@@ -1,0 +1,120 @@
+{
+  "format": 1,
+  "restore": {
+    "F:\\SteamLibrary\\steamapps\\common\\sbox\\addons\\sbox-parachute\\code\\parachute.csproj": {}
+  },
+  "projects": {
+    "F:\\SteamLibrary\\steamapps\\common\\sbox\\addons\\base\\code\\base.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "F:\\SteamLibrary\\steamapps\\common\\sbox\\addons\\base\\code\\base.csproj",
+        "projectName": "base",
+        "projectPath": "F:\\SteamLibrary\\steamapps\\common\\sbox\\addons\\base\\code\\base.csproj",
+        "packagesPath": "C:\\Users\\Louie\\.nuget\\packages\\",
+        "outputPath": "F:\\SteamLibrary\\steamapps\\common\\sbox\\addons\\base\\code\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Louie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "F:\\SteamLibrary\\steamapps\\common\\sbox\\addons\\sbox-parachute\\code\\parachute.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "F:\\SteamLibrary\\steamapps\\common\\sbox\\addons\\sbox-parachute\\code\\parachute.csproj",
+        "projectName": "parachute",
+        "projectPath": "F:\\SteamLibrary\\steamapps\\common\\sbox\\addons\\sbox-parachute\\code\\parachute.csproj",
+        "packagesPath": "C:\\Users\\Louie\\.nuget\\packages\\",
+        "outputPath": "F:\\SteamLibrary\\steamapps\\common\\sbox\\addons\\sbox-parachute\\code\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Louie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "F:\\SteamLibrary\\steamapps\\common\\sbox\\addons\\base\\code\\base.csproj": {
+                "projectPath": "F:\\SteamLibrary\\steamapps\\common\\sbox\\addons\\base\\code\\base.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
