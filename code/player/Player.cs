@@ -1,15 +1,19 @@
 ﻿using Sandbox;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Sandbox
 {
-	partial class ParachutePawn : Player
+	partial class ParachutePawn : Sandbox.Player
 	{
 
 		public Clothing.Container Clothing = new();
 
 		private DamageInfo lastDamage;
+
+		[Net]
+		public List<Checkpoint> Checkpoints { get; set; } = new();
 
 		public ParachutePawn()
 		{
@@ -38,7 +42,11 @@ namespace Sandbox
 
 			CameraMode = new ParachuteCamera();
 
+			
+
 			base.Respawn();
+
+			GotoBestCheckpoint();
 		}
 
 		public override void OnKilled()
@@ -74,6 +82,11 @@ namespace Sandbox
 		public override void Simulate( Client cl )
 		{
 			base.Simulate( cl );
+
+			if ( Input.Pressed( InputButton.Drop ) || Input.Pressed( InputButton.Reload ) )
+			{
+				Game.Current.DoPlayerSuicide(cl);
+			}
 		}
 
 		/// <summary>
