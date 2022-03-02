@@ -12,7 +12,6 @@ namespace Sandbox
 		[Net, Change]
 		public float BestTime { get; set; } = defaultBestTime;
 
-		private Particles crown;
 
 		public bool CourseIncomplete => BestTime == defaultBestTime;
 
@@ -39,15 +38,6 @@ namespace Sandbox
 			if ( IsServer )
 			{
 				ClearCheckpoints();
-
-
-
-				if ( TimeSinceStart < BestTime )
-				{
-
-					BestTime = TimeSinceStart;
-
-				}
 
 				Celebrate();
 			}

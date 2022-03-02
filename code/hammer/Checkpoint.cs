@@ -3,10 +3,20 @@ using Sandbox;
 using System.Linq;
 
 [Library("para_checkpoint", Description = "Defines a checkpoint where the player will respawn after falling")]
-[EditorModel( "models/checkpoint_platform_hammer.vmdl", FixedBounds = true)]
+[Model( Model = "models/gameplay/checkpoint/editor_checkpoint/editor_checkpoint.vmdl" )]
 [EntityTool("Player Checkpoint", "Parachute", "Defines a checkpoint where the player will respawn after falling.")]
+[BoundsHelper( "mins", "maxs", false, true )]
 internal partial class Checkpoint : ModelEntity
 {
+
+
+	[Property("mins", Title = "Checkpoint mins")]
+	[Net]
+	public Vector3 Mins { get; set; } = new Vector3(-75, -75, 0);
+
+	[Property("maxs", Title = "Checkpoint maxs")]
+	[Net]
+	public Vector3 Maxs { get; set; } = new Vector3(75, 75, 100);
 
 	[Net, Property]
 	public bool IsStart { get; set; }
@@ -17,51 +27,19 @@ internal partial class Checkpoint : ModelEntity
 
 	private ModelEntity flag;
 
-	public enum ModelType
-	{
-		Dev,
-		Metal,
-		Stone,
-		Wood
-	}
-
-	/// <summary>
-	/// Movement type of the door.
-	/// </summary>
-	[Property("model_type", Title = "Model Type")]
-	public ModelType ModelTypeList { get; set; } = ModelType.Dev;
-
 	public override void Spawn()
 	{
 		base.Spawn();
+
+		//SetModel( "models/gameplay/checkpoint/editor_checkpoint/editor_checkpoint.vmdl" );
 
 		Transmit = TransmitType.Always;
 		EnableAllCollisions = true;
 		EnableTouch = true;
 
-		if (ModelTypeList == ModelType.Dev)
-		{
-			SetModel("models/checkpoint_platform.vmdl");
-		}
-
-		else if (ModelTypeList == ModelType.Metal)
-		{
-			SetModel("models/checkpoint_platform_metal.vmdl");
-		}
-
-		else if (ModelTypeList == ModelType.Stone)
-		{
-			SetModel("models/checkpoint_platform_stone.vmdl");
-		}
-
-		else if (ModelTypeList == ModelType.Wood)
-		{
-			SetModel("models/checkpoint_platform_wood.vmdl");
-		}
-
 		SetupPhysicsFromModel( PhysicsMotionType.Static );
 
-		var bounds = PhysicsBody.GetBounds();
+		var bounds = new BBox( Position + Mins, Position + Maxs );
 		var extents = ( bounds.Maxs - bounds.Mins ) * 0.5f;
 
 		var trigger = new BaseTrigger();
