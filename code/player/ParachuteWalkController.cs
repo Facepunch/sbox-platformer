@@ -24,14 +24,23 @@ namespace Sandbox
 		[Net] public float EyeHeight { get; set; } = 64.0f;
 		[Net] public float Gravity { get; set; } = 800.0f;
 		[Net] public float AirControl { get; set; } = 30.0f;
+		[Net] public int AllowedJumps => 2; // how many times you can jump before touching ground again
+		[Net] public float DoubleJumpDelay => .15f; // forced delay between double jumps
+
 		public bool Swimming { get; set; } = false;
-		[Net] public bool AutoJump { get; set; } = false;
 
 		[Net,Predicted]
-		private TimeSince TimeSinceJump { get; set; }
+		private TimeSince TimeSinceJumpPressed { get; set; }
+		[Net, Predicted]
+		private TimeSince TimeSinceJumped { get; set; }
 
 		[Net, Predicted]
 		private bool Jumping { get; set; }
+
+		[Net, Predicted]
+		public int JumpsAllowed { get; set; }
+		[Net, Predicted]
+		public bool Gliding { get; set; }
 
 		public Duck Duck;
 		public Unstuck Unstuck;
@@ -107,8 +116,6 @@ namespace Sandbox
 
 			CheckParachute();
 
-			RestoreGroundPos();
-
 			//Velocity += BaseVelocity * ( 1 + Time.Delta * 0.5f );
 			//BaseVelocity = Vector3.Zero;
 
@@ -159,9 +166,19 @@ namespace Sandbox
 
 			// if ( underwater ) do underwater movement
 
-			if ( AutoJump ? Input.Down( InputButton.Jump ) : Input.Pressed( InputButton.Jump ) )
+			if ( Input.Released( InputButton.Jump ) && CanDoubleJump() )
 			{
-				CheckJumpButton();
+				DoJump();
+			}
+
+			if ( Input.Pressed( InputButton.Jump ) )
+			{
+				TimeSinceJumpPressed = 0;
+
+				if ( GroundEntity != null )
+				{
+					DoJump();
+				}
 			}
 
 			// Fricion is handled before we add in any base velocity. That way, if we are on a conveyor,
@@ -236,8 +253,6 @@ namespace Sandbox
 
 			// Land Sound
 			// Swim Sounds
-
-			SaveGroundPos();
 
 			if ( Debug )
 			{
@@ -416,7 +431,7 @@ namespace Sandbox
 			// mv->m_outWishVel -= (1.f-newspeed) * mv->m_vecVelocity;
 		}
 
-		public virtual void CheckJumpButton()
+		public virtual void DoJump()
 		{
 			// If we are in the water most of the way...
 			if ( Swimming )
@@ -433,32 +448,27 @@ namespace Sandbox
 				return;
 			}
 
-			if ( GroundEntity == null )
+			if ( JumpsAllowed <= 0 ) 
 				return;
+
+			JumpsAllowed--;
 
 			ClearGroundEntity();
 
 			float flGroundFactor = 1.0f;
-			{
-			}
-
-
 			float flMul = 268.3281572999747f * 1.2f;
-
 			float startz = Velocity.z;
 
 			if ( Duck.IsActive )
 				flMul *= 0.8f;
 
 			Velocity = Velocity.WithZ( startz + flMul * flGroundFactor );
-
 			Velocity -= new Vector3( 0, 0, Gravity * 0.5f ) * Time.Delta;
 
 			AddEvent( "jump" );
 
-			TimeSinceJump = 0;
-
-			Jumping= true;
+			Jumping = true;
+			TimeSinceJumped = 0;
 		}
 
 		public virtual void AirMove()
@@ -635,6 +645,7 @@ namespace Sandbox
 			if ( GroundEntity != null )
 			{
 				BaseVelocity = GroundEntity.Velocity;
+				JumpsAllowed = AllowedJumps;
 			}
 
 			/*
@@ -697,22 +708,6 @@ namespace Sandbox
 			Position = trace.EndPosition;
 		}
 
-		void RestoreGroundPos()
-		{
-			if ( GroundEntity == null || GroundEntity.IsWorld )
-				return;
-
-			//var Position = GroundEntity.Transform.ToWorld( GroundTransform );
-			//Pos = Position.Position;
-		}
-
-		void SaveGroundPos()
-		{
-			if ( GroundEntity == null || GroundEntity.IsWorld )
-				return;
-
-			//GroundTransform = GroundEntity.Transform.ToLocal( new Transform( Pos, Rot ) );
-		}
 		private bool JumpDown()
 		{
 			if ( Input.Down( InputButton.Jump ) ) return true;
@@ -720,14 +715,29 @@ namespace Sandbox
 			return false;
 		}
 
+		private bool CanDoubleJump()
+		{
+			if ( Gliding ) return false;
+			if ( JumpsAllowed < 1 ) return false;
+			if ( TimeSinceJumpPressed > .2f ) return false;
+			if ( GroundEntity != null ) return false;
+			if ( JumpsAllowed >= AllowedJumps ) return false;
+			if ( TimeSinceJumped < DoubleJumpDelay ) return false;
+
+			return true;
+		}
+
 		private void CheckParachute()
 		{
+			Gliding = false;
+
 			if ( JumpDown()
 				&& (GroundEntity == null)
 				&& Velocity.z < 0 )
 			{
 				DebugOverlay.Text( Position, $"Gliding" );
 				Velocity = Velocity.WithZ( -20 );
+				Gliding = true;
 			}
 		}
 	}
