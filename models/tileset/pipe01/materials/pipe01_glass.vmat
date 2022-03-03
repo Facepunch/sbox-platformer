@@ -59,4 +59,9 @@ Layer0
 	//---- Translucent ----
 	g_flOpacityScale "1.000"
 	TextureTranslucency "models/tileset/pipe01/materials/pipe01_glass_trans.png"
+
+	SystemAttributes
+	{
+		PhysicsSurfaceProperties "glass"
+	}
 }
