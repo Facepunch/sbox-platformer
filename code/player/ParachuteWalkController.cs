@@ -457,12 +457,11 @@ namespace Sandbox
 
 			float flGroundFactor = 1.0f;
 			float flMul = 268.3281572999747f * 1.2f;
-			float startz = Velocity.z;
 
 			if ( Duck.IsActive )
 				flMul *= 0.8f;
 
-			Velocity = Velocity.WithZ( startz + flMul * flGroundFactor );
+			Velocity = Velocity.WithZ( flMul * flGroundFactor );
 			Velocity -= new Vector3( 0, 0, Gravity * 0.5f ) * Time.Delta;
 
 			AddEvent( "jump" );
