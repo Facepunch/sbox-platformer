@@ -5,7 +5,7 @@ namespace Sandbox
 	public partial class ParachuteWalkController : BasePlayerController
 	{
 		[Net] public float SprintSpeed { get; set; } = 320.0f;
-		[Net] public float WalkSpeed { get; set; } = 150.0f;
+		[Net] public float WalkSpeed { get; set; } = 120.0f;
 		[Net] public float DefaultSpeed { get; set; } = 190.0f;
 		[Net] public float Acceleration { get; set; } = 10.0f;
 		[Net] public float AirAcceleration { get; set; } = 50.0f;

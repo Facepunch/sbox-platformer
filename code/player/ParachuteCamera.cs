@@ -23,7 +23,7 @@ namespace Sandbox
 			Position = pawn.Position;
 			Vector3 targetPos;
 
-			var center = pawn.Position + Vector3.Up * 64;
+			var center = pawn.Position + Vector3.Up * 76;
 
 			if ( Thirdperson_orbit )
 			{
@@ -38,7 +38,7 @@ namespace Sandbox
 				Rotation = Rotation.FromAxis( Vector3.Up, 4 ) * Input.Rotation;
 
 				float distance = 350.0f * pawn.Scale;
-				targetPos = Position + Input.Rotation.Right * ((pawn.CollisionBounds.Maxs.x + 15) * pawn.Scale);
+				targetPos = Position + Input.Rotation.Right * ((pawn.CollisionBounds.Maxs.x + 0) * pawn.Scale);
 				targetPos += Input.Rotation.Forward * -distance;
 			}
 

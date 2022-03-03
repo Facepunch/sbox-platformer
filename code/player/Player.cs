@@ -10,6 +10,8 @@ namespace Sandbox
 
 		public Clothing.Container Clothing = new();
 
+		private Particles FakeShadow;
+
 		private DamageInfo lastDamage;
 
 		[Net]
@@ -42,7 +44,7 @@ namespace Sandbox
 
 			CameraMode = new ParachuteCamera();
 
-			
+			FakeShadow = Particles.Create( "particles/gameplay/fake_shadow/fake_shadow.vpcf", this );
 
 			base.Respawn();
 
@@ -53,21 +55,14 @@ namespace Sandbox
 		{
 			base.OnKilled();
 
-			if ( lastDamage.Flags.HasFlag( DamageFlags.Vehicle ) )
-			{
-				Particles.Create( "particles/impact.flesh.bloodpuff-big.vpcf", lastDamage.Position );
-				Particles.Create( "particles/impact.flesh-big.vpcf", lastDamage.Position );
-				PlaySound( "kersplat" );
-			}
-
 			BecomeRagdollOnClient( Velocity, lastDamage.Flags, lastDamage.Position, lastDamage.Force, GetHitboxBone( lastDamage.HitboxIndex ) );
 
-			Controller = null;
+			Controller = null;	
 
 			EnableAllCollisions = false;
 			EnableDrawing = false;
 
-			CameraMode = new SpectateRagdollCamera();
+			CameraMode = new ParachuteRagdollCamera();
 
 			foreach ( var child in Children )
 			{
