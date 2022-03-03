@@ -82,7 +82,7 @@ namespace Sandbox
 		{
 			Host.AssertServer();
 
-			var cp = Checkpoints.LastOrDefault();
+			var cp = Checkpoints.LastOrDefault( x => x.RespawnPoint || x.IsStart );
 			if ( !cp.IsValid() )
 			{
 				cp = Entity.All.FirstOrDefault( x => x is Checkpoint c && c.IsStart ) as Checkpoint;

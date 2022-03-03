@@ -24,6 +24,8 @@ internal partial class Checkpoint : ModelEntity
 	public bool IsEnd { get; set; }
 	[Net, Property]
 	public int Number { get; set; }
+	[Net, Property]
+	public bool RespawnPoint { get; set; } = true;
 
 	private ModelEntity flag;
 

@@ -33,6 +33,7 @@ metadata
 	isstart(boolean) : "Is Start" : 0 : ""
 	isend(boolean) : "Is End" : 0 : ""
 	number(integer) : "Number" : 0 : ""
+	respawnpoint(boolean) : "Respawn Point" : 1 : ""
 	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 
 	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
