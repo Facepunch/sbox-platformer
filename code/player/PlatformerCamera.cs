@@ -1,90 +1,81 @@
-﻿
+﻿using Sandbox;
+using System;
+
 namespace Sandbox
 {
 	public class PlatformerCamera : CameraMode
 	{
-		[ConVar.Replicated]
-		public static bool Thirdperson_orbit { get; set; } = false;
 
-		[ConVar.Replicated]
-		public static bool Thirdperson_collision { get; set; } = true;
+		private float distance = 250.0f;
 
-		private Angles orbitAngles;
-		private float orbitDistance = 250;
+		public float MinDistance => 100.0f;
+		public float MaxDistance => 350.0f;
+		public float DistanceStep => 60.0f;
 
 		public override void Update()
 		{
-			var pawn = Local.Pawn as AnimEntity;
-			var client = Local.Client;
+			var pawn = Local.Pawn as PlatformerPawn;
 
-			if ( pawn == null )
-				return;
+			if ( pawn == null ) return;
 
-			Position = pawn.Position;
-			Vector3 targetPos;
+			UpdateViewBlockers( pawn );
 
 			var center = pawn.Position + Vector3.Up * 76;
+			//var distance = 150.0f * pawn.Scale;
+			var targetPos = center + Input.Rotation.Forward * -distance;
 
-			if ( Thirdperson_orbit )
-			{
-				Position += Vector3.Up * (pawn.CollisionBounds.Center.z * pawn.Scale);
-				Rotation = Rotation.From( orbitAngles );
+			var tr = Trace.Ray( center, targetPos )
+				.Ignore( pawn )
+				.Radius( 8 )
+				.Run();
 
-				targetPos = Position + Rotation.Backward * orbitDistance;
-			}
-			else
-			{
-				Position = center;
-				Rotation = Rotation.FromAxis( Vector3.Up, 4 ) * Input.Rotation;
+			var endpos = tr.EndPosition;
 
-				float distance = 350.0f * pawn.Scale;
-				targetPos = Position + Input.Rotation.Right * ((pawn.CollisionBounds.Maxs.x + 0) * pawn.Scale);
-				targetPos += Input.Rotation.Forward * -distance;
-			}
 
-			if ( Thirdperson_collision )
-			{
-				var tr = Trace.Ray( Position, targetPos )
-					.Ignore( pawn )
-					.Radius( 8 )
-					.Run();
+			Position = endpos;
+			Rotation = Input.Rotation;
 
-				Position = tr.EndPosition;
-			}
-			else
-			{
-				Position = targetPos;
-			}
+			var rot = pawn.Rotation.Angles() * .015f;
+			rot.yaw = 0;
 
-			FieldOfView = 70;
+			Rotation *= Rotation.From( rot );
+
+			var spd = pawn.Velocity.WithZ( 0 ).Length / 350f;
+			var fov = 70f.LerpTo( 80f, spd );
+
+			FieldOfView = FieldOfView.LerpTo( fov, Time.Delta );
 
 			Viewer = null;
 		}
 
+		public override void Activated()
+		{
+			base.Activated();
+
+			FieldOfView = 70;
+		}
+
+		public override void Deactivated()
+		{
+			base.Deactivated();
+		}
+
+		private void UpdateViewBlockers( PlatformerPawn pawn )
+		{
+			var traces = Trace.Sphere( 3f, CurrentView.Position, pawn.Position + Vector3.Up * 16 ).RunAll();
+
+			if ( traces == null ) return;
+		}
+
 		public override void BuildInput( InputBuilder input )
 		{
-			if ( Thirdperson_orbit && input.Down( InputButton.Walk ) )
-			{
-				if ( input.Down( InputButton.Attack1 ) )
-				{
-					orbitDistance += input.AnalogLook.pitch;
-					orbitDistance = orbitDistance.Clamp( 0, 1000 );
-				}
-				else
-				{
-					orbitAngles.yaw += input.AnalogLook.yaw;
-					orbitAngles.pitch += input.AnalogLook.pitch;
-					orbitAngles = orbitAngles.Normal;
-					orbitAngles.pitch = orbitAngles.pitch.Clamp( -89, 89 );
-				}
-
-				input.AnalogLook = Angles.Zero;
-
-				input.Clear();
-				input.StopProcessing = true;
-			}
-
 			base.BuildInput( input );
+
+			if ( Input.MouseWheel != 0 )
+			{
+				distance = distance.LerpTo( distance - Input.MouseWheel * DistanceStep, Time.Delta * 10, true ).Clamp( MinDistance, MaxDistance );
+			}
 		}
+
 	}
 }

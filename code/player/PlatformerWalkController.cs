@@ -788,7 +788,6 @@ namespace Sandbox
 				&& (GroundEntity == null)
 				&& Velocity.z < 0 )
 			{
-				DebugOverlay.Text( Position, $"Gliding" );
 				Velocity = Velocity.WithZ( -20 );
 				Gliding = true;
 			}

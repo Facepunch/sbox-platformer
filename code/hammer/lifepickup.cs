@@ -37,23 +37,21 @@ internal partial class LifePickup : ModelEntity
 
 		if ( other is not PlatformerPawn pl ) return;
 		if ( PlayerCollected.Contains( pl ) ) return;
+		
 		pl.NumberLife ++;
-
 
 		CollectedPickup(To.Single (other.Client) );
 		PlayerCollected.Add( pl );
-
-		//Delete();
 
 	}
 
 	[ClientRpc]
 	private void CollectedPickup()
 	{
+		Sound.FromEntity( "life.pickup", this );
+
 		EnableDrawing = false;
 		Particles.Create( "particles/explosion/barrel_explosion/explosion_gib.vpcf", this );
-
-		Sound.FromEntity( "life.pickup", this );
 	}
 
 }
