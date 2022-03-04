@@ -2,6 +2,7 @@
 using Sandbox;
 using Sandbox.Internal;
 using System.Linq;
+using System.Collections.Generic;
 
 [Library( "plat_lifepickup", Description = "Addition Life" )]
 [Model( Model = "models/editor/cordon_helper.vmdl" )]
@@ -11,6 +12,8 @@ internal partial class LifePickup : ModelEntity
 
 	[Net, Property]
 	public int NumberOfLife { get; set; }
+
+	private List<Entity> PlayerCollected { get; set; } = new List<Entity>();
 
 	public override void Spawn()
 	{
@@ -33,10 +36,12 @@ internal partial class LifePickup : ModelEntity
 		base.StartTouch( other );
 
 		if ( other is not PlatformerPawn pl ) return;
+		if ( PlayerCollected.Contains( pl ) ) return;
 		pl.NumberLife ++;
-		Particles.Create( "particles/explosion/barrel_explosion/explosion_gib.vpcf", this );
+
 
 		CollectedPickup(To.Single (other.Client) );
+		PlayerCollected.Add( pl );
 
 		//Delete();
 
@@ -46,7 +51,9 @@ internal partial class LifePickup : ModelEntity
 	private void CollectedPickup()
 	{
 		EnableDrawing = false;
-		CollisionGroup = CollisionGroup.Debris;
+		Particles.Create( "particles/explosion/barrel_explosion/explosion_gib.vpcf", this );
+
+		Sound.FromEntity( "life.pickup", this );
 	}
 
 }
