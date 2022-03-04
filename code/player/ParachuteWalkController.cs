@@ -456,7 +456,7 @@ namespace Sandbox
 			ClearGroundEntity();
 
 			float flGroundFactor = 1.0f;
-			float flMul = 268.3281572999747f * 1.2f;
+			float flMul = 285f * 1.2f;
 
 			if ( Duck.IsActive )
 				flMul *= 0.8f;
