@@ -28,7 +28,7 @@ namespace Sandbox
 		[Net] public float DoubleJumpDelay => .15f; // forced delay between double jumps.
 		[Net] public float MaxSpeed { get; set; }
 
-		public float FallDamageThreshold { get; set; } = 24.5f;
+		public float FallDamageThreshold { get; set; } = 23.5f;
 		public float FallDamageMin { get; set; } = 0f;
 		public float FallDamageMax { get; set; } = 100f;
 
@@ -350,7 +350,7 @@ namespace Sandbox
 		public virtual void StepMove()
 		{
 			MoveHelper mover = new MoveHelper( Position, Velocity );
-			mover.Trace = mover.Trace.Size( mins, maxs ).Ignore( Pawn );
+			mover.Trace = mover.Trace.Size( mins, maxs ).Ignore( Pawn ).WithoutTags( "Platplayer" );
 			mover.MaxStandableAngle = GroundAngle;
 
 			mover.TryMoveWithStep( Time.Delta, StepSize );
@@ -362,7 +362,7 @@ namespace Sandbox
 		public virtual void Move()
 		{
 			MoveHelper mover = new MoveHelper( Position, Velocity );
-			mover.Trace = mover.Trace.Size( mins, maxs ).Ignore( Pawn );
+			mover.Trace = mover.Trace.Size( mins, maxs ).Ignore( Pawn ).WithoutTags( "Platplayer" );
 			mover.MaxStandableAngle = GroundAngle;
 
 			mover.TryMove( Time.Delta );

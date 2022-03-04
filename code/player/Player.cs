@@ -8,11 +8,14 @@ namespace Sandbox
 	partial class PlatformerPawn : Sandbox.Player
 	{
 
+		public const float MaxRenderDistance = 128f;
+
 		public Clothing.Container Clothing = new();
 
 		private Particles FakeShadow;
 
 		private DamageInfo lastDamage;
+
 
 		[Net]
 		public List<Checkpoint> Checkpoints { get; set; } = new();
@@ -34,6 +37,7 @@ namespace Sandbox
 
 			Controller = new PlatformerWalkController();
 			Animator = new StandardPlayerAnimator();
+			CameraMode = new PlatformerCamera();
 
 			EnableAllCollisions = true;
 			EnableDrawing = true;
@@ -42,13 +46,15 @@ namespace Sandbox
 
 			Clothing.DressEntity( this );
 
-			CameraMode = new PlatformerCamera();
-
-			FakeShadow = Particles.Create( "particles/gameplay/fake_shadow/fake_shadow.vpcf", this );
+			//FakeShadow = Particles.Create( "particles/gameplay/fake_shadow/fake_shadow.vpcf", this );
 
 			base.Respawn();
 
+			RemoveCollisionLayer( CollisionLayer.Solid );
+
 			GotoBestCheckpoint();
+
+			Tags.Add( "Platplayer" );
 		}
 
 		public override void OnKilled()
@@ -92,6 +98,27 @@ namespace Sandbox
 		public override void FrameSimulate( Client cl )
 		{
 			base.FrameSimulate( cl );
+		}
+
+		[Event.Frame]
+		private void UpdateRenderAlpha()
+		{
+			if ( Local.Pawn == this ) return;
+			if ( Local.Pawn == null ) return;
+			if ( !Local.Pawn.IsValid() ) return;
+
+			var dist = Local.Pawn.Position.Distance( Position );
+			var a = 1f - dist.LerpInverse( MaxRenderDistance, MaxRenderDistance * .1f );
+			a = Math.Max( a, .15f );
+			a = Easing.EaseOut( a );
+
+			this.RenderColor = this.RenderColor.WithAlpha( a );
+
+			foreach ( var child in this.Children )
+			{
+				if ( child is not ModelEntity m || !child.IsValid() ) continue;
+				m.RenderColor = m.RenderColor.WithAlpha( a );
+			}
 		}
 	}
 }
