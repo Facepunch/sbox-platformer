@@ -25,7 +25,14 @@ namespace Sandbox
 		[Net] public float Gravity { get; set; } = 800.0f;
 		[Net] public float AirControl { get; set; } = 30.0f;
 		[Net] public int AllowedJumps => 2; // how many times you can jump before touching ground again
-		[Net] public float DoubleJumpDelay => .15f; // forced delay between double jumps
+		[Net] public float DoubleJumpDelay => .15f; // forced delay between double jumps.
+		[Net] public float MaxSpeed { get; set; }
+
+		public float FallDamageThreshold { get; set; } = 24.5f;
+		public float FallDamageMin { get; set; } = 0f;
+		public float FallDamageMax { get; set; } = 100f;
+
+		protected Vector3 PreVelocity { get; set; }
 
 		public bool Swimming { get; set; } = false;
 
@@ -137,6 +144,8 @@ namespace Sandbox
 
 
 			// RunLadderMode
+
+			PreVelocity = Velocity;
 
 			CheckLadder();
 			Swimming = Pawn.WaterLevel > 0.6f;
@@ -639,6 +648,8 @@ namespace Sandbox
 
 			bool wasOffGround = GroundEntity == null;
 
+			var wasOnGround = (GroundEntity != null);
+
 			GroundEntity = tr.Entity;
 
 			if ( GroundEntity != null )
@@ -656,6 +667,49 @@ namespace Sandbox
 	            const CGameSurfaceProperties *pGameProps = g_pPhysicsQuery->GetGameSurfaceproperties( pProp );
 	            player->m_chTextureType = (int8)pGameProps->m_nLegacyGameMaterial;
             */
+			if ( GroundEntity != null )
+			{
+				BaseVelocity = GroundEntity.Velocity;
+
+				if ( !wasOnGround )
+				{
+					var fallVelocity = PreVelocity.z + Gravity;
+					var threshold = -FallDamageThreshold;
+
+					if ( fallVelocity < threshold  )
+					{
+						var overstep = threshold - fallVelocity;
+						var fraction = overstep.Remap( 0f, FallDamageThreshold, 0f, 1f ).Clamp( 0f, 1f );
+
+						Pawn.PlaySound( $"player.fall{Rand.Int( 1, 3 )}" )
+							.SetVolume( 0.7f + (0.3f * fraction) )
+							.SetPitch( 1f - (0.35f * fraction) );
+
+						OnTakeFallDamage( fraction );
+					}
+					else
+					{
+						var volume = Velocity.Length.Remap( 0f, MaxSpeed, 0.1f, 0.5f );
+						Pawn.PlaySound( $"player.land{Rand.Int( 1, 4 )}" ).SetVolume( volume );
+					}
+				}
+			}
+		}
+
+		private void OnTakeFallDamage( float fraction )
+		{
+			if ( Host.IsServer )
+			{
+				var damage = new DamageInfo()
+					.WithAttacker( Pawn )
+					.WithFlag( DamageFlags.Fall )
+					.WithForce( Vector3.Down * Velocity.Length * fraction )
+					.WithPosition( Position );
+
+				damage.Damage = FallDamageMin + (FallDamageMax - FallDamageMin) * fraction;
+
+				Pawn.TakeDamage( damage );
+			}
 		}
 
 		/// <summary>

@@ -82,6 +82,8 @@ namespace Sandbox
 			{
 				Game.Current.DoPlayerSuicide(cl);
 			}
+
+			DebugOverlay.Text( Position, Health.ToString() );
 		}
 
 		/// <summary>
