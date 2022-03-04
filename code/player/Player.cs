@@ -16,6 +16,9 @@ namespace Sandbox
 
 		private DamageInfo lastDamage;
 
+		[Net]
+		public int NumberLife { get; set; } = 3;
+
 
 		[Net]
 		public List<Checkpoint> Checkpoints { get; set; } = new();
@@ -52,7 +55,14 @@ namespace Sandbox
 
 			RemoveCollisionLayer( CollisionLayer.Solid );
 
+			if ( NumberLife == 0 )
+			{
+				ClearCheckpoints();
+				NumberLife = 3;
+			}
+
 			GotoBestCheckpoint();
+
 
 			Tags.Add( "Platplayer" );
 		}
@@ -60,6 +70,8 @@ namespace Sandbox
 		public override void OnKilled()
 		{
 			base.OnKilled();
+
+			NumberLife--;
 
 			BecomeRagdollOnClient( Velocity, lastDamage.Flags, lastDamage.Position, lastDamage.Force, GetHitboxBone( lastDamage.HitboxIndex ) );
 
@@ -75,6 +87,7 @@ namespace Sandbox
 				child.EnableDrawing = false;
 			}
 
+
 		}
 
 		/// <summary>
@@ -88,8 +101,6 @@ namespace Sandbox
 			{
 				Game.Current.DoPlayerSuicide(cl);
 			}
-
-			DebugOverlay.Text( Position, Health.ToString() );
 		}
 
 		/// <summary>

@@ -24,7 +24,7 @@ namespace Sandbox.UI
 			var health = player.Health;
 			_health = _health.LerpTo( health, Time.Delta * 10 );
 
-			Label.SetClass( "low", health < 100 * .25f );
+			Label.SetClass( "healthlow", health < 100 * .25f );
 
 			Label.Text = $"{(int)(_health + 0.5f)}";
 
@@ -36,7 +36,6 @@ namespace Sandbox.UI
 				HealthGrowTime = 0.02f;
 			}
 
-			Label.SetClass( "grow", !HealthGrowTime );
 			LastHealth = health;
 		}
 

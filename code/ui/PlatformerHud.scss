@@ -15,16 +15,31 @@ Health {
 
     label {
 
-        &.lower {
-            color: greenyellow;
-        }
-
-        &.low {
+        &.healthlow {
             color: hotpink;
         }
+    }
+}
 
-        &.grow {
-            transition: all 0.25s ease-out;
-            }
+Life {
+    position: absolute;
+    font-family: 'Fredoka One';
+    text-stroke: 12px black;
+    transform: rotate(10deg);
+    right: 96px;
+    top: 96px;
+    font-size: 96px;
+    font-weight: bold;
+    color: #3472e6;
+    height: 30px;
+    padding: 0 20px;
+    align-items: center;
+    transition: all 0.25s ease-out;
+
+    label {
+
+        &.lifelow {
+            color: hotpink;
         }
     }
+}

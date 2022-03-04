@@ -14,6 +14,8 @@ namespace Sandbox.UI
 			RootPanel.StyleSheet.Load( "/ui/PlatformerHud.scss" );
 
 			RootPanel.AddChild<Health>();
+			RootPanel.AddChild<Life>();
+
 
 		}
 	}
