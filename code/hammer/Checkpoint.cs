@@ -1,22 +1,25 @@
 ﻿using Hammer;
 using Sandbox;
+using Sandbox.Internal;
 using System.Linq;
 
-[Library("para_checkpoint", Description = "Defines a checkpoint where the player will respawn after falling")]
+[Library( "para_checkpoint", Description = "Defines a checkpoint where the player will respawn after falling" )]
 [Model( Model = "models/gameplay/checkpoint/editor_checkpoint/editor_checkpoint.vmdl" )]
-[EntityTool("Player Checkpoint", "Parachute", "Defines a checkpoint where the player will respawn after falling.")]
+[EntityTool( "Player Checkpoint", "Parachute", "Defines a checkpoint where the player will respawn after falling." )]
 [BoundsHelper( "mins", "maxs", false, true )]
 internal partial class Checkpoint : ModelEntity
 {
 
 
-	[Property("mins", Title = "Checkpoint mins")]
+	[Property( "mins", Title = "Checkpoint mins" )]
 	[Net]
-	public Vector3 Mins { get; set; } = new Vector3(-75, -75, 0);
+	[DefaultValue( "-32 -32 0" )]
+	public Vector3 Mins { get; set; } = new Vector3( -32, -32, 0 );
 
-	[Property("maxs", Title = "Checkpoint maxs")]
+	[Property( "maxs", Title = "Checkpoint maxs" )]
 	[Net]
-	public Vector3 Maxs { get; set; } = new Vector3(75, 75, 100);
+	[DefaultValue( "32 32 64" )]
+	public Vector3 Maxs { get; set; } = new Vector3(32, 32, 64);
 
 	[Net, Property]
 	public bool IsStart { get; set; }
