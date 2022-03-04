@@ -1,7 +1,7 @@
 ﻿
 namespace Sandbox
 {
-	public class ParachuteCamera : CameraMode
+	public class PlatformerCamera : CameraMode
 	{
 		[ConVar.Replicated]
 		public static bool Thirdperson_orbit { get; set; } = false;

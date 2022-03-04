@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Sandbox
 {
-	partial class ParachutePawn : Sandbox.Player
+	partial class PlatformerPawn : Sandbox.Player
 	{
 
 		public Clothing.Container Clothing = new();
@@ -17,12 +17,12 @@ namespace Sandbox
 		[Net]
 		public List<Checkpoint> Checkpoints { get; set; } = new();
 
-		public ParachutePawn()
+		public PlatformerPawn()
 		{
 
 		}
 
-		public ParachutePawn( Client cl ) : this()
+		public PlatformerPawn( Client cl ) : this()
 		{
 			// Load clothing from client data
 			Clothing.LoadFromClient( cl );
@@ -32,7 +32,7 @@ namespace Sandbox
 		{
 			SetModel( "models/citizen/citizen.vmdl" );
 
-			Controller = new ParachuteWalkController();
+			Controller = new PlatformerWalkController();
 			Animator = new StandardPlayerAnimator();
 
 			EnableAllCollisions = true;
@@ -42,7 +42,7 @@ namespace Sandbox
 
 			Clothing.DressEntity( this );
 
-			CameraMode = new ParachuteCamera();
+			CameraMode = new PlatformerCamera();
 
 			FakeShadow = Particles.Create( "particles/gameplay/fake_shadow/fake_shadow.vpcf", this );
 
@@ -62,7 +62,7 @@ namespace Sandbox
 			EnableAllCollisions = false;
 			EnableDrawing = false;
 
-			CameraMode = new ParachuteRagdollCamera();
+			CameraMode = new PlatformerRagdollCamera();
 
 			foreach ( var child in Children )
 			{

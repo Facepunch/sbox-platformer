@@ -1,9 +1,9 @@
 ﻿using Sandbox;
 using Hammer;
 
-[Library( "para_trigger_fall", Description = "Makes the player fall" )]
+[Library( "plat_trigger_fall", Description = "Makes the player fall" )]
 [Hammer.AutoApplyMaterial("materials/editor/uf_trigger_fall.vmat")]
-[EntityTool( "Trigger Fall", "Parachute", "Makes the player fall." )]
+[EntityTool( "Trigger Fall", "Platformer", "Makes the player fall." )]
 internal partial class FallTrigger : BaseTrigger
 {
 
@@ -12,7 +12,7 @@ internal partial class FallTrigger : BaseTrigger
 		base.StartTouch( other );
 
 		if ( !other.IsServer ) return;
-		if ( other is not ParachutePawn pl ) return;
+		if ( other is not PlatformerPawn pl ) return;
 
 		Game.Current.DoPlayerSuicide( pl.Client );
 	}

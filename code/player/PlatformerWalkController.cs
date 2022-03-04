@@ -2,7 +2,7 @@
 namespace Sandbox
 {
 	[Library]
-	public partial class ParachuteWalkController : BasePlayerController
+	public partial class PlatformerWalkController : BasePlayerController
 	{
 		[Net] public float SprintSpeed { get; set; } = 320.0f;
 		[Net] public float WalkSpeed { get; set; } = 120.0f;
@@ -46,7 +46,7 @@ namespace Sandbox
 		public Unstuck Unstuck;
 
 
-		public ParachuteWalkController()
+		public PlatformerWalkController()
 		{
 			Duck = new Duck( this );
 			Unstuck = new Unstuck( this );

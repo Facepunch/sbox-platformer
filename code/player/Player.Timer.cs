@@ -2,7 +2,7 @@
 using System.Linq;
 namespace Sandbox
 {
-	partial class ParachutePawn
+	partial class PlatformerPawn
 	{
 
 		[Net, Predicted]

@@ -1,7 +1,7 @@
 ﻿
 namespace Sandbox
 {
-	public class ParachuteRagdollCamera : CameraMode
+	public class PlatformerRagdollCamera : CameraMode
 	{
 		Vector3 FocusPoint;
 

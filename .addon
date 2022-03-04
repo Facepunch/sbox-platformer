@@ -1,8 +1,8 @@
 {
-  "Title": "Parachute",
+  "Title": "Platformer",
   "Type": "game",
   "Org": "local",
-  "Ident": "parachute",
+  "Ident": "platformer",
   "Schema": 1,
   "HasAssets": true,
   "AssetsPath": "",

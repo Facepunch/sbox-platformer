@@ -3,9 +3,9 @@ using Sandbox;
 using Sandbox.Internal;
 using System.Linq;
 
-[Library( "para_checkpoint", Description = "Defines a checkpoint where the player will respawn after falling" )]
+[Library( "plat_checkpoint", Description = "Defines a checkpoint where the player will respawn after falling" )]
 [Model( Model = "models/gameplay/checkpoint/editor_checkpoint/editor_checkpoint.vmdl" )]
-[EntityTool( "Player Checkpoint", "Parachute", "Defines a checkpoint where the player will respawn after falling." )]
+[EntityTool( "Player Checkpoint", "Platformer", "Defines a checkpoint where the player will respawn after falling." )]
 [BoundsHelper( "mins", "maxs", false, true )]
 internal partial class Checkpoint : ModelEntity
 {
@@ -81,7 +81,7 @@ internal partial class Checkpoint : ModelEntity
 	{
 		base.Touch( other );
 
-		if ( other is not ParachutePawn pl ) return;
+		if ( other is not PlatformerPawn pl ) return;
 		if ( !CanPlayerCheckpoint( pl ) ) return;
 
 		pl.TrySetCheckpoint( this );
@@ -94,13 +94,13 @@ internal partial class Checkpoint : ModelEntity
 	{
 		base.EndTouch( other );
 
-		if ( other is not ParachutePawn pl ) return;
+		if ( other is not PlatformerPawn pl ) return;
 		if ( !IsStart ) return;
 
 		pl.StartCourse();
 	}
 
-	private bool CanPlayerCheckpoint( ParachutePawn pl )
+	private bool CanPlayerCheckpoint( PlatformerPawn pl )
 	{
 		//if ( pl.GroundEntity == null ) return false;
 		if ( pl.TimerState != TimerState.Live ) return false;
@@ -112,7 +112,7 @@ internal partial class Checkpoint : ModelEntity
 	[Event.Frame]
 	private void OnFrame()
 	{
-		if ( Local.Pawn is not ParachutePawn pl ) return;
+		if ( Local.Pawn is not PlatformerPawn pl ) return;
 		if ( this.IsEnd || this.IsStart ) return;
 
 		var isLatestCheckpoint = pl.Checkpoints.LastOrDefault() == this;

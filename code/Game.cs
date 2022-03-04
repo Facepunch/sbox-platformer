@@ -32,7 +32,7 @@ namespace Sandbox
 			base.ClientJoined( client );
 
 			// Create a pawn for this client to play with
-			var pawn = new ParachutePawn(client);
+			var pawn = new PlatformerPawn( client);
 			pawn.Respawn();
 			client.Pawn = pawn;
 
