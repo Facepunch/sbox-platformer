@@ -17,9 +17,13 @@ namespace Sandbox
 	/// You can use this to create things like HUDs and declare which player class
 	/// to use for spawned players.
 	/// </summary>
-	public partial class MyGame : Sandbox.Game
+	public partial class Platformer : Sandbox.Game
 	{
-		public MyGame()
+
+		[ConVar.Replicated( "plat_coop" )]
+		public static bool CoopMode { get; set; } = false;
+
+		public Platformer()
 		{
 			if ( IsServer )
 			{
@@ -27,6 +31,8 @@ namespace Sandbox
 				hud.Parent = this;
 			}
 		}
+
+
 
 		/// <summary>
 		/// A client has joined the server. Make them a pawn to play with
