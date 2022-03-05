@@ -15,7 +15,7 @@ namespace Sandbox.UI
 
 			RootPanel.AddChild<Health>();
 			RootPanel.AddChild<Life>();
-
+			RootPanel.AddChild<ChatBox>();
 
 		}
 	}
