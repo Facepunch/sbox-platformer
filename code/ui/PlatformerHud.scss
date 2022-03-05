@@ -13,6 +13,34 @@ Health {
     align-items: center;
     transition: all 0.25s ease-out;
 
+    .health-block {
+        width: 48px;
+        height: 48px;
+        background-color: rgba(black .75);
+        border-radius: 50%;
+        border: 8px black;
+        margin-right: 4px;
+
+        .fill {
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #3472e6;
+            transform: scale(0);
+            transition: all .25s linear;
+            border-radius: 50%;
+        }
+
+        &.lowhealth .fill {
+            background-color: hotpink;
+        }
+
+        &.visible .fill {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
     label {
 
         &.healthlow {

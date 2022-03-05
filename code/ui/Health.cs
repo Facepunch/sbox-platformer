@@ -1,42 +1,36 @@
-﻿using Sandbox;
-using Sandbox.UI;
-using Sandbox.UI.Construct;
+﻿
+using System.Linq;
 
 namespace Sandbox.UI
 {
 	public class Health : Panel
 	{
-		public Label Label;
-		private float _health;
 
-		private RealTimeUntil HealthGrowTime { get; set; }
-		private float LastHealth { get; set; }
+		private const int MaxHealth = 4;
 
 		public Health()
 		{
-			Label = Add.Label( "100", "value" );
+			for ( int i = 0; i < MaxHealth; i++ )
+			{
+				var block = new Panel( this, "health-block" );
+				var fill = new Panel( block, "fill" );
+			}
 		}
 
 		public override void Tick()
 		{
-			var player = Local.Pawn;
-			if ( player == null ) return;
-			var health = player.Health;
-			_health = _health.LerpTo( health, Time.Delta * 10 );
+			base.Tick();
 
-			Label.SetClass( "healthlow", health < 100 * .25f );
+			if ( Local.Pawn is not Player pl ) return;
 
-			Label.Text = $"{(int)(_health + 0.5f)}";
-
-			//Label.SetClass( "low", _health < 25 );
-
-
-			if ( health != LastHealth && HealthGrowTime )
+			for( int i = 0; i < MaxHealth; i++ )
 			{
-				HealthGrowTime = 0.02f;
-			}
+				var block = Children.ElementAtOrDefault( i );
+				if ( block == null ) continue;
 
-			LastHealth = health;
+				block.SetClass( "lowhealth", pl.Health <= 2 );
+				block.SetClass( "visible", pl.Health >= i + 1 );
+			}
 		}
 
 	}
