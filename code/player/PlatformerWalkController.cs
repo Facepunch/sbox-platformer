@@ -30,10 +30,6 @@ namespace Sandbox
 		[Net] public float DoubleJumpDelay => .15f; // forced delay between double jumps.
 		[Net] public float MaxSpeed { get; set; }
 
-		public float FallDamageThreshold { get; set; } = 23.5f;
-		public float FallDamageMin { get; set; } = 0f;
-		public float FallDamageMax { get; set; } = 100f;
-
 		protected Vector3 PreVelocity { get; set; }
 
 		public bool Swimming { get; set; } = false;
