@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace Sandbox
 {
 	[Library]
@@ -673,43 +675,26 @@ namespace Sandbox
 
 				if ( !wasOnGround )
 				{
-					var fallVelocity = PreVelocity.z + Gravity;
-					var threshold = -FallDamageThreshold;
-
-					if ( fallVelocity < threshold  )
+					var dmg = GetFallDamage( PreVelocity.z );
+					if( dmg > 0 )
 					{
-						var overstep = threshold - fallVelocity;
-						var fraction = overstep.Remap( 0f, FallDamageThreshold, 0f, 1f ).Clamp( 0f, 1f );
-
-						Pawn.PlaySound( $"player.fall{Rand.Int( 1, 3 )}" )
-							.SetVolume( 0.7f + (0.3f * fraction) )
-							.SetPitch( 1f - (0.35f * fraction) );
-
-						OnTakeFallDamage( fraction );
-					}
-					else
-					{
-						var volume = Velocity.Length.Remap( 0f, MaxSpeed, 0.1f, 0.5f );
-						Pawn.PlaySound( $"player.land{Rand.Int( 1, 4 )}" ).SetVolume( volume );
+						var dmginfo = new DamageInfo() { Damage = dmg };
+						Pawn.TakeDamage( dmginfo );
 					}
 				}
 			}
 		}
 
-		private void OnTakeFallDamage( float fraction )
+		private int GetFallDamage( float fallspeed )
 		{
-			if ( Host.IsServer )
-			{
-				var damage = new DamageInfo()
-					.WithAttacker( Pawn )
-					.WithFlag( DamageFlags.Fall )
-					.WithForce( Vector3.Down * Velocity.Length * fraction )
-					.WithPosition( Position );
+			fallspeed = Math.Abs( fallspeed );
 
-				damage.Damage = FallDamageMin + (FallDamageMax - FallDamageMin) * fraction;
+			if ( fallspeed < 600 ) return 0;
+			if ( fallspeed < 900 ) return 1;
+			if ( fallspeed < 1200 ) return 2;
+			if ( fallspeed < 1500 ) return 3;
 
-				Pawn.TakeDamage( damage );
-			}
+			return 4;
 		}
 
 		/// <summary>

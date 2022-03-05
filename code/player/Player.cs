@@ -55,6 +55,8 @@ namespace Sandbox
 
 			RemoveCollisionLayer( CollisionLayer.Solid );
 
+			Health = 4;
+
 			if ( NumberLife == 0 )
 			{
 				ClearCheckpoints();
