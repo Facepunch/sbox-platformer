@@ -758,6 +758,8 @@ namespace Sandbox
 			if ( JumpsAllowed >= AllowedJumps ) return false;
 			if ( TimeSinceJumped < DoubleJumpDelay ) return false;
 
+			HasDoubleJumped();
+
 			return true;
 		}
 
@@ -772,6 +774,13 @@ namespace Sandbox
 				Velocity = Velocity.WithZ( -20 );
 				Gliding = true;
 			}
+		}
+
+
+		private void HasDoubleJumped()
+		{
+			Particles.Create( "particles/gameplay/player/doublejump/doublejump.vpcf", Client.Pawn );
+			Sound.FromWorld( "player.djump", Position );
 		}
 	}
 }
