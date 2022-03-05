@@ -59,12 +59,21 @@ namespace Sandbox
 			{
 				ClearCheckpoints();
 				NumberLife = 3;
+				ResetPickUps();
 			}
 
 			GotoBestCheckpoint();
 
 
 			Tags.Add( "Platplayer" );
+		}
+
+		public void ResetPickUps()
+		{
+			foreach ( var item in All.OfType<LifePickup>())
+			{
+				item.Reset( this );
+			}
 		}
 
 		public override void OnKilled()

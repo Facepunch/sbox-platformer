@@ -19,6 +19,8 @@ internal partial class LifePickup : ModelEntity
 	{
 		base.Spawn();
 
+		Transmit = TransmitType.Always;
+
 		SetupPhysicsFromModel(PhysicsMotionType.Keyframed);
 		CollisionGroup = CollisionGroup.Trigger;
 		EnableSolidCollisions = false;
@@ -52,6 +54,17 @@ internal partial class LifePickup : ModelEntity
 
 		EnableDrawing = false;
 		Particles.Create( "particles/explosion/barrel_explosion/explosion_gib.vpcf", this );
+	}
+
+	public void Reset(Entity ent)
+	{
+		PlayerCollected.Remove( ent );
+		ResetDrawing(To.Single(ent.Client));
+	}
+	[ClientRpc]
+	public void ResetDrawing()
+	{
+		EnableDrawing = true;
 	}
 
 }
