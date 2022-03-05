@@ -5,7 +5,7 @@ using System.Linq;
 using System.Collections.Generic;
 
 [Library( "plat_lifepickup", Description = "Addition Life" )]
-[Model( Model = "models/editor/cordon_helper.vmdl" )]
+[Model( Model = "models/gameplay/temp/temp_heart_01.vmdl" )]
 [EntityTool( "Life Pickup", "Platformer", "Addition Life." )]
 internal partial class LifePickup : ModelEntity
 {
@@ -13,7 +13,7 @@ internal partial class LifePickup : ModelEntity
 	[Net, Property]
 	public int NumberOfLife { get; set; }
 
-	private List<Entity> PlayerCollected { get; set; } = new List<Entity>();
+	private List<Entity> PlayerCollectedLife { get; set; } = new List<Entity>();
 
 	public override void Spawn()
 	{
@@ -38,17 +38,17 @@ internal partial class LifePickup : ModelEntity
 		base.StartTouch( other );
 
 		if ( other is not PlatformerPawn pl ) return;
-		if ( PlayerCollected.Contains( pl ) ) return;
+		if ( PlayerCollectedLife.Contains( pl ) ) return;
 		
 		pl.NumberLife ++;
 
-		CollectedPickup(To.Single (other.Client) );
-		PlayerCollected.Add( pl );
+		CollectedLifePickup(To.Single (other.Client) );
+		PlayerCollectedLife.Add( pl );
 
 	}
 
 	[ClientRpc]
-	private void CollectedPickup()
+	private void CollectedLifePickup()
 	{
 		Sound.FromEntity( "life.pickup", this );
 
@@ -58,7 +58,7 @@ internal partial class LifePickup : ModelEntity
 
 	public void Reset(Entity ent)
 	{
-		PlayerCollected.Remove( ent );
+		PlayerCollectedLife.Remove( ent );
 		ResetDrawing(To.Single(ent.Client));
 	}
 	[ClientRpc]

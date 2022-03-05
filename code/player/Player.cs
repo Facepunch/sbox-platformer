@@ -16,6 +16,17 @@ namespace Sandbox
 
 		private DamageInfo lastDamage;
 
+		private TimeSince timeSinceFlash = 1;
+
+		private bool isFlashing = false;
+
+		private float LastHealth;
+
+		public Color Color { get; private set; }
+
+		private ModelEntity m;
+
+
 		[Net]
 		public int NumberLife { get; set; } = 3;
 
@@ -61,7 +72,9 @@ namespace Sandbox
 			{
 				ClearCheckpoints();
 				NumberLife = 3;
-				ResetPickUps();
+				ResetHealthPickUps();
+				ResetLifePickUps();
+
 			}
 
 			GotoBestCheckpoint();
@@ -70,11 +83,67 @@ namespace Sandbox
 			Tags.Add( "Platplayer" );
 		}
 
-		public void ResetPickUps()
+		public void ResetLifePickUps()
 		{
-			foreach ( var item in All.OfType<LifePickup>())
+			foreach ( var lifeitem in All.OfType<LifePickup>() )
 			{
-				item.Reset( this );
+				lifeitem.Reset( this );
+			}
+		}
+		public void ResetHealthPickUps()
+		{
+			foreach ( var healthitem in All.OfType<HealthPickup>() )
+			{
+				healthitem.Reset( this );
+			}
+		}
+
+		public void PlayerBeenDamaged()
+		{
+			Flash();
+			LastHealth = Health;
+		}
+
+		void Flash()
+		{
+			timeSinceFlash = 0;
+			isFlashing = true;
+		}
+
+		public override void TakeDamage( DamageInfo info )
+		{
+
+			PlayerBeenDamaged();
+
+			base.TakeDamage( info );
+
+		}
+
+		[Event.Tick.Server]
+		protected void Tick()
+		{
+
+
+			if ( isFlashing )
+			{
+				foreach ( var child in this.Children )
+				{
+					if ( child is not ModelEntity m || !child.IsValid() ) continue;
+					m.RenderColor = m.RenderColor.WithAlpha( timeSinceFlash / 1 );
+				}
+
+				if ( timeSinceFlash < 5.0f )
+				{
+					this.RenderColor = RenderColor.WithAlpha( timeSinceFlash / 1 );
+				//	this.RenderColor = RenderColor.WithAlpha( timeSinceFlash / 4);
+					//this.RenderColor = this.RenderColor.WithAlpha( .5f );
+				}
+				else
+				{
+					this.RenderColor = RenderColor.WithAlpha( 1 );
+					//					RenderColor.WithAlpha( .5 );this.RenderColor = Color.White;
+					isFlashing = false;
+				}
 			}
 		}
 
@@ -104,14 +173,15 @@ namespace Sandbox
 		/// <summary>
 		/// Called every tick, clientside and serverside.
 		/// </summary>
-		public override void Simulate( Client cl )
+		public override async void Simulate( Client cl )
 		{
 			base.Simulate( cl );
 
 			if ( Input.Pressed( InputButton.Drop ) || Input.Pressed( InputButton.Reload ) )
 			{
-				Game.Current.DoPlayerSuicide(cl);
+				Game.Current.DoPlayerSuicide( cl );
 			}
+
 		}
 
 		/// <summary>

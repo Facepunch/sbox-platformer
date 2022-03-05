@@ -79,6 +79,26 @@ metadata
 ]
 
 //
+// HealthPickup
+//
+@PointClass base(BaseProperties_local_platformer) model() 
+metadata
+{
+	entity_tool_name = "Health Pickup"
+	entity_tool_group = "Platformer"
+	entity_tool_tip = "Addition Health."
+}
+= plat_healthpickup : "Addition Health"
+[
+	model(resource:vmdl) { report = true hide_when_solid = true }: "World Model" : "models/gameplay/temp/temp_health_01.vmdl" : "The model this entity should use."
+	skin(materialgroup) { group = "Rendering" hide_when_solid = true } : "Skin" : "default" : "Some models have multiple versions of their textures, called skins." 
+	bodygroups(bodygroupchoices) { group = "Rendering" hide_when_solid = true } : "Body Groups" : "" : "Some models have multiple variations of certain items, such as characters having different hair styles, etc."
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+
+	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
+]
+
+//
 // LifePickup
 //
 @PointClass base(BaseProperties_local_platformer) model() 
@@ -90,7 +110,7 @@ metadata
 }
 = plat_lifepickup : "Addition Life"
 [
-	model(resource:vmdl) { report = true hide_when_solid = true }: "World Model" : "models/editor/cordon_helper.vmdl" : "The model this entity should use."
+	model(resource:vmdl) { report = true hide_when_solid = true }: "World Model" : "models/gameplay/temp/temp_heart_01.vmdl" : "The model this entity should use."
 	skin(materialgroup) { group = "Rendering" hide_when_solid = true } : "Skin" : "default" : "Some models have multiple versions of their textures, called skins." 
 	bodygroups(bodygroupchoices) { group = "Rendering" hide_when_solid = true } : "Body Groups" : "" : "Some models have multiple variations of certain items, such as characters having different hair styles, etc."
 	numberoflife(integer) : "Number Of Life" : 0 : ""
