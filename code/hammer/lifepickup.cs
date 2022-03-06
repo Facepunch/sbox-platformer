@@ -52,7 +52,8 @@ internal partial class LifePickup : ModelEntity
 	{
 		Sound.FromEntity( "life.pickup", this );
 
-		EnableDrawing = false;
+		//EnableDrawing = false;
+		RenderColor = RenderColor.WithAlpha( 0.1f );
 		Particles.Create( "particles/explosion/barrel_explosion/explosion_gib.vpcf", this );
 	}
 
@@ -64,7 +65,8 @@ internal partial class LifePickup : ModelEntity
 	[ClientRpc]
 	public void ResetDrawing()
 	{
-		EnableDrawing = true;
+		RenderColor = RenderColor.WithAlpha( 1 );
+		//EnableDrawing = true;
 	}
 
 }

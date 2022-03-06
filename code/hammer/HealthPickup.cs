@@ -42,6 +42,7 @@ internal partial class HealthPickup : ModelEntity
 
 		pl.Health ++;
 
+
 		CollectedHealthPickup(To.Single (other.Client) );
 		PlayerCollectedHealth.Add( pl );
 
@@ -52,7 +53,8 @@ internal partial class HealthPickup : ModelEntity
 	{
 		Sound.FromEntity( "life.pickup", this );
 
-		EnableDrawing = false;
+		//EnableDrawing = false;
+		RenderColor = RenderColor.WithAlpha( 0 );
 		Particles.Create( "particles/explosion/barrel_explosion/explosion_gib.vpcf", this );
 	}
 
@@ -61,10 +63,12 @@ internal partial class HealthPickup : ModelEntity
 		PlayerCollectedHealth.Remove( ent );
 		ResetDrawing(To.Single(ent.Client));
 	}
+
 	[ClientRpc]
 	public void ResetDrawing()
 	{
-		EnableDrawing = true;
+		RenderColor = RenderColor.WithAlpha( 1 );
+		//EnableDrawing = true;
 	}
 
 }
