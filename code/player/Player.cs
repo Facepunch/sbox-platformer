@@ -30,6 +30,11 @@ namespace Sandbox
 		[Net]
 		public List<Checkpoint> Checkpoints { get; set; } = new();
 
+		public PlatformerPawn()
+		{
+
+		}
+
 		public PlatformerPawn( Client cl )
 		{
 			// Load clothing from client data
