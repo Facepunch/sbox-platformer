@@ -7,10 +7,10 @@ namespace Sandbox
 	public partial class PlatformerWalkController : BasePlayerController
 	{
 		//[Net] public float SprintSpeed { get; set; } = 160.0f;
-		[Net] public float WalkSpeed { get; set; } = 160.0f;
-		[Net] public float DefaultSpeed { get; set; } = 320.0f;
-		[Net] public float Acceleration { get; set; } = 150f;
-		[Net] public float AirAcceleration { get; set; } = 50.0f;
+		[Net] public float WalkSpeed { get; set; } = 140.0f;
+		[Net] public float DefaultSpeed { get; set; } = 280.0f;
+		[Net] public float Acceleration { get; set; } = 10f;
+		[Net] public float AirAcceleration { get; set; } = 75.0f;
 		[Net] public float FallSoundZ { get; set; } = -30.0f;
 		[Net] public float GroundFriction { get; set; } = 4.0f;
 		[Net] public float StopSpeed { get; set; } = 250.0f;
@@ -685,10 +685,10 @@ namespace Sandbox
 		{
 			fallspeed = Math.Abs( fallspeed );
 
-			if ( fallspeed < 600 ) return 0;
-			if ( fallspeed < 900 ) return 1;
-			if ( fallspeed < 1200 ) return 2;
-			if ( fallspeed < 1500 ) return 3;
+			if ( fallspeed < 700 ) return 0;
+			if ( fallspeed < 1000 ) return 1;
+			if ( fallspeed < 1300 ) return 2;
+			if ( fallspeed < 1600 ) return 3;
 
 			return 4;
 		}
