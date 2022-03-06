@@ -34,12 +34,7 @@ namespace Sandbox
 		[Net]
 		public List<Checkpoint> Checkpoints { get; set; } = new();
 
-		public PlatformerPawn()
-		{
-
-		}
-
-		public PlatformerPawn( Client cl ) : this()
+		public PlatformerPawn( Client cl )
 		{
 			// Load clothing from client data
 			Clothing.LoadFromClient( cl );
@@ -90,6 +85,7 @@ namespace Sandbox
 				lifeitem.Reset( this );
 			}
 		}
+
 		public void ResetHealthPickUps()
 		{
 			foreach ( var healthitem in All.OfType<HealthPickup>() )
@@ -100,51 +96,24 @@ namespace Sandbox
 
 		public void PlayerBeenDamaged()
 		{
-			Flash();
 			LastHealth = Health;
-		}
 
-		void Flash()
-		{
-			timeSinceFlash = 0;
-			isFlashing = true;
+			Juice.Scale( 1, 1.15f, 1f )
+				.WithTarget( this )
+				.WithDuration( .45f )
+				.WithEasing( EasingType.EaseOut );
+
+			Juice.Color( Color.White, Color.Red, Color.White )
+				.WithTarget( this )
+				.WithDuration( .45f )
+				.WithEasing( EasingType.EaseOut );
 		}
 
 		public override void TakeDamage( DamageInfo info )
 		{
-
 			PlayerBeenDamaged();
 
 			base.TakeDamage( info );
-
-		}
-
-		[Event.Tick.Server]
-		protected void Tick()
-		{
-
-
-			if ( isFlashing )
-			{
-				foreach ( var child in this.Children )
-				{
-					if ( child is not ModelEntity m || !child.IsValid() ) continue;
-					m.RenderColor = m.RenderColor.WithAlpha( timeSinceFlash / 1 );
-				}
-
-				if ( timeSinceFlash < 5.0f )
-				{
-					this.RenderColor = RenderColor.WithAlpha( timeSinceFlash / 1 );
-				//	this.RenderColor = RenderColor.WithAlpha( timeSinceFlash / 4);
-					//this.RenderColor = this.RenderColor.WithAlpha( .5f );
-				}
-				else
-				{
-					this.RenderColor = RenderColor.WithAlpha( 1 );
-					//					RenderColor.WithAlpha( .5 );this.RenderColor = Color.White;
-					isFlashing = false;
-				}
-			}
 		}
 
 		public override void OnKilled()
@@ -166,14 +135,12 @@ namespace Sandbox
 			{
 				child.EnableDrawing = false;
 			}
-
-
 		}
 
 		/// <summary>
 		/// Called every tick, clientside and serverside.
 		/// </summary>
-		public override async void Simulate( Client cl )
+		public override void Simulate( Client cl )
 		{
 			base.Simulate( cl );
 
