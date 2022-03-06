@@ -9,6 +9,7 @@ namespace Sandbox
 	{
 
 		public const float MaxRenderDistance = 128f;
+		public const float InvulnerableTimeAfterDamaged = 2f;
 
 		public Clothing.Container Clothing = new();
 
@@ -16,17 +17,12 @@ namespace Sandbox
 
 		private DamageInfo lastDamage;
 
-		private TimeSince timeSinceFlash = 1;
-
-		private bool isFlashing = false;
-
 		private float LastHealth;
 
 		public Color Color { get; private set; }
 
-		private ModelEntity m;
-
-
+		[Net]
+		public TimeSince TimeSinceDamaged { get; set; }
 		[Net]
 		public int NumberLife { get; set; } = 3;
 
@@ -111,9 +107,13 @@ namespace Sandbox
 
 		public override void TakeDamage( DamageInfo info )
 		{
-			PlayerBeenDamaged();
+			if ( TimeSinceDamaged < InvulnerableTimeAfterDamaged ) return;
 
+			PlayerBeenDamaged();
+			
 			base.TakeDamage( info );
+
+			TimeSinceDamaged = 0;
 		}
 
 		public override void OnKilled()
