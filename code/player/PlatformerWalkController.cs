@@ -6,14 +6,14 @@ namespace Sandbox
 	[Library]
 	public partial class PlatformerWalkController : BasePlayerController
 	{
-		[Net] public float SprintSpeed { get; set; } = 320.0f;
-		[Net] public float WalkSpeed { get; set; } = 120.0f;
-		[Net] public float DefaultSpeed { get; set; } = 190.0f;
-		[Net] public float Acceleration { get; set; } = 10.0f;
+		//[Net] public float SprintSpeed { get; set; } = 160.0f;
+		[Net] public float WalkSpeed { get; set; } = 160.0f;
+		[Net] public float DefaultSpeed { get; set; } = 320.0f;
+		[Net] public float Acceleration { get; set; } = 150f;
 		[Net] public float AirAcceleration { get; set; } = 50.0f;
 		[Net] public float FallSoundZ { get; set; } = -30.0f;
 		[Net] public float GroundFriction { get; set; } = 4.0f;
-		[Net] public float StopSpeed { get; set; } = 100.0f;
+		[Net] public float StopSpeed { get; set; } = 250.0f;
 		[Net] public float Size { get; set; } = 20.0f;
 		[Net] public float DistEpsilon { get; set; } = 0.03125f;
 		[Net] public float GroundAngle { get; set; } = 46.0f;
@@ -27,7 +27,7 @@ namespace Sandbox
 		[Net] public float Gravity { get; set; } = 800.0f;
 		[Net] public float AirControl { get; set; } = 30.0f;
 		[Net] public int AllowedJumps => 2; // how many times you can jump before touching ground again
-		[Net] public float DoubleJumpDelay => .15f; // forced delay between double jumps.
+		[Net] public float DoubleJumpDelay => .3f; // forced delay between double jumps.
 		[Net] public float MaxSpeed { get; set; }
 
 		protected Vector3 PreVelocity { get; set; }
@@ -284,8 +284,8 @@ namespace Sandbox
 			var ws = Duck.GetWishSpeed();
 			if ( ws >= 0 ) return ws;
 
-			if ( Input.Down( InputButton.Run ) ) return SprintSpeed;
-			if ( Input.Down( InputButton.Walk ) ) return WalkSpeed;
+			//if ( Input.Down( InputButton.Run ) ) return SprintSpeed;
+			if ( Input.Down( InputButton.Run ) ) return WalkSpeed;
 
 			return DefaultSpeed;
 		}
