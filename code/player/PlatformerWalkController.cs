@@ -668,14 +668,16 @@ namespace Sandbox
 			if ( GroundEntity != null )
 			{
 				BaseVelocity = GroundEntity.Velocity;
-
+				
 				if ( !wasOnGround )
 				{
+					Sound.FromWorld( "player.land1", Position );
 					var dmg = GetFallDamage( PreVelocity.z );
 					if( dmg > 0 )
 					{
 						var dmginfo = new DamageInfo() { Damage = dmg };
 						Pawn.TakeDamage( dmginfo );
+						Sound.FromWorld( "player.fall1", Position );
 					}
 				}
 			}

@@ -4,16 +4,14 @@
 	{
 		sounds = 
 		[
-			"sound/player/player.fall1.vsnd",
-			"sound/player/player.fall2.mp3",
-			"sound/player/player.fall3.mp3",
+			"sounds/kenney/ui/select_007.vsnd",
 		]
 		ui = false
-		volume = 1.0
+		volume = 0.5
 		volumerandom = 0.0
-		pitch = 1.0
-		pitchrandom = 0.1
-		distancemax = 2000.0
+		pitch = 0.125
+		pitchrandom = 0.0
+		distancemax = 1000.0
 		selectionmode = "3"
 	}
 }

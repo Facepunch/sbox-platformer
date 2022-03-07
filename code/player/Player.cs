@@ -19,6 +19,8 @@ namespace Sandbox
 
 		private float LastHealth;
 
+		private TimeSince ts;
+
 		public Color Color { get; private set; }
 
 
@@ -136,6 +138,7 @@ namespace Sandbox
 
 			Coin /= 2;
 
+
 			BecomeRagdollOnClient( Velocity, lastDamage.Flags, lastDamage.Position, lastDamage.Force, GetHitboxBone( lastDamage.HitboxIndex ) );
 
 			Controller = null;	
@@ -161,6 +164,36 @@ namespace Sandbox
 			if ( Input.Pressed( InputButton.Drop ) || Input.Pressed( InputButton.Reload ) )
 			{
 				Game.Current.DoPlayerSuicide( cl );
+			}
+
+			if (Health == 1)
+			{
+				if (ts > 2)
+				{
+					LowHealth();
+					ts = 0;
+				}
+					
+			}
+
+		}
+
+		
+		public void LowHealth()
+		{
+			{
+
+				Juice.Scale( 1, 1.05f, 1f )
+					.WithTarget( this )
+					.WithDuration( .45f )
+					.WithEasing( EasingType.EaseOut );
+
+				Juice.Color( Color.White, Color.Red, Color.White )
+					.WithTarget( this )
+					.WithDuration( .45f )
+					.WithEasing( EasingType.EaseOut );
+
+				Sound.FromWorld( "player.lowhealth", Position );
 			}
 
 		}

@@ -4,13 +4,17 @@
 	{
 		sounds = 
 		[
-			"sound/player/player.land1.vsnd",
+			"sound/player/player.land1.mp3",
+			"sound/player/player.land2.mp3",
+			"sound/player/player.land3.mp3",
+			"sound/player/player.land4.mp3",
 		]
 		UI = false
-		Volume = 1.0
+		Volume = 0.5
 		VolumeRandom = 0.0
 		Pitch = 1.0
-		PitchRandom = 0.5
+		PitchRandom = 0.2
 		DistanceMax = 500.0
+		selectionmode = "3"
 	}
 }
