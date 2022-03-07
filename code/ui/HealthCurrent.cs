@@ -1,15 +1,20 @@
 ﻿
+using Sandbox.UI.Construct;
 using System.Linq;
 
 namespace Sandbox.UI
 {
-	public class Health : Panel
+	public class HealthCurrent : Panel
 	{
 
 		private const int MaxHealth = 4;
 
-		public Health()
+		public Image HealthImage;
+
+		public HealthCurrent()
 		{
+
+
 			for ( int i = 0; i < MaxHealth; i++ )
 			{
 				var block = new Panel( this, "health-block" );
@@ -28,7 +33,7 @@ namespace Sandbox.UI
 				var block = Children.ElementAtOrDefault( i );
 				if ( block == null ) continue;
 
-				block.SetClass( "lowhealth", pl.Health <= 2 );
+				block.SetClass( "lowhealth", pl.Health <= 1 );
 				block.SetClass( "visible", pl.Health >= i + 1 );
 			}
 		}
