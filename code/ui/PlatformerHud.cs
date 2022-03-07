@@ -15,7 +15,7 @@ namespace Sandbox.UI
 
 			RootPanel.AddChild<HealthCurrent>();
 			RootPanel.AddChild<LifeCurrent>();
-			RootPanel.AddChild<Coin>();
+			RootPanel.AddChild<CoinCurrent>();
 			RootPanel.AddChild<ChatBox>();
 
 		}

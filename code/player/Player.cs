@@ -21,11 +21,14 @@ namespace Sandbox
 
 		public Color Color { get; private set; }
 
+
 		[Net]
 		public TimeSince TimeSinceDamaged { get; set; }
 		[Net]
 		public int NumberLife { get; set; } = 3;
 
+		[Net]
+		public int Coin { get; set; }
 
 		[Net]
 		public List<Checkpoint> Checkpoints { get; set; } = new();
@@ -70,7 +73,7 @@ namespace Sandbox
 				NumberLife = 3;
 				ResetHealthPickUps();
 				ResetLifePickUps();
-
+				Coin = 0;
 			}
 
 			GotoBestCheckpoint();
@@ -99,6 +102,7 @@ namespace Sandbox
 		{
 			LastHealth = Health;
 
+
 			Juice.Scale( 1, 1.15f, 1f )
 				.WithTarget( this )
 				.WithDuration( .45f )
@@ -114,6 +118,7 @@ namespace Sandbox
 		{
 			if ( TimeSinceDamaged < InvulnerableTimeAfterDamaged ) return;
 
+
 			PlayerBeenDamaged();
 			
 			base.TakeDamage( info );
@@ -123,9 +128,13 @@ namespace Sandbox
 
 		public override void OnKilled()
 		{
+
+
 			base.OnKilled();
 
 			NumberLife--;
+
+			Coin /= 2;
 
 			BecomeRagdollOnClient( Velocity, lastDamage.Flags, lastDamage.Position, lastDamage.Force, GetHitboxBone( lastDamage.HitboxIndex ) );
 

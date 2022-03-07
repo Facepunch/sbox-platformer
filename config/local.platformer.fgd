@@ -40,6 +40,26 @@ metadata
 ]
 
 //
+// CoinPickup
+//
+@PointClass base(BaseProperties_local_platformer) model() 
+metadata
+{
+	entity_tool_name = "Coin Pickup"
+	entity_tool_group = "Platformer"
+	entity_tool_tip = "Coin Pickup."
+}
+= plat_coin : "Coin Pickup"
+[
+	model(resource:vmdl) { report = true hide_when_solid = true }: "World Model" : "models/citizen_props/coin01.vmdl" : "The model this entity should use."
+	skin(materialgroup) { group = "Rendering" hide_when_solid = true } : "Skin" : "default" : "Some models have multiple versions of their textures, called skins." 
+	bodygroups(bodygroupchoices) { group = "Rendering" hide_when_solid = true } : "Body Groups" : "" : "Some models have multiple variations of certain items, such as characters having different hair styles, etc."
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+
+	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
+]
+
+//
 // FallTrigger
 //
 @SolidClass base(BaseProperties_local_platformer) tags( Trigger ) 
