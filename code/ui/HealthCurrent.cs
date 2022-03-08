@@ -17,9 +17,10 @@ namespace Sandbox.UI
 
 			for ( int i = 0; i < MaxHealth; i++ )
 			{
-				var block = new Panel( this, "health-block" );
+				var block = new Panel( this, $"health-block health-block-{i}" );
 				var fill = new Panel( block, "fill" );
 			}
+
 		}
 
 		public override void Tick()
