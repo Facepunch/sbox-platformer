@@ -1,6 +1,6 @@
 HealthCurrent {
   position: absolute;
-  left: 24px;
+  left: 48px;
   top: 24px;
   transition: all 0.25s ease-out;
   width: 196px;
@@ -47,7 +47,7 @@ HealthCurrent {
 LifeCurrent {
   position: absolute;
   transform: rotate(-10deg);
-  left: 69px;
+  left: 93px;
   top: 118px;
   padding: 0 20px;
   transition: all 0.25s ease-out;
@@ -85,36 +85,81 @@ LifeCurrent {
 }
 
 CoinCurrent {
-  position: absolute;
-  transform: rotate(-10deg);
-  right: 72px;
-  top: 100px;
-  padding: 0 20px;
-  transition: all 0.25s ease-out;
-  flex-direction: row;
-
-  .coinimage {
     position: absolute;
-    width: 82px;
-    aspect-ratio: 1;
-    top: -48px;
-    border-radius: 50%;
-    border: 4px black;
-  }
-
-  .coinnumber {
-    position: absolute;
-    font-family: "Fredoka One";
-    text-stroke: 16px black;
-    transform: rotate(20deg);
-    left: -10px;
-    top: 12px;
-    font-size: 48px;
-    font-weight: bold;
-    color: #f1c40f;
-    height: 30px;
+    transform: rotate(-10deg);
+    left: 200px;
+    top: 65px;
     padding: 0 0px;
-    align-items: center;
     transition: all 0.25s ease-out;
-  }
+    flex-direction: row;
+    z-index: 2;
+
+    .coinimage {
+        position: absolute;
+        width: 65px;
+        aspect-ratio: 1;
+        top: -48px;
+        left: 1.5%;
+        border-radius: 50%;
+        border: 4px black;
+    }
+
+    .coinnumber {
+        position: absolute;
+        font-family: "Fredoka One";
+        text-stroke: 16px black;
+        transform: rotate(20deg);
+        left: 45px;
+        top: 2px;
+        font-size: 48px;
+        font-weight: bold;
+        color: #f1c40f;
+        height: 30px;
+        padding: 0 0px;
+        align-items: center;
+        transition: all 0.25s ease-out;
+    }
+}
+
+KeysCollected {
+    position: absolute;
+    left: 5px;
+    top: 10px;
+    padding: 0 0px;
+    transition: all 0.25s ease-out;
+    flex-direction: column;
+
+
+
+    KeyPanel {
+        opacity: .15;
+        font-family: "Material Icons";
+        text-stroke: 12px black;
+        // transform: rotate(20deg);
+        padding-left: 10px;
+        font-size: 48px;
+        font-weight: bold;
+        color: #3498db;
+        transition: all 0.25s ease-out;
+
+        &.Active {
+            opacity: 1;
+        }
+    }
+
+    .key1 {
+        //color: #EA2027;
+    }
+
+    .key2 {
+        // color: #009432;
+    }
+
+    .key3 {
+        //color: #0652DD;
+    }
+
+    .key4 {
+        //color: #D980FA;
+    }
 }
