@@ -1,110 +1,119 @@
 HealthCurrent {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  transition: all 0.25s ease-out;
+  width: 196px;
+  height: 196px;
+
+  .health-block {
     position: absolute;
-    left: -18px;
-    top: -18px;
-    transition: all 0.25s ease-out;
-    width: 128px;
-    height: 128px;
+    background-image: url("/ui/hud/circlehud.png");
+    background-size: cover;
+    background-tint: #e74c3c;
+    width: 100px;
+    height: 100px;
+    transform-origin: 50% 50%;
+  }
 
-    .health-block {
-        position: absolute;
-        background-image: url('/ui/hud/circlehud.png');
-        background-tint: #e74c3c;
-        width: 162px;
-        height: 162px;
-        transform-origin: 86% 86%;
-    }
+  .health-block-0 {
+    left: 0;
+    top: 0;
+  }
 
-    .health-block-0 {
-        transform: scale(.7) rotate(25deg);
-    }
+  .health-block-1 {
+    transform: rotate(90deg);
+    top: 0;
+    right: 0;
+  }
 
-    .health-block-1 {
-        transform: scale(.7) rotate(115deg);
-    }
+  .health-block-2 {
+    transform: rotate(180deg);
+    bottom: 0;
+    right: 0;
+  }
 
-    .health-block-2 {
-        transform: scale(.7) rotate(205deg);
-    }
+  .health-block-3 {
+    transform: rotate(270deg);
+    bottom: 0;
+    left: 0;
+  }
 
-    .health-block-3 {
-        transform: scale(.7) rotate(295deg);
-    }
-
-    .visible {
-        background-tint: #2ecc71;
-    }
+  .visible {
+    background-tint: #2ecc71;
+  }
 }
 
 LifeCurrent {
-    position: absolute;
-    transform: rotate(-10deg);
-    left: 69px;
-    top: 118px;
-    padding: 0 20px;
+  position: absolute;
+  transform: rotate(-10deg);
+  left: 69px;
+  top: 118px;
+  padding: 0 20px;
+  transition: all 0.25s ease-out;
+  flex-direction: row;
+  z-index: 1;
+
+  .number {
+    font-family: "Fredoka One";
+    text-stroke: 16px black;
+    transform: rotate(20deg);
+    left: 48px;
+    top: 32px;
+    font-size: 64px;
+    font-weight: bold;
+    color: #f1c40f;
+    height: 30px;
+    padding: 0 0px;
+    align-items: center;
     transition: all 0.25s ease-out;
-    flex-direction: row;
 
-    .number {
-        font-family: 'Fredoka One';
-        text-stroke: 16px black;
-        transform: rotate(20deg);
-        left: 48px;
-        top: 32px;
-        font-size: 64px;
-        font-weight: bold;
-        color: #f1c40f;
-        height: 30px;
-        padding: 0 0px;
-        align-items: center;
-        transition: all 0.25s ease-out;
-
-        &.lifelow {
-            color: #c0392b;
-        }
+    &.lifelow {
+      color: #c0392b;
     }
+  }
 
-    .playerimage {
-        position: absolute;
-        width: 108px;
-        aspect-ratio: 1;
-        top: -48px;
-        border-radius: 50%;
-        border: 6px black;
-    }
+  .playerimage {
+    position: absolute;
+    width: 108px;
+    aspect-ratio: 1;
+    top: -48px;
+    border-radius: 50%;
+    border: 6px black;
+  }
 }
 
 CoinCurrent {
+  position: absolute;
+  transform: rotate(-10deg);
+  right: 72px;
+  top: 100px;
+  padding: 0 20px;
+  transition: all 0.25s ease-out;
+  flex-direction: row;
+
+  .coinimage {
     position: absolute;
-    transform: rotate(-10deg);
-    right: 72px;
-    top: 100px;
-    padding: 0 20px;
+    width: 82px;
+    aspect-ratio: 1;
+    top: -48px;
+    border-radius: 50%;
+    border: 4px black;
+  }
+
+  .coinnumber {
+    position: absolute;
+    font-family: "Fredoka One";
+    text-stroke: 16px black;
+    transform: rotate(20deg);
+    left: -10px;
+    top: 12px;
+    font-size: 48px;
+    font-weight: bold;
+    color: #f1c40f;
+    height: 30px;
+    padding: 0 0px;
+    align-items: center;
     transition: all 0.25s ease-out;
-    flex-direction: row;
-
-    .coinimage {
-        position: absolute;
-        width: 82px;
-        aspect-ratio: 1;
-        top: -48px;
-        border-radius: 50%;
-        border: 4px black;
-    }
-
-    .coinnumber {
-        position: absolute;
-        font-family: 'Fredoka One';
-        text-stroke: 16px black;
-        transform: rotate(20deg);
-        left: -10px;
-        top: 12px;
-        font-size: 48px;
-        font-weight: bold;
-        color: #f1c40f;
-        height: 30px;
-        padding: 0 0px;
-        align-items: center;
-        transition: all 0.25s ease-out;
-    }
+  }
 }
