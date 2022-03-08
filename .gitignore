@@ -18,3 +18,4 @@ tools_asset_info.bin
 # Build results
 [Oo]bj/
 *_bakeresourcecache
+*_source
