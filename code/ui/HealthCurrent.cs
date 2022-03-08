@@ -18,7 +18,6 @@ namespace Sandbox.UI
 			for ( int i = 0; i < MaxHealth; i++ )
 			{
 				var block = new Panel( this, $"health-block health-block-{i}" );
-				var fill = new Panel( block, "fill" );
 			}
 
 		}
@@ -34,7 +33,6 @@ namespace Sandbox.UI
 				var block = Children.ElementAtOrDefault( i );
 				if ( block == null ) continue;
 
-				block.SetClass( "lowhealth", pl.Health <= 1 );
 				block.SetClass( "visible", pl.Health >= i + 1 );
 			}
 		}
