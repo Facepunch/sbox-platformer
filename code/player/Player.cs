@@ -12,27 +12,25 @@ namespace Sandbox
 		public const float InvulnerableTimeAfterDamaged = 2f;
 
 		public Clothing.Container Clothing = new();
-
 		private Particles FakeShadow;
-
 		private DamageInfo lastDamage;
-
 		private float LastHealth;
 
 		private TimeSince ts;
 		private TimeSince tshealthpick;
 
 		public string MapName => Global.MapName;
-
 		public bool JustPickedupHealth;
 		public int AmountOfFlash = 0;
 
 		public Color Color { get; private set; }
 
 		[Net]
+		public IList<int> KeysPlayerHas { get; set; } = new List<int>();
+
+		[Net]
 		public string CurrentArea { get; set; }
 		public int AreaPriority = 0;
-
 
 		[Net]
 		public TimeSince TimeSinceDamaged { get; set; }
