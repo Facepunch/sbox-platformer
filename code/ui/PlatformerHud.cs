@@ -12,10 +12,12 @@ namespace Sandbox.UI
 				return;
 
 			RootPanel.StyleSheet.Load( "/ui/PlatformerHud.scss" );
+			RootPanel.StyleSheet.Load( "/ui/NewArea.scss" );
 
 			RootPanel.AddChild<HealthCurrent>();
 			RootPanel.AddChild<LifeCurrent>();
 			RootPanel.AddChild<CoinCurrent>();
+			RootPanel.AddChild<NewArea>();
 			RootPanel.AddChild<ChatBox>();
 
 		}

@@ -1,0 +1,24 @@
+NewArea {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    opacity: 1;
+    z-index: 100;
+    font-weight: 100;
+    transition: opacity 1s linear;
+    /*    &.visible {
+        opacity: .2;
+    }*/
+
+    .destext {
+        font-family: 'Fredoka One';
+        color: #fff;
+        font-size: 16px;
+        text-stroke: 10px black;
+        color: #ecf0f1;
+        position: absolute;
+        top: 190px;
+        left: 10%;
+        transform: translateX(-50%);
+    }
+}

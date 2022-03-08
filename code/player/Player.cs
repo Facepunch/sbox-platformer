@@ -22,10 +22,16 @@ namespace Sandbox
 		private TimeSince ts;
 		private TimeSince tshealthpick;
 
+		public string MapName => Global.MapName;
+
 		public bool JustPickedupHealth;
 		public int AmountOfFlash = 0;
 
 		public Color Color { get; private set; }
+
+		[Net]
+		public string CurrentArea { get; set; }
+		public int AreaPriority = 0;
 
 
 		[Net]
@@ -80,6 +86,11 @@ namespace Sandbox
 				ResetHealthPickUps();
 				ResetLifePickUps();
 				Coin = 0;
+			}
+
+			if(CurrentArea == null)
+			{
+				CurrentArea = $"{MapName}"; 
 			}
 
 			GotoBestCheckpoint();
