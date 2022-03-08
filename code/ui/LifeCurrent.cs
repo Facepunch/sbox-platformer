@@ -17,18 +17,12 @@ namespace Sandbox.UI
 
 		public LifeCurrent()
 		{
-
-
 			Image = Add.Image( "ui/hud/citizen/citizen.png", "playerimage" );
 			Number = Add.Label( "", "number" );
-			//Text = Add.Label( "text", "lifetext" );
-
-
 		}
 
 		public override void Tick()
 		{
-			//Text.SetText( "	♡" );
 
 			var player = Local.Pawn;
 			if ( player == null ) return;

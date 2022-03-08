@@ -9,7 +9,7 @@ HealthCurrent {
     .health-block {
         position: absolute;
         background-image: url('/ui/hud/circlehud.png');
-        background-tint: #eb4019;
+        background-tint: #e74c3c;
         width: 162px;
         height: 162px;
         transform-origin: 86% 86%;
@@ -32,7 +32,7 @@ HealthCurrent {
     }
 
     .visible {
-        background-tint: #7afd72;
+        background-tint: #2ecc71;
     }
 }
 
@@ -53,14 +53,14 @@ LifeCurrent {
         top: 32px;
         font-size: 64px;
         font-weight: bold;
-        color: #fdcb6e;
+        color: #f1c40f;
         height: 30px;
         padding: 0 0px;
         align-items: center;
         transition: all 0.25s ease-out;
 
         &.lifelow {
-            color: #ff7675;
+            color: #c0392b;
         }
     }
 
@@ -69,7 +69,6 @@ LifeCurrent {
         width: 108px;
         aspect-ratio: 1;
         top: -48px;
-        // background-color: rgba(black 1);
         border-radius: 50%;
         border: 6px black;
     }
@@ -80,7 +79,6 @@ CoinCurrent {
     transform: rotate(-10deg);
     right: 72px;
     top: 100px;
-    // height: 30px;
     padding: 0 20px;
     transition: all 0.25s ease-out;
     flex-direction: row;
@@ -90,27 +88,23 @@ CoinCurrent {
         width: 82px;
         aspect-ratio: 1;
         top: -48px;
-        // background-color: rgba(black 1);
         border-radius: 50%;
         border: 4px black;
     }
 
     .coinnumber {
+        position: absolute;
         font-family: 'Fredoka One';
         text-stroke: 16px black;
         transform: rotate(20deg);
-        left: -38px;
+        left: -10px;
         top: 12px;
         font-size: 48px;
         font-weight: bold;
-        color: #74b9ff;
+        color: #f1c40f;
         height: 30px;
         padding: 0 0px;
         align-items: center;
         transition: all 0.25s ease-out;
-
-        &.lifelow {
-            color: #ff7675;
-        }
     }
 }

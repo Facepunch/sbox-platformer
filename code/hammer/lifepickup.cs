@@ -41,6 +41,7 @@ internal partial class LifePickup : ModelEntity
 		if ( PlayerCollectedLife.Contains( pl ) ) return;
 		
 		pl.NumberLife ++;
+		pl.PickedUpItem( Color.Orange );
 
 		CollectedLifePickup(To.Single (other.Client) );
 		PlayerCollectedLife.Add( pl );

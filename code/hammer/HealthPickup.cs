@@ -41,6 +41,7 @@ internal partial class HealthPickup : ModelEntity
 		if ( pl.Health == 4 ) return;
 
 		pl.Health ++;
+		pl.PickedUpItem( Color.Green );
 
 
 		CollectedHealthPickup(To.Single (other.Client) );

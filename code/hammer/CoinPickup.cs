@@ -40,6 +40,7 @@ internal partial class CoinPickup : ModelEntity
 		if ( PlayerCollectedCoin.Contains( pl ) ) return;
 
 		pl.Coin++;
+		pl.PickedUpItem( Color.Yellow );
 
 
 		CollectedHealthPickup(To.Single (other.Client) );

@@ -20,6 +20,10 @@ namespace Sandbox
 		private float LastHealth;
 
 		private TimeSince ts;
+		private TimeSince tshealthpick;
+
+		public bool JustPickedupHealth;
+		public int AmountOfFlash = 0;
 
 		public Color Color { get; private set; }
 
@@ -104,7 +108,6 @@ namespace Sandbox
 		{
 			LastHealth = Health;
 
-
 			Juice.Scale( 1, 1.15f, 1f )
 				.WithTarget( this )
 				.WithDuration( .45f )
@@ -130,14 +133,11 @@ namespace Sandbox
 
 		public override void OnKilled()
 		{
-
-
 			base.OnKilled();
 
 			NumberLife--;
 
 			Coin /= 2;
-
 
 			BecomeRagdollOnClient( Velocity, lastDamage.Flags, lastDamage.Position, lastDamage.Force, GetHitboxBone( lastDamage.HitboxIndex ) );
 
@@ -175,13 +175,24 @@ namespace Sandbox
 				}
 					
 			}
-
 		}
 
-		
+		public void PickedUpItem(Color itempickedup)
+		{
+
+				Juice.Scale( 1, 1.1f, 1f )
+					.WithTarget( this )
+					.WithDuration( .45f )
+					.WithEasing( EasingType.EaseOut );
+
+				Juice.Color( Color.White, itempickedup, Color.White )
+					.WithTarget( this )
+					.WithDuration( .45f )
+					.WithEasing( EasingType.EaseOut );
+
+		}
 		public void LowHealth()
 		{
-			{
 
 				Juice.Scale( 1, 1.05f, 1f )
 					.WithTarget( this )
@@ -194,7 +205,6 @@ namespace Sandbox
 					.WithEasing( EasingType.EaseOut );
 
 				Sound.FromWorld( "player.lowhealth", Position );
-			}
 
 		}
 

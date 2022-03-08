@@ -13,8 +13,6 @@ namespace Sandbox.UI
 
 		public HealthCurrent()
 		{
-
-
 			for ( int i = 0; i < MaxHealth; i++ )
 			{
 				var block = new Panel( this, $"health-block health-block-{i}" );
