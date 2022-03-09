@@ -18,6 +18,7 @@ namespace Sandbox.UI
 			RootPanel.AddChild<LifeCurrent>();
 			RootPanel.AddChild<CoinCurrent>();
 			RootPanel.AddChild<KeysCollected>();
+			RootPanel.AddChild<NewMajorArea>();
 			RootPanel.AddChild<NewArea>();
 			RootPanel.AddChild<ChatBox>();
 
