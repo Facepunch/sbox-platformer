@@ -7,6 +7,7 @@ namespace Sandbox
 	/// A simple trigger volume that fires once and then removes itself.
 	/// </summary>
 	[Library( "plat_landmark" )]
+	[Hammer.AutoApplyMaterial( "materials/editor/landmark/landmark.vmat" )]
 	[Hammer.Solid]
 	public partial class NewMajorAreaTrigger : TriggerOnce
 	{

@@ -222,6 +222,7 @@
 					m_Stops = [  ]
 				}
 			}
+			m_bDisableOperator = true
 		},
 	]
 	m_Operators = 
@@ -387,7 +388,7 @@
 			m_bGammaCorrectVertexColors = false
 			m_bSaturateColorPreAlphaBlend = false
 			m_bAdditive = true
-			m_hTexture = resource:"materials/particles/powerups/healsign.vtex"
+			m_hTexture = resource:"materials/particles/light_glow_pink.vtex"
 		},
 		{
 			_class = "C_OP_RenderTrails"

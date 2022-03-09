@@ -11,10 +11,10 @@
 	m_Children = 
 	[
 		{
-			m_ChildRef = resource:"particles/gameplay/player/healthpickup/healthpickup_a.vpcf"
+			m_ChildRef = resource:"particles/gameplay/player/lifepickup/lifepickup_a.vpcf"
 		},
 		{
-			m_ChildRef = resource:"particles/gameplay/player/healthpickup/healthpickup_b.vpcf"
+			m_ChildRef = resource:"particles/gameplay/player/lifepickup/lifepickup_b.vpcf"
 		},
 	]
 }
