@@ -40,12 +40,13 @@ internal partial class HealthPickup : ModelEntity
 		if ( PlayerCollectedHealth.Contains( pl ) ) return;
 		if ( pl.Health == 4 ) return;
 
+
 		pl.Health ++;
 		pl.PickedUpItem( Color.Green );
-
-
+		
 		CollectedHealthPickup(To.Single (other.Client) );
 		PlayerCollectedHealth.Add( pl );
+		Particles.Create( "particles/gameplay/player/healthpickup/healthpickup.vpcf", pl );
 
 	}
 
@@ -56,7 +57,7 @@ internal partial class HealthPickup : ModelEntity
 
 		//EnableDrawing = false;
 		RenderColor = RenderColor.WithAlpha( 0 );
-		Particles.Create( "particles/explosion/barrel_explosion/explosion_gib.vpcf", this );
+		//Particles.Create( "particles/explosion/barrel_explosion/explosion_gib.vpcf", this );
 	}
 
 	public void Reset(Entity ent)

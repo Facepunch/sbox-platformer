@@ -43,9 +43,10 @@ internal partial class LifePickup : ModelEntity
 		pl.NumberLife ++;
 		pl.PickedUpItem( Color.Orange );
 
+
 		CollectedLifePickup(To.Single (other.Client) );
 		PlayerCollectedLife.Add( pl );
-
+		Particles.Create( "particles/gameplay/player/lifepickup/lifepickup.vpcf", pl );
 	}
 
 	[ClientRpc]
@@ -55,7 +56,7 @@ internal partial class LifePickup : ModelEntity
 
 		//EnableDrawing = false;
 		RenderColor = RenderColor.WithAlpha( 0.1f );
-		Particles.Create( "particles/explosion/barrel_explosion/explosion_gib.vpcf", this );
+		//Particles.Create( "particles/explosion/barrel_explosion/explosion_gib.vpcf", this );
 	}
 
 	public void Reset(Entity ent)

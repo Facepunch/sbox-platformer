@@ -43,6 +43,7 @@ internal partial class KeyPickup : ModelEntity
 
 		pl.KeysPlayerHas.Add( KeyNumber );
 
+
 		CollectedHealthPickup(To.Single (other.Client) );
 		PlayerCollectedKey.Add( pl );
 
