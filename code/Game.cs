@@ -23,6 +23,9 @@ namespace Sandbox
 		[ConVar.Replicated( "plat_coop" )]
 		public static bool CoopMode { get; set; } = false;
 
+		[ConVar.Replicated( "plat_debug" )]
+		public static bool PlatDebug { get; set; } = true;
+
 		public Platformer()
 		{
 			if ( IsServer )

@@ -34,6 +34,8 @@ namespace Sandbox
 
 		public bool Swimming { get; set; } = false;
 
+		[Net, Predicted] public Vector3 Impulse { get; set; }
+
 		[Net,Predicted]
 		private TimeSince TimeSinceJumpPressed { get; set; }
 		[Net, Predicted]
@@ -159,7 +161,12 @@ namespace Sandbox
 				BaseVelocity = BaseVelocity.WithZ( 0 );
 			}
 
-
+			if ( Impulse.Length > 0 )
+			{
+				ClearGroundEntity();
+				Velocity += Impulse;
+				Impulse = 0f;
+			}
 			/*
              if (player->m_flWaterJumpTime)
 	            {

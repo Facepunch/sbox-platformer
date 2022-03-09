@@ -245,5 +245,12 @@ namespace Sandbox
 				m.RenderColor = m.RenderColor.WithAlpha( a );
 			}
 		}
+		public void ApplyForce( Vector3 force )
+		{
+			if ( Controller is PlatformerWalkController controller )
+			{
+				controller.Impulse += force;
+			}
+		}
 	}
 }
