@@ -23,6 +23,8 @@ namespace Sandbox
 		public bool JustPickedupHealth;
 		public int AmountOfFlash = 0;
 
+		public bool IgnoreFallDamage = false;
+
 		public Color Color { get; private set; }
 
 		[Net]
@@ -32,11 +34,11 @@ namespace Sandbox
 		public string CurrentArea { get; set; }
 		public int AreaPriority = 0;
 
+
 		[Net]
 		public TimeSince TimeSinceDamaged { get; set; }
 		[Net]
 		public int NumberLife { get; set; } = 3;
-
 		[Net]
 		public int Coin { get; set; }
 

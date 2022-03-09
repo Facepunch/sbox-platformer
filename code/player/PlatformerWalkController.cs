@@ -678,12 +678,20 @@ namespace Sandbox
 				
 				if ( !wasOnGround )
 				{
-					Sound.FromWorld( "player.land1", Position );
+					if((Pawn as PlatformerPawn).IgnoreFallDamage)
+					{
+						Sound.FromWorld( "player.land1", Position );
+						return;
+					}
+
 					var dmg = GetFallDamage( PreVelocity.z );
-					if( dmg > 0 )
+					Sound.FromWorld( "player.land1", Position );
+
+					if ( dmg > 0 )
 					{
 						var dmginfo = new DamageInfo() { Damage = dmg };
 						Pawn.TakeDamage( dmginfo );
+
 						Sound.FromWorld( "player.fall1", Position );
 					}
 				}
