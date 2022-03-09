@@ -122,6 +122,48 @@ metadata
 ]
 
 //
+// Jumppad
+//
+@SolidClass base(BaseProperties_local_platformer) tags( Trigger ) line( 255 255 255, "targetname", "targetentity" ) 
+metadata
+{
+	entity_tool_name = "Jump Pad"
+	entity_tool_group = "Platformer"
+	entity_tool_tip = "A pad that launches players toward a target entity"
+	auto_apply_material = "materials/editor/jumppad/jumppad.vmat"
+}
+= plat_jumppad : ""
+[
+	targetentity(target_destination) : "Target Entity" : "" : ""
+	verticalboost(float) : "Vertical Boost" : "200" : ""
+	force(float) : "Force" : "1000" : ""
+	startdisabled(boolean) : "Start Disabled" : 0 : "Should this entity start disabled?"
+	actvationtags(tags) : "Actvation Tags" :  : "Entities with these tags can activate this trigger."
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+	spawnflags(flags) = [
+		1 : "Clients" : 1
+		2 : "Npcs" : 0
+		4 : "Pushables" : 0
+		8 : "Physics Objects" : 0
+		16 : "Allied Npcs" : 0
+		32 : "Client In Vehicle" : 0
+		64 : "Everything" : 0
+		512 : "Client Not In Vehicle" : 0
+		1024 : "Physics Debris" : 0
+	]
+
+	input Enable(void) : "Enables this trigger"
+	input Disable(void) : "Disables this trigger"
+	input Toggle(void) : "Toggles this trigger between enabled and disabled states"
+	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
+
+	output OnStartTouch(void) : "Fired when an entity starts touching this trigger. The touching entity must pass this trigger's filters to cause this output to fire."
+	output OnEndTouch(void) : "Fired when an entity stops touching this trigger. Only entities that passed this trigger's filters will cause this output to fire."
+	output OnStartTouchAll(void) : "Fired when an entity starts touching this trigger while no other passing entities are touching it."
+	output OnEndTouchAll(void) : "Fired when all entities touching this trigger have stopped touching it."
+]
+
+//
 // KeyPickup
 //
 @PointClass base(BaseProperties_local_platformer) model() 
