@@ -23,6 +23,9 @@ namespace Sandbox
 		public bool JustPickedupHealth;
 		public int AmountOfFlash = 0;
 
+		[Net]
+		public Color PlayerColor { get; set; }
+
 		public bool IgnoreFallDamage = false;
 
 		public Color Color { get; private set; }
@@ -54,6 +57,8 @@ namespace Sandbox
 		{
 			// Load clothing from client data
 			Clothing.LoadFromClient( cl );
+
+			PlayerColor = Color.Random;
 		}
 
 		public override void Respawn()
