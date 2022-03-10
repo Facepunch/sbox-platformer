@@ -124,15 +124,18 @@ namespace Sandbox
 		{
 			LastHealth = Health;
 
-			Juice.Scale( 1, 1.15f, 1f )
-				.WithTarget( this )
-				.WithDuration( .45f )
-				.WithEasing( EasingType.EaseOut );
+			if ( IsServer )
+			{
+				Juice.Scale( 1, 1.15f, 1f )
+					.WithTarget( this )
+					.WithDuration( .45f )
+					.WithEasing( EasingType.EaseOut );
 
-			Juice.Color( Color.White, Color.Red, Color.White )
-				.WithTarget( this )
-				.WithDuration( .45f )
-				.WithEasing( EasingType.EaseOut );
+				Juice.Color( Color.White, Color.Red, Color.White )
+					.WithTarget( this )
+					.WithDuration( .45f )
+					.WithEasing( EasingType.EaseOut );
+			}
 		}
 
 		public override void TakeDamage( DamageInfo info )
