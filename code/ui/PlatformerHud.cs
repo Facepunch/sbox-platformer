@@ -20,7 +20,7 @@ namespace Sandbox.UI
 			RootPanel.AddChild<KeysCollected>();
 			RootPanel.AddChild<NewMajorArea>();
 			RootPanel.AddChild<NewArea>();
-			RootPanel.AddChild<ChatBox>();
+			RootPanel.AddChild<PlatformerChatBox>();
 
 		}
 	}
