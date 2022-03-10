@@ -483,6 +483,9 @@ namespace Sandbox
 
 			Velocity -= new Vector3( 0, 0, Gravity * 0.5f ) * Time.Delta;
 
+			var LJPart  = Particles.Create( "particles/gameplay/player/longjumptrail/longjumptrail.vpcf", Client.Pawn );
+			LJPart.SetPosition( 6, (Pawn as PlatformerPawn).PlayerColor * 255f );
+
 			AddEvent( "jump" );
 
 			Jumping = true;
