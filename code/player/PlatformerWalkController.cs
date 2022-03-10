@@ -180,11 +180,26 @@ namespace Sandbox
 
 			// if ( underwater ) do underwater movement
 
+			var spd = Math.Min( Velocity.Length, 800 );
+
+			if ( Input.Released( InputButton.Jump ) && CanDoubleJump() )
+			{
+				//DoLongJump();
+			}
 			if ( Input.Released( InputButton.Jump ) && CanDoubleJump() )
 			{
 				DoJump();
 			}
 
+			if ( Input.Pressed( InputButton.Jump ) && Input.Down(InputButton.Duck)  && spd >= 130)
+			{
+				TimeSinceJumpPressed = 0;
+
+				if ( GroundEntity != null )
+				{
+					DoLongJump();
+				}
+			}
 			if ( Input.Pressed( InputButton.Jump ) )
 			{
 				TimeSinceJumpPressed = 0;
@@ -194,6 +209,9 @@ namespace Sandbox
 					DoJump();
 				}
 			}
+
+
+			Log.Info( spd );
 
 			// Fricion is handled before we add in any base velocity. That way, if we are on a conveyor,
 			//  we don't slow when standing still, relative to the conveyor.
@@ -288,7 +306,7 @@ namespace Sandbox
 
 		public virtual float GetWishSpeed()
 		{
-			var ws = Duck.GetWishSpeed();
+			var ws = Duck.GetWishSpeed() * 2;
 			if ( ws >= 0 ) return ws;
 
 			//if ( Input.Down( InputButton.Run ) ) return SprintSpeed;
@@ -445,6 +463,32 @@ namespace Sandbox
 			// mv->m_outWishVel -= (1.f-newspeed) * mv->m_vecVelocity;
 		}
 
+		public void DoLongJump()
+		{
+
+			if ( JumpsAllowed <= 0 )
+				return;
+
+			JumpsAllowed--;
+
+			ClearGroundEntity();
+
+			float flGroundFactor = 1.0f;
+			float flMul = 300f * 1.2f;
+			float forMul = 485f * 1.2f;
+
+
+			Velocity = Rotation.Forward * forMul * flGroundFactor;
+			Velocity = Velocity.WithZ( flMul * flGroundFactor );
+
+			Velocity -= new Vector3( 0, 0, Gravity * 0.5f ) * Time.Delta;
+
+			AddEvent( "jump" );
+
+			Jumping = true;
+			TimeSinceJumped = 0;
+		}
+
 		public virtual void DoJump()
 		{
 			// If we are in the water most of the way...
@@ -472,8 +516,8 @@ namespace Sandbox
 			float flGroundFactor = 1.0f;
 			float flMul = 285f * 1.2f;
 
-			if ( Duck.IsActive )
-				flMul *= 0.8f;
+			//if ( Duck.IsActive )
+			//	flMul *= 0.8f;
 
 			Velocity = Velocity.WithZ( flMul * flGroundFactor );
 			Velocity -= new Vector3( 0, 0, Gravity * 0.5f ) * Time.Delta;
@@ -762,6 +806,13 @@ namespace Sandbox
 		private bool JumpDown()
 		{
 			if ( Input.Down( InputButton.Jump ) ) return true;
+			if ( Input.UsingController && Input.Down( InputButton.SlotNext ) ) return true;
+			return false;
+		}
+
+		private bool LongJumpDown()
+		{
+			if ( Input.Down( InputButton.Jump) && Input.Down(InputButton.Duck) ) return true;
 			if ( Input.UsingController && Input.Down( InputButton.SlotNext ) ) return true;
 			return false;
 		}
