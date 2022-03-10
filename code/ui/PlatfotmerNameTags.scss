@@ -1,0 +1,37 @@
+﻿PlatfotmerNameTags {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	left: 0px;
+	bottom: 0px;
+	pixel-snap: 0;
+
+	basenametag {
+		font-family: "Fredoka One";
+		position: absolute;
+		font-weight: 500;
+		color: white;
+		background-color: rgba( 52,152,219,.5 );
+		font-size: 96px;
+		transform-origin: 50% -10%;
+		border-radius: 20px;
+		align-items: center;
+		justify-content: center;
+		flex-direction: row-reverse;
+
+
+		label {
+			padding: 5px 60px;
+			padding-left: 60px;
+		}
+
+		image {
+			width: 90px;
+			height: 90px;
+			margin: 20px;
+			margin-right: 0px;
+			margin-left: 20px;
+			border-radius: 20px;
+		}
+	}
+}
