@@ -23,6 +23,7 @@ namespace Platformer.UI
 			RootPanel.AddChild<NewMajorArea>();
 			RootPanel.AddChild<NewArea>();
 			RootPanel.AddChild<PlatformerChatBox>();
+			RootPanel.AddChild<PlatformerKillfeed>();
 
 		}
 	}

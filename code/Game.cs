@@ -3,7 +3,7 @@ using Sandbox;
 using System;
 using System.Linq;
 using Platformer.UI;
-
+using System.Collections.Generic;
 
 namespace Platformer
 {
@@ -22,6 +22,12 @@ namespace Platformer
 
 		[ConVar.Replicated( "plat_debug" )]
 		public static bool PlatDebug { get; set; } = true;
+
+		private List<string> killMessages = new()
+		{
+			"{0} Died",
+			"{0} Couldn't stand"
+		};
 
 		public Platformer()
 		{
@@ -59,6 +65,24 @@ namespace Platformer
 				tx.Position = tx.Position + Vector3.Up * 50.0f; // raise it up
 				pawn.Transform = tx;
 			}
+		}
+
+		public override void OnKilled( Client client, Entity pawn )
+		{
+			base.OnKilled( client, pawn );
+
+			PlatformerKillfeed.AddEntryOnClient( To.Everyone, GetRandomFallMessage( client.Name ), client.NetworkIdent );
+		}
+
+		private int lastFallMessage;
+		private string GetRandomFallMessage( string playerName )
+		{
+			var idx = Rand.Int( 0, killMessages.Count - 1 );
+			while ( idx == lastFallMessage )
+				idx = Rand.Int( 0, killMessages.Count - 1 );
+
+			lastFallMessage = idx;
+			return string.Format( killMessages[idx], playerName );
 		}
 	}
 
