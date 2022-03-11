@@ -32,6 +32,7 @@ namespace Facepunch.Parkour
 			mechanics.Add( new Slide( this ) );
 			//mechanics.Add( new LedgeJump( this ) );
 			mechanics.Add( new DoubleJump( this ) );
+			mechanics.Add( new Glide( this ) );
 
 
 			mechanics.Add( new MoveDebug( this ) );
@@ -83,7 +84,7 @@ namespace Facepunch.Parkour
 				foreach ( var m in mechanics )
 				{
 					// try to activate, i.e. vault looks for a ledge in front of the player
-					if ( !m.Try() ) continue; 
+					if ( !m.Try() ) continue;
 					control = m;
 					break;
 				}
