@@ -41,5 +41,4 @@ internal partial class PlatformerKillfeed : Panel
 	{
 		Current?.AddEntry( message, clientId );
 	}
-
 }

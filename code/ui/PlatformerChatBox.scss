@@ -102,4 +102,10 @@ platformerchatentry {
             color: #ff80f5;
         }
     }
+
+    &.custom {
+        .name {
+            display: none;
+        }
+    }
 }

@@ -16,6 +16,8 @@ namespace Platformer
 
 		[Property( "landmarkname", Title = "Land" )]
 		public string LandMarkName { get; set; } = "";
+
+		public string LandMarkMessage;
 		public string UpperCase;
 
 		public override void Spawn()
@@ -31,6 +33,13 @@ namespace Platformer
 		public static void NewAreaAlert( string Title )
 		{
 			NewMajorArea.ShowLandmark( Title );
+	
+		}
+
+
+		public static void NewAreaHud( string Location, int clint )
+		{
+			PlatformerKillfeed.AddEntryOnClient( To.Everyone, Location, clint );
 		}
 
 		public override void OnTouchStart( Entity other )
@@ -42,11 +51,12 @@ namespace Platformer
 
 			if ( other != null )
 			{
-				NewAreaAlert( To.Single( other ), $"NEW AREA : {UpperCase} " );
-
+				NewAreaHud($"{pl.Client.Name} has entered {LandMarkName}",pl.Client.NetworkIdent );
+				NewAreaAlert( To.Single( other ), $"NEW AREA : {LandMarkName} " );
 			}
 
 		}
+		///pl.Client.Name  		
 
 	}
 }

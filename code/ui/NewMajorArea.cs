@@ -6,6 +6,8 @@ namespace Platformer.UI
 {
 	public class NewMajorArea : Panel
 	{
+		//public static PlatformerKillfeed Current;
+
 		public static NewMajorArea Instance;
 		public float timesince = 0;
 		public Label newlandmark;
@@ -36,6 +38,13 @@ namespace Platformer.UI
 		{
 			Instance.newlandmark.SetText( title );
 			Instance.timesince = Time.Now;
+
+		}
+
+		[ClientCmd( "plat_killfeed_add", CanBeCalledFromServer = true )]
+		public static void AddEntryOnClient( string message, int clientId )
+		{
+			PlatformerKillfeed.Current?.AddEntry( message, clientId );
 		}
 	}
 }
