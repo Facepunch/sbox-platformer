@@ -21,13 +21,15 @@ namespace Platformer.Movement
 		{
 			base.PostSimulate();
 
-			if ( !ctrl.GetMechanic<Slide>().Sliding ) return;
-
 			if ( ctrl.GroundEntity == null )
 			{
 				IsLongjumping = false;
 				return;
 			}
+
+			if ( ctrl.GetMechanic<Slide>().TimeSinceSlide >= 0.15 ) return;
+			//This controls the time we can LJ during slide. ^^^^ TimeSince start of slide.
+			//This also allows for combo jumps in the player can time correctly.
 
 			//if ( !Input.Pressed( InputButton.Jump ) ) return;
 			//if ( !Input.Down( InputButton.Duck ) ) return;

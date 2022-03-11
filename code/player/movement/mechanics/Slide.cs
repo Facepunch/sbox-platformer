@@ -31,7 +31,7 @@ namespace Platformer.Movement
 			if ( !Input.Down( InputButton.Duck ) ) return false;
 			if ( ctrl.GroundEntity == null ) return false;
 			if ( ctrl.Velocity.WithZ( 0 ).Length < StartSlideSpeed ) return false;
-			//if ( ctrl.GetMechanic<LongJump>().IsLongjumping ) return false;
+			if ( ctrl.GetMechanic<LongJump>().IsLongjumping ) return false;
 
 			TimeSinceSlide = 0;
 
@@ -68,12 +68,14 @@ namespace Platformer.Movement
 
 				return;
 			}
-
+			Log.Info( TimeSinceSlide );
 			ctrl.SetTag( "sitting" );
+
+			if ( ctrl.GetMechanic<LongJump>().IsLongjumping ) return;
 
 			if ( ctrl.GroundNormal.z < 1 )
 			{
-				Sliding = true;
+				//Sliding = true;
 
 				var slopeDir = Vector3.Cross( Vector3.Up, Vector3.Cross( Vector3.Up, ctrl.GroundNormal ) );
 				var dot = Vector3.Dot( ctrl.Velocity.Normal, slopeDir );
@@ -89,7 +91,7 @@ namespace Platformer.Movement
 			{
 				ctrl.Velocity = ctrl.Velocity.WithZ( 0 );
 				ctrl.ApplyFriction( StopSpeed, Friction );
-				Sliding = false;
+				//Sliding = false;
 			}
 
 			ctrl.Move();
