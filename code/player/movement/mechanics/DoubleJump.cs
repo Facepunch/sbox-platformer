@@ -9,10 +9,21 @@ namespace Facepunch.Parkour
 		public override bool TakesOverControl => false;
 		public override bool AlwaysSimulate => true;
 
-		private bool canDoubleJump;
+		private TimeUntil timeUntilCanDoubleJump;
+		private bool justJumped;
 
 		public DoubleJump( ParkourController controller ) : base( controller )
 		{
+		}
+
+		public override void PostSimulate()
+		{
+			base.PostSimulate();
+
+			if ( justJumped && !Input.Down( InputButton.Jump ) )
+			{
+				justJumped = false;
+			}
 		}
 
 		public override void PreSimulate()
@@ -21,12 +32,16 @@ namespace Facepunch.Parkour
 
 			if ( Input.Pressed( InputButton.Jump ) && ctrl.GroundEntity != null )
 			{
-				canDoubleJump = true;
+				timeUntilCanDoubleJump = .25f;
+				justJumped = true;
 				return;
 			}
 
-			if ( !canDoubleJump ) return;
-			if ( !Input.Pressed( InputButton.Jump ) ) return;
+			if ( justJumped ) return;
+			if ( ctrl.GroundEntity != null ) return;
+			if ( !Input.Released( InputButton.Jump ) ) return;
+			if ( timeUntilCanDoubleJump > 0 ) return;
+			if ( ctrl.GetMechanic<Glide>()?.Gliding ?? false ) return;
 
 			ctrl.Velocity = ctrl.Velocity.WithZ( DoubleJumpStrength );
 		}
