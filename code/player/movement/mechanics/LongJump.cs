@@ -9,6 +9,8 @@ namespace Platformer.Movement
 		public override bool AlwaysSimulate => true;
 		public override bool TakesOverControl => false;
 
+		public bool IsLongjumping;
+
 		public LongJump( PlatformerController controller )
 			: base( controller )
 		{
@@ -19,20 +21,34 @@ namespace Platformer.Movement
 		{
 			base.PostSimulate();
 
-			if ( ctrl.GroundEntity == null ) return;
-			if ( !Input.Pressed( InputButton.Jump ) ) return;
-			if ( !Input.Down( InputButton.Duck ) ) return;
-			if ( ctrl.Velocity.WithZ( 0 ).Length >= 130 ) return;
+			if ( !ctrl.GetMechanic<Slide>().Sliding ) return;
 
-			float flGroundFactor = 1.0f;
-			float flMul = 300f * 1.2f;
-			float forMul = 485f * 1.2f;
+			if ( ctrl.GroundEntity == null )
+			{
+				IsLongjumping = false;
+				return;
+			}
 
-			ctrl.Velocity = ctrl.Rotation.Forward * forMul * flGroundFactor;
-			ctrl.Velocity = ctrl.Velocity.WithZ( flMul * flGroundFactor );
-			ctrl.Velocity -= new Vector3( 0, 0, 800f * 0.5f ) * Time.Delta;
+			//if ( !Input.Pressed( InputButton.Jump ) ) return;
+			//if ( !Input.Down( InputButton.Duck ) ) return;
+			//if ( ctrl.Velocity.WithZ( 0 ).Length >= 130 ) return;
+			//Some Reason this made the longjump feel bad.
 
-			LongJumpEffect();
+			if ( Input.Pressed( InputButton.Jump ) && Input.Down( InputButton.Duck ) && ctrl.Velocity.WithZ( 0 ).Length >= 120 )
+			{
+				IsLongjumping = true;
+
+				float flGroundFactor = 1.0f;
+				float flMul = 300f * 1.2f;
+				float forMul = 485f * 1.2f;
+
+				ctrl.Velocity = ctrl.Rotation.Forward * forMul * flGroundFactor;
+				ctrl.Velocity = ctrl.Velocity.WithZ( flMul * flGroundFactor );
+				ctrl.Velocity -= new Vector3( 0, 0, 800f * 0.5f ) * Time.Delta;
+
+				LongJumpEffect();
+			}
+
 		}
 
 		private void LongJumpEffect()

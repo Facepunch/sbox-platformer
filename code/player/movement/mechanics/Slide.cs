@@ -8,9 +8,9 @@ namespace Platformer.Movement
 
 		public float StopSpeed => 50f;
 		public float Friction => 2f;
-		public float EndSlideSpeed => 140f;
-		public float StartSlideSpeed => 200f;
-		public float SlideBoost => 75f;
+		public float EndSlideSpeed => 120f;
+		public float StartSlideSpeed => 240f;
+		public float SlideBoost => 275f;
 		public TimeSince TimeSinceSlide { get; set; }
 		public bool Sliding { get; private set; }
 
@@ -31,6 +31,7 @@ namespace Platformer.Movement
 			if ( !Input.Down( InputButton.Duck ) ) return false;
 			if ( ctrl.GroundEntity == null ) return false;
 			if ( ctrl.Velocity.WithZ( 0 ).Length < StartSlideSpeed ) return false;
+			//if ( ctrl.GetMechanic<LongJump>().IsLongjumping ) return false;
 
 			TimeSinceSlide = 0;
 
@@ -64,6 +65,7 @@ namespace Platformer.Movement
 			if ( !StillSliding() )
 			{
 				IsActive = false;
+
 				return;
 			}
 
@@ -71,6 +73,8 @@ namespace Platformer.Movement
 
 			if ( ctrl.GroundNormal.z < 1 )
 			{
+				Sliding = true;
+
 				var slopeDir = Vector3.Cross( Vector3.Up, Vector3.Cross( Vector3.Up, ctrl.GroundNormal ) );
 				var dot = Vector3.Dot( ctrl.Velocity.Normal, slopeDir );
 				var slopeForward = Vector3.Cross( ctrl.GroundNormal, ctrl.Pawn.Rotation.Right );
@@ -85,6 +89,7 @@ namespace Platformer.Movement
 			{
 				ctrl.Velocity = ctrl.Velocity.WithZ( 0 );
 				ctrl.ApplyFriction( StopSpeed, Friction );
+				Sliding = false;
 			}
 
 			ctrl.Move();
