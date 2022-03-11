@@ -260,10 +260,10 @@ namespace Platformer
 
 		public void ApplyForce( Vector3 force )
 		{
-			//if ( Controller is PlatformerWalkController controller )
-			//{
-			//	controller.Impulse += force;
-			//}
+			if ( Controller is PlatformerController controller )
+			{
+				controller.Impulse += force;
+			}
 		}
 	}
 }

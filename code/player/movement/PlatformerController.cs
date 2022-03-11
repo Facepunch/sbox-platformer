@@ -14,6 +14,8 @@ namespace Platformer.Movement
 		public Vector3 Mins { get; private set; }
 		public Vector3 Maxs { get; private set; }
 
+		[Net, Predicted] public Vector3 Impulse { get; set; }
+
 		private List<BaseMoveMechanic> mechanics = new();
 		private BaseMoveMechanic activeMechanic => mechanics.FirstOrDefault( x => x.IsActive );
 
@@ -72,6 +74,13 @@ namespace Platformer.Movement
 			//		all other mechanics until its finished with the vault
 
 			// Pros: modular, easy to edit/add movement mechanics
+
+			if ( Impulse.Length > 0 )
+			{
+				ClearGroundEntity();
+				Velocity += Impulse;
+				Impulse = 0f;
+			}
 
 			foreach ( var m in mechanics )
 			{
