@@ -57,7 +57,7 @@ public partial class SignPost : Entity
 	/// Stop s sound event
 	/// </summary>
 	[ClientRpc, Input]
-	public async void DisplayText()
+	public void DisplayText()
 	{
 		WorldPanel.Style.Opacity = 1;
 	}
@@ -66,7 +66,7 @@ public partial class SignPost : Entity
 	/// Stop the d event
 	/// </summary>
 	[ClientRpc,Input]
-	public async void HideText()
+	public void HideText()
 	{
 		WorldPanel.Style.Opacity = 0;
 	}

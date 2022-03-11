@@ -68,7 +68,6 @@ namespace Platformer.Movement
 
 				return;
 			}
-			Log.Info( TimeSinceSlide );
 			ctrl.SetTag( "sitting" );
 
 			if ( ctrl.GetMechanic<LongJump>().IsLongjumping ) return;
