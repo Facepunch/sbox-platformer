@@ -1,7 +1,9 @@
-﻿using Sandbox.UI.Construct;
+﻿
+using Sandbox;
+using Sandbox.UI;
+using Sandbox.UI.Construct;
 
-
-namespace Sandbox.UI
+namespace Platformer.UI
 {
 	public partial class PlatformerChatEntry : Panel
 	{

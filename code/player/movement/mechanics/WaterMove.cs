@@ -1,6 +1,7 @@
-﻿using Sandbox;
+﻿
+using Sandbox;
 
-namespace Facepunch.Parkour
+namespace Platformer.Movement
 {
 	class WaterMove : BaseMoveMechanic
 	{
@@ -9,7 +10,7 @@ namespace Facepunch.Parkour
 
 		public override bool TakesOverControl => true;
 
-		public WaterMove( ParkourController ctrl )
+		public WaterMove( PlatformerController ctrl )
 			: base( ctrl )
 		{
 

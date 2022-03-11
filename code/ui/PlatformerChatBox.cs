@@ -1,11 +1,10 @@
 ﻿
 using Sandbox;
-using Sandbox.Hooks;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
 using System;
 
-namespace Sandbox.UI
+namespace Platformer.UI
 {
 	public partial class PlatformerChatBox : Panel
 	{

@@ -1,8 +1,9 @@
 ﻿
-using Sandbox.UI.Construct;
+using Sandbox;
+using Sandbox.UI;
 using System.Linq;
 
-namespace Sandbox.UI
+namespace Platformer.UI
 {
 	public class HealthCurrent : Panel
 	{

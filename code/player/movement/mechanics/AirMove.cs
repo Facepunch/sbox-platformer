@@ -1,8 +1,8 @@
-﻿using Sandbox;
-using Sandbox.ScreenShake;
+﻿
+using Sandbox;
 using System;
 
-namespace Facepunch.Parkour
+namespace Platformer.Movement
 {
 	class AirMove : BaseMoveMechanic
 	{
@@ -16,7 +16,7 @@ namespace Facepunch.Parkour
 		private Vector3 velocityAtStart;
 		private bool groundedAtStart;
 
-		public AirMove( ParkourController controller )
+		public AirMove( PlatformerController controller )
 			: base( controller )
 		{
 

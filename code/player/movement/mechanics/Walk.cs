@@ -1,6 +1,7 @@
-﻿using Sandbox;
+﻿
+using Sandbox;
 
-namespace Facepunch.Parkour
+namespace Platformer.Movement
 {
 	class Walk : BaseMoveMechanic
 	{
@@ -19,7 +20,7 @@ namespace Facepunch.Parkour
 
 		public override bool AlwaysSimulate => true;
 
-		public Walk( ParkourController controller )
+		public Walk( PlatformerController controller )
 			: base( controller )
 		{
 

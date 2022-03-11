@@ -1,7 +1,7 @@
 ﻿
 using Sandbox;
 
-namespace Facepunch.Parkour
+namespace Platformer.Movement
 {
 	partial class BaseMoveMechanic : BaseNetworkable
 	{
@@ -12,9 +12,9 @@ namespace Facepunch.Parkour
 		public TimeSince TimeSinceActivate { get; private set; }
 		public virtual float EyePosMultiplier => 1f;
 
-		protected ParkourController ctrl;
+		protected PlatformerController ctrl;
 
-		public BaseMoveMechanic( ParkourController controller )
+		public BaseMoveMechanic( PlatformerController controller )
 		{
 			ctrl = controller;
 		}

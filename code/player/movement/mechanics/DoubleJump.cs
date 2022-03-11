@@ -1,6 +1,7 @@
-﻿using Sandbox;
+﻿
+using Sandbox;
 
-namespace Facepunch.Parkour
+namespace Platformer.Movement
 {
 	partial class DoubleJump : BaseMoveMechanic
 	{
@@ -15,7 +16,7 @@ namespace Facepunch.Parkour
 		private TimeUntil timeUntilCanDoubleJump;
 		private bool justJumped;
 
-		public DoubleJump( ParkourController controller ) : base( controller )
+		public DoubleJump( PlatformerController controller ) : base( controller )
 		{
 		}
 

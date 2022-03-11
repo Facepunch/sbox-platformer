@@ -1,7 +1,7 @@
-﻿using Facepunch.Parkour;
+﻿
 using Sandbox;
 
-namespace Facepunch.Movement
+namespace Platformer.Movement
 {
 	class Unstucker : BaseMoveMechanic
 	{
@@ -10,7 +10,7 @@ namespace Facepunch.Movement
 
 		private int _stuckTries = 0;
 
-		public Unstucker( ParkourController ctrl )
+		public Unstucker( PlatformerController ctrl )
 			: base( ctrl )
 		{
 		}

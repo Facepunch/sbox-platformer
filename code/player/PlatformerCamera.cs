@@ -1,7 +1,7 @@
-﻿using Sandbox;
-using System;
+﻿
+using Sandbox;
 
-namespace Sandbox
+namespace Platformer
 {
 	public class PlatformerCamera : CameraMode
 	{

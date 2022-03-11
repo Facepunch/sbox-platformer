@@ -1,13 +1,14 @@
-﻿using Sandbox;
+﻿
+using Sandbox;
 
-namespace Facepunch.Parkour
+namespace Platformer.Movement
 {
 	class MoveDebug : BaseMoveMechanic
 	{
 
 		public override bool AlwaysSimulate => true;
 
-		public MoveDebug( ParkourController ctrl )
+		public MoveDebug( PlatformerController ctrl )
 			: base( ctrl )
 		{
 

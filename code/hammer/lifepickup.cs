@@ -1,8 +1,9 @@
-﻿using Hammer;
+﻿
+using Hammer;
 using Sandbox;
-using Sandbox.Internal;
-using System.Linq;
 using System.Collections.Generic;
+
+namespace Platformer;
 
 [Library( "plat_lifepickup", Description = "Addition Life" )]
 [Model( Model = "models/gameplay/temp/temp_heart_01.vmdl" )]

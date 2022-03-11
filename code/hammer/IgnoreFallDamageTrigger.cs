@@ -1,5 +1,8 @@
-﻿using Sandbox;
+﻿
+using Sandbox;
 using Hammer;
+
+namespace Platformer;
 
 [Library( "plat_ignorefalldamage", Description = "Ignore Fall Damage." )]
 [Hammer.AutoApplyMaterial( "materials/editor/ignorefalldamage/ignorefalldamage.vmat" )]

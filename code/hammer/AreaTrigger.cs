@@ -2,6 +2,7 @@
 using Hammer;
 using Sandbox.UI;
 
+namespace Platformer;
 
 /// <summary>
 /// When the player is inside the trigger it will display the location on the hud. It will fall back to the map name.

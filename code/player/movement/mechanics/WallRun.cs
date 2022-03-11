@@ -1,7 +1,7 @@
-﻿using Sandbox;
-using System.Collections.Generic;
+﻿
+using Sandbox;
 
-namespace Facepunch.Parkour
+namespace Platformer.Movement
 {
 	class WallRun : BaseMoveMechanic
 	{
@@ -19,7 +19,7 @@ namespace Facepunch.Parkour
 		private TimeSince timeSinceWallRun;
 		private Vector3 prevWallRunStart;
 
-		public WallRun( ParkourController ctrl )
+		public WallRun( PlatformerController ctrl )
 			: base( ctrl )
 		{
 

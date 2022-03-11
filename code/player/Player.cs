@@ -1,10 +1,11 @@
-﻿using Facepunch.Parkour;
+﻿
 using Sandbox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Platformer.Movement;
 
-namespace Sandbox
+namespace Platformer
 {
 	partial class PlatformerPawn : Sandbox.Player
 	{
@@ -66,7 +67,7 @@ namespace Sandbox
 		{
 			SetModel( "models/citizen/citizen.vmdl" );
 
-			Controller = new ParkourController();
+			Controller = new PlatformerController();
 			Animator = new StandardPlayerAnimator();
 			CameraMode = new PlatformerCamera();
 

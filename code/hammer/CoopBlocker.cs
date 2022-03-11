@@ -1,7 +1,8 @@
+
 using Sandbox;
 using Hammer;
 
-namespace Sandbox
+namespace Platformer
 {
 	/// <summary>
 	/// A generic brush/mesh that can toggle its visibilty and collisions, and can be broken.

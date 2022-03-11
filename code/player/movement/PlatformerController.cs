@@ -1,11 +1,11 @@
-﻿using Facepunch.Movement;
+﻿
 using Sandbox;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Facepunch.Parkour
+namespace Platformer.Movement
 {
-	partial class ParkourController : BasePlayerController
+	partial class PlatformerController : BasePlayerController
 	{
 
 		public float EyeHeight => 64.0f;
@@ -17,7 +17,7 @@ namespace Facepunch.Parkour
 		private List<BaseMoveMechanic> mechanics = new();
 		private BaseMoveMechanic activeMechanic => mechanics.FirstOrDefault( x => x.IsActive );
 
-		public ParkourController()
+		public PlatformerController()
 		{
 			//mechanics.Add( new StepJump( this ) );
 			mechanics.Add( new Walk( this ) );

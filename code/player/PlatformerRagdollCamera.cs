@@ -1,5 +1,7 @@
 ﻿
-namespace Sandbox
+using Sandbox;
+
+namespace Platformer
 {
 	public class PlatformerRagdollCamera : CameraMode
 	{

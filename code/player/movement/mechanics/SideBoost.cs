@@ -1,6 +1,7 @@
-﻿using Sandbox;
+﻿
+using Sandbox;
 
-namespace Facepunch.Parkour
+namespace Platformer.Movement
 {
 	class SideBoost : BaseMoveMechanic
 	{
@@ -11,7 +12,7 @@ namespace Facepunch.Parkour
 		private TimeSince timeSinceMoveLeft;
 		private TimeSince timeSinceMoveRight;
 
-		public SideBoost( ParkourController ctrl )
+		public SideBoost( PlatformerController ctrl )
 			: base( ctrl )
 		{
 

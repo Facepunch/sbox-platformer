@@ -1,5 +1,8 @@
-﻿using Sandbox;
+﻿
+using Sandbox;
 using Hammer;
+
+namespace Platformer;
 
 [Library( "plat_trigger_kill", Description = "Kills the player." )]
 [Hammer.AutoApplyMaterial( "materials/editor/killtrigger/killtrigger.vmat" )]

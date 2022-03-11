@@ -1,6 +1,7 @@
+
 using Sandbox;
 
-namespace Sandbox
+namespace Platformer
 {
 	partial class PlatformerPawn
 	{

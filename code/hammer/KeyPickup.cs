@@ -1,8 +1,11 @@
-﻿using Hammer;
+﻿
+using Hammer;
 using Sandbox;
 using Sandbox.UI;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
+namespace Platformer;
 
 [Library( "plat_key", Description = "Key Pickup" )]
 [Model( Model = "models/citizen_props/coin01.vmdl" )]

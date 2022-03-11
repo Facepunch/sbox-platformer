@@ -4,6 +4,8 @@ using Sandbox.Internal;
 using System.Linq;
 using System.Collections.Generic;
 
+namespace Platformer;
+
 [Library( "plat_coin", Description = "Coin Pickup" )]
 [Model( Model = "models/citizen_props/coin01.vmdl" )]
 [EntityTool( "Coin Pickup", "Platformer", "Coin Pickup." )]

@@ -1,7 +1,7 @@
 ﻿
 using Sandbox;
 
-namespace Facepunch.Parkour
+namespace Platformer.Movement
 {
 	class LongJump : BaseMoveMechanic
 	{
@@ -9,7 +9,7 @@ namespace Facepunch.Parkour
 		public override bool AlwaysSimulate => true;
 		public override bool TakesOverControl => false;
 
-		public LongJump( ParkourController controller )
+		public LongJump( PlatformerController controller )
 			: base( controller )
 		{
 

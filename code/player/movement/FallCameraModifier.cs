@@ -1,7 +1,8 @@
-﻿using Sandbox;
+﻿
+using Sandbox;
 using System;
 
-namespace Facepunch.Parkour
+namespace Platformer.Movement
 {
 	class FallCameraModifier : CameraModifier
 	{

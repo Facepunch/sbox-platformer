@@ -1,6 +1,7 @@
-﻿using Sandbox;
+﻿
+using Sandbox;
 
-namespace Facepunch.Parkour
+namespace Platformer.Movement
 {
 	class LadderMove : BaseMoveMechanic
 	{
@@ -9,7 +10,7 @@ namespace Facepunch.Parkour
 
 		private Vector3 ladderNormal;
 
-		public LadderMove( ParkourController ctrl )
+		public LadderMove( PlatformerController ctrl )
 			: base( ctrl )
 		{
 

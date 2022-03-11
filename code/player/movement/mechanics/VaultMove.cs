@@ -1,6 +1,7 @@
-﻿using Sandbox;
+﻿
+using Sandbox;
 
-namespace Facepunch.Parkour
+namespace Platformer.Movement
 {
 	partial class VaultMove : BaseMoveMechanic
 	{
@@ -19,7 +20,7 @@ namespace Facepunch.Parkour
 		private Vector3 vaultStart, vaultEnd;
 		private WallInfo wall;
 
-		public VaultMove( ParkourController ctrl )
+		public VaultMove( PlatformerController ctrl )
 			: base( ctrl )
 		{
 

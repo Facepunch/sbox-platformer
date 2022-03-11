@@ -1,8 +1,8 @@
-﻿using Facepunch.Movement;
+﻿
 using Sandbox;
 using System;
 
-namespace Facepunch.Parkour
+namespace Platformer.Movement
 {
 	class FallDamage : BaseMoveMechanic
 	{
@@ -13,7 +13,7 @@ namespace Facepunch.Parkour
 		private float prevFallSpeed;
 		private bool prevGrounded;
 
-		public FallDamage( ParkourController controller )
+		public FallDamage( PlatformerController controller )
 			: base( controller )
 		{
 

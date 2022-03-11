@@ -1,6 +1,7 @@
-﻿using Sandbox;
+﻿
+using Sandbox;
 
-namespace Facepunch.Parkour
+namespace Platformer.Movement
 {
 	class LedgeJump : BaseMoveMechanic
 	{
@@ -13,7 +14,7 @@ namespace Facepunch.Parkour
 
 		public override bool TakesOverControl => true;
 
-		public LedgeJump( ParkourController ctrl )
+		public LedgeJump( PlatformerController ctrl )
 			: base( ctrl )
 		{
 

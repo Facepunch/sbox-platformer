@@ -1,6 +1,7 @@
-﻿using Sandbox;
+﻿
+using Sandbox;
 
-namespace Facepunch.Parkour
+namespace Platformer.Movement
 {
     class Slide : BaseMoveMechanic
 	{
@@ -19,7 +20,7 @@ namespace Facepunch.Parkour
 		private Vector3 originalMins;
 		private Vector3 originalMaxs;
 
-		public Slide(ParkourController ctrl)
+		public Slide(PlatformerController ctrl)
 			: base(ctrl)
 		{
 

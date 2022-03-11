@@ -1,7 +1,8 @@
+
 using Sandbox;
 using Sandbox.UI;
 
-namespace Sandbox.UI
+namespace Platformer.UI
 {
 	[Library]
 	public partial class PlatformerHud : HudEntity<RootPanel>

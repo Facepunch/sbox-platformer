@@ -1,6 +1,7 @@
-﻿using Sandbox;
+﻿
+using Sandbox;
 
-namespace Facepunch.Parkour
+namespace Platformer.Movement
 {
 	class Glide : BaseMoveMechanic
 	{
@@ -13,7 +14,7 @@ namespace Facepunch.Parkour
 
 		private TimeSince tsJumpHold;
 
-		public Glide( ParkourController controller ) : base( controller )
+		public Glide( PlatformerController controller ) : base( controller )
 		{
 		}
 

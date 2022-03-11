@@ -1,7 +1,7 @@
-﻿using Facepunch.Movement;
+﻿
 using Sandbox;
 
-namespace Facepunch.Parkour
+namespace Platformer.Movement
 {
 	class StepJump : BaseMoveMechanic
 	{
@@ -13,7 +13,7 @@ namespace Facepunch.Parkour
 		private Vector3 jumpPos;
 		private float moveLen;
 
-		public StepJump( ParkourController controller )
+		public StepJump( PlatformerController controller )
 			: base( controller )
 		{
 

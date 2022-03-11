@@ -1,7 +1,7 @@
-﻿using Sandbox;
-using System.Diagnostics;
+﻿
+using Sandbox;
 
-namespace Facepunch.Parkour
+namespace Platformer.Movement
 {
 	class Ducker : BaseMoveMechanic
 	{
@@ -13,7 +13,7 @@ namespace Facepunch.Parkour
 		public float DuckSpeed => 110f;
 		public float MaxDuckSpeed => 140f;
 
-		public Ducker( ParkourController ctrl )
+		public Ducker( PlatformerController ctrl )
 			: base( ctrl )
 		{
 

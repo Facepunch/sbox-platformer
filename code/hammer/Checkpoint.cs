@@ -3,6 +3,8 @@ using Sandbox;
 using Sandbox.Internal;
 using System.Linq;
 
+namespace Platformer;
+
 [Library( "plat_checkpoint", Description = "Defines a checkpoint where the player will respawn after falling" )]
 [Model( Model = "models/gameplay/checkpoint/editor_checkpoint/editor_checkpoint.vmdl" )]
 [EntityTool( "Player Checkpoint", "Platformer", "Defines a checkpoint where the player will respawn after falling." )]
