@@ -10,11 +10,11 @@ namespace Facepunch.Parkour
 		public float GroundAngle => 46.0f;
 		public bool AutoJump => false;
 		public float JumpPower => 322f;
-		public float DefaultSpeed => 350f;
+		public float DefaultSpeed => 280f;
 		public float GroundFriction => 4.0f;
 		public float MaxNonJumpVelocity => 140.0f;
 		public float SurfaceFriction { get; set; } = 1f;
-		public float Acceleration => 2f;
+		public float Acceleration => 4.5f;
 		public float DuckAcceleration => 5f;
 
 		public override bool AlwaysSimulate => true;

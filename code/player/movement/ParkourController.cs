@@ -8,9 +8,9 @@ namespace Facepunch.Parkour
 	partial class ParkourController : BasePlayerController
 	{
 
-		public float EyeHeight { get; private set; } = 64.0f;
-		public float BodyGirth { get; set; } = 32.0f;
-		public float BodyHeight { get; set; } = 72.0f;
+		public float EyeHeight => 64.0f;
+		public float BodyGirth => 32.0f;
+		public float BodyHeight => 72.0f;
 		public Vector3 Mins { get; private set; }
 		public Vector3 Maxs { get; private set; }
 
@@ -19,18 +19,18 @@ namespace Facepunch.Parkour
 
 		public ParkourController()
 		{
-			mechanics.Add( new StepJump( this ) );
+			//mechanics.Add( new StepJump( this ) );
 			mechanics.Add( new Walk( this ) );
 			mechanics.Add( new AirMove( this ) );
 			mechanics.Add( new WaterMove( this ) );
 			mechanics.Add( new WallRun( this ) );
 			mechanics.Add( new LadderMove( this ) );
 			mechanics.Add( new VaultMove( this ) );
-			mechanics.Add( new SideBoost( this ) );
+			//mechanics.Add( new SideBoost( this ) );
 			mechanics.Add( new Unstucker( this ) );
 			mechanics.Add( new Ducker( this ) );
 			mechanics.Add( new Slide( this ) );
-			mechanics.Add( new LedgeJump( this ) );
+			//mechanics.Add( new LedgeJump( this ) );
 
 
 			mechanics.Add( new MoveDebug( this ) );
