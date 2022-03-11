@@ -17,12 +17,12 @@ namespace Facepunch.Parkour
 		public FallCameraModifier( float fallSpeed, float length = .5f )
 		{
 			this.length = length;
-			this.fallSpeed = fallSpeed;
+			this.fallSpeed = fallSpeed * .15f;
 		}
 
 		public override bool Update( ref CameraSetup setup )
 		{
-			var delta = ((float)t).LerpInverse( 0, length, true );
+			var delta = t.LerpInverse( 0, length, true );
 			delta = Easing.EaseOut( delta );
 			var invdelta = 1 - delta;
 
