@@ -1,0 +1,32 @@
+WorldSignPanel {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+label {
+    font-family: 'Times New Roman';
+    text-align: center;
+    font-weight: 700;
+    //text-shadow: 2px 2px 2px rgba(black, 0.1);
+    color: white;
+    width: 160%;
+    //height: 300%;
+}
+
+.top {
+    font-size: 400px;
+    text-transform: uppercase;
+    margin-bottom: 120px
+}
+
+.name {
+    font-size: 250px;
+    margin-top: -128px;
+}
+
+.bottom {
+    margin-top: 32px;
+    font-size: 400px;
+}

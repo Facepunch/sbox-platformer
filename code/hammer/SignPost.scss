@@ -1,0 +1,29 @@
+SignPost {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+label {
+    font-family: 'Times New Roman';
+    text-align: center;
+    font-weight: 700;
+    //text-shadow: 2px 2px 2px rgba(black, 0.1);
+    font-size: 100px;
+    color: white;
+}
+
+.top {
+    font-size: 100px;
+    text-transform: uppercase;
+}
+
+.name {
+    font-size: 54px;
+}
+
+.bottom {
+    margin-top: 32px;
+    font-size: 54px;
+}

@@ -1,5 +1,4 @@
-﻿
-using Platformer.UI;
+﻿using Platformer.UI;
 using Sandbox;
 using Sandbox.UI;
 
@@ -33,9 +32,7 @@ namespace Platformer
 		public static void NewAreaAlert( string Title )
 		{
 			NewMajorArea.ShowLandmark( Title );
-	
 		}
-
 
 		public static void NewAreaHud( string Location, int clint )
 		{
@@ -55,8 +52,6 @@ namespace Platformer
 				NewAreaAlert( To.Single( other ), $"NEW AREA : {LandMarkName} " );
 			}
 
-		}
-		///pl.Client.Name  		
-
+		}		
 	}
 }

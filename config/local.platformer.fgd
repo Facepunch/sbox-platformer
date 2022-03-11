@@ -14,6 +14,18 @@
 ]
 
 //
+// SignPost
+//
+@PointClass base(BaseProperties_local_platformer) drawangles() iconsprite( "editor/snd_event.vmat" ) = plat_sign : "Minigolf Sign Pole"
+[
+	top_text(string) : "Top Text" :  : ""
+	bottom_text(string) : "Bottom Text" :  : ""
+
+	input DisplayText(void) : "Stop s sound event"
+	input HideText(void) : "Stop the d event"
+]
+
+//
 // Platformer.AreaTrigger
 //
 @SolidClass base(BaseProperties_local_platformer) tags( Trigger ) 
