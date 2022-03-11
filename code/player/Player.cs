@@ -1,9 +1,11 @@
-﻿using Sandbox;
+﻿
+using Sandbox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Platformer.Movement;
 
-namespace Sandbox
+namespace Platformer
 {
 	partial class PlatformerPawn : Sandbox.Player
 	{
@@ -65,7 +67,7 @@ namespace Sandbox
 		{
 			SetModel( "models/citizen/citizen.vmdl" );
 
-			Controller = new PlatformerWalkController();
+			Controller = new PlatformerController();
 			Animator = new StandardPlayerAnimator();
 			CameraMode = new PlatformerCamera();
 
@@ -255,12 +257,13 @@ namespace Sandbox
 				m.RenderColor = m.RenderColor.WithAlpha( a );
 			}
 		}
+
 		public void ApplyForce( Vector3 force )
 		{
-			if ( Controller is PlatformerWalkController controller )
-			{
-				controller.Impulse += force;
-			}
+			//if ( Controller is PlatformerWalkController controller )
+			//{
+			//	controller.Impulse += force;
+			//}
 		}
 	}
 }

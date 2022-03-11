@@ -1,14 +1,11 @@
 ﻿
 using Sandbox;
-using Sandbox.UI;
-using Sandbox.UI.Construct;
 using System;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
+using Platformer.UI;
 
 
-namespace Sandbox
+namespace Platformer
 {
 	/// <summary>
 	/// This is your game class. This is an entity that is created serverside when

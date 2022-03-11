@@ -1,5 +1,7 @@
-﻿using Sandbox;
-using System;
+﻿
+using Sandbox;
+
+namespace Platformer;
 
 [Library( "plat_jumppad" )]
 [Hammer.EntityTool( "Jump Pad", "Platformer", "A pad that launches players toward a target entity" )]

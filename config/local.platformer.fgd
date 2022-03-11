@@ -14,7 +14,7 @@
 ]
 
 //
-// AreaTrigger
+// Platformer.AreaTrigger
 //
 @SolidClass base(BaseProperties_local_platformer) tags( Trigger ) 
 metadata
@@ -56,7 +56,7 @@ metadata
 ]
 
 //
-// Checkpoint
+// Platformer.Checkpoint
 //
 @PointClass base(BaseProperties_local_platformer) model() box_world_aligned( "mins", "maxs" ) 
 metadata
@@ -82,7 +82,7 @@ metadata
 ]
 
 //
-// CoinPickup
+// Platformer.CoinPickup
 //
 @PointClass base(BaseProperties_local_platformer) model() 
 metadata
@@ -102,7 +102,39 @@ metadata
 ]
 
 //
-// HealthPickup
+// Platformer.CoopBlocker
+//
+@SolidClass base(BaseProperties_local_platformer) tags( Dynamic, Dynamic ) 
+metadata
+{
+	entity_tool_name = "Coop Blocker"
+	entity_tool_group = "Platformer"
+	entity_tool_tip = "If its coop mode open routes."
+}
+= plat_coop : "A generic brush/mesh that can toggle its visibilty and collisions, and can be broken."
+[
+	rendercolor(color255) { alpha = true } : "Color (R G B A)" : "255 255 255 255" : "The color tint of this entity."
+	coop_blocker(boolean) : "For Coop" : 0 : "If set to true, it will show in coop mode, False means it will show not in coop mode."
+	enabled(boolean) : "Enabled" : 1 : "Whether this func_brush is visible/active at all"
+	solid(boolean) : "Solid" : 1 : "Whether this func_brush has collisions"
+	health(float) : "Health" : 0 : "If set to above 0, the entity will have this much health on spawn and will be breakable."
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+
+	input Break(void) : "Causes this prop to break, regardless if it is actually breakable or not. (i.e. ignores health and whether the model has gibs)"
+	input DisableSolid(void) : "Make this func_brush non solid"
+	input EnableSolid(void) : "Make this func_brush solid"
+	input ToggleSolid(void) : "Toggle solidity of this func_brush"
+	input Enable(void) : "Enable this func_brush, making it visible"
+	input Disable(void) : "Disable this func_brush, making it invisible and non solid"
+	input Toggle(void) : "Toggle this func_brush"
+	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
+
+	output OnDamaged(void) : "Fired when the entity gets damaged, even if it is unbreakable."
+	output OnBreak(void) : "Fired when the entity gets destroyed."
+]
+
+//
+// Platformer.HealthPickup
 //
 @PointClass base(BaseProperties_local_platformer) model() 
 metadata
@@ -122,7 +154,7 @@ metadata
 ]
 
 //
-// IgnoreFallDamageTrigger
+// Platformer.IgnoreFallDamageTrigger
 //
 @SolidClass base(BaseProperties_local_platformer) tags( Trigger ) 
 metadata
@@ -161,7 +193,7 @@ metadata
 ]
 
 //
-// Jumppad
+// Platformer.Jumppad
 //
 @SolidClass base(BaseProperties_local_platformer) tags( Trigger ) line( 255 255 255, "targetname", "targetentity" ) 
 metadata
@@ -203,7 +235,7 @@ metadata
 ]
 
 //
-// KeyPickup
+// Platformer.KeyPickup
 //
 @PointClass base(BaseProperties_local_platformer) model() 
 metadata
@@ -224,7 +256,7 @@ metadata
 ]
 
 //
-// KillTrigger
+// Platformer.KillTrigger
 //
 @SolidClass base(BaseProperties_local_platformer) tags( Trigger ) 
 metadata
@@ -263,7 +295,7 @@ metadata
 ]
 
 //
-// LifePickup
+// Platformer.LifePickup
 //
 @PointClass base(BaseProperties_local_platformer) model() 
 metadata
@@ -284,39 +316,7 @@ metadata
 ]
 
 //
-// Sandbox.CoopBlocker
-//
-@SolidClass base(BaseProperties_local_platformer) tags( Dynamic, Dynamic ) 
-metadata
-{
-	entity_tool_name = "Coop Blocker"
-	entity_tool_group = "Platformer"
-	entity_tool_tip = "If its coop mode open routes."
-}
-= plat_coop : "A generic brush/mesh that can toggle its visibilty and collisions, and can be broken."
-[
-	rendercolor(color255) { alpha = true } : "Color (R G B A)" : "255 255 255 255" : "The color tint of this entity."
-	coop_blocker(boolean) : "For Coop" : 0 : "If set to true, it will show in coop mode, False means it will show not in coop mode."
-	enabled(boolean) : "Enabled" : 1 : "Whether this func_brush is visible/active at all"
-	solid(boolean) : "Solid" : 1 : "Whether this func_brush has collisions"
-	health(float) : "Health" : 0 : "If set to above 0, the entity will have this much health on spawn and will be breakable."
-	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
-
-	input Break(void) : "Causes this prop to break, regardless if it is actually breakable or not. (i.e. ignores health and whether the model has gibs)"
-	input DisableSolid(void) : "Make this func_brush non solid"
-	input EnableSolid(void) : "Make this func_brush solid"
-	input ToggleSolid(void) : "Toggle solidity of this func_brush"
-	input Enable(void) : "Enable this func_brush, making it visible"
-	input Disable(void) : "Disable this func_brush, making it invisible and non solid"
-	input Toggle(void) : "Toggle this func_brush"
-	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
-
-	output OnDamaged(void) : "Fired when the entity gets damaged, even if it is unbreakable."
-	output OnBreak(void) : "Fired when the entity gets destroyed."
-]
-
-//
-// Sandbox.NewMajorAreaTrigger
+// Platformer.NewMajorAreaTrigger
 //
 @SolidClass base(BaseProperties_local_platformer) tags( Trigger ) 
 metadata

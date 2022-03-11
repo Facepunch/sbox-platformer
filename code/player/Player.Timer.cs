@@ -1,6 +1,8 @@
-﻿using Sandbox;
+﻿
+using Sandbox;
 using System.Linq;
-namespace Sandbox
+
+namespace Platformer
 {
 	partial class PlatformerPawn
 	{

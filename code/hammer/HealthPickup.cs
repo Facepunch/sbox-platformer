@@ -4,6 +4,8 @@ using Sandbox.Internal;
 using System.Linq;
 using System.Collections.Generic;
 
+namespace Platformer;
+
 [Library( "plat_healthpickup", Description = "Addition Health" )]
 [Model( Model = "models/gameplay/temp/temp_health_01.vmdl" )]
 [EntityTool( "Health Pickup", "Platformer", "Addition Health." )]

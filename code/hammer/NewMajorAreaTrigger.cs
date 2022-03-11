@@ -1,7 +1,9 @@
-﻿using Sandbox.UI;
-using System.Threading.Tasks;
+﻿
+using Platformer.UI;
+using Sandbox;
+using Sandbox.UI;
 
-namespace Sandbox
+namespace Platformer
 {
 	/// <summary>
 	/// A simple trigger volume that fires once and then removes itself.

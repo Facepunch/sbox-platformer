@@ -1,12 +1,12 @@
-﻿using Sandbox.UI.Construct;
+﻿
+using Sandbox;
+using Sandbox.UI;
+using Sandbox.UI.Construct;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
 using System.Linq;
-using System.Numerics;
-using System.Runtime.InteropServices;
 
-namespace Sandbox.UI
+namespace Platformer.UI
 {
 	public class BaseNameTag : Panel
 	{
