@@ -6,9 +6,9 @@ namespace Facepunch.Parkour
 	{
 
 		public float StopSpeed => 50f;
-		public float Friction => 1f;
-		public float EndSlideSpeed => 120f;
-		public float StartSlideSpeed => 150f;
+		public float Friction => 2f;
+		public float EndSlideSpeed => 140f;
+		public float StartSlideSpeed => 200f;
 		public float SlideBoost => 75f;
 		public TimeSince TimeSinceSlide { get; set; }
 		public bool Sliding { get; private set; }

@@ -34,6 +34,7 @@ namespace Facepunch.Parkour
 			mechanics.Add( new DoubleJump( this ) );
 			mechanics.Add( new Glide( this ) );
 			mechanics.Add( new FallDamage( this ) );
+			mechanics.Add( new LongJump( this ) );
 
 
 			mechanics.Add( new MoveDebug( this ) );
