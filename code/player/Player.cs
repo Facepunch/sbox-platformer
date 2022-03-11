@@ -1,4 +1,5 @@
-﻿using Sandbox;
+﻿using Facepunch.Parkour;
+using Sandbox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,7 +66,7 @@ namespace Sandbox
 		{
 			SetModel( "models/citizen/citizen.vmdl" );
 
-			//Controller = new PlatformerWalkController();
+			Controller = new ParkourController();
 			Animator = new StandardPlayerAnimator();
 			CameraMode = new PlatformerCamera();
 
