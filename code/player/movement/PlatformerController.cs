@@ -33,10 +33,12 @@ namespace Platformer.Movement
 			mechanics.Add( new Ducker( this ) );
 			mechanics.Add( new Slide( this ) );
 			//mechanics.Add( new LedgeJump( this ) );
+			mechanics.Add( new DuckJump( this ) );
 			mechanics.Add( new DoubleJump( this ) );
 			mechanics.Add( new Glide( this ) );
 			mechanics.Add( new FallDamage( this ) );
 			mechanics.Add( new LongJump( this ) );
+
 
 
 			mechanics.Add( new MoveDebug( this ) );

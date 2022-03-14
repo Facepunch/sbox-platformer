@@ -47,9 +47,10 @@ namespace Platformer.Movement
 
 			if ( justJumped ) return;
 			if ( ctrl.GroundEntity != null ) return;
-			if ( !Input.Released( InputButton.Jump ) ) return;
+			if ( !Input.Pressed( InputButton.Jump ) ) return;
 			if ( timeUntilCanDoubleJump > 0 ) return;
 			if ( ctrl.GetMechanic<Glide>()?.Gliding ?? false ) return;
+			if ( ctrl.GetMechanic<DuckJump>().IsDuckjumping == true ) return;
 			if ( DoubleJumpsRemaining <= 0 ) return;
 
 			ctrl.Velocity = ctrl.Velocity.WithZ( DoubleJumpStrength );
