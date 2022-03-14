@@ -12,6 +12,7 @@ namespace Platformer.Movement
 		public bool AutoJump => false;
 		public float JumpPower => 322f;
 		public float DefaultSpeed => 280f;
+		public float WalkSpeed => 140f;
 		public float GroundFriction => 4.0f;
 		public float MaxNonJumpVelocity => 140.0f;
 		public float SurfaceFriction { get; set; } = 1f;
@@ -43,6 +44,8 @@ namespace Platformer.Movement
 
 		public override float GetWishSpeed()
 		{
+			if ( Input.Down( InputButton.Run ) ) return WalkSpeed;
+
 			return DefaultSpeed;
 		}
 
