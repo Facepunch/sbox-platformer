@@ -16,7 +16,7 @@
 //
 // SignPost
 //
-@PointClass base(BaseProperties_local_platformer) drawangles() iconsprite( "editor/snd_event.vmat" ) = plat_sign : "Minigolf Sign Pole"
+@PointClass base(BaseProperties_local_platformer) drawangles() iconsprite( "materials/editor/plat_sign/plat_sign.vmat" ) = plat_sign : "Minigolf Sign Pole"
 [
 	top_text(string) : "Top Text" :  : ""
 	bottom_text(string) : "Bottom Text" :  : ""
