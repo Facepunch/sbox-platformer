@@ -9,7 +9,7 @@ using Sandbox.UI.Construct;
 
 [Library( "plat_sign", Description = "Minigolf Sign Pole" )]
 [Hammer.DrawAngles]
-[Hammer.EditorSprite( "editor/snd_event.vmat" )]
+[Hammer.EditorSprite( "materials/editor/plat_sign/plat_sign.vmat" )]
 public partial class SignPost : Entity
 {
 
