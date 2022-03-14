@@ -163,3 +163,53 @@ KeysCollected {
         //color: #D980FA;
     }
 }
+EnergyCurrent {
+    color: #fff;
+    font-family: "Fredoka One";
+    flex-direction: column;
+    //justify-content: center;
+    position: absolute;
+    left: 11%;
+    top: 12.45%;
+    width: 200px;
+
+    .energynm {
+        font-family: "Fredoka One";
+        text-stroke: 14px black;
+        font-size: 24px;
+        font-weight: bold;
+        position: absolute;
+        bottom: 32px;
+        left: 96px;
+        right: 0;
+        width: auto;
+        height: 24px;
+        transform-origin: 50%,50%;
+        transition: all 0.25s ease-out;
+    }
+
+    .energy {
+        background-color: yellow;
+        position: absolute;
+        opacity: .75;
+        bottom: 0px;
+        left: 0;
+        right: 0;
+        width: auto;
+        height: 24px;
+        transform-origin: 50%,50%;
+        transition: all 0.25s ease-out;
+    }
+
+    .energybg {
+        background-color: rgb(150, 150, 150,.25);
+        position: absolute;
+        border: 4px black;
+        bottom: 0px;
+        left: 0px;
+        right: 0;
+        width: auto;
+        height: 24px;
+        transform-origin: 50%,50%;
+    }
+}

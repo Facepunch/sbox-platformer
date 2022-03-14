@@ -7,7 +7,7 @@ namespace Platformer.Movement
 	{
 
 		public float GlideGravity => 20f;
-		public bool Gliding { get; private set; }
+		public bool Gliding { get; set; }
 
 		public override bool TakesOverControl => false;
 		public override bool AlwaysSimulate => true;
@@ -25,6 +25,7 @@ namespace Platformer.Movement
 			Gliding = false;
 
 			if ( ctrl.GroundEntity != null ) return;
+			if ( ctrl.Energy == 0 ) return;
 			if ( !Input.Down( InputButton.Jump ) )
 			{
 				tsJumpHold = 0;
@@ -34,7 +35,7 @@ namespace Platformer.Movement
 			if( tsJumpHold < .15f ) return;
 
 			Gliding = true;
-
+			ctrl.Energy = (ctrl.Energy - ctrl.EnergyDrain * Time.Delta).Clamp( 0f, ctrl.MaxEnergy );
 			ctrl.Velocity = ctrl.Velocity.WithZ( -GlideGravity );
 		}
 

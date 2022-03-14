@@ -33,7 +33,7 @@ namespace Platformer
 			AddAttempts();
 		}
 
-		public async void CompleteCourse()
+		public void CompleteCourse()
 		{
 			TimerState = TimerState.Finished;
 

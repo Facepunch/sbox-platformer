@@ -24,6 +24,7 @@ namespace Platformer.UI
 			RootPanel.AddChild<NewArea>();
 			RootPanel.AddChild<PlatformerChatBox>();
 			RootPanel.AddChild<PlatformerKillfeed>();
+			RootPanel.AddChild<EnergyCurrent>();
 
 		}
 	}

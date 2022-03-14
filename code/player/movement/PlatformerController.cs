@@ -7,6 +7,11 @@ namespace Platformer.Movement
 {
 	partial class PlatformerController : BasePlayerController
 	{
+		[Net] public float Energy { get; set; }
+		[Net] public float EnergyRegen { get; set; } = 20f;
+		[Net] public float MaxEnergy { get; set; } = 120f;
+		[Net] public bool IsRegeneratingEnergy { get; set; }
+		[Net] public float EnergyDrain { get; set; } = 20f;
 
 		public float EyeHeight => 64.0f;
 		public float BodyGirth => 32.0f;
@@ -121,6 +126,22 @@ namespace Platformer.Movement
 				if ( !m.IsActive && !m.AlwaysSimulate ) continue;
 				m.PostSimulate();
 			}
+
+			var startOnGround = GroundEntity != null;
+
+			if ( Host.IsServer )
+			{
+				if ( !GetMechanic<Glide>().Gliding && (startOnGround) )
+				{
+					IsRegeneratingEnergy = true;
+					Energy = (Energy + EnergyRegen * Time.Delta).Clamp( 0f, MaxEnergy );
+				}
+				else
+				{
+					IsRegeneratingEnergy = false;
+				}
+			}
+
 		}
 
 		public virtual void SetBBox( Vector3 mins, Vector3 maxs )

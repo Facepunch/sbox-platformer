@@ -9,7 +9,6 @@ namespace Platformer
 {
 	partial class PlatformerPawn : Sandbox.Player
 	{
-
 		public const float MaxRenderDistance = 128f;
 		public const float InvulnerableTimeAfterDamaged = 2f;
 
@@ -29,7 +28,6 @@ namespace Platformer
 		public Color PlayerColor { get; set; }
 
 		public bool IgnoreFallDamage = false;
-
 		public Color Color { get; private set; }
 
 		[Net]
@@ -39,6 +37,7 @@ namespace Platformer
 		public string CurrentArea { get; set; }
 		public int AreaPriority = 0;
 
+		[Net] public float GliderEnergy { get; set; }
 
 		[Net]
 		public TimeSince TimeSinceDamaged { get; set; }
@@ -182,6 +181,11 @@ namespace Platformer
 		{
 			base.Simulate( cl );
 
+			if ( Controller is PlatformerController controller )
+			{
+				GliderEnergy = (float)Math.Round(controller.Energy);
+			}
+
 			if ( Input.Pressed( InputButton.Drop ) || Input.Pressed( InputButton.Reload ) )
 			{
 				Game.Current.DoPlayerSuicide( cl );
@@ -263,6 +267,7 @@ namespace Platformer
 			if ( Controller is PlatformerController controller )
 			{
 				controller.Impulse += force;
+				
 			}
 		}
 	}
