@@ -204,7 +204,8 @@ namespace Platformer
 
 		public void PickedUpItem(Color itempickedup)
 		{
-
+			if ( IsServer )
+			{
 				Juice.Scale( 1, 1.1f, 1f )
 					.WithTarget( this )
 					.WithDuration( .45f )
@@ -214,11 +215,12 @@ namespace Platformer
 					.WithTarget( this )
 					.WithDuration( .45f )
 					.WithEasing( EasingType.EaseOut );
-
+			}
 		}
 		public void LowHealth()
 		{
-
+			if ( IsServer )
+			{
 				Juice.Scale( 1, 1.05f, 1f )
 					.WithTarget( this )
 					.WithDuration( .45f )
@@ -230,7 +232,7 @@ namespace Platformer
 					.WithEasing( EasingType.EaseOut );
 
 				Sound.FromWorld( "player.lowhealth", Position );
-
+			}
 		}
 
 		/// <summary>
