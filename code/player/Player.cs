@@ -52,6 +52,8 @@ namespace Platformer
 		[Net, Predicted]
 		public bool ViewLocked { get; set; }
 
+		public PlatformerPawn() { }
+
 		public PlatformerPawn( Client cl )
 		{
 			// Load clothing from client data
