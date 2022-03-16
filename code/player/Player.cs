@@ -49,10 +49,8 @@ namespace Platformer
 		[Net]
 		public List<Checkpoint> Checkpoints { get; set; } = new();
 
-		public PlatformerPawn()
-		{
-
-		}
+		[Net, Predicted]
+		public bool ViewLocked { get; set; }
 
 		public PlatformerPawn( Client cl )
 		{
@@ -189,6 +187,11 @@ namespace Platformer
 			if ( Input.Pressed( InputButton.Drop ) || Input.Pressed( InputButton.Reload ) )
 			{
 				Game.Current.DoPlayerSuicide( cl );
+			}
+
+			if ( Input.Pressed( InputButton.View ) )
+			{
+				ViewLocked = !ViewLocked;
 			}
 
 			if (Health == 1)

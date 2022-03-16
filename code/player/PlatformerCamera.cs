@@ -22,7 +22,8 @@ namespace Platformer
 
 			var center = pawn.Position + Vector3.Up * 76;
 			//var distance = 150.0f * pawn.Scale;
-			var targetPos = center + Input.Rotation.Forward * -distance;
+			var viewRot = pawn.ViewLocked ? pawn.EyeRotation : Input.Rotation;
+			var targetPos = center + viewRot.Forward * -distance;
 
 			var tr = Trace.Ray( center, targetPos )
 				.Ignore( pawn )
@@ -33,7 +34,7 @@ namespace Platformer
 
 
 			Position = endpos;
-			Rotation = Input.Rotation;
+			Rotation = viewRot;
 
 			var rot = pawn.Rotation.Angles() * .015f;
 			rot.yaw = 0;
@@ -70,6 +71,11 @@ namespace Platformer
 		public override void BuildInput( InputBuilder input )
 		{
 			base.BuildInput( input );
+
+			if( Local.Pawn is PlatformerPawn p && p.ViewLocked )
+			{
+				input.ViewAngles = Local.Pawn.EyeRotation.Angles();
+			}
 
 			if ( Input.MouseWheel != 0 )
 			{
