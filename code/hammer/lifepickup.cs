@@ -1,75 +1,33 @@
 ﻿
 using Hammer;
 using Sandbox;
-using System.Collections.Generic;
 
 namespace Platformer;
 
 [Library( "plat_lifepickup", Description = "Addition Life" )]
 [Model( Model = "models/gameplay/temp/temp_heart_01.vmdl" )]
 [EntityTool( "Life Pickup", "Platformer", "Addition Life." )]
-internal partial class LifePickup : ModelEntity
+internal partial class LifePickup : BaseCollectible
 {
 
 	[Net, Property]
 	public int NumberOfLife { get; set; }
 
-	private List<Entity> PlayerCollectedLife { get; set; } = new List<Entity>();
-
-	public override void Spawn()
+	protected override bool OnCollected( PlatformerPawn pl )
 	{
-		base.Spawn();
-
-		Transmit = TransmitType.Always;
-
-		SetupPhysicsFromModel(PhysicsMotionType.Keyframed);
-		CollisionGroup = CollisionGroup.Trigger;
-		EnableSolidCollisions = false;
-		EnableAllCollisions = true;
-
-	}
-
-	public override void ClientSpawn()
-	{
-		base.ClientSpawn();
-	}
-
-	public override void StartTouch( Entity other )
-	{
-		base.StartTouch( other );
-
-		if ( other is not PlatformerPawn pl ) return;
-		if ( PlayerCollectedLife.Contains( pl ) ) return;
-		
-		pl.NumberLife ++;
+		pl.NumberLife++;
 		pl.PickedUpItem( Color.Orange );
 
-
-		CollectedLifePickup(To.Single (other.Client) );
-		PlayerCollectedLife.Add( pl );
 		Particles.Create( "particles/gameplay/player/lifepickup/lifepickup.vpcf", pl );
+
+		return true;
 	}
 
-	[ClientRpc]
-	private void CollectedLifePickup()
+	protected override void OnCollectedEffect()
 	{
+		base.OnCollectedEffect();
+
 		Sound.FromEntity( "life.pickup", this );
-
-		//EnableDrawing = false;
-		RenderColor = RenderColor.WithAlpha( 0.1f );
-		//Particles.Create( "particles/explosion/barrel_explosion/explosion_gib.vpcf", this );
-	}
-
-	public void Reset(Entity ent)
-	{
-		PlayerCollectedLife.Remove( ent );
-		ResetDrawing(To.Single(ent.Client));
-	}
-	[ClientRpc]
-	public void ResetDrawing()
-	{
-		RenderColor = RenderColor.WithAlpha( 1 );
-		//EnableDrawing = true;
 	}
 
 }

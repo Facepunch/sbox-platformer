@@ -1,78 +1,36 @@
-﻿using Hammer;
+﻿
+using Hammer;
 using Sandbox;
-using Sandbox.Internal;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace Platformer;
 
 [Library( "plat_healthpickup", Description = "Addition Health" )]
 [Model( Model = "models/gameplay/temp/temp_health_01.vmdl" )]
 [EntityTool( "Health Pickup", "Platformer", "Addition Health." )]
-internal partial class HealthPickup : ModelEntity
+internal partial class HealthPickup : BaseCollectible
 {
 
 	public int NumberOfHealth { get; set; } = 1;
 
-	private List<Entity> PlayerCollectedHealth { get; set; } = new List<Entity>();
-
-	public override void Spawn()
+	protected override bool OnCollected( PlatformerPawn pl )
 	{
-		base.Spawn();
+		base.OnCollected( pl );
 
-		Transmit = TransmitType.Always;
+		if ( pl.Health == 4 ) return false;
 
-		SetupPhysicsFromModel(PhysicsMotionType.Keyframed);
-		CollisionGroup = CollisionGroup.Trigger;
-		EnableSolidCollisions = false;
-		EnableAllCollisions = true;
-
-	}
-
-	public override void ClientSpawn()
-	{
-		base.ClientSpawn();
-	}
-
-	public override void StartTouch( Entity other )
-	{
-		base.StartTouch( other );
-
-		if ( other is not PlatformerPawn pl ) return;
-		if ( PlayerCollectedHealth.Contains( pl ) ) return;
-		if ( pl.Health == 4 ) return;
-
-
-		pl.Health ++;
-		pl.PickedUpItem( Color.Green );
-		
-		CollectedHealthPickup(To.Single (other.Client) );
-		PlayerCollectedHealth.Add( pl );
 		Particles.Create( "particles/gameplay/player/healthpickup/healthpickup.vpcf", pl );
 
+		pl.Health++;
+		pl.PickedUpItem( Color.Green );
+
+		return true;
 	}
 
-	[ClientRpc]
-	private void CollectedHealthPickup()
+	protected override void OnCollectedEffect()
 	{
+		base.OnCollectedEffect();
+
 		Sound.FromEntity( "life.pickup", this );
-
-		//EnableDrawing = false;
-		RenderColor = RenderColor.WithAlpha( 0 );
-		//Particles.Create( "particles/explosion/barrel_explosion/explosion_gib.vpcf", this );
-	}
-
-	public void Reset(Entity ent)
-	{
-		PlayerCollectedHealth.Remove( ent );
-		ResetDrawing(To.Single(ent.Client));
-	}
-
-	[ClientRpc]
-	public void ResetDrawing()
-	{
-		RenderColor = RenderColor.WithAlpha( 1 );
-		//EnableDrawing = true;
 	}
 
 }
