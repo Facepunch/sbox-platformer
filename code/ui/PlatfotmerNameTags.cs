@@ -27,6 +27,8 @@ namespace Platformer.UI
 
 		public virtual void UpdateFromPlayer( Player player )
 		{
+			if ( player is not PlatformerPawn p ) return;
+			Style.BackgroundColor = p.PlayerColor;
 			// Nothing to do unless we're showing health and shit
 		}
 	}
