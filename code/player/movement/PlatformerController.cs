@@ -12,14 +12,13 @@ namespace Platformer.Movement
 		[Net] public float MaxEnergy { get; set; } = 120f;
 		[Net] public bool IsRegeneratingEnergy { get; set; }
 		[Net] public float EnergyDrain { get; set; } = 20f;
+		[Net, Predicted] public Vector3 Impulse { get; set; }
 
 		public float EyeHeight => 64.0f;
 		public float BodyGirth => 32.0f;
 		public float BodyHeight => 72.0f;
 		public Vector3 Mins { get; private set; }
 		public Vector3 Maxs { get; private set; }
-
-		[Net, Predicted] public Vector3 Impulse { get; set; }
 
 		private List<BaseMoveMechanic> mechanics = new();
 		private BaseMoveMechanic activeMechanic => mechanics.FirstOrDefault( x => x.IsActive );
@@ -67,7 +66,14 @@ namespace Platformer.Movement
 		{
 			EyeLocalPosition = Vector3.Up * (64 * Pawn.Scale) + TraceOffset;
 			EyeLocalPosition *= activeMechanic != null ? activeMechanic.EyePosMultiplier : 1f;
-			EyeRotation = Input.Rotation;
+			//EyeRotation = Input.Rotation;
+
+			if ( Velocity.WithZ(0).Length > 0 )
+			{
+				Rotation = Rotation.Slerp( Rotation, Rotation.LookAt( Velocity.WithZ( 0 ) ), 5f * Time.Delta );
+				EyeRotation = Rotation;
+			}
+
 			UpdateBBox();
 
 			// This is confusing and needs review:

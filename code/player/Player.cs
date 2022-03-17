@@ -45,12 +45,8 @@ namespace Platformer
 		public int NumberLife { get; set; } = 3;
 		[Net]
 		public int Coin { get; set; }
-
 		[Net]
 		public List<Checkpoint> Checkpoints { get; set; } = new();
-
-		[Net, Predicted]
-		public bool ViewLocked { get; set; }
 
 		public PlatformerPawn() { }
 
@@ -67,8 +63,8 @@ namespace Platformer
 			SetModel( "models/citizen/citizen.vmdl" );
 
 			Controller = new PlatformerController();
-			Animator = new StandardPlayerAnimator();
-			CameraMode = new PlatformerCamera();
+			Animator = new PlatformerOrbitAnimator();
+			CameraMode = new PlatformerOrbitCamera();
 
 			EnableAllCollisions = true;
 			EnableDrawing = true;
@@ -189,11 +185,6 @@ namespace Platformer
 			if ( Input.Pressed( InputButton.Drop ) || Input.Pressed( InputButton.Reload ) )
 			{
 				Game.Current.DoPlayerSuicide( cl );
-			}
-
-			if ( Input.Pressed( InputButton.View ) )
-			{
-				ViewLocked = !ViewLocked;
 			}
 
 			if (Health == 1)
