@@ -58,7 +58,7 @@ namespace Platformer.Movement
 				float flMul = 300f * 1.2f;
 				float forMul = 485f * 1.2f;
 
-				ctrl.Velocity = ctrl.Rotation.Left * forMul * flGroundFactor;
+				ctrl.Velocity = ctrl.Rotation.Forward * forMul * flGroundFactor;
 				ctrl.Velocity = ctrl.Velocity.WithZ( flMul * flGroundFactor );
 				ctrl.Velocity -= new Vector3( 0, 0, 800f * 0.5f ) * Time.Delta;
 
@@ -72,7 +72,7 @@ namespace Platformer.Movement
 				float flMul = 300f * 1.2f;
 				float forMul = 485f * 1.2f;
 
-				ctrl.Velocity = ctrl.Rotation.Right * forMul * flGroundFactor;
+				ctrl.Velocity = ctrl.Rotation.Forward * forMul * flGroundFactor;
 				ctrl.Velocity = ctrl.Velocity.WithZ( flMul * flGroundFactor );
 				ctrl.Velocity -= new Vector3( 0, 0, 800f * 0.5f ) * Time.Delta;
 
@@ -86,7 +86,7 @@ namespace Platformer.Movement
 				float flMul = 300f * 1.2f;
 				float forMul = 485f * 1.2f;
 
-				ctrl.Velocity = ctrl.Rotation.Backward * forMul * flGroundFactor;
+				ctrl.Velocity = ctrl.Rotation.Forward * forMul * flGroundFactor;
 				ctrl.Velocity = ctrl.Velocity.WithZ( flMul * flGroundFactor );
 				ctrl.Velocity -= new Vector3( 0, 0, 800f * 0.5f ) * Time.Delta;
 
