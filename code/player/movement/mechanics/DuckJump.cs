@@ -38,7 +38,7 @@ namespace Platformer.Movement
 			//if ( ctrl.Velocity.WithZ( 0 ).Length >= 130 ) return;
 			//Some Reason this made the longjump feel bad.
 
-			if ( Input.Pressed( InputButton.Jump ) && Input.Down( InputButton.Duck ) && ctrl.Velocity.WithZ( 0 ).Length <= 5 )
+			if ( InputActions.Jump.Pressed() && InputActions.Duck.Down() && ctrl.Velocity.WithZ( 0 ).Length <= 5 )
 			{
 				IsDuckjumping = true;
 

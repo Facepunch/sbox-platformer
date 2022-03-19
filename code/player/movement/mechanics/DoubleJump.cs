@@ -24,7 +24,7 @@ namespace Platformer.Movement
 		{
 			base.PostSimulate();
 
-			if ( justJumped && !Input.Down( InputButton.Jump ) )
+			if ( justJumped && !InputActions.Jump.Down() )
 			{
 				justJumped = false;
 			}
@@ -38,7 +38,7 @@ namespace Platformer.Movement
 			{
 				DoubleJumpsRemaining = 1;
 
-				if ( Input.Pressed( InputButton.Jump ) )
+				if ( InputActions.Jump.Pressed() )
 				{
 					timeUntilCanDoubleJump = .25f;
 					justJumped = true;
@@ -47,7 +47,7 @@ namespace Platformer.Movement
 
 			if ( justJumped ) return;
 			if ( ctrl.GroundEntity != null ) return;
-			if ( !Input.Pressed( InputButton.Jump ) ) return;
+			if ( !InputActions.Jump.Pressed() ) return;
 			if ( timeUntilCanDoubleJump > 0 ) return;
 			if ( ctrl.GetMechanic<Glide>()?.Gliding ?? false ) return;
 			if ( ctrl.GetMechanic<DuckJump>().IsDuckjumping == true ) return;

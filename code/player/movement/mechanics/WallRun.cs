@@ -27,7 +27,7 @@ namespace Platformer.Movement
 
 		protected override bool TryActivate()
 		{
-			if ( !Input.Down( InputButton.Jump ) ) return false;
+			if ( !InputActions.Jump.Down()) return false;
 			if ( ctrl.GroundEntity != null ) return false;
 			if ( ctrl.Velocity.z > 100 ) return false;
 			if ( ctrl.Velocity.z < -150 ) return false;
@@ -57,7 +57,7 @@ namespace Platformer.Movement
 				return;
 			}
 
-			if ( Input.Pressed( InputButton.Jump ) && timeSinceWallRun > .1f )
+			if ( InputActions.Jump.Pressed() && timeSinceWallRun > .1f )
 			{
 				JumpOffWall();
 				IsActive = false;

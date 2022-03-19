@@ -40,7 +40,7 @@ namespace Platformer.Movement
 
 		public override void Simulate()
 		{
-			if ( Input.Pressed( InputButton.Jump ) )
+			if ( InputActions.Jump.Pressed() )
 			{
 				ctrl.Velocity = ladderNormal * 100.0f;
 				IsActive = false;

@@ -28,7 +28,7 @@ namespace Platformer.Movement
 
 		protected override bool TryActivate()
 		{
-			if ( !Input.Down( InputButton.Jump ) ) return false;
+			if ( !InputActions.Jump.Down() ) return false;
 
 			var wall = GetWallInfo( ctrl.Rotation.Forward );
 

@@ -2,12 +2,13 @@
 
 namespace Platformer
 {
-	public class PlatformerOrbitCamera : CameraMode
+	public class PlatformerShiftCamera : CameraMode
 	{
 
 		private float distance;
 		private float targetDistance = 250f;
 		private Vector3 targetPosition;
+		private Angles currentForward;
 
 		public float MinDistance => 120.0f;
 		public float MaxDistance => 350.0f;
@@ -19,13 +20,24 @@ namespace Platformer
 
 			if ( pawn == null ) return;
 
-			UpdateViewBlockers( pawn );
+			if ( pawn.Velocity.WithZ( 0 ).Length > 0 )
+			{
+				var targetFwd = pawn.Rotation.Angles();
+				currentForward = Angles.Lerp( currentForward, targetFwd, .1f * Time.Delta );
+			}
+
+			if ( !CameraAdjustment.AlmostEqual( 0f ) )
+			{
+				var amount = CameraAdjustment * 10f * Time.Delta;
+				CameraAdjustment = CameraAdjustment.LerpTo( 0, 10f * Time.Delta );
+				currentForward.yaw += amount;
+			}
 
 			distance = distance.LerpTo( targetDistance, 5f * Time.Delta );
 			targetPosition = Vector3.Lerp( targetPosition, pawn.Position, 8f * Time.Delta );
 
 			var distanceA = distance.LerpInverse( MinDistance, MaxDistance );
-			var height = 48f.LerpTo( 96f, distanceA );
+			var height = 48f.LerpTo( 128f, distanceA );
 			var center = targetPosition + Vector3.Up * height;
 			var targetPos = center + Input.Rotation.Forward * -distance;
 
@@ -61,16 +73,17 @@ namespace Platformer
 			targetPosition = Local.Pawn.Position;
 		}
 
-		private void UpdateViewBlockers( PlatformerPawn pawn )
-		{
-			var traces = Trace.Sphere( 3f, CurrentView.Position, pawn.Position + Vector3.Up * 16 ).RunAll();
-
-			if ( traces == null ) return;
-		}
-
+		private float CameraAdjustment;
 		public override void BuildInput( InputBuilder input )
 		{
 			base.BuildInput( input );
+
+			if ( InputActions.Menu.Pressed() )
+				CameraAdjustment = -60;
+			if ( InputActions.Use.Pressed() )
+				CameraAdjustment = 60;
+
+			input.ViewAngles = currentForward;
 
 			if ( Input.MouseWheel != 0 )
 			{

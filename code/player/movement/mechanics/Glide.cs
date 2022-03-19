@@ -26,7 +26,7 @@ namespace Platformer.Movement
 
 			if ( ctrl.GroundEntity != null ) return;
 			if ( ctrl.Energy == 0 ) return;
-			if ( !Input.Down( InputButton.Jump ) )
+			if ( !InputActions.Jump.Down() )
 			{
 				tsJumpHold = 0;
 				return;

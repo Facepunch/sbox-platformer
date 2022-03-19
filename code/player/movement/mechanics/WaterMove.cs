@@ -31,7 +31,7 @@ namespace Platformer.Movement
 				return;
 			}
 
-			if( Input.Down(InputButton.Jump ) )
+			if( InputActions.Jump.Down())
 				ctrl.Velocity = ctrl.Velocity.WithZ( 100 );
 
 			// ctrl.ApplyFriction( 1 );

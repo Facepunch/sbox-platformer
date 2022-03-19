@@ -26,7 +26,7 @@ namespace Platformer.Movement
 		public PlatformerController()
 		{
 			//mechanics.Add( new StepJump( this ) );
-			mechanics.Add( new Walk( this ) );
+			mechanics.Add( new Walk( this ) );	
 			mechanics.Add( new AirMove( this ) );
 			mechanics.Add( new WaterMove( this ) );
 			//mechanics.Add( new WallRun( this ) );
@@ -42,7 +42,7 @@ namespace Platformer.Movement
 			mechanics.Add( new Glide( this ) );
 			mechanics.Add( new FallDamage( this ) );
 			mechanics.Add( new LongJump( this ) );
-
+			//mechanics.Add( new GroundSlam( this ) ); Needs work.
 
 
 			mechanics.Add( new MoveDebug( this ) );

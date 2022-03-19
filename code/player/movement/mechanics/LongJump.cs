@@ -36,7 +36,7 @@ namespace Platformer.Movement
 			//if ( ctrl.Velocity.WithZ( 0 ).Length >= 130 ) return;
 			//Some Reason this made the longjump feel bad.
 
-			if ( Input.Pressed( InputButton.Jump ) && Input.Down( InputButton.Duck ) && Input.Down( InputButton.Forward ) && ctrl.Velocity.WithZ( 0 ).Length >= 120 )
+			if ( InputActions.Jump.Pressed() && InputActions.Duck.Down() && ctrl.Velocity.WithZ( 0 ).Length >= 120 )
 			{
 				IsLongjumping = true;
 
@@ -50,49 +50,6 @@ namespace Platformer.Movement
 
 				LongJumpEffect();
 			}
-			if ( Input.Pressed( InputButton.Jump ) && Input.Down( InputButton.Duck ) && Input.Down( InputButton.Left ) && ctrl.Velocity.WithZ( 0 ).Length >= 120 )
-			{
-				IsLongjumping = true;
-
-				float flGroundFactor = 1.0f;
-				float flMul = 300f * 1.2f;
-				float forMul = 485f * 1.2f;
-
-				ctrl.Velocity = ctrl.Rotation.Forward * forMul * flGroundFactor;
-				ctrl.Velocity = ctrl.Velocity.WithZ( flMul * flGroundFactor );
-				ctrl.Velocity -= new Vector3( 0, 0, 800f * 0.5f ) * Time.Delta;
-
-				LongJumpEffect();
-			}
-			if ( Input.Pressed( InputButton.Jump ) && Input.Down( InputButton.Duck ) && Input.Down( InputButton.Right ) && ctrl.Velocity.WithZ( 0 ).Length >= 120 )
-			{
-				IsLongjumping = true;
-
-				float flGroundFactor = 1.0f;
-				float flMul = 300f * 1.2f;
-				float forMul = 485f * 1.2f;
-
-				ctrl.Velocity = ctrl.Rotation.Forward * forMul * flGroundFactor;
-				ctrl.Velocity = ctrl.Velocity.WithZ( flMul * flGroundFactor );
-				ctrl.Velocity -= new Vector3( 0, 0, 800f * 0.5f ) * Time.Delta;
-
-				LongJumpEffect();
-			}
-			if ( Input.Pressed( InputButton.Jump ) && Input.Down( InputButton.Duck ) && Input.Down( InputButton.Back ) && ctrl.Velocity.WithZ( 0 ).Length >= 120 )
-			{
-				IsLongjumping = true;
-
-				float flGroundFactor = 1.0f;
-				float flMul = 300f * 1.2f;
-				float forMul = 485f * 1.2f;
-
-				ctrl.Velocity = ctrl.Rotation.Forward * forMul * flGroundFactor;
-				ctrl.Velocity = ctrl.Velocity.WithZ( flMul * flGroundFactor );
-				ctrl.Velocity -= new Vector3( 0, 0, 800f * 0.5f ) * Time.Delta;
-
-				LongJumpEffect();
-			}
-
 		}
 
 		private void LongJumpEffect()

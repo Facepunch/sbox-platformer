@@ -28,7 +28,7 @@ namespace Platformer.Movement
 
 		protected override bool TryActivate()
 		{
-			if ( !Input.Down( InputButton.Duck ) ) return false;
+			if ( !InputActions.Duck.Down() ) return false;
 			if ( ctrl.GroundEntity == null ) return false;
 			if ( ctrl.Velocity.WithZ( 0 ).Length < StartSlideSpeed ) return false;
 			if ( ctrl.GetMechanic<LongJump>().IsLongjumping ) return false;
@@ -98,7 +98,7 @@ namespace Platformer.Movement
 
 		private bool StillSliding()
 		{
-			if ( !Input.Down( InputButton.Duck ) ) return false;
+			if ( !InputActions.Duck.Down() ) return false;
 			if ( ctrl.GroundEntity == null ) return false;
 			if ( ctrl.Velocity.WithZ( 0 ).Length < EndSlideSpeed ) return false;
 			return true;

@@ -21,7 +21,7 @@ namespace Platformer.Movement
 
 		protected override bool TryActivate()
 		{
-			if ( !Input.Down( InputButton.Run ) ) return false;
+			if ( !InputActions.Walk.Down() ) return false;
 
 			var wall = GetWallInfo( ctrl.Velocity.WithZ( 0 ).Normal );
 			if ( wall == null ) return false;

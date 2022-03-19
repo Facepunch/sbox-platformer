@@ -23,7 +23,7 @@ namespace Platformer.Movement
 		protected override bool TryActivate()
 		{
 			if ( ctrl.GroundEntity == null ) return false;
-			if ( !Input.Down( InputButton.Run ) ) return false;
+			if ( !InputActions.Walk.Down() ) return false;
 
 			var trStart = ctrl.Position + ctrl.Velocity.WithZ(0) * Time.Delta;
 			var trEnd = trStart + Vector3.Down * MinLedgeHeight;

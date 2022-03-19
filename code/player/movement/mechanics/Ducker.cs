@@ -21,7 +21,7 @@ namespace Platformer.Movement
 
 		protected override bool TryActivate()
 		{
-			if ( !Input.Down( InputButton.Duck ) ) return false;
+			if ( !InputActions.Duck.Down() ) return false;
 			//let slide activate if we too fast
 			if ( ctrl.GroundEntity != null && ctrl.Velocity.WithZ( 0 ).Length > MaxDuckSpeed ) return false;
 
@@ -48,7 +48,7 @@ namespace Platformer.Movement
 
 			ctrl.SetTag( "ducked" );
 
-			if ( Input.Down( InputButton.Duck ) ) return;
+			if ( InputActions.Duck.Down() ) return;
 
 			var pm = ctrl.TraceBBox( ctrl.Position, ctrl.Position, originalMins, originalMaxs );
 			if ( pm.StartedSolid ) return;

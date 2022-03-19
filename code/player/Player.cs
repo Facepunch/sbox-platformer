@@ -64,7 +64,16 @@ namespace Platformer
 
 			Controller = new PlatformerController();
 			Animator = new PlatformerOrbitAnimator();
-			CameraMode = new PlatformerOrbitCamera();
+
+			if ( Input.UsingController )
+			{
+				CameraMode = new PlatformerShiftCamera();
+			}
+			else
+			{
+				CameraMode = new PlatformerOrbitCamera();
+			}
+
 
 			EnableAllCollisions = true;
 			EnableDrawing = true;
@@ -182,7 +191,7 @@ namespace Platformer
 				GliderEnergy = (float)Math.Round(controller.Energy);
 			}
 
-			if ( Input.Pressed( InputButton.Drop ) || Input.Pressed( InputButton.Reload ) )
+			if ( InputActions.Kill.Down() )
 			{
 				Game.Current.DoPlayerSuicide( cl );
 			}

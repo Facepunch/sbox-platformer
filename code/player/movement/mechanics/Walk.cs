@@ -44,7 +44,7 @@ namespace Platformer.Movement
 
 		public override float GetWishSpeed()
 		{
-			if ( Input.Down( InputButton.Run ) ) return WalkSpeed;
+			if ( InputActions.Walk.Down()) return WalkSpeed;
 
 			return DefaultSpeed;
 		}
@@ -107,7 +107,7 @@ namespace Platformer.Movement
 
 		private void CheckJumpButton()
 		{
-			if ( !AutoJump && !Input.Pressed( InputButton.Jump ) )
+			if ( !AutoJump && !InputActions.Jump.Pressed() )
 				return;
 
 			var flGroundFactor = 1.0f;
