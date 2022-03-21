@@ -76,7 +76,6 @@ namespace Platformer
 				CameraMode = new PlatformerOrbitCamera();
 			}
 
-
 			EnableAllCollisions = true;
 			EnableDrawing = true;
 			EnableHideInFirstPerson = true;
@@ -173,7 +172,7 @@ namespace Platformer
 			EnableAllCollisions = false;
 			EnableDrawing = false;
 
-			CameraMode = new PlatformerRagdollCamera();
+			CameraMode = new PlatformerRagdollCamera();			
 
 			foreach ( var child in Children )
 			{
@@ -218,15 +217,16 @@ namespace Platformer
 				FakeShadowParticle = Particles.Create( "particles/gameplay/fake_shadow/fake_shadow.vpcf" );
 			}
 
-			var mytrace = Trace.Ray( Position, Position + Vector3.Down * 2000 );
-			mytrace = mytrace.WorldOnly();
-			var result = mytrace.Run();
+			var Downtrace = Trace.Ray( Position, Position + Vector3.Down * 2000 );
+			Downtrace = Downtrace.WorldOnly();
+			var result = Downtrace.Run();
 
 			FakeShadowParticle.SetPosition( 0, result.EndPosition );
 
 			//DebugOverlay.TraceResult( result );
 
 		}
+
 
 		public void PickedUpItem(Color itempickedup)
 		{

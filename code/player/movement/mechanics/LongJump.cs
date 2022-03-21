@@ -27,7 +27,7 @@ namespace Platformer.Movement
 				return;
 			}
 
-			if ( ctrl.GetMechanic<Slide>().TimeSinceSlide >= 0.15 ) return;
+			if ( ctrl.GetMechanic<Slide>().TimeSinceSlide >= 0.20 ) return;
 			//This controls the time we can LJ during slide. ^^^^ TimeSince start of slide.
 			//This also allows for combo jumps in the player can time correctly.
 
