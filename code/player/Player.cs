@@ -24,6 +24,8 @@ namespace Platformer
 		public bool JustPickedupHealth;
 		public int AmountOfFlash = 0;
 
+		public Particles FakeShadowParticle;
+
 		[Net]
 		public Color PlayerColor { get; set; }
 
@@ -205,6 +207,25 @@ namespace Platformer
 				}
 					
 			}
+
+		}
+
+		[Event.Frame]
+		public void PlayerShadow()
+		{
+			if ( FakeShadowParticle == null )
+			{
+				FakeShadowParticle = Particles.Create( "particles/gameplay/fake_shadow/fake_shadow.vpcf" );
+			}
+
+			var mytrace = Trace.Ray( Position, Position + Vector3.Down * 2000 );
+			mytrace = mytrace.WorldOnly();
+			var result = mytrace.Run();
+
+			FakeShadowParticle.SetPosition( 0, result.EndPosition );
+
+			//DebugOverlay.TraceResult( result );
+
 		}
 
 		public void PickedUpItem(Color itempickedup)
