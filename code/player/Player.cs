@@ -154,6 +154,8 @@ namespace Platformer
 			
 			base.TakeDamage( info );
 
+			Velocity += info.Force;
+
 			TimeSinceDamaged = 0;
 		}
 

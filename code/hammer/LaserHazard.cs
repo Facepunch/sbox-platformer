@@ -83,6 +83,9 @@ public partial class LaserHazard : ModelEntity
 	{
 		Host.AssertServer();
 
-		pl.TakeDamage( new() { Damage = 1 } );
+		var damage = 1;
+		var force = Rotation.Forward * 200 + Vector3.Up * 200;
+
+		pl.TakeDamage( new() { Damage = damage, Force = force } );
 	}
 }
