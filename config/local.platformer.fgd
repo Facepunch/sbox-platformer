@@ -307,6 +307,28 @@ metadata
 ]
 
 //
+// Platformer.LaserHazard
+//
+@PointClass base(BaseProperties_local_platformer) model() drawangles() 
+metadata
+{
+	entity_tool_name = "Laser Beam Hazard"
+	entity_tool_group = "Platformer"
+	entity_tool_tip = "Laser Beam Hazard."
+}
+= plat_LaserHazard : "Laser Beam Hazard"
+[
+	model(resource:vmdl) { report = true hide_when_solid = true }: "World Model" : "models/gameplay/temp/temp_heart_01.vmdl" : "The model this entity should use."
+	skin(materialgroup) { group = "Rendering" hide_when_solid = true } : "Skin" : "default" : "Some models have multiple versions of their textures, called skins." 
+	bodygroups(bodygroupchoices) { group = "Rendering" hide_when_solid = true } : "Body Groups" : "" : "Some models have multiple variations of certain items, such as characters having different hair styles, etc."
+	maxdistance(float) : "Max Distance" : "500" : ""
+	effect_name(particlesystem) { report = true } : "Beam Particle" :  : ""
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+
+	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
+]
+
+//
 // Platformer.LifePickup
 //
 @PointClass base(BaseProperties_local_platformer) model() 
@@ -363,5 +385,21 @@ metadata
 	output OnEndTouch(void) : "Fired when an entity stops touching this trigger. Only entities that passed this trigger's filters will cause this output to fire."
 	output OnStartTouchAll(void) : "Fired when an entity starts touching this trigger while no other passing entities are touching it."
 	output OnEndTouchAll(void) : "Fired when all entities touching this trigger have stopped touching it."
+]
+
+//
+// Platformer.PlatformerDecay
+//
+@PointClass base(BaseProperties_local_platformer) tags( SupportsSolids, Dynamic ) model() = plat_platform : "A simple platform that moves between two locations and can be controlled through Entity IO."
+[
+	model(resource:vmdl) { report = true hide_when_solid = true }: "World Model" : "" : "The model this entity should use."
+	skin(materialgroup) { group = "Rendering" hide_when_solid = true } : "Skin" : "default" : "Some models have multiple versions of their textures, called skins." 
+	bodygroups(bodygroupchoices) { group = "Rendering" hide_when_solid = true } : "Body Groups" : "" : "Some models have multiple variations of certain items, such as characters having different hair styles, etc."
+	rendercolor(color255) { alpha = true } : "Color (R G B A)" : "255 255 255 255" : "The color tint of this entity."
+	decaytime(float) : "Decay Time" : "5" : ""
+	respawntime(float) : "Respawn Time" : "5" : ""
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+
+	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
 ]
 
