@@ -12,7 +12,7 @@ namespace Platformer;
 [Hammer.DrawAngles]
 public partial class LaserHazard : ModelEntity
 {
-	private DamageInfo damage = 10;
+	private int damage = 10;
 
 	[Net]
 	[Property( "MaxDistance", Title = "Max Distance" )]
@@ -57,18 +57,10 @@ public partial class LaserHazard : ModelEntity
 
 		DebugOverlay.TraceResult( trace );
 
-		var pl = trace.Entity as PlatformerPawn;
-		if ( trace.Hit == true )
+		if( trace.Entity is PlatformerPawn pl )
 		{
-			DamagePlayer( pl );
+			var dmginfo = new DamageInfo() { Damage = damage };
+			pl.TakeDamage( dmginfo );
 		}
-	}
-
-	[ClientRpc]
-	public void DamagePlayer( Entity pl )
-	{
-		if ( pl is not PlatformerPawn p ) return;
-		pl.TakeDamage( damage );
-		Log.Info( pl );
 	}
 }
