@@ -71,7 +71,7 @@ public partial class LaserHazard : ModelEntity
 
 		if ( pl.TimeUntilVulnerable > 0f ) return;
 
-		var damage = 0;
+		var damage = 1;
 		var force = Rotation.Forward * 200 + Vector3.Up * 200;
 
 		pl.TakeDamage( new() { Damage = damage, Force = force } );
