@@ -1,8 +1,7 @@
-﻿using Hammer;
+﻿
+using Hammer;
 using Sandbox;
 using Sandbox.Internal;
-using System.Linq;
-
 
 namespace Platformer;
 
@@ -12,13 +11,11 @@ namespace Platformer;
 [Hammer.DrawAngles]
 public partial class LaserHazard : ModelEntity
 {
-	private int damage = 10;
 
 	[Net]
 	[Property( "MaxDistance", Title = "Max Distance" )]
 	[DefaultValue( "500" )]
 	public float maxDist { get; set; }
-
 
 	//public string BeamParticle = "particles/gameplay/laser_beam/beam_lazer.vpcf";
 
@@ -26,41 +23,45 @@ public partial class LaserHazard : ModelEntity
 	[Property( "effect_name" ), Hammer.EntityReportSource, FGDType( "particlesystem" )]
 	public string BeamParticle { get; set; }
 
-	private Particles Beam { get; set; }
+	private Particles Beam;
 
 	public override void Spawn()
 	{
 		base.Spawn();
 
-		var BeamPart = Particles.Create( BeamParticle );
-		Beam = BeamPart;
+		Transmit = TransmitType.Always;
+	}
+
+	public override void ClientSpawn()
+	{
+		base.ClientSpawn();
+
+		Beam = Particles.Create( BeamParticle );
 	}
 
 	[Event.Tick]
-	public void LBeam()
+	public void UpdateBeam()
 	{
-		var Dir = Rotation.Forward;
-
-		var trace = Trace.Ray( Position, Position + Dir * maxDist )
+		var dir = Rotation.Forward;
+		var trace = Trace.Ray( Position, Position + dir * maxDist )
 			.UseHitboxes()
 			.Radius( 2.0f )
 			.HitLayer( CollisionLayer.Player )
 			.Run();
 
-		if ( Beam == null )
+		if ( IsClient )
 		{
-			var BeamPart = Particles.Create( BeamParticle );
-			Beam = BeamPart;
+			Beam.SetPosition( 0, this.Position );
+			Beam.SetPosition( 1, trace.EndPosition );
 		}
-		Beam.SetPosition( 0, this.Position );
-		Beam.SetPosition( 1, trace.EndPosition );
 
-		DebugOverlay.TraceResult( trace );
-
-		if( trace.Entity is PlatformerPawn pl )
+		if ( IsServer )
 		{
-			var dmginfo = new DamageInfo() { Damage = damage };
-			pl.TakeDamage( dmginfo );
+			if ( trace.Entity is PlatformerPawn pl )
+			{
+				var dmginfo = new DamageInfo() { Damage = 10 };
+				pl.TakeDamage( dmginfo );
+			}
 		}
 	}
 }
