@@ -26,7 +26,7 @@ namespace Platformer.Movement
 		public PlatformerController()
 		{
 			//mechanics.Add( new StepJump( this ) );
-			mechanics.Add( new Walk( this ) );	
+			mechanics.Add( new Walk( this ) );
 			mechanics.Add( new AirMove( this ) );
 			mechanics.Add( new WaterMove( this ) );
 			//mechanics.Add( new WallRun( this ) );
@@ -69,7 +69,7 @@ namespace Platformer.Movement
 			EyeLocalPosition *= activeMechanic != null ? activeMechanic.EyePosMultiplier : 1f;
 			//EyeRotation = Input.Rotation;
 
-			if ( Velocity.WithZ(0).Length > 0 )
+			if ( Velocity.WithZ( 0 ).Length > 0 )
 			{
 				Rotation = Rotation.Slerp( Rotation, Rotation.LookAt( Velocity.WithZ( 0 ) ), 5f * Time.Delta );
 				EyeRotation = Rotation;
