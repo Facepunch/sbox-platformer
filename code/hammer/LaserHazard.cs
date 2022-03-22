@@ -24,6 +24,8 @@ public partial class LaserHazard : ModelEntity
 	public string BeamParticle { get; set; }
 
 	private Particles Beam;
+	private int TouchingEntity;
+	private TimeSince TouchTime;
 
 	public override void Spawn()
 	{
@@ -57,11 +59,30 @@ public partial class LaserHazard : ModelEntity
 
 		if ( IsServer )
 		{
-			if ( trace.Entity is PlatformerPawn pl )
+			if( trace.Entity is PlatformerPawn pl )
 			{
-				var dmginfo = new DamageInfo() { Damage = 10 };
-				pl.TakeDamage( dmginfo );
+				if( TouchingEntity != pl.NetworkIdent )
+				{
+					TouchTime = 0;
+					TouchingEntity = pl.NetworkIdent;
+				}
+
+				if( TouchTime % 1 == 0 )
+				{
+					DoDamage( pl );
+				}
+			}
+			else
+			{
+				TouchingEntity = -1;
 			}
 		}
+	}
+
+	private void DoDamage( PlatformerPawn pl )
+	{
+		Host.AssertServer();
+
+		pl.TakeDamage( new() { Damage = 1 } );
 	}
 }
