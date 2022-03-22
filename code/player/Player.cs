@@ -10,7 +10,6 @@ namespace Platformer
 	partial class PlatformerPawn : Sandbox.Player
 	{
 		public const float MaxRenderDistance = 128f;
-		public const float InvulnerableTimeAfterDamaged = 2f;
 
 		public Clothing.Container Clothing = new();
 		private Particles FakeShadow;
@@ -42,7 +41,7 @@ namespace Platformer
 		[Net] public float GliderEnergy { get; set; }
 
 		[Net]
-		public TimeSince TimeSinceDamaged { get; set; }
+		public TimeUntil TimeUntilVulnerable { get; set; }
 		[Net]
 		public int NumberLife { get; set; } = 3;
 		[Net]
@@ -145,18 +144,19 @@ namespace Platformer
 			}
 		}
 
+		public void SetInvulnerable( float duration )
+		{
+			TimeUntilVulnerable = duration;
+		}
+
 		public override void TakeDamage( DamageInfo info )
 		{
-			if ( TimeSinceDamaged < InvulnerableTimeAfterDamaged ) return;
+			if ( TimeUntilVulnerable > 0 ) return;
 
-
-			PlayerBeenDamaged();
-			
 			base.TakeDamage( info );
 
+			PlayerBeenDamaged();
 			Velocity += info.Force;
-
-			TimeSinceDamaged = 0;
 		}
 
 		public override void OnKilled()

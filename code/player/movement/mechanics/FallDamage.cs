@@ -42,7 +42,8 @@ namespace Platformer.Movement
 
 			if ( dmg == 0 ) return;
 
-			ctrl.Pawn.TakeDamage( new DamageInfo() { Damage = dmg } );
+			p.TakeDamage( new DamageInfo() { Damage = dmg } );
+			p.SetInvulnerable( 2f );
 
 			FallDamageEffect();
 		}
