@@ -1,0 +1,85 @@
+﻿using System;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Sandbox;
+
+namespace Platformer;
+/// <summary>
+/// A simple platform that moves between two locations and can be controlled through Entity IO.
+/// </summary>
+[Library( "plat_platform" )]
+[Hammer.SupportsSolid]
+[Hammer.Model]
+[Hammer.RenderFields]
+[Hammer.VisGroup( Hammer.VisGroup.Dynamic )]
+public partial class PlatformerDecay : ModelEntity
+{
+	public int TimeToHold { get; set; }
+
+	[Net, Property] public float DecayTime { get; set; } = 5f;
+
+	[Net, Property] public float RespawnTime { get; set; } = 5f;
+
+
+	public override void Spawn()
+	{
+		base.Spawn();
+
+		Transmit = TransmitType.Always;
+		EnableAllCollisions = true;
+		EnableTouch = true;
+
+		SetupPhysicsFromModel( PhysicsMotionType.Static );
+
+		var bounds = PhysicsBody.GetBounds();
+		var extents = (bounds.Maxs - bounds.Mins) * 0.5f;
+
+		var trigger = new BaseTrigger();
+		trigger.SetParent( this, null, Transform.Zero );
+		trigger.SetupPhysicsFromAABB( PhysicsMotionType.Static, -extents.WithZ( 0 ), extents.WithZ( 32 ) );
+		trigger.Transmit = TransmitType.Always;
+		trigger.EnableTouchPersists = true;
+	}
+
+	public override void Touch( Entity other )
+	{
+
+		if ( !other.IsServer ) return;
+		if ( other is not PlatformerPawn pl ) return;
+
+		TimeToHold++;
+
+		Log.Info( TimeToHold/10 );
+		if ( TimeToHold/10 >= DecayTime )
+		{
+
+			EnableDrawing = false;
+			EnableAllCollisions = false;
+
+			RespawnPlat();
+		}
+
+		base.Touch( other );
+
+	}
+
+	public override void EndTouch( Entity other )
+	{
+		base.EndTouch( other );
+
+		if ( !other.IsServer ) return;
+		if ( other is not PlatformerPawn pl ) return;
+
+		TimeToHold = 0;
+
+	}
+
+	public async void RespawnPlat()
+	{
+		await GameTask.DelaySeconds( RespawnTime );
+		EnableDrawing = true;
+		EnableAllCollisions = true;
+	}
+
+
+}
