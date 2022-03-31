@@ -29,11 +29,21 @@ internal class RailSlide : BaseMoveMechanic
 			if ( AttachToPath( path, ctrl.Position, out Node, out Alpha ) )
 			{
 				Path = path;
+				ctrl.SetGroundEntity( path );
 				return true;
 			}
 		}
 
 		return false;
+	}
+
+	public override void PostSimulate()
+	{
+		base.PostSimulate();
+
+		ctrl.GroundEntity = Path;
+
+		Log.Info( ctrl.Pawn.IsServer + ":" + Path );
 	}
 
 	public override void Simulate()
@@ -63,7 +73,9 @@ internal class RailSlide : BaseMoveMechanic
 		ctrl.Velocity = (nextPosition - currentPosition).Normal * 300f;
 		ctrl.Position = nextPosition;
 		ctrl.Rotation = Rotation.LookAt( ctrl.Velocity.Normal );
-
+		ctrl.GroundEntity = Path;
+		ctrl.SetTag( "skidding" );
+		
 		if ( Input.Pressed( InputButton.Jump ) )
 		{
 			TimeSinceJump = 0;

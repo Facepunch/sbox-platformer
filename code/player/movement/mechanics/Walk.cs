@@ -221,13 +221,7 @@ namespace Platformer.Movement
 			SurfaceFriction = tr.Surface.Friction * 1.25f;
 			if ( SurfaceFriction > 1 ) SurfaceFriction = 1;
 
-			ctrl.GroundEntity = tr.Entity;
-
-			if ( ctrl.GroundEntity != null )
-			{
-				ctrl.Velocity = ctrl.Velocity.WithZ( 0 );
-				ctrl.BaseVelocity = ctrl.GroundEntity.Velocity;
-			}
+			ctrl.SetGroundEntity( tr.Entity );
 		}
 
 	}

@@ -263,6 +263,17 @@ namespace Platformer.Movement
 			GroundNormal = Vector3.Up;
 		}
 
+		public void SetGroundEntity( Entity entity )
+		{
+			GroundEntity = entity;
+
+			if ( GroundEntity != null )
+			{
+				Velocity = Velocity.WithZ( 0 );
+				BaseVelocity = GroundEntity.Velocity;
+			}
+		}
+
 		public override TraceResult TraceBBox( Vector3 start, Vector3 end, float liftFeet = 0.0f )
 		{
 			return TraceBBox( start, end, Mins, Maxs, liftFeet );

@@ -38,10 +38,10 @@ namespace Platformer.Movement
 			var len = ctrl.Velocity.WithZ( 0 ).Length;
 			var newLen = len + SlideBoost;
 			ctrl.Velocity *= newLen / len;
-			ctrl.SetTag( "sitting" );
+			ctrl.SetTag( "skidding" );
 
 			new FallCameraModifier( -300 );
-
+			
 			return true;
 		}
 
@@ -68,7 +68,6 @@ namespace Platformer.Movement
 
 				return;
 			}
-			ctrl.SetTag( "sitting" );
 
 			if ( ctrl.GetMechanic<LongJump>().IsLongjumping ) return;
 
@@ -93,6 +92,7 @@ namespace Platformer.Movement
 				//Sliding = false;
 			}
 
+			ctrl.SetTag( "skidding" );
 			ctrl.Move();
 		}
 

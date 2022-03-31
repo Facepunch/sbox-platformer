@@ -32,7 +32,7 @@ namespace Platformer.Movement
 			var a = Math.Min( Math.Abs(fallSpeed) / effectMaxSpeed, 1f );
 			if ( fallSpeed < 0f ) a *= -1f;
 
-			setup.Rotation *= Rotation.FromAxis( Vector3.Left, effectStrength * invdelta * pos * a );
+			//setup.Rotation *= Rotation.FromAxis( Vector3.Left, effectStrength * invdelta * pos * a );
 
 			t += Time.Delta;
 

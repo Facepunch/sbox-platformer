@@ -24,10 +24,12 @@ public class PlatformerOrbitAnimator : PawnAnimator
 		//
 		bool sitting = HasTag( "sitting" );
 		bool noclip = HasTag( "noclip" ) && !sitting;
+		bool skidding = HasTag( "skidding" );
 
 		SetAnimParameter( "b_grounded", GroundEntity != null || noclip || sitting );
 		SetAnimParameter( "b_noclip", noclip );
 		SetAnimParameter( "b_sit", sitting );
+		SetAnimParameter( "skid", skidding ? 1.0f : 0f );
 		SetAnimParameter( "b_swim", Pawn.WaterLevel > 0.5f && !sitting );
 
 		if ( Host.IsClient && Client.IsValid() )
