@@ -22,16 +22,18 @@ internal class RailSlide : BaseMoveMechanic
 	{
 		if ( TimeSinceJump < .3f ) return false;
 
-		foreach ( var path in Entity.All.OfType<GenericPathEntity>() )
+		foreach ( var path in Entity.All.OfType<RailPathEntity>() )
 		{
 			if ( path.PathNodes.Count < 2 ) continue;
 
-			if ( AttachToPath( path, ctrl.Position, out Node, out Alpha ) )
-			{
-				Path = path;
-				ctrl.SetGroundEntity( path );
-				return true;
-			}
+			var nearestPoint = path.NearestPoint( ctrl.Position, out int node, out float t );
+			if ( nearestPoint.Distance( ctrl.Position ) > 30 ) continue;
+
+			Path = path;
+			Node = node;
+			Alpha = t;
+
+			return true;
 		}
 
 		return false;
@@ -42,8 +44,6 @@ internal class RailSlide : BaseMoveMechanic
 		base.PostSimulate();
 
 		ctrl.GroundEntity = Path;
-
-		Log.Info( ctrl.Pawn.IsServer + ":" + Path );
 	}
 
 	public override void Simulate()
@@ -86,46 +86,6 @@ internal class RailSlide : BaseMoveMechanic
 			ctrl.Velocity = ctrl.Velocity.WithZ( 320f );
 			ctrl.Position = ctrl.Position.WithZ( ctrl.Position.z + 10 );
 		}
-	}
-
-	private bool AttachToPath( GenericPathEntity path, Vector3 position, out int nodeIdx, out float t )
-	{
-		// todo: NearestPointOnPath
-		// Attach and slide along path in reverse
-
-		nodeIdx = 0;
-		t = 0;
-
-		for( int i = 0; i < path.PathNodes.Count - 1; i++ )
-		{
-			var nodea = path.PathNodes[i];
-			var nodeb = path.PathNodes[i + 1];
-			var bestDist = float.MaxValue;
-			var bestA = 0f;
-
-			for( float j = 0; j <= 1; j += .1f )
-			{
-				var point = path.GetPointBetweenNodes( nodea, nodeb, j );
-				var dist = position.Distance( point );
-				if( dist < bestDist )
-				{
-					bestA = j;
-					bestDist = dist;
-				}
-			}
-
-			if ( bestA > .8f && i == path.PathNodes.Count - 2 ) continue;
-
-			if( bestDist < 30 )
-			{
-				nodeIdx = i;
-				t = bestA;
-
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 }
