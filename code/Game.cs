@@ -38,17 +38,6 @@ namespace Platformer
 			}
 		}
 
-		[Event.Entity.PostSpawn]
-		private void PostEntitySpawn()
-		{
-			if ( !Host.IsServer ) return;
-
-			// temp thing til we do our own path entity for rails
-			All.OfType<GenericPathEntity>()
-				.ToList()
-				.ForEach( x => x.Transmit = TransmitType.Always );
-		}
-
 		/// <summary>
 		/// A client has joined the server. Make them a pawn to play with
 		/// </summary>

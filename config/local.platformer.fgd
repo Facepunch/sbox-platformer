@@ -403,3 +403,15 @@ metadata
 	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
 ]
 
+//
+// Platformer.RailPathEntity
+//
+@PathClass base(BaseProperties_local_platformer) 
+metadata
+{
+	node_entity_class = "path_generic_node"
+}
+= platformer_path_rail : ""
+[
+]
+
