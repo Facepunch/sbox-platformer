@@ -2,26 +2,32 @@
 using Sandbox;
 using Sandbox.UI;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Platformer.UI
 {
-	public class KeysCollected : Panel
+	public partial class KeysCollected : Panel
 	{
 
 		private List<KeyPanel> KeyPanels = new();
+		private static KeysCollected Current { get; set; }
 
 		public KeysCollected()
 		{
-			KeyPanels.Add( Add.KeyPanel( "album", "key1", 1 ) );
-			KeyPanels.Add( Add.KeyPanel( "save", "key2", 2 ) );
-			KeyPanels.Add( Add.KeyPanel( "folder", "key3", 3 ) );
-			KeyPanels.Add( Add.KeyPanel( "work", "key4", 4 ) );
 
-			//Image
-			//KeyPanels.Add( Add.KeyPanel( "ui/hud/keys/key.png", "key1", 1 ) );
-			//KeyPanels.Add( Add.KeyPanel( "ui/hud/keys/key.png", "key2", 2 ) );
-			//KeyPanels.Add( Add.KeyPanel( "ui/hud/keys/key.png", "key3", 3 ) );
-			//KeyPanels.Add( Add.KeyPanel( "ui/hud/keys/key.png", "key4", 4 ) );
+			Current = this;
+
+		}
+
+		public static void InitKeys()
+		{
+			Log.Info( Entity.All.OfType<KeyPickup>().Count() );
+			
+			foreach (var key in Entity.All.OfType<KeyPickup>())
+			{
+				Current.KeyPanels.Add( Current.Add.KeyPanel( key.KeyEmoji, "key1", key.KeyNumber ) );
+				Log.Info(key.KeyNumber );
+			}
 		}
 
 		public override void Tick()

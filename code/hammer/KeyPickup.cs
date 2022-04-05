@@ -12,7 +12,14 @@ namespace Platformer;
 [EntityTool( "Key Pickup", "Platformer", "Key Pickup." )]
 internal partial class KeyPickup : ModelEntity
 {
+	/// <summary>
+	/// 🍆💦 😝
+	/// </summary>
+	[Property, Net]
+	public string KeyEmoji { get; set; } = "🍆";
+
 	[Property]
+	[Net]
 	public int KeyNumber { get; set; } = 1;
 
 	private List<Entity> PlayerCollectedKey { get; set; } = new List<Entity>();
