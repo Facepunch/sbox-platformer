@@ -9,5 +9,10 @@
   "ResourcePaths": null,
   "HasCode": true,
   "CodePath": "/code/",
-  "RootNamespace": "Platformer"
+  "RootNamespace": "Platformer",
+  "Metadata": {
+    "MapList": [
+      "facepunch.construct"
+    ]
+  }
 }
