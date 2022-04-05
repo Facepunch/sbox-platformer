@@ -23,6 +23,8 @@ namespace Platformer
 		[ConVar.Replicated( "plat_debug" )]
 		public static bool PlatDebug { get; set; } = true;
 
+		StandardPostProcess postProcess;
+
 		private List<string> killMessages = new()
 		{
 			"{0} Died",
@@ -35,7 +37,44 @@ namespace Platformer
 			{
 				var hud = new PlatformerHud();
 				hud.Parent = this;
+				_ = GameLoopAsync();
 			}
+
+			if ( IsClient )
+			{
+				postProcess = new StandardPostProcess();
+				PostProcess.Add( postProcess );
+
+				foreach ( var Keys in Entity.All.OfType<KeyPickup>() )
+				{
+					var goal = Entity.All.OfType<KeyPickup>();
+					Keys.ToString();
+				}
+			}
+		}
+
+		[Event.Entity.PostSpawn]
+		private void PostEntitySpawn()
+		{
+			if ( Host.IsClient )
+			{
+				KeysCollected.InitKeys();
+
+			}
+
+			if ( !Host.IsServer ) return;
+
+			// temp thing til we do our own path entity for rails
+			All.OfType<GenericPathEntity>()
+				.ToList()
+				.ForEach( x => x.Transmit = TransmitType.Always );
+		}
+
+		public override void PostLevelLoaded()
+		{
+			base.PostLevelLoaded();
+
+
 		}
 
 		/// <summary>
@@ -81,6 +120,37 @@ namespace Platformer
 
 			lastFallMessage = idx;
 			return string.Format( killMessages[idx], playerName );
+		}
+
+		public override void FrameSimulate( Client cl )
+		{
+			base.FrameSimulate( cl );
+
+			postProcess.Sharpen.Enabled = false;
+
+			postProcess.FilmGrain.Enabled = false;
+			postProcess.FilmGrain.Intensity = 0.2f;
+			postProcess.FilmGrain.Response = 1;
+
+			postProcess.Vignette.Enabled = true;
+			postProcess.Vignette.Intensity = 1.0f;
+			postProcess.Vignette.Roundness = 1.5f;
+			postProcess.Vignette.Smoothness = 0.5f;
+			postProcess.Vignette.Color = Color.Black;
+
+			postProcess.Saturate.Enabled = true;
+			postProcess.Saturate.Amount = 1;
+
+			postProcess.Blur.Enabled = false;
+
+
+			if ( CurrentState == GameStates.Warmup )
+			{
+				postProcess.FilmGrain.Intensity = 0.4f;
+				postProcess.FilmGrain.Response = 0.5f;
+
+				postProcess.Saturate.Amount = 0.5f;
+			}
 		}
 	}
 
