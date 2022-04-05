@@ -17,6 +17,8 @@ internal partial class CoinPickup : BaseCollectible
 		pl.Coin++;
 		pl.PickedUpItem( Color.Yellow );
 
+		pl.Client.AddInt( "kills" );
+
 		return true;
 	}
 
