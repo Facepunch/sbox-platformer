@@ -12,12 +12,10 @@ namespace Platformer
 		public const float MaxRenderDistance = 128f;
 
 		public Clothing.Container Clothing = new();
-		private Particles FakeShadow;
 		private DamageInfo lastDamage;
 		private float LastHealth;
 
 		private TimeSince ts;
-		private TimeSince tshealthpick;
 
 		public string MapName => Global.MapName;
 		public bool JustPickedupHealth;
@@ -43,7 +41,7 @@ namespace Platformer
 		[Net]
 		public TimeUntil TimeUntilVulnerable { get; set; }
 		[Net]
-		public int NumberLife { get; set; } = 3;
+		public int NumberLife { get; set; } = 1;
 		[Net]
 		public int Coin { get; set; }
 		[Net]
@@ -82,6 +80,7 @@ namespace Platformer
 
 			Clothing.DressEntity( this );
 
+
 			//FakeShadow = Particles.Create( "particles/gameplay/fake_shadow/fake_shadow.vpcf", this );
 
 			base.Respawn();
@@ -105,7 +104,6 @@ namespace Platformer
 			}
 
 			GotoBestCheckpoint();
-
 
 			Tags.Add( "Platplayer" );
 		}
@@ -193,6 +191,8 @@ namespace Platformer
 			{
 				GliderEnergy = (float)Math.Round(controller.Energy);
 			}
+
+			TickPlayerUse();
 
 			if ( InputActions.Kill.Down() )
 			{
