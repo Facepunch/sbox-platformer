@@ -7,6 +7,7 @@ namespace Platformer.UI
 	[Library]
 	public partial class PlatformerHud : HudEntity<RootPanel>
 	{
+
 		public PlatformerHud()
 		{
 			if ( !IsClient )
@@ -14,6 +15,8 @@ namespace Platformer.UI
 
 			RootPanel.StyleSheet.Load( "/ui/PlatformerHud.scss" );
 			RootPanel.StyleSheet.Load( "/ui/NewArea.scss" );
+
+			RootPanel.AddChild<PlatformerScoreboard>();
 
 			RootPanel.AddChild<PlatfotmerNameTags>();
 			RootPanel.AddChild<HealthCurrent>();
@@ -24,7 +27,8 @@ namespace Platformer.UI
 			RootPanel.AddChild<NewArea>();
 			RootPanel.AddChild<PlatformerChatBox>();
 			RootPanel.AddChild<PlatformerKillfeed>();
-			RootPanel.AddChild<EnergyCurrent>();
+			RootPanel.AddChild<RoundTimer>();
+			//RootPanel.AddChild<EnergyCurrent>();
 
 		}
 	}

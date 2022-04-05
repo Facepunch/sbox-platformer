@@ -1,47 +1,47 @@
 HealthCurrent {
-  position: absolute;
-  left: 48px;
-  top: 24px;
-  transition: all 0.25s ease-out;
-  width: 196px;
-  height: 196px;
-
-  .health-block {
     position: absolute;
-    background-image: url("/ui/hud/circlehud.png");
-    background-size: cover;
-    background-tint: #e74c3c;
-    width: 100px;
-    height: 100px;
-    transform-origin: 50% 50%;
-  }
+    left: 48px;
+    top: 24px;
+    transition: all 0.25s ease-out;
+    width: 196px;
+    height: 196px;
 
-  .health-block-0 {
-    left: 0;
-    top: 0;
-  }
+    .health-block {
+        position: absolute;
+        background-image: url("/ui/hud/circlehud.png");
+        background-size: cover;
+        background-tint: #e74c3c;
+        width: 100px;
+        height: 100px;
+        transform-origin: 50% 50%;
+    }
 
-  .health-block-1 {
-    transform: rotate(90deg);
-    top: 0;
-    right: 0;
-  }
+    .health-block-0 {
+        left: 0;
+        top: 0;
+    }
 
-  .health-block-2 {
-    transform: rotate(180deg);
-    bottom: 0;
-    right: 0;
-  }
+    .health-block-1 {
+        transform: rotate(90deg);
+        top: 0;
+        right: 0;
+    }
 
-  .health-block-3 {
-    transform: rotate(270deg);
-    bottom: 0;
-    left: 0;
-  }
+    .health-block-2 {
+        transform: rotate(180deg);
+        bottom: 0;
+        right: 0;
+    }
 
-  .visible {
-    background-tint: #2ecc71;
-  }
+    .health-block-3 {
+        transform: rotate(270deg);
+        bottom: 0;
+        left: 0;
+    }
+
+    .visible {
+        background-tint: #2ecc71;
+    }
 }
 
 LifeCurrent {
@@ -75,13 +75,45 @@ LifeCurrent {
 
   .playerimage {
     position: absolute;
-    width: 108px;
+    width: 110px;
     aspect-ratio: 1;
-    top: -48px;
-    left:1.5%;
+    top: -46.5px;
+    left: -4.6px;
     border-radius: 50%;
     border: 6px black;
   }
+}
+
+RoundTimer {
+    position: absolute;
+    right: 100px;
+    top: 48px;
+    width: 175px;
+    height: 60px;
+    margin: 0px 2px;
+    transition: all 0.6s ease-in-out;
+    margin-top: 10px;
+    font-family: poppins;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50px;
+
+
+    .game-state {
+        width: 60px;
+        height: 60px;
+    }
+
+    .game-timer {
+        position: absolute;
+        font-size: 24px;
+        color: #607D8B;
+        font-family: Poppins;
+        font-weight: 800;
+        text-transform: uppercase;
+        left: 65px;
+        right: 0;
+        bottom: 7%;
+    }
 }
 
 CoinCurrent {
@@ -123,22 +155,21 @@ CoinCurrent {
 
 KeysCollected {
     position: absolute;
-    left: 5px;
-    top: 10px;
+    top: 260px;
+    left:32px;
     padding: 0 0px;
     transition: all 0.25s ease-out;
-    flex-direction: column;
-
-
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 300px;
 
     KeyPanel {
         opacity: .15;
-        font-family: "Material Icons";
-        text-stroke: 12px black;
+        font-family: Poppins;
+        text-stroke: 2px black;
         // transform: rotate(20deg);
         padding-left: 10px;
-        font-size: 48px;
-        font-weight: bold;
+        font-size: 24px;
         color: #3498db;
         transition: all 0.25s ease-out;
 
@@ -149,18 +180,7 @@ KeysCollected {
 
     .key1 {
         //color: #EA2027;
-    }
-
-    .key2 {
-        // color: #009432;
-    }
-
-    .key3 {
-        //color: #0652DD;
-    }
-
-    .key4 {
-        //color: #D980FA;
+        padding: 1 1px;
     }
 }
 EnergyCurrent {
