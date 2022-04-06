@@ -73,7 +73,7 @@ internal partial class KeyPickup : AnimEntity
 	[Event.Tick.Server]
 	public void Tick()
 	{
-		Rotation = Rotation.FromYaw( Rotation.Yaw() + 200 * Time.Delta );
+		Rotation = Rotation.FromYaw( Rotation.Yaw() + 500 * Time.Delta );
 	}
 
 	public void Reset(Entity ent)
