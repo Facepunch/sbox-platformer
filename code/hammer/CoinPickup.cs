@@ -25,7 +25,7 @@ internal partial class CoinPickup : BaseCollectible
 	protected override void OnCollectedEffect()
 	{
 		Sound.FromEntity( "life.pickup", this );
-		Particles.Create( "particles/explosion/barrel_explosion/explosion_gib.vpcf", this );
+		Particles.Create( "particles/gameplay/player/coincollected/coincollected.vpcf", this );
 	}
 
 }
