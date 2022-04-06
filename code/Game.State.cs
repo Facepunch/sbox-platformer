@@ -20,6 +20,7 @@ namespace Platformer
 		public GameStates GameState { get; set; } = GameStates.Warmup;
 		[Net]
 		public string NextMap { get; set; } = "facepunch.datacore";
+		public bool GameIsLive { get; private set; }
 
 		[AdminCmd]
 		public static void SkipStage()
@@ -33,39 +34,39 @@ namespace Platformer
 		{
 			if ( CurrentState == GameStates.Warmup )
 			{
-				if ( StateTimer <= 45 )
+				await Task.DelayRealtimeSeconds( 45.0f );
+				if ( StateTimer == 45 )
 				{
 					GameState = GameStates.Live;
 				}
 			}
-			while ( StateTimer > 0 )
+			if( CurrentState == GameStates.Live )
 			{
-				await Task.DelayRealtimeSeconds( 1.0f );
-			}
 
-			// extra second for fun
-			await Task.DelayRealtimeSeconds( 1.0f );
+			}
 		}
 
 		private async Task GameLoopAsync()
 		{
 			GameState = GameStates.Warmup;
-			StateTimer = 10;
+			StateTimer = 0f;
 			await WaitStateTimer();
 
 			GameState = GameStates.Live;
-			StateTimer = 1;
-			await WaitStateTimer();
+			StateTimer = 0f;
 
-			GameState = GameStates.GameEnd;
-			StateTimer = 10.0f;
-			await WaitStateTimer();
+			if ( GameIsLive )
+			{
+				GameState = GameStates.GameEnd;
+				StateTimer = 0f;
+				await WaitStateTimer();
 
-			//GameState = GameStates.MapVote;
-			//StateTimer = 10.0f;
-			//await WaitStateTimer();
+				//GameState = GameStates.MapVote;
+				//StateTimer = 10.0f;
+				//await WaitStateTimer();
 
-			Global.ChangeLevel( NextMap );
+				Global.ChangeLevel( NextMap );
+			}
 		}
 		private void FreshStart()
 		{
