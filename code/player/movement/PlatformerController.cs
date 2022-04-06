@@ -23,6 +23,8 @@ namespace Platformer.Movement
 		private List<BaseMoveMechanic> mechanics = new();
 		private BaseMoveMechanic activeMechanic => mechanics.FirstOrDefault( x => x.IsActive );
 
+		public bool PlayerPickedUpGlider { get; private set; } = false;
+
 		public PlatformerController()
 		{
 			//mechanics.Add( new StepJump( this ) );
@@ -39,12 +41,13 @@ namespace Platformer.Movement
 			//mechanics.Add( new LedgeJump( this ) );
 			mechanics.Add( new DuckJump( this ) );
 			mechanics.Add( new DoubleJump( this ) );
-			//mechanics.Add( new Glide( this ) );
+			mechanics.Add( new Glide( this ) );
 			mechanics.Add( new FallDamage( this ) );
 			mechanics.Add( new LongJump( this ) );
 			mechanics.Add( new RailSlide( this ) );
 			//mechanics.Add( new GroundSlam( this ) ); Needs work.
-
+			
+			
 
 			mechanics.Add( new MoveDebug( this ) );
 		}
@@ -136,27 +139,28 @@ namespace Platformer.Movement
 
 			var startOnGround = GroundEntity != null;
 
-			//if ( Host.IsServer )
-			//{
-			//	if ( !GetMechanic<Glide>().Gliding && (startOnGround) )
-			//	{
-			//		IsRegeneratingEnergy = true;
-			//		Energy = (Energy + EnergyRegen * Time.Delta).Clamp( 0f, MaxEnergy );
-			//	}
-			//	else
-			//	{
-			//		IsRegeneratingEnergy = false;
-			//	}
-			//}
+			if ( PlayerPickedUpGlider )
+			{
+				if ( Host.IsServer )
+				{
+					if ( !GetMechanic<Glide>().Gliding && (startOnGround) )
+					{
+						IsRegeneratingEnergy = true;
+						Energy = (Energy + EnergyRegen * Time.Delta).Clamp( 0f, MaxEnergy );
+					}
+					else
+					{
+						IsRegeneratingEnergy = false;
+					}
+				}
+			}
 
 		}
-
 		public virtual void SetBBox( Vector3 mins, Vector3 maxs )
 		{
 			Mins = mins;
 			Maxs = maxs;
 		}
-
 		public virtual void UpdateBBox()
 		{
 			var girth = BodyGirth * 0.5f;
@@ -279,5 +283,10 @@ namespace Platformer.Movement
 			return TraceBBox( start, end, Mins, Maxs, liftFeet );
 		}
 
+		public void EnableGliderControl()
+		{
+			Log.Info( "Enable" );
+			PlayerPickedUpGlider = true;
+		}
 	}
 }

@@ -29,6 +29,8 @@ namespace Platformer
 		public bool IgnoreFallDamage = false;
 		public Color Color { get; private set; }
 
+		public bool PlayerHasGlider { get; set; } = false;
+
 		[Net]
 		public IList<int> KeysPlayerHas { get; set; } = new List<int>();
 
@@ -46,6 +48,9 @@ namespace Platformer
 		public int Coin { get; set; }
 		[Net]
 		public List<Checkpoint> Checkpoints { get; set; } = new();
+
+		[Net]
+		public Entity HeldBody { get; private set; }
 
 		public PlatformerPawn() { }
 
@@ -271,6 +276,8 @@ namespace Platformer
 			base.FrameSimulate( cl );
 		}
 
+
+
 		[Event.Frame]
 		private void UpdateRenderAlpha()
 		{
@@ -290,6 +297,7 @@ namespace Platformer
 				if ( child is not ModelEntity m || !child.IsValid() ) continue;
 				m.RenderColor = m.RenderColor.WithAlpha( a );
 			}
+
 		}
 
 		public void ApplyForce( Vector3 force )
@@ -300,5 +308,18 @@ namespace Platformer
 				
 			}
 		}
+
+		public void PlayerPickedUpGlider()
+		{
+			if(PlayerHasGlider)
+			{
+				if ( Controller is PlatformerController controller )
+				{
+					controller.EnableGliderControl();
+					Log.Info( PlayerHasGlider );
+				}
+			}
+		}
+
 	}
 }

@@ -24,6 +24,8 @@ namespace Platformer.Movement
 
 			Gliding = false;
 
+			if ( !ctrl.PlayerPickedUpGlider ) return;
+
 			if ( ctrl.GroundEntity != null ) return;
 			if ( ctrl.Energy == 0 ) return;
 			if ( !InputActions.Jump.Down() )
@@ -38,6 +40,5 @@ namespace Platformer.Movement
 			ctrl.Energy = (ctrl.Energy - ctrl.EnergyDrain * Time.Delta).Clamp( 0f, ctrl.MaxEnergy );
 			ctrl.Velocity = ctrl.Velocity.WithZ( -GlideGravity );
 		}
-
 	}
 }
