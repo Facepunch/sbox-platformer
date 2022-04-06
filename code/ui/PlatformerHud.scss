@@ -1,10 +1,11 @@
 HealthCurrent {
     position: absolute;
-    left: 48px;
+    left: 46px;
     top: 24px;
     transition: all 0.25s ease-out;
     width: 196px;
     height: 196px;
+    z-index: 2;
 
     .health-block {
         position: absolute;
@@ -155,18 +156,17 @@ CoinCurrent {
 
 KeysCollected {
     position: absolute;
-    right: 100px;
+    right: 105px;
     top: 128px;
     padding: 4 4px;
     transition: all 0.25s ease-out;
     flex-direction: row-reverse;
     flex-wrap: wrap;
-    min-width:20px;
-    max-width:200px;
-    min-height:20px;
-    max-height:500px;
-    background-color: rgba(255, 255, 255,.02);
-    border-radius: 25px;
+    min-width: 20px;
+    max-width: 200px;
+    min-height: 20px;
+    max-height: 500px;
+
 
     KeyPanel {
         opacity: .15;
@@ -177,6 +177,8 @@ KeysCollected {
         font-size: 24px;
         color: #3498db;
         transition: all 0.25s ease-out;
+        background-color: rgba(255, 255, 255,.02);
+        border-radius: 25px;
 
         &.Active {
             opacity: 1;
@@ -186,6 +188,8 @@ KeysCollected {
     .key1 {
         //color: #EA2027;
         padding: 2 6px;
+        background-color: rgba(255, 255, 255,.04);
+        border-radius: 50px;
     }
 }
 EnergyCurrent {
@@ -194,7 +198,7 @@ EnergyCurrent {
     flex-direction: column;
     //justify-content: center;
     position: absolute;
-    left: 11%;
+    left: 210px;
     top: 12.45%;
     width: 200px;
 
