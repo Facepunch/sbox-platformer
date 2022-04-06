@@ -1,16 +1,15 @@
 ﻿
 using Hammer;
 using Sandbox;
-using Sandbox.UI;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+
 
 namespace Platformer;
 
 [Library( "plat_key", Description = "Key Pickup" )]
 [Model( Model = "models/citizen_props/coin01.vmdl" )]
 [EntityTool( "Key Pickup", "Platformer", "Key Pickup." )]
-internal partial class KeyPickup : ModelEntity
+internal partial class KeyPickup : AnimEntity
 {
 	/// <summary>
 	/// 🍆💦 😝
@@ -69,6 +68,12 @@ internal partial class KeyPickup : ModelEntity
 		//EnableDrawing = false;
 		RenderColor = RenderColor.WithAlpha( 0 );
 		Particles.Create( "particles/explosion/barrel_explosion/explosion_gib.vpcf", this );
+	}
+
+	[Event.Tick.Server]
+	public void Tick()
+	{
+		Rotation = Rotation.FromYaw( Rotation.Yaw() + 200 * Time.Delta );
 	}
 
 	public void Reset(Entity ent)
