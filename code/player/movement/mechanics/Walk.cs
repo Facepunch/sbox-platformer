@@ -31,10 +31,8 @@ namespace Platformer.Movement
 		public override void Simulate()
 		{
 			if ( ctrl.GroundEntity == null ) return;
-
 			WalkMove();
 			CheckJumpButton();
-			DoGroundRotation();
 		}
 
 		public override void PostSimulate()
@@ -42,6 +40,7 @@ namespace Platformer.Movement
 			base.PostSimulate();
 
 			CategorizePosition( ctrl.GroundEntity != null );
+			MoveWithGround();
 		}
 
 		public override float GetWishSpeed()
@@ -73,7 +72,7 @@ namespace Platformer.Movement
 			ctrl.Velocity = ctrl.Velocity.WithZ( 0 );
 
 			// Add in any base velocity to the current velocity.
-			ctrl.Velocity += ctrl.BaseVelocity;
+			//ctrl.Velocity += ctrl.BaseVelocity;
 
 			try
 			{
@@ -101,7 +100,7 @@ namespace Platformer.Movement
 			{
 
 				// Now pull the base velocity back out.   Base velocity is set if you are on a moving object, like a conveyor (or maybe another monster?)
-				ctrl.Velocity -= ctrl.BaseVelocity;
+				//ctrl.Velocity -= ctrl.BaseVelocity;
 			}
 
 			StayOnGround();
@@ -124,21 +123,28 @@ namespace Platformer.Movement
 			new FallCameraModifier( jumpPower );
 		}
 
-		private Rotation prevRot;
+		private Transform prevTx;
 		private Entity prevGroundEntity;
-		private void DoGroundRotation()
+		private void MoveWithGround()
 		{
 			if ( ctrl.GroundEntity == null ) return;
-			if ( prevRot == ctrl.GroundEntity.Rotation ) return;
+			if ( prevTx == ctrl.GroundEntity.Transform ) return;
 
 			if ( prevGroundEntity == ctrl.GroundEntity )
 			{
-				var delta = Rotation.Difference( prevRot, ctrl.GroundEntity.Rotation );
-				ctrl.Position = ctrl.Position.RotateAroundPivot( ctrl.GroundEntity.Position, delta );
+				if ( prevTx.Rotation != ctrl.GroundEntity.Transform.Rotation )
+				{
+					var rotdelta = Rotation.Difference( prevTx.Rotation, ctrl.GroundEntity.Rotation );
+					ctrl.Position = ctrl.Position.RotateAroundPivot( ctrl.GroundEntity.Position, rotdelta );
+				}
+
+				var posdelta = ctrl.GroundEntity.Position - prevTx.Position;
+				if ( posdelta.z < 0 ) posdelta.z = 0;
+				ctrl.Position += posdelta;
 			}
 
 			prevGroundEntity = ctrl.GroundEntity;
-			prevRot = ctrl.GroundEntity.Rotation;
+			prevTx = ctrl.GroundEntity.Transform;
 		}
 
 		// todo: really need to do this in a way we can define simply
