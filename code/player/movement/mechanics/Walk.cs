@@ -1,4 +1,5 @@
 ﻿
+using Platformer.Utility;
 using Sandbox;
 
 namespace Platformer.Movement
@@ -33,6 +34,7 @@ namespace Platformer.Movement
 
 			WalkMove();
 			CheckJumpButton();
+			DoGroundRotation();
 		}
 
 		public override void PostSimulate()
@@ -101,7 +103,7 @@ namespace Platformer.Movement
 				// Now pull the base velocity back out.   Base velocity is set if you are on a moving object, like a conveyor (or maybe another monster?)
 				ctrl.Velocity -= ctrl.BaseVelocity;
 			}
-			
+
 			StayOnGround();
 		}
 
@@ -120,6 +122,23 @@ namespace Platformer.Movement
 			ctrl.AddEvent( "jump" );
 
 			new FallCameraModifier( jumpPower );
+		}
+
+		private Rotation prevRot;
+		private Entity prevGroundEntity;
+		private void DoGroundRotation()
+		{
+			if ( ctrl.GroundEntity == null ) return;
+			if ( prevRot == ctrl.GroundEntity.Rotation ) return;
+
+			if ( prevGroundEntity == ctrl.GroundEntity )
+			{
+				var delta = Rotation.Difference( prevRot, ctrl.GroundEntity.Rotation );
+				ctrl.Position = ctrl.Position.RotateAroundPivot( ctrl.GroundEntity.Position, delta );
+			}
+
+			prevGroundEntity = ctrl.GroundEntity;
+			prevRot = ctrl.GroundEntity.Rotation;
 		}
 
 		// todo: really need to do this in a way we can define simply
