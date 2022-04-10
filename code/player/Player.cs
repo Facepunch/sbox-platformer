@@ -50,7 +50,7 @@ namespace Platformer
 		public List<Checkpoint> Checkpoints { get; set; } = new();
 
 		[Net]
-		public Entity HeldBody { get; private set; }
+		public PropCarriable HeldBody { get; set; }
 
 		public PlatformerPawn() { }
 
@@ -185,6 +185,19 @@ namespace Platformer
 			}
 		}
 
+		protected override void TickPlayerUse()
+		{
+			if ( HeldBody.IsValid() ) 
+				return;
+
+			if ( TimeUntilCanUse > 0 )
+				return;
+
+			base.TickPlayerUse();
+		}
+
+		private TimeUntil TimeUntilCanUse;
+
 		/// <summary>
 		/// Called every tick, clientside and serverside.
 		/// </summary>
@@ -192,28 +205,32 @@ namespace Platformer
 		{
 			base.Simulate( cl );
 
-			if ( Controller is PlatformerController controller )
+			if ( !IsServer ) return;
+
+			if ( HeldBody.IsValid() && InputActions.Use.Pressed() )
 			{
-				GliderEnergy = (float)Math.Round(controller.Energy);
+				HeldBody.Throw();
+				HeldBody = null;
+				TimeUntilCanUse = 1f;
 			}
 
 			TickPlayerUse();
+
+			if ( Controller is PlatformerController controller )
+			{
+				GliderEnergy = (float)Math.Round( controller.Energy );
+			}
 
 			if ( InputActions.Kill.Down() )
 			{
 				Game.Current.DoPlayerSuicide( cl );
 			}
 
-			if (Health == 1)
+			if ( Health == 1 && ts > 2 )
 			{
-				if (ts > 2)
-				{
-					LowHealth();
-					ts = 0;
-				}
-					
+				LowHealth();
+				ts = 0;
 			}
-
 		}
 
 		[Event.Frame]
@@ -231,9 +248,7 @@ namespace Platformer
 			FakeShadowParticle.SetPosition( 0, result.EndPosition );
 
 			//DebugOverlay.TraceResult( result );
-
 		}
-
 
 		public void PickedUpItem(Color itempickedup)
 		{
@@ -250,6 +265,7 @@ namespace Platformer
 					.WithEasing( EasingType.EaseOut );
 			}
 		}
+
 		public void LowHealth()
 		{
 			if ( IsServer )
@@ -268,15 +284,20 @@ namespace Platformer
 			}
 		}
 
-		/// <summary>
-		/// Called every frame on the client
-		/// </summary>
-		public override void FrameSimulate( Client cl )
+		protected override Entity FindUsable()
 		{
-			base.FrameSimulate( cl );
+			var startpos = Position + Vector3.Up * 5;
+			var endpos = startpos + Rotation.Forward * 60f;
+			var tr = Trace.Sphere( 5f, startpos, endpos )
+				.Ignore( this )
+				.EntitiesOnly()
+				.Run();
+
+			if ( tr.Entity.IsValid() && tr.Entity is IUse use && use.IsUsable( this ) )
+				return tr.Entity;
+
+			return null;
 		}
-
-
 
 		[Event.Frame]
 		private void UpdateRenderAlpha()
