@@ -53,7 +53,7 @@ LifeCurrent {
   padding: 0 20px;
   transition: all 0.25s ease-out;
   flex-direction: row;
-  z-index: 1;
+  z-index: 2;
 
   .number {
     font-family: "Fredoka One";
@@ -78,8 +78,8 @@ LifeCurrent {
     position: absolute;
     width: 110px;
     aspect-ratio: 1;
-    top: -46.5px;
-    left: -4.6px;
+    top: -50px;
+    left: -2px;
     border-radius: 50%;
     border: 6px black;
   }

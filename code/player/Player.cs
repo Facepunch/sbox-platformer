@@ -43,7 +43,7 @@ namespace Platformer
 		[Net]
 		public TimeUntil TimeUntilVulnerable { get; set; }
 		[Net]
-		public int NumberLife { get; set; } = 1;
+		public int NumberLife { get; set; } = 4;
 		[Net]
 		public int Coin { get; set; }
 		[Net]
@@ -69,14 +69,16 @@ namespace Platformer
 			Controller = new PlatformerController();
 			Animator = new PlatformerOrbitAnimator();
 
-			if ( Input.UsingController )
-			{
-				CameraMode = new PlatformerShiftCamera();
-			}
-			else
-			{
-				CameraMode = new PlatformerOrbitCamera();
-			}
+			CameraMode = new PlatformerOrbitCamera();
+
+			//if ( Input.UsingController )
+			//{
+			//	CameraMode = new PlatformerShiftCamera();
+			//}
+			//else
+			//{
+			//	CameraMode = new PlatformerOrbitCamera();
+			//}
 
 			EnableAllCollisions = true;
 			EnableDrawing = true;

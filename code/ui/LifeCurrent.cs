@@ -1,9 +1,10 @@
-﻿
+﻿using Platformer;
 using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
+using System.Collections.Generic;
 
-namespace Platformer.UI
+namespace Sandbox.UI
 {
 	public class LifeCurrent : Panel
 	{
@@ -18,6 +19,7 @@ namespace Platformer.UI
 		public LifeCurrent()
 		{
 			Image = Add.Image( "ui/hud/citizen/citizen.png", "playerimage" );
+			Number = Add.Label( "", "number" );
 		}
 
 		public override void Tick()
@@ -32,6 +34,24 @@ namespace Platformer.UI
 
 			_life = _life.LerpTo( life, Time.Delta * 0 );
 
+			Number.SetClass( "lifelow", life <= 1 );
+
+			Number.Text = $"{life}";
+
+			if ( life <= 1 )
+			{
+				LowHealth();
+			}
+			if ( life == 3 )
+			{
+				HighHealth();
+			}
+
+		}
+
+		public void LowHealth()
+		{
+			Image.SetTexture( "ui/hud/citizen/citizen_low.png" );
 		}
 		public void HighHealth()
 		{
