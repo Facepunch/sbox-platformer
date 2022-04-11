@@ -39,7 +39,11 @@ partial class PlatformerPawn
 		TimerState = TimerState.InStartZone;
 		TimeSinceStart = 0;
 
-		if ( IsServer ) ClearCheckpoints();
+		if ( IsServer )
+		{
+			ClearCheckpoints();
+			KeysPlayerHas.Clear();
+		}
 	}
 
 	public void ClearCheckpoints()
