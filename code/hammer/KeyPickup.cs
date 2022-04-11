@@ -21,8 +21,6 @@ internal partial class KeyPickup : AnimEntity
 	[Net]
 	public int KeyNumber { get; set; } = 1;
 
-	private List<Entity> PlayerCollectedKey { get; set; } = new List<Entity>();
-
 	public override void Spawn()
 	{
 		base.Spawn();
@@ -33,12 +31,6 @@ internal partial class KeyPickup : AnimEntity
 		CollisionGroup = CollisionGroup.Trigger;
 		EnableSolidCollisions = false;
 		EnableAllCollisions = true;
-
-	}
-
-	public override void ClientSpawn()
-	{
-		base.ClientSpawn();
 	}
 
 	public override void StartTouch( Entity other )
@@ -49,24 +41,15 @@ internal partial class KeyPickup : AnimEntity
 		if ( pl.KeysPlayerHas.Contains( KeyNumber ) ) return;
 
 		pl.PickedUpItem( Color.Yellow );
-
 		pl.KeysPlayerHas.Add( KeyNumber );
 
-
 		CollectedHealthPickup(To.Single (other.Client) );
-		PlayerCollectedKey.Add( pl );
-
 	}
 
 	[ClientRpc]
 	private void CollectedHealthPickup()
 	{
 		Sound.FromEntity( "life.pickup", this );
-
-		
-
-		//EnableDrawing = false;
-		RenderColor = RenderColor.WithAlpha( 0 );
 		Particles.Create( "particles/explosion/barrel_explosion/explosion_gib.vpcf", this );
 	}
 
@@ -76,17 +59,19 @@ internal partial class KeyPickup : AnimEntity
 		Rotation = Rotation.FromYaw( Rotation.Yaw() + 500 * Time.Delta );
 	}
 
-	public void Reset(Entity ent)
+	[Event.Tick.Client]
+	private void ClientTick()
 	{
-		PlayerCollectedKey.Remove( ent );
-		ResetDrawing(To.Single(ent.Client));
+		var a = ShouldRender() ? 1 : 0;
+		RenderColor = RenderColor.WithAlpha( a );
 	}
 
-	[ClientRpc]
-	public void ResetDrawing()
+	private bool ShouldRender()
 	{
-		RenderColor = RenderColor.WithAlpha( 1 );
-		//EnableDrawing = true;
+		if ( !Local.Pawn.IsValid() ) return true;
+		if ( Local.Pawn is not PlatformerPawn pl ) return true;
+
+		return !pl.KeysPlayerHas.Contains( KeyNumber );
 	}
 
 }
