@@ -39,7 +39,7 @@ internal class PropCarriable : Prop, IUse
 		return true;
 	}
 
-	[Event.Tick]
+	[Event.Tick.Server]
 	private void OnTick()
 	{
 		if ( !Parent.IsValid() ) return;
