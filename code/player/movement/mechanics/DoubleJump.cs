@@ -35,11 +35,11 @@ namespace Platformer.Movement
 
 			if( ctrl.GroundEntity != null )
 			{
+				timeUntilCanDoubleJump = .25f;
 				DoubleJumpsRemaining = 1;
 
 				if ( InputActions.Jump.Pressed() )
 				{
-					timeUntilCanDoubleJump = .25f;
 					justJumped = true;
 				}
 			}
