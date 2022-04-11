@@ -6,6 +6,13 @@ namespace Platformer;
 [Library("plat_prop_carriable")]
 internal class PropCarriable : Prop, IUse
 {
+	public override void Spawn()
+	{
+		base.Spawn();
+
+		Transmit = TransmitType.Always;
+
+	}
 
 	public void Throw()
 	{

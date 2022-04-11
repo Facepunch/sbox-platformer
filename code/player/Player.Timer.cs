@@ -1,5 +1,6 @@
 ﻿
 using Sandbox;
+using System;
 using System.Linq;
 
 namespace Platformer
@@ -16,6 +17,8 @@ namespace Platformer
 
 
 		public bool CourseIncomplete => BestTime == defaultBestTime;
+
+		public object Timer { get; private set; }
 
 		private const float defaultBestTime = 3600f; // easier to check for this than sorting out 0/default
 
@@ -36,11 +39,16 @@ namespace Platformer
 		public void CompleteCourse()
 		{
 			TimerState = TimerState.Finished;
+			var game = Game.Current as Platformer;
+
+			var span = TimeSpan.FromSeconds( (game.StateTimer * 60).Clamp( 0, float.MaxValue ) );
+
+			Timer = span.ToString( @"hh\:mm" );
 
 			if ( IsServer )
 			{
 				ClearCheckpoints();
-
+				PlatformerKillfeed.AddEntryOnClient( To.Everyone, $"{Client.Name} has completed the course in {Timer}", Client.NetworkIdent );
 				Celebrate();
 			}
 		}
@@ -116,7 +124,6 @@ namespace Platformer
 		private void Celebrate()
 		{
 			if ( !IsLocalPawn ) return;
-
 			Particles.Create( "particles/finish/finish_effect.vpcf" );
 			Sound.FromScreen( "course.complete" );
 

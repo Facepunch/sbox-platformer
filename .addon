@@ -1,18 +1,21 @@
 {
   "Title": "Platformer",
   "Type": "game",
-  "Org": "local",
+  "Org": "facepunch",
   "Ident": "platformer",
   "Schema": 1,
   "HasAssets": true,
   "AssetsPath": "",
-  "ResourcePaths": null,
+  "ResourcePaths": [
+    "\\ui\\*"
+  ],
   "HasCode": true,
   "CodePath": "/code/",
   "RootNamespace": "Platformer",
   "Metadata": {
     "MapList": [
-      "facepunch.construct"
-    ]
+      "facepunch.tup_block"
+    ],
+    "MinPlayers": 1
   }
 }

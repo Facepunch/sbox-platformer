@@ -34,8 +34,8 @@ namespace Platformer
 		{
 			if ( CurrentState == GameStates.Warmup )
 			{
-				await Task.DelayRealtimeSeconds( 45.0f );
-				if ( StateTimer == 45 )
+				await Task.DelayRealtimeSeconds( 10.0f );
+				if ( StateTimer == 10 )
 				{
 					GameState = GameStates.Live;
 				}
