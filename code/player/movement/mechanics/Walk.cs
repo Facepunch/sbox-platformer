@@ -22,6 +22,8 @@ namespace Platformer.Movement
 
 		public override bool AlwaysSimulate => true;
 
+		private TimeSince TimeSinceUngrounded;
+
 		public Walk( PlatformerController controller )
 			: base( controller )
 		{
@@ -30,9 +32,18 @@ namespace Platformer.Movement
 
 		public override void Simulate()
 		{
-			if ( ctrl.GroundEntity == null ) return;
-			WalkMove();
+			if ( ctrl.GroundEntity != null ) 
+				WalkMove();
+
 			CheckJumpButton();
+		}
+
+		private bool prevGrounded;
+		public override void PreSimulate()
+		{
+			base.PreSimulate();
+
+			prevGrounded = ctrl.GroundEntity.IsValid();
 		}
 
 		public override void PostSimulate()
@@ -41,6 +52,11 @@ namespace Platformer.Movement
 
 			CategorizePosition( ctrl.GroundEntity != null );
 			MoveWithGround();
+
+			if( prevGrounded && !ctrl.GroundEntity.IsValid() )
+			{
+				TimeSinceUngrounded = 0f;
+			}
 		}
 
 		public override float GetWishSpeed()
@@ -109,6 +125,9 @@ namespace Platformer.Movement
 		private void CheckJumpButton()
 		{
 			if ( !AutoJump && !InputActions.Jump.Pressed() )
+				return;
+
+			if ( !ctrl.GroundEntity.IsValid() && TimeSinceUngrounded > .25f )
 				return;
 
 			var flGroundFactor = 1.0f;
