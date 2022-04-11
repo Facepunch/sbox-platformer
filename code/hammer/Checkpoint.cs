@@ -89,7 +89,7 @@ internal partial class Checkpoint : ModelEntity
 		pl.TrySetCheckpoint( this );
 
 		if ( IsEnd ) pl.CompleteCourse();
-		else if ( IsStart ) pl.EnterStartZone();
+		else if ( IsStart ) pl.ResetTimer();
 	}
 
 	public override void EndTouch( Entity other )
