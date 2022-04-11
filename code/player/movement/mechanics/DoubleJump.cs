@@ -10,7 +10,6 @@ namespace Platformer.Movement
 		public override bool TakesOverControl => false;
 		public override bool AlwaysSimulate => true;
 
-		[Net, Predicted]
 		public int DoubleJumpsRemaining { get; set; }
 
 		private TimeUntil timeUntilCanDoubleJump;
