@@ -117,6 +117,17 @@ RoundTimer {
     }
 }
 
+CourseTimer {
+    position: absolute;
+    top: 145px;
+    left: 225px;
+    text-stroke: 11px black;
+    font-size: 20px;
+    font-family: Poppins;
+    font-weight: 800;
+    color: white;
+}
+
 CoinCurrent {
     position: absolute;
     transform: rotate(-10deg);
