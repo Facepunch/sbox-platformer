@@ -17,6 +17,10 @@
     "MapList": [
       "facepunch.tup_block"
     ],
-    "MinPlayers": 1
+    "MinPlayers": 1,
+    "RankType": 2,
+    "LeaderboardType": 2,
+    "PerMapRanking": false,
+    "MapSelect": 3
   }
 }

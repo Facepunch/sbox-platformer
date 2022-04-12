@@ -2,6 +2,7 @@
 using Sandbox;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Platformer;
 
@@ -13,14 +14,25 @@ partial class PlatformerPawn
 	[Net, Predicted]
 	public TimeSince TimeSinceStart { get; set; }
 
+	[Net, Change]
+	public float BestTime { get; set; } = defaultBestTime;
+
 	public void StartCourse()
 	{
 		TimeSinceStart = 0;
 		TimerState = TimerState.Live;
 		Velocity = Velocity.ClampLength( 240 );
 	}
+	public bool CourseIncomplete => BestTime == defaultBestTime;
 
-	public void CompleteCourse()
+	private const float defaultBestTime = 3600f;
+
+	public void ResetBestTime()
+	{
+		BestTime = defaultBestTime;
+	}
+
+	public async Task CompleteCourseAsync()
 	{
 		TimerState = TimerState.Finished;
 
@@ -32,6 +44,15 @@ partial class PlatformerPawn
 		ClearCheckpoints();
 		PlatformerKillfeed.AddEntryOnClient( To.Everyone, $"{Client.Name} has completed the course in {formattedTime}", Client.NetworkIdent );
 		Celebrate();
+
+		if ( TimeSinceStart < BestTime )
+		{
+			BestTime = TimeSinceStart;
+
+			var scoreResult = await GameServices.SubmitScore( Client.PlayerId, BestTime );
+
+		}
+
 
 	}
 
@@ -100,6 +121,12 @@ partial class PlatformerPawn
 		if ( !IsLocalPawn ) return;
 		Particles.Create( "particles/finish/finish_effect.vpcf" );
 		Sound.FromScreen( "course.complete" );
+	}
+
+	private void OnBestTimeChanged()
+	{
+		if ( !IsLocalPawn ) return;
+		MapStats.Local.SetBestTime( BestTime );
 	}
 
 	//[ServerCmd( "par_nextcp" )]

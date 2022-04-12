@@ -67,6 +67,11 @@ namespace Platformer
 			{
 				cl.SetInt( "points", 0 );
 				cl.SetInt( "deaths", 0 );
+
+				if ( cl.Pawn is not PlatformerPawn pl ) continue;
+				pl.ResetTimer();
+				pl.ResetBestTime();
+				pl.GotoBestCheckpoint();
 			}
 
 			All.OfType<Player>().ToList().ForEach( x =>
