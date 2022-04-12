@@ -27,7 +27,7 @@ partial class PlatformerPawn
 		if ( !IsServer ) return;
 
 		var span = TimeSpan.FromSeconds( TimeSinceStart );
-		var formattedTime = span.ToString( @"hh\:mm" );
+		var formattedTime = span.ToString( @"mm\:ss" );
 
 		ClearCheckpoints();
 		PlatformerKillfeed.AddEntryOnClient( To.Everyone, $"{Client.Name} has completed the course in {formattedTime}", Client.NetworkIdent );
