@@ -1,0 +1,72 @@
+﻿
+$yellow: #ff0;
+$orange: #f70;
+
+mapicon {
+    background-color: red;
+    margin: 10px;
+    background-position: center;
+    background-size: cover;
+    width: 300px;
+    height: 500px;
+    cursor: pointer;
+    color: white;
+    text-stroke: 8px black;
+    border-radius: 25px;
+    z-index: 99;
+
+    &:hover {
+        transform: scale( 1.02 );
+        opacity: 1;
+    }
+
+    .votes {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        background-color: rgba( black, 0.9 );
+        padding: 10px 15px;
+        border-radius: 3px;
+        font-weight: bold;
+        font-size: 32px;
+        min-height: 50px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .info {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: rgba( black, 0.9 );
+        flex-direction: column;
+        padding: 5px;
+        border-radius: 3px;
+
+        .orgavatar {
+            position: absolute;
+            left: 5px;
+            bottom: 5px;
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            background-color: black;
+            background-position: center;
+            background-size: cover;
+        }
+
+        .title {
+            font-weight: bolder;
+            margin-left: 50px;
+            font-size: 20px;
+        }
+
+        .orgname {
+            font-weight: bolder;
+            margin-left: 50px;
+            font-size: 13px;
+            color: #f1c40f;
+            text-stroke: 6px black;
+        }
+    }
+}

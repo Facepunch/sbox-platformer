@@ -210,6 +210,9 @@ namespace Platformer
 		/// </summary>
 		public override void Simulate( Client cl )
 		{
+			if ( Platformer.CurrentState == Platformer.GameStates.GameEnd )
+				return;
+
 			base.Simulate( cl );
 
 			if ( !IsServer ) return;
@@ -356,6 +359,12 @@ namespace Platformer
 					controller.EnableGliderControl();
 				}
 			}
+		}
+
+		[AdminCmd]
+		public static void MapVote()
+		{
+			var vote = new MapVoteEntity();
 		}
 
 	}

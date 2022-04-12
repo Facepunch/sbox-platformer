@@ -7,11 +7,14 @@ namespace Platformer.UI
 	[Library]
 	public partial class PlatformerHud : HudEntity<RootPanel>
 	{
+		public static PlatformerHud Current;
 
 		public PlatformerHud()
 		{
 			if ( !IsClient )
 				return;
+
+			Current = this;
 
 			RootPanel.StyleSheet.Load( "/ui/PlatformerHud.scss" );
 			RootPanel.StyleSheet.Load( "/ui/NewArea.scss" );
@@ -31,6 +34,13 @@ namespace Platformer.UI
 			RootPanel.AddChild<EnergyCurrent>();
 			RootPanel.AddChild<CourseTimer>();
 
+		}
+
+		public void Tick()
+		{
+
+			RootPanel.SetClass( "game-end", Platformer.CurrentState == Platformer.GameStates.GameEnd );
+			RootPanel.SetClass( "game-warmup", Platformer.CurrentState == Platformer.GameStates.Warmup );
 		}
 	}
 }

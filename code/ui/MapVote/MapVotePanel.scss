@@ -1,0 +1,65 @@
+﻿
+$yellow: #ff0;
+$orange: #f70;
+
+mapvotepanel {
+    background-color: #111;
+    position: absolute;
+    left: -50px;
+    right: -50px;
+    top: -50px;
+    bottom: -50px;
+    font-family: "Fredoka One";
+    pointer-events: all;
+    opacity: .9;
+    backdrop-filter: blur( 20px );
+    z-index: 99;
+}
+
+mapvotepanel > .inner
+{
+    margin: 150px 250px;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+mapvotepanel > .inner > .header {
+    flex-direction: row;
+
+    .left {
+        flex-grow: 1;
+        flex-direction: column;
+
+        .title {
+            font-family: "Fredoka One";
+            font-size: 50px;
+            font-weight: bold;
+            color: #f1c40f;
+            text-stroke: 16px black;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-stroke: 16px black;
+        }
+    }
+
+    .right {
+        .countdown {
+            font-family: "Fredoka One";
+            font-size: 50px;
+            font-weight: bold;
+            color: white;
+            text-stroke: 16px black;
+        }
+    }
+}
+
+mapvotepanel > .inner > .body
+{
+    flex-grow: 1;
+    margin: 50px;
+    flex-wrap: wrap;
+}
