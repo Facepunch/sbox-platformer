@@ -22,7 +22,6 @@ public partial class PlatformerDecay : ModelEntity
 
 	[Net, Property] public float RespawnTime { get; set; } = 5f;
 
-
 	public override void Spawn()
 	{
 		base.Spawn();

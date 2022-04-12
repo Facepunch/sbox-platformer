@@ -256,8 +256,8 @@ namespace Platformer
 		{
 			if ( IsServer )
 			{
-				Juice.Scale( 1, 1.1f, 1f )
-					.WithTarget( this )
+				Juice.Scale( 0, 0, 0 )
+					
 					.WithDuration( .45f )
 					.WithEasing( EasingType.EaseOut );
 
@@ -272,7 +272,7 @@ namespace Platformer
 		{
 			if ( IsServer )
 			{
-				Juice.Scale( 1, 1.05f, 1f )
+				Juice.Scale( 0,0,0 )
 					.WithTarget( this )
 					.WithDuration( .45f )
 					.WithEasing( EasingType.EaseOut );
