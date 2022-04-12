@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using System;
 
 namespace Platformer
 {
@@ -21,20 +22,26 @@ namespace Platformer
 
 			UpdateViewBlockers( pawn );
 
+			var distanceA = distance.LerpInverse( MinDistance, MaxDistance );
+
 			distance = distance.LerpTo( targetDistance, 5f * Time.Delta );
 			targetPosition = Vector3.Lerp( targetPosition, pawn.Position, 8f * Time.Delta );
 
-			var distanceA = distance.LerpInverse( MinDistance, MaxDistance );
 			var height = 48f.LerpTo( 96f, distanceA );
 			var center = targetPosition + Vector3.Up * height;
-			var targetPos = center + Input.Rotation.Forward * -distance;
+			var targetPos = center + Input.Rotation.Backward * targetDistance;
 
 			var tr = Trace.Ray( center, targetPos )
 				.Ignore( pawn )
-				.Radius( 8 )
+				.Radius( 10 )
 				.Run();
 
-			var endpos = tr.EndPosition;
+			if ( tr.Hit )
+			{
+				distance = Math.Min( distance, tr.Distance );
+			}
+
+			var endpos = center + Input.Rotation.Backward * distance;
 
 			Position = endpos;
 			Rotation = Input.Rotation;
