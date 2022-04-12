@@ -72,7 +72,6 @@ namespace Platformer
 
 			Controller = new PlatformerController();
 			Animator = new PlatformerOrbitAnimator();
-
 			CameraMode = new PlatformerOrbitCamera();
 
 			//if ( Input.UsingController )
@@ -90,9 +89,6 @@ namespace Platformer
 			EnableShadowInFirstPerson = true;
 
 			Clothing.DressEntity( this );
-
-
-			//FakeShadow = Particles.Create( "particles/gameplay/fake_shadow/fake_shadow.vpcf", this );
 
 			base.Respawn();
 
@@ -213,13 +209,6 @@ namespace Platformer
 		{
 			if ( Platformer.CurrentState == Platformer.GameStates.GameEnd )
 				return;
-			if ( GetActiveController() == DevController )
-			{
-				ResetTimer();
-
-				KeysPlayerHas.Clear();
-				NumberOfKeys = 0;
-			}
 
 			base.Simulate( cl );
 
@@ -258,6 +247,16 @@ namespace Platformer
 			{
 				LowHealth();
 				ts = 0;
+			}
+
+			if ( LifeState == LifeState.Alive )
+			{
+				if ( GetActiveController() == DevController )
+				{
+					ResetTimer();
+					KeysPlayerHas.Clear();
+					NumberOfKeys = 0;
+				}
 			}
 		}
 
