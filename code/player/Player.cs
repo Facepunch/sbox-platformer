@@ -213,6 +213,13 @@ namespace Platformer
 		{
 			if ( Platformer.CurrentState == Platformer.GameStates.GameEnd )
 				return;
+			if ( GetActiveController() == DevController )
+			{
+				ResetTimer();
+
+				KeysPlayerHas.Clear();
+				NumberOfKeys = 0;
+			}
 
 			base.Simulate( cl );
 
