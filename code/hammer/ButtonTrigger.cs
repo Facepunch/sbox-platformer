@@ -39,7 +39,6 @@ internal partial class ButtonTrigger : BaseTrigger
 		if ( !other.IsServer ) return;
 		if(other is PropCarriable prop)
 		{
-			Log.Info( "Heyya" );
 			_ = OnPressed.Fire( this );
 		}
 
@@ -63,7 +62,6 @@ internal partial class ButtonTrigger : BaseTrigger
 
 		if ( other is PropCarriable prop )
 		{
-			Log.Info( "Heyya" );
 			_ = UnPressed.Fire( this );
 		}
 

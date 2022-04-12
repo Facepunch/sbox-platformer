@@ -50,7 +50,6 @@ public partial class PlatformerDecay : ModelEntity
 
 		TimeToHold++;
 
-		Log.Info( TimeToHold/10 );
 		if ( TimeToHold/10 >= DecayTime )
 		{
 

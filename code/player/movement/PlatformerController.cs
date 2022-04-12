@@ -285,7 +285,6 @@ namespace Platformer.Movement
 
 		public void EnableGliderControl()
 		{
-			Log.Info( "Enable" );
 			PlayerPickedUpGlider = true;
 		}
 	}
