@@ -42,6 +42,7 @@ internal partial class KeyPickup : AnimEntity
 
 		pl.PickedUpItem( Color.Yellow );
 		pl.KeysPlayerHas.Add( KeyNumber );
+		pl.NumberOfKeys++;
 
 		CollectedHealthPickup(To.Single (other.Client) );
 	}
@@ -51,6 +52,7 @@ internal partial class KeyPickup : AnimEntity
 	{
 		Sound.FromEntity( "life.pickup", this );
 		Particles.Create( "particles/explosion/barrel_explosion/explosion_gib.vpcf", this );
+
 	}
 
 	[Event.Tick.Server]

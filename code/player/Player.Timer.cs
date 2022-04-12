@@ -32,6 +32,7 @@ partial class PlatformerPawn
 		ClearCheckpoints();
 		PlatformerKillfeed.AddEntryOnClient( To.Everyone, $"{Client.Name} has completed the course in {formattedTime}", Client.NetworkIdent );
 		Celebrate();
+
 	}
 
 	public void ResetTimer()
@@ -42,7 +43,6 @@ partial class PlatformerPawn
 		if ( IsServer )
 		{
 			ClearCheckpoints();
-			KeysPlayerHas.Clear();
 		}
 	}
 

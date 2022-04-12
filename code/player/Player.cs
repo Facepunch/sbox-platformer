@@ -35,6 +35,9 @@ namespace Platformer
 		public IList<int> KeysPlayerHas { get; set; } = new List<int>();
 
 		[Net]
+		public float NumberOfKeys { get; set; }
+
+		[Net]
 		public string CurrentArea { get; set; }
 		public int AreaPriority = 0;
 
@@ -43,7 +46,7 @@ namespace Platformer
 		[Net]
 		public TimeUntil TimeUntilVulnerable { get; set; }
 		[Net]
-		public int NumberLife { get; set; } = 4;
+		public int NumberLife { get; set; } = 3;
 		[Net]
 		public int Coin { get; set; }
 		[Net]
@@ -53,6 +56,7 @@ namespace Platformer
 		public PropCarriable HeldBody { get; set; }
 
 		public PlatformerPawn() { }
+
 
 		public PlatformerPawn( Client cl )
 		{
@@ -103,6 +107,7 @@ namespace Platformer
 				ResetHealthPickUps();
 				ResetLifePickUps();
 				Coin = 0;
+				KeysPlayerHas.Clear();
 			}
 
 			if(CurrentArea == null)
@@ -225,7 +230,17 @@ namespace Platformer
 
 			if ( InputActions.Kill.Down() )
 			{
-				Game.Current.DoPlayerSuicide( cl );
+				if ( TimerState == TimerState.Finished )
+				{
+					KeysPlayerHas.Clear();
+					NumberLife = 3;
+					NumberOfKeys = 0;
+					Game.Current.DoPlayerSuicide( cl );
+				}
+				else
+				{
+					Game.Current.DoPlayerSuicide( cl );
+				}
 			}
 
 			if ( Health == 1 && ts > 2 )
@@ -339,7 +354,6 @@ namespace Platformer
 				if ( Controller is PlatformerController controller )
 				{
 					controller.EnableGliderControl();
-					Log.Info( PlayerHasGlider );
 				}
 			}
 		}

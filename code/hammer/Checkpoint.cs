@@ -89,7 +89,7 @@ internal partial class Checkpoint : ModelEntity
 
 		pl.TrySetCheckpoint( this );
 
-		if ( IsEnd ) pl.CompleteCourse();
+		if ( IsEnd && pl.NumberOfKeys == Platformer.NumberOfCollectables ) pl.CompleteCourse();
 		else if ( IsStart ) pl.ResetTimer();
 	}
 
