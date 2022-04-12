@@ -1,12 +1,13 @@
 ﻿
 using Hammer;
 using Sandbox;
+using System.ComponentModel.DataAnnotations;
 
 namespace Platformer;
 
 [Library( "plat_glider", Description = "Glider Pickup" )]
 [Model( Model = "models/citizen_props/coin01.vmdl" )]
-[EntityTool( "Glider Pickup", "Platformer", "Glider Pickup." )]
+[Display( Name = "Glider Pickup", GroupName = "Platformer", Description = "Glider Pickup." )]
 internal partial class GliderPickup : BaseCollectible
 {
 

@@ -2,12 +2,13 @@
 using Hammer;
 using Sandbox;
 using Sandbox.Internal;
+using System.ComponentModel.DataAnnotations;
 
 namespace Platformer;
 
 [Library( "plat_LaserHazard", Description = "Laser Beam Hazard" )]
 [Model( Model = "models/gameplay/temp/temp_heart_01.vmdl" )]
-[EntityTool( "Laser Beam Hazard", "Platformer", "Laser Beam Hazard." )]
+[Display( Name = "Laser Beam Hazard", GroupName = "Platformer", Description = "Laser Beam Hazard" )]
 [Hammer.DrawAngles]
 public partial class LaserHazard : ModelEntity
 {

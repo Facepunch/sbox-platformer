@@ -2,13 +2,13 @@
 using Hammer;
 using Sandbox;
 using System.Collections.Generic;
-
+using System.ComponentModel.DataAnnotations;
 
 namespace Platformer;
 
 [Library( "plat_key", Description = "Key Pickup" )]
 [Model( Model = "models/citizen_props/coin01.vmdl" )]
-[EntityTool( "Key Pickup", "Platformer", "Key Pickup." )]
+[Display( Name = "Key Pickup", GroupName = "Platformer", Description = "Key Pickup" )]
 internal partial class KeyPickup : AnimEntity
 {
 	/// <summary>

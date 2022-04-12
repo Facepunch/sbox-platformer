@@ -1,15 +1,16 @@
 ﻿using Sandbox;
 using Hammer;
 using Sandbox.UI;
+using System.ComponentModel.DataAnnotations;
 
 namespace Platformer;
 
 /// <summary>
 /// When the player is inside the trigger it will display the location on the hud. It will fall back to the map name.
 /// </summary>
-[Library( "plat_areatrigger", Description = "When the player is inside the trigger it will display the location on the hud." )]
+[Library( "plat_areatrigger")]
 [Hammer.AutoApplyMaterial( "materials/editor/areatrigger/areatrigger.vmat" )]
-[EntityTool( "Area Trigger", "Platformer", "Area Trigger." )]
+[Display( Name = "Area Trigger",GroupName = "Platformer", Description = "When the player is inside the trigger it will display the location on the hud.")]
 internal partial class AreaTrigger : BaseTrigger
 {
 	/// <summary>

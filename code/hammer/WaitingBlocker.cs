@@ -1,6 +1,7 @@
 
 using Sandbox;
 using Hammer;
+using System.ComponentModel.DataAnnotations;
 
 namespace Platformer
 {
@@ -11,7 +12,7 @@ namespace Platformer
 	[Hammer.Solid]
 	[Hammer.RenderFields]
 	[Hammer.VisGroup( Hammer.VisGroup.Dynamic )]
-	[EntityTool( "Waiting Blocker", "Platformer", "Waiting Blocker." )]
+	[Display( Name = "Waiting Blocker", GroupName = "Platformer", Description = "Waiting Blocker." )]
 
 	public partial class WaitingBlocker : BrushEntity
 	{

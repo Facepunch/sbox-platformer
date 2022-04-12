@@ -16,8 +16,8 @@
 	transform-origin: 50% 50%;
 	background-size: 100% 100%;
 	background-position: center center;
-	background-color: rgba( 10, 10, 10, 0.1 );
-	backdrop-filter: blur( 20px );
+	background-color: rgba( 100, 10, 10, 0.1 );
+	backdrop-filter: blur( 30px );
 
 	&.open {
 		opacity: 1;

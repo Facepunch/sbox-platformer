@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Sandbox;
 
@@ -8,6 +9,7 @@ namespace Platformer;
 /// A simple platform that moves between two locations and can be controlled through Entity IO.
 /// </summary>
 [Library( "plat_platform" )]
+[Display( Name = "Platform Decay", GroupName = "Platformer", Description = "Platform dies after time." )]
 [Hammer.SupportsSolid]
 [Hammer.Model]
 [Hammer.RenderFields]

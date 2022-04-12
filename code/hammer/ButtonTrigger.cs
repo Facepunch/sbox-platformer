@@ -1,15 +1,16 @@
 ﻿using Sandbox;
 using Hammer;
 using Sandbox.UI;
+using System.ComponentModel.DataAnnotations;
 
 namespace Platformer;
 
 /// <summary>
 /// When the player is inside the trigger it will display the location on the hud. It will fall back to the map name.
 /// </summary>
-[Library( "plat_buttontrigger", Description = "When the player is inside the trigger it will display the location on the hud." )]
+[Library( "plat_buttontrigger", Description = "Triggers when Prop Carriable is inside volume" )]
 [Hammer.AutoApplyMaterial( "materials/editor/areatrigger/areatrigger.vmat" )]
-[EntityTool( "Button Trigger", "Platformer", "Button Trigger." )]
+[Display( Name = "Button Trigger", GroupName = "Platformer", Description = "Triggers when Prop Carriable is inside volume" )]
 internal partial class ButtonTrigger : BaseTrigger
 {
 

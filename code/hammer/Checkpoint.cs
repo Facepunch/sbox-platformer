@@ -1,13 +1,14 @@
 ﻿using Hammer;
 using Sandbox;
 using Sandbox.Internal;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace Platformer;
 
 [Library( "plat_checkpoint", Description = "Defines a checkpoint where the player will respawn after falling" )]
 [Model( Model = "models/gameplay/checkpoint/editor_checkpoint/editor_checkpoint.vmdl" )]
-[EntityTool( "Player Checkpoint", "Platformer", "Defines a checkpoint where the player will respawn after falling." )]
+[Display( Name = "Player Checkpoint", GroupName = "Platformer", Description = "Defines a checkpoint where the player will respawn after falling" )]
 [BoundsHelper( "mins", "maxs", false, true )]
 internal partial class Checkpoint : ModelEntity
 {

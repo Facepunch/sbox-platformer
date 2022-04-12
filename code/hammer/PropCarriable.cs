@@ -1,9 +1,11 @@
 ﻿
 using Sandbox;
+using System.ComponentModel.DataAnnotations;
 
 namespace Platformer;
 
 [Library("plat_prop_carriable")]
+[Display( Name = "Prop Carriable", GroupName = "Platformer", Description = "A model the player can carry." )]
 internal class PropCarriable : Prop, IUse
 {
 	public override void Spawn()

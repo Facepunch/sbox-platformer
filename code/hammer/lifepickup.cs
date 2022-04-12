@@ -1,12 +1,13 @@
 ﻿
 using Hammer;
 using Sandbox;
+using System.ComponentModel.DataAnnotations;
 
 namespace Platformer;
 
 [Library( "plat_lifepickup", Description = "Addition Life" )]
 [Model( Model = "models/gameplay/temp/temp_heart_01.vmdl" )]
-[EntityTool( "Life Pickup", "Platformer", "Addition Life." )]
+[Display( Name = "Life Pickup", GroupName = "Platformer", Description = "Addition Life" )]
 internal partial class LifePickup : BaseCollectible
 {
 

@@ -1,12 +1,13 @@
 ﻿
 using Hammer;
 using Sandbox;
+using System.ComponentModel.DataAnnotations;
 
 namespace Platformer;
 
 [Library( "plat_coin", Description = "Coin Pickup" )]
 [Model( Model = "models/citizen_props/coin01.vmdl" )]
-[EntityTool( "Coin Pickup", "Platformer", "Coin Pickup." )]
+[Display( Name = "Coin Pickup", GroupName = "Platformer", Description = "Coin Pickup." )]
 internal partial class CoinPickup : BaseCollectible
 {
 

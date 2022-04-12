@@ -1,10 +1,11 @@
 ﻿
 using Sandbox;
+using System.ComponentModel.DataAnnotations;
 
 namespace Platformer;
 
 [Library( "plat_jumppad" )]
-[Hammer.EntityTool( "Jump Pad", "Platformer", "A pad that launches players toward a target entity" )]
+[Display( Name = "Jump Pad", GroupName = "Platformer", Description = "A pad that launches players toward a target entity" )]
 [Hammer.AutoApplyMaterial( "materials/editor/jumppad/jumppad.vmat" )]
 [Hammer.Line( "targetname", "targetentity" )]
 public partial class Jumppad : BaseTrigger

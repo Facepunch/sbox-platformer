@@ -1,11 +1,13 @@
 ﻿
 using Sandbox;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 
 namespace Platformer
 {
 	[Library( "platformer_path_rail" )]
+	[Display( Name = "Path Rail", GroupName = "Platformer", Description = "A rail path the player can slide along." )]
 	[Hammer.Path( "path_generic_node" )]
 	internal partial class RailPathEntity : GenericPathEntity
 	{

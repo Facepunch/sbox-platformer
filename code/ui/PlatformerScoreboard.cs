@@ -6,6 +6,7 @@ namespace Platformer
 	{
 		protected override void AddHeader()
 		{
+
 			Header = Add.Panel( "header" );
 			Header.Add.Label( "", "name" );
 			Header.Add.Label( "points", "points" );

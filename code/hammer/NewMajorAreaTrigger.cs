@@ -1,6 +1,7 @@
 ﻿using Platformer.UI;
 using Sandbox;
 using Sandbox.UI;
+using System.ComponentModel.DataAnnotations;
 
 namespace Platformer
 {
@@ -10,6 +11,7 @@ namespace Platformer
 	[Library( "plat_landmark" )]
 	[Hammer.AutoApplyMaterial( "materials/editor/landmark/landmark.vmat" )]
 	[Hammer.Solid]
+	[Display( Name = "Landmark", GroupName = "Platformer", Description = "Landmark" )]
 	public partial class NewMajorAreaTrigger : TriggerOnce
 	{
 
