@@ -108,6 +108,7 @@ namespace Platformer
 				ResetLifePickUps();
 				Coin = 0;
 				KeysPlayerHas.Clear();
+				NumberOfKeys = 0;
 			}
 
 			if(CurrentArea == null)
@@ -274,7 +275,7 @@ namespace Platformer
 		{
 			if ( IsServer )
 			{
-				Juice.Scale( 0, 0, 0 )
+				Juice.Scale( 1, 1, 1 )
 					
 					.WithDuration( .45f )
 					.WithEasing( EasingType.EaseOut );
@@ -290,7 +291,7 @@ namespace Platformer
 		{
 			if ( IsServer )
 			{
-				Juice.Scale( 0,0,0 )
+				Juice.Scale( 1,1,1 )
 					.WithTarget( this )
 					.WithDuration( .45f )
 					.WithEasing( EasingType.EaseOut );
