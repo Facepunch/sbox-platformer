@@ -16,6 +16,8 @@ namespace Platformer
 	/// </summary>
 	public partial class Platformer : Sandbox.Game
 	{
+		[Net]
+		public static float NumberOfCollectables { get; set; }
 
 		[ConVar.Replicated( "plat_coop" )]
 		public static bool CoopMode { get; set; } = false;
@@ -74,7 +76,9 @@ namespace Platformer
 		{
 			base.PostLevelLoaded();
 
+			NumberOfCollectables = All.OfType<KeyPickup>().Count();
 
+			Log.Info( NumberOfCollectables );
 		}
 
 		/// <summary>

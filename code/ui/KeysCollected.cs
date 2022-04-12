@@ -12,6 +12,8 @@ namespace Platformer.UI
 		private List<KeyPanel> KeyPanels = new();
 		private static KeysCollected Current { get; set; }
 
+		public static float numbkey { get; set; }
+
 		public KeysCollected()
 		{
 
@@ -21,12 +23,17 @@ namespace Platformer.UI
 
 		public static void InitKeys()
 		{
-			Log.Info( Entity.All.OfType<KeyPickup>().Count() );
-			
+			//Log.Info( Entity.All.OfType<KeyPickup>().Count() );
+			//numbkey = Entity.All.OfType<KeyPickup>().Count();
+
+			//Platformer.NumberOfCollectables = numbkey;
+
+			//Log.Info( Platformer.NumberOfCollectables );
+
 			foreach (var key in Entity.All.OfType<KeyPickup>())
 			{
 				Current.KeyPanels.Add( Current.Add.KeyPanel( key.KeyEmoji, "key1", key.KeyNumber ) );
-				Log.Info(key.KeyNumber );
+				//Log.Info(key.KeyNumber );
 			}
 		}
 
@@ -41,6 +48,7 @@ namespace Platformer.UI
 			foreach ( var keypanel in KeyPanels )
 			{
 				keypanel.SetClass( "active", pl.KeysPlayerHas.Contains( keypanel.KeyNumber ) );
+				
 			}
 		}
 	}

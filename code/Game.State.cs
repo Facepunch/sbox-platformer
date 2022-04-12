@@ -11,15 +11,12 @@ namespace Platformer
 		public static GameStates CurrentState => (Current as Platformer)?.GameState ?? GameStates.Warmup;
 
 		[Net]
-		public RealTimeSince StateTimer { get; set; } = 0f;
-
-		[Net]
-		public RealTimeUntil StateTimerDown { get; set; } = 0f;
+		public RealTimeUntil StateTimer { get; set; } = 0f;
 
 		[Net]
 		public GameStates GameState { get; set; } = GameStates.Warmup;
 		[Net]
-		public string NextMap { get; set; } = "facepunch.datacore";
+		public string NextMap { get; set; } = "facepunch.tup_block";
 		public bool GameIsLive { get; private set; }
 
 		[AdminCmd]
@@ -32,41 +29,37 @@ namespace Platformer
 
 		private async Task WaitStateTimer()
 		{
-			if ( CurrentState == GameStates.Warmup )
+			while ( StateTimer > 0 )
 			{
-				await Task.DelayRealtimeSeconds( 10.0f );
-				if ( StateTimer == 10 )
-				{
-					GameState = GameStates.Live;
-				}
+				await Task.DelayRealtimeSeconds( 1.0f );
 			}
-			if( CurrentState == GameStates.Live )
-			{
 
-			}
+			// extra second for fun
+			await Task.DelayRealtimeSeconds( 1.0f );
 		}
 
 		private async Task GameLoopAsync()
 		{
 			GameState = GameStates.Warmup;
-			StateTimer = 0f;
+			StateTimer = 10;
 			await WaitStateTimer();
 
 			GameState = GameStates.Live;
-			StateTimer = 0f;
+			StateTimer = 20*60f;
+			FreshStart();
+			await WaitStateTimer();
 
-			if ( GameIsLive )
-			{
-				GameState = GameStates.GameEnd;
-				StateTimer = 0f;
-				await WaitStateTimer();
+			GameState = GameStates.GameEnd;
+			StateTimer = 10;
+			await WaitStateTimer();
 
-				//GameState = GameStates.MapVote;
-				//StateTimer = 10.0f;
-				//await WaitStateTimer();
+			GameState = GameStates.MapVote;
+			var mapVote = new MapVoteEntity();
+			mapVote.VoteTimeLeft = 15f;
+			StateTimer = mapVote.VoteTimeLeft;
+			await WaitStateTimer();
 
-				Global.ChangeLevel( NextMap );
-			}
+			Global.ChangeLevel( mapVote.WinningMap );
 		}
 		private void FreshStart()
 		{
