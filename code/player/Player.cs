@@ -189,6 +189,12 @@ namespace Platformer
 			}
 		}
 
+		public void FinishedReset()
+		{
+			KeysPlayerHas.Clear();
+			NumberOfKeys = 0;
+		}
+
 		protected override void TickPlayerUse()
 		{
 			if ( HeldBody.IsValid() ) 

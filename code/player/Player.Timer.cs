@@ -44,6 +44,7 @@ partial class PlatformerPawn
 		ClearCheckpoints();
 		PlatformerKillfeed.AddEntryOnClient( To.Everyone, $"{Client.Name} has completed the course in {formattedTime}", Client.NetworkIdent );
 		Celebrate();
+		FinishedReset();
 
 		if ( TimeSinceStart < BestTime )
 		{
@@ -121,6 +122,7 @@ partial class PlatformerPawn
 		if ( !IsLocalPawn ) return;
 		Particles.Create( "particles/finish/finish_effect.vpcf" );
 		Sound.FromScreen( "course.complete" );
+
 	}
 
 	private void OnBestTimeChanged()
