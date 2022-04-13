@@ -90,7 +90,11 @@ internal partial class Checkpoint : ModelEntity
 		pl.TrySetCheckpoint( this );
 
 		if ( IsEnd && pl.NumberOfKeys == Platformer.NumberOfCollectables ) pl.CompleteCourseAsync();
-		else if ( IsStart ) pl.ResetTimer();
+		else if ( IsStart )
+		{
+			if ( pl.NumberOfKeys == 0 )
+			pl.ResetTimer();
+		}
 	}
 
 	public override void EndTouch( Entity other )
@@ -100,7 +104,10 @@ internal partial class Checkpoint : ModelEntity
 		if ( other is not PlatformerPawn pl ) return;
 		if ( !IsStart ) return;
 
-		pl.StartCourse();
+		if ( pl.NumberOfKeys == 0 )
+		{
+			pl.StartCourse();
+		}
 	}
 
 	private bool CanPlayerCheckpoint( PlatformerPawn pl )
