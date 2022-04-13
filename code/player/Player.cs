@@ -114,6 +114,8 @@ namespace Platformer
 			GotoBestCheckpoint();
 
 			Tags.Add( "Platplayer" );
+
+
 		}
 
 		public void ResetLifePickUps()

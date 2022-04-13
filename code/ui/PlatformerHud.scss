@@ -46,43 +46,43 @@ HealthCurrent {
 }
 
 LifeCurrent {
-  position: absolute;
-  transform: rotate(-10deg);
-  left: 93px;
-  top: 118px;
-  padding: 0 20px;
-  transition: all 0.25s ease-out;
-  flex-direction: row;
-  z-index: 2;
-
-  .number {
-    font-family: "Fredoka One";
-    text-stroke: 16px black;
-    transform: rotate(20deg);
-    left: 48px;
-    top: 32px;
-    font-size: 64px;
-    font-weight: bold;
-    color: #f1c40f;
-    height: 30px;
-    padding: 0 0px;
-    align-items: center;
-    transition: all 0.25s ease-out;
-
-    &.lifelow {
-      color: #c0392b;
-    }
-  }
-
-  .playerimage {
     position: absolute;
-    width: 110px;
-    aspect-ratio: 1;
-    top: -50px;
-    left: -2px;
-    border-radius: 50%;
-    border: 6px black;
-  }
+    transform: rotate(-10deg);
+    left: 93px;
+    top: 118px;
+    padding: 0 20px;
+    transition: all 0.25s ease-out;
+    flex-direction: row;
+    z-index: 2;
+
+    .number {
+        font-family: "Fredoka One";
+        text-stroke: 16px black;
+        transform: rotate(20deg);
+        left: 48px;
+        top: 32px;
+        font-size: 64px;
+        font-weight: bold;
+        color: #f1c40f;
+        height: 30px;
+        padding: 0 0px;
+        align-items: center;
+        transition: all 0.25s ease-out;
+
+        &.lifelow {
+            color: #c0392b;
+        }
+    }
+
+    .playerimage {
+        position: absolute;
+        width: 110px;
+        aspect-ratio: 1;
+        top: -50px;
+        left: -2px;
+        border-radius: 50%;
+        border: 6px black;
+    }
 }
 
 RoundTimer {
@@ -203,6 +203,7 @@ KeysCollected {
         border-radius: 50px;
     }
 }
+
 EnergyCurrent {
     color: #fff;
     font-family: "Fredoka One";
@@ -252,4 +253,39 @@ EnergyCurrent {
         height: 24px;
         transform-origin: 50%,50%;
     }
+}
+
+DeathUI {
+    position: absolute;
+    left: 47.5%;
+    top: 45.5%;
+    width: 100px;
+    height: 100px;
+    aspect-ratio: 0;
+    //  background-image: url("/ui/hud/death/respawn.png");
+    background-size: cover;
+    z-index: -1;
+
+
+    .deathimage {
+
+        &.alive {
+            transform: scale(50);
+            transition: all .2s ease-in;
+            opacity: 0;
+        }
+
+        &.limbo {
+            transform: scale(15);
+            transition: all 1s ease-in-out;
+            opacity: 1;
+        }
+
+        &.died {
+            transform: scale(.1 );
+            transition: all 1s ease-out;
+            opacity: 1;
+        }
+    }
+
 }

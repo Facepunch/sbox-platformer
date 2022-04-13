@@ -33,6 +33,7 @@ namespace Platformer.UI
 			RootPanel.AddChild<RoundTimer>();
 			RootPanel.AddChild<EnergyCurrent>();
 			RootPanel.AddChild<CourseTimer>();
+			//RootPanel.AddChild<DeathUI>();
 
 		}
 
