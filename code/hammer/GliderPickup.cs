@@ -6,11 +6,16 @@ using System.ComponentModel.DataAnnotations;
 namespace Platformer;
 
 [Library( "plat_glider", Description = "Glider Pickup" )]
-[Model( Model = "models/citizen_props/coin01.vmdl" )]
+[Hammer.EditorModel( "models/gameplay/glider/handglider.vmdl",FixedBounds = true )]
 [Display( Name = "Glider Pickup", GroupName = "Platformer", Description = "Glider Pickup." )]
 internal partial class GliderPickup : BaseCollectible
 {
+	public override void Spawn()
+	{
+		base.Spawn();
 
+		SetModel( "models/gameplay/glider/handglider.vmdl");
+	}
 	protected override bool OnCollected( PlatformerPawn pl )
 	{
 		base.OnCollected( pl );
@@ -27,4 +32,9 @@ internal partial class GliderPickup : BaseCollectible
 		Particles.Create( "particles/explosion/barrel_explosion/explosion_gib.vpcf", this );
 	}
 
+	[Event.Tick.Server]
+	public void Tick()
+	{
+		Rotation = Rotation.FromYaw( Rotation.Yaw() + 100 * Time.Delta );
+	}
 }
