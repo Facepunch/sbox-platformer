@@ -23,17 +23,11 @@ namespace Platformer.UI
 
 		public static void InitKeys()
 		{
-			//Log.Info( Entity.All.OfType<KeyPickup>().Count() );
-			//numbkey = Entity.All.OfType<KeyPickup>().Count();
-
-			//Platformer.NumberOfCollectables = numbkey;
-
-			//Log.Info( Platformer.NumberOfCollectables );
-
+			
 			foreach (var key in Entity.All.OfType<KeyPickup>())
 			{
-				Current.KeyPanels.Add( Current.Add.KeyPanel( key.KeyEmoji, "key1", key.KeyNumber ) );
-				//Log.Info(key.KeyNumber );
+				Log.Info( key.KeyIcon );
+				Current.KeyPanels.Add( Current.Add.KeyPanel( $"{key.KeyIcon}", "key1", key.KeyNumber ) );
 			}
 		}
 

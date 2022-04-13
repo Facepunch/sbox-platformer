@@ -169,38 +169,36 @@ KeysCollected {
     position: absolute;
     right: 105px;
     top: 128px;
-    padding: 4 4px;
+    padding: 1 1px;
     transition: all 0.25s ease-out;
     flex-direction: row-reverse;
     flex-wrap: wrap;
-    min-width: 20px;
-    max-width: 200px;
-    min-height: 20px;
+    min-width: 50px;
+    max-width: 400px;
+    min-height: 50px;
     max-height: 500px;
 
 
     KeyPanel {
-        opacity: .15;
-        font-family: Poppins;
-        text-stroke: 2px black;
+        margin: 2;
+        opacity: .2;
+        aspect-ratio: 1;
         // transform: rotate(20deg);
         padding-left: 10px;
-        font-size: 24px;
         color: #3498db;
         transition: all 0.25s ease-out;
-        background-color: rgba(255, 255, 255,.02);
-        border-radius: 25px;
+
 
         &.Active {
             opacity: 1;
+            background-image-tint: white;
         }
     }
 
     .key1 {
-        //color: #EA2027;
+        opacity: .2;
         padding: 2 6px;
-        background-color: rgba(255, 255, 255,.04);
-        border-radius: 50px;
+        background-image-tint: #212121;
     }
 }
 

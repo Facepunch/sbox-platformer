@@ -11,11 +11,20 @@ namespace Platformer;
 [Display( Name = "Key Pickup", GroupName = "Platformer", Description = "Key Pickup" )]
 internal partial class KeyPickup : AnimEntity
 {
+	public enum ModelType
+	{
+		FoamFinger,
+		Ball
+	}
+
 	/// <summary>
 	/// 🍆💦 😝
 	/// </summary>
-	[Property, Net]
-	public string KeyEmoji { get; set; } = "🍆";
+	[Property( "model_type", Title = "Model Type" ), Net]
+	public ModelType ModelTypeList { get; set; } = ModelType.FoamFinger;
+
+	[Net]
+	public string KeyIcon { get; set; }
 
 	[Property]
 	[Net]
@@ -25,12 +34,25 @@ internal partial class KeyPickup : AnimEntity
 	{
 		base.Spawn();
 
+		if ( ModelTypeList == ModelType.FoamFinger )
+		{
+			SetModel( "models/citizen_props/foamhand.vmdl" );
+			KeyIcon = ("ui/hud/collectables/Collect_FoamHand.png");
+		}
+		if ( ModelTypeList == ModelType.Ball )
+		{
+			SetModel( "models/citizen_props/beachball.vmdl" );
+			KeyIcon = ("ui/hud/collectables/Collect_BeachBall.png");
+		}
+
 		Transmit = TransmitType.Always;
 
 		SetupPhysicsFromModel(PhysicsMotionType.Keyframed);
 		CollisionGroup = CollisionGroup.Trigger;
 		EnableSolidCollisions = false;
 		EnableAllCollisions = true;
+
+
 	}
 
 	public override void StartTouch( Entity other )
