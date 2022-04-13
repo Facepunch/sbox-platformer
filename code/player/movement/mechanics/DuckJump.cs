@@ -64,6 +64,8 @@ namespace Platformer.Movement
 			if ( !ctrl.Pawn.IsServer ) return;
 			using var _ = Prediction.Off();
 
+			Sound.FromWorld( "player.duckjump", ctrl.Pawn.Position );
+
 		}
 
 	}

@@ -4,15 +4,14 @@
 	{
 		sounds = 
 		[
-			"sounds/kenney/ui/select_003.vsnd",
-			"sounds/kenney/ui/select_004.vsnd",
-			"sounds/kenney/ui/select_005.vsnd",
+			"sounds/kenney/ui/pluck_002.vsnd",
+			"sounds/kenney/ui/pluck_001.vsnd",
 		]
 		ui = false
 		volume = 1.0
 		volumerandom = 0.0
 		pitch = 1.0
-		pitchrandom = 0.1
+		pitchrandom = 0.5
 		distancemax = 1000.0
 		selectionmode = "3"
 	}
