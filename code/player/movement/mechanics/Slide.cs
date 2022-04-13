@@ -39,6 +39,7 @@ namespace Platformer.Movement
 			var newLen = len + SlideBoost;
 			ctrl.Velocity *= newLen / len;
 			ctrl.SetTag( "skidding" );
+			Sound.FromEntity( "slide.stop", ctrl.Pawn );
 
 			new FallCameraModifier( -300 );
 			
@@ -73,7 +74,7 @@ namespace Platformer.Movement
 
 			if ( ctrl.GroundNormal.z < 1 )
 			{
-				//Sliding = true;
+				//Sliding = false;
 
 				var slopeDir = Vector3.Cross( Vector3.Up, Vector3.Cross( Vector3.Up, ctrl.GroundNormal ) );
 				var dot = Vector3.Dot( ctrl.Velocity.Normal, slopeDir );
@@ -89,7 +90,8 @@ namespace Platformer.Movement
 			{
 				ctrl.Velocity = ctrl.Velocity.WithZ( 0 );
 				ctrl.ApplyFriction( StopSpeed, Friction );
-				//Sliding = false;
+				Particles.Create( "particles/gameplay/player/sliding/sliding.vpcf", ctrl.Pawn );
+				//Sliding = true;
 			}
 
 			ctrl.SetTag( "skidding" );

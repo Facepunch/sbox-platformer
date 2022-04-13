@@ -75,7 +75,8 @@ internal class RailSlide : BaseMoveMechanic
 		ctrl.Rotation = Rotation.LookAt( ctrl.Velocity.Normal );
 		ctrl.GroundEntity = Path;
 		ctrl.SetTag( "skidding" );
-		
+		Particles.Create( "particles/gameplay/player/sliding/railsliding.vpcf", ctrl.Pawn );
+
 		if ( Input.Pressed( InputButton.Jump ) )
 		{
 			TimeSinceJump = 0;

@@ -57,7 +57,6 @@ namespace Platformer
 
 		public PlatformerPawn() { }
 
-
 		public PlatformerPawn( Client cl )
 		{
 			// Load clothing from client data
@@ -107,9 +106,9 @@ namespace Platformer
 				NumberOfKeys = 0;
 			}
 
-			if(CurrentArea == null)
+			if ( CurrentArea == null )
 			{
-				CurrentArea = $"{MapName}"; 
+				CurrentArea = $"{MapName}";
 			}
 
 			GotoBestCheckpoint();
@@ -176,12 +175,12 @@ namespace Platformer
 
 			BecomeRagdollOnClient( Velocity, lastDamage.Flags, lastDamage.Position, lastDamage.Force, GetHitboxBone( lastDamage.HitboxIndex ) );
 
-			Controller = null;	
+			Controller = null;
 
 			EnableAllCollisions = false;
 			EnableDrawing = false;
 
-			CameraMode = new PlatformerRagdollCamera();			
+			CameraMode = new PlatformerRagdollCamera();
 
 			foreach ( var child in Children )
 			{
@@ -197,7 +196,7 @@ namespace Platformer
 
 		protected override void TickPlayerUse()
 		{
-			if ( HeldBody.IsValid() ) 
+			if ( HeldBody.IsValid() )
 				return;
 
 			if ( TimeUntilCanUse > 0 )
@@ -283,12 +282,12 @@ namespace Platformer
 			//DebugOverlay.TraceResult( result );
 		}
 
-		public void PickedUpItem(Color itempickedup)
+		public void PickedUpItem( Color itempickedup )
 		{
 			if ( IsServer )
 			{
 				Juice.Scale( 1, 1, 1 )
-					
+
 					.WithDuration( .45f )
 					.WithEasing( EasingType.EaseOut );
 
@@ -303,7 +302,7 @@ namespace Platformer
 		{
 			if ( IsServer )
 			{
-				Juice.Scale( 1,1,1 )
+				Juice.Scale( 1, 1, 1 )
 					.WithTarget( this )
 					.WithDuration( .45f )
 					.WithEasing( EasingType.EaseOut );
@@ -359,13 +358,13 @@ namespace Platformer
 			if ( Controller is PlatformerController controller )
 			{
 				controller.Impulse += force;
-				
+
 			}
 		}
 
 		public void PlayerPickedUpGlider()
 		{
-			if(PlayerHasGlider)
+			if ( PlayerHasGlider )
 			{
 				if ( Controller is PlatformerController controller )
 				{
@@ -380,5 +379,34 @@ namespace Platformer
 			var vote = new MapVoteEntity();
 		}
 
+		TimeSince timeSinceLastFootstep = 0;
+
+		public override void OnAnimEventFootstep( Vector3 pos, int foot, float volume )
+		{
+			if ( LifeState != LifeState.Alive )
+				return;
+
+			if ( !IsServer )
+				return;
+
+			if ( timeSinceLastFootstep < 0.2f )
+				return;
+
+			volume *= FootstepVolume();
+
+			timeSinceLastFootstep = 0;
+
+			//DebugOverlay.Box( 1, pos, -1, 1, Color.Red );
+			//DebugOverlay.Text( pos, $"{volume}", Color.White, 5 );
+
+			var tr = Trace.Ray( pos, pos + Vector3.Down * 20 )
+				.Radius( 1 )
+				.Ignore( this )
+				.Run();
+
+			if ( !tr.Hit ) return;
+
+			tr.Surface.DoFootstep( this, tr, foot, volume * 10 );
+		}
 	}
 }
