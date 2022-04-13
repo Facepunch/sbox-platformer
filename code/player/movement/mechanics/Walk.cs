@@ -56,7 +56,6 @@ namespace Platformer.Movement
 			if( prevGrounded && !ctrl.GroundEntity.IsValid() )
 			{
 				TimeSinceUngrounded = 0f;
-				timeSinceLastJump = 0;
 			}
 		}
 
@@ -122,16 +121,14 @@ namespace Platformer.Movement
 
 			StayOnGround();
 		}
-		TimeSince timeSinceLastJump = 0;
 		private void CheckJumpButton()
 		{
-			if ( timeSinceLastJump   < 0.3f )
-				return;
+
 
 			if ( !AutoJump && !InputActions.Jump.Pressed() )
 				return;
 
-			if ( !ctrl.GroundEntity.IsValid() && TimeSinceUngrounded > .25f )
+			if ( !ctrl.GroundEntity.IsValid() && TimeSinceUngrounded > .5f )
 				return;
 
 			var flGroundFactor = 1.0f;
@@ -144,6 +141,7 @@ namespace Platformer.Movement
 			ctrl.AddEvent( "jump" );
 
 			new FallCameraModifier( jumpPower );
+
 		}
 
 		private Transform prevTx;
