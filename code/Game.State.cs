@@ -72,6 +72,8 @@ namespace Platformer
 				pl.ResetTimer();
 				pl.ResetBestTime();
 				pl.GotoBestCheckpoint();
+				pl.KeysPlayerHas.Clear();
+				pl.NumberOfKeys = 0;
 			}
 
 			All.OfType<Player>().ToList().ForEach( x =>
