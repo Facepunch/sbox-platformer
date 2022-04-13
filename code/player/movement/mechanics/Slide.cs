@@ -32,6 +32,7 @@ namespace Platformer.Movement
 			if ( ctrl.GroundEntity == null ) return false;
 			if ( ctrl.Velocity.WithZ( 0 ).Length < StartSlideSpeed ) return false;
 			if ( ctrl.GetMechanic<LongJump>().IsLongjumping ) return false;
+			if ( timeSinceLastSlide < .5 ) return false;
 
 			TimeSinceSlide = 0;
 
@@ -60,7 +61,7 @@ namespace Platformer.Movement
 		{
 			return 100;
 		}
-
+		TimeSince timeSinceLastSlide = 0;
 		public override void Simulate()
 		{
 			if ( !StillSliding() )
@@ -75,6 +76,7 @@ namespace Platformer.Movement
 			if ( ctrl.GroundNormal.z < 1 )
 			{
 				//Sliding = false;
+				
 
 				var slopeDir = Vector3.Cross( Vector3.Up, Vector3.Cross( Vector3.Up, ctrl.GroundNormal ) );
 				var dot = Vector3.Dot( ctrl.Velocity.Normal, slopeDir );
@@ -92,6 +94,7 @@ namespace Platformer.Movement
 				ctrl.ApplyFriction( StopSpeed, Friction );
 				Particles.Create( "particles/gameplay/player/sliding/sliding.vpcf", ctrl.Pawn );
 				//Sliding = true;
+				timeSinceLastSlide = 0;
 			}
 
 			ctrl.SetTag( "skidding" );
