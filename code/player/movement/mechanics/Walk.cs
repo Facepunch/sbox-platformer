@@ -128,7 +128,7 @@ namespace Platformer.Movement
 			if ( !AutoJump && !InputActions.Jump.Pressed() )
 				return;
 
-			if ( !ctrl.GroundEntity.IsValid() && TimeSinceUngrounded > .5f )
+			if ( !ctrl.GroundEntity.IsValid() && TimeSinceUngrounded > .25f )
 				return;
 
 			var flGroundFactor = 1.0f;
