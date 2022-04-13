@@ -22,7 +22,7 @@ namespace Platformer.Movement
 
 		public override bool AlwaysSimulate => true;
 
-		private TimeSince TimeSinceUngrounded;
+		private TimeUntil Coyote;
 
 		public Walk( PlatformerController controller )
 			: base( controller )
@@ -55,7 +55,10 @@ namespace Platformer.Movement
 
 			if( prevGrounded && !ctrl.GroundEntity.IsValid() )
 			{
-				TimeSinceUngrounded = 0f;
+				if ( !Input.Pressed( InputButton.Jump ) )
+				{
+					Coyote = .25f;
+				}
 			}
 		}
 
@@ -121,14 +124,13 @@ namespace Platformer.Movement
 
 			StayOnGround();
 		}
+
 		private void CheckJumpButton()
 		{
-
-
 			if ( !AutoJump && !InputActions.Jump.Pressed() )
 				return;
 
-			if ( !ctrl.GroundEntity.IsValid() && TimeSinceUngrounded > .25f )
+			if ( !ctrl.GroundEntity.IsValid() && Coyote < 0 )
 				return;
 
 			var flGroundFactor = 1.0f;
@@ -141,7 +143,6 @@ namespace Platformer.Movement
 			ctrl.AddEvent( "jump" );
 
 			new FallCameraModifier( jumpPower );
-
 		}
 
 		private Transform prevTx;
