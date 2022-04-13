@@ -56,6 +56,7 @@ namespace Platformer.Movement
 			if( prevGrounded && !ctrl.GroundEntity.IsValid() )
 			{
 				TimeSinceUngrounded = 0f;
+				timeSinceLastJump = 0;
 			}
 		}
 
@@ -121,9 +122,12 @@ namespace Platformer.Movement
 
 			StayOnGround();
 		}
-
+		TimeSince timeSinceLastJump = 0;
 		private void CheckJumpButton()
 		{
+			if ( timeSinceLastJump   < 0.3f )
+				return;
+
 			if ( !AutoJump && !InputActions.Jump.Pressed() )
 				return;
 
