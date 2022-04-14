@@ -71,15 +71,21 @@ namespace Platformer.Movement
 
 		private void GroundEffect()
 		{
-			if ( !ctrl.Pawn.IsServer ) return;
-			using var _ = Prediction.Off();
-
 			ctrl.AddEvent( "sitting" );
 
-			Particles.Create( "particles/gameplay/player/slamland/slamland.vpcf", ctrl.Pawn );
-			Sound.FromWorld( "player.slam.land", ctrl.Pawn.Position );
+			if ( !ctrl.Pawn.IsServer ) return;
 
+			using var _ = Prediction.Off();
 
+			new ExplosionEntity()
+			{
+				Position = ctrl.Position,
+				Radius = 100f,
+				Damage = 0,
+				ForceScale = 100f,
+				ParticleOverride = "particles/gameplay/player/slamland/slamland.vpcf",
+				SoundOverride = "player.slam.land"
+			}.Explode( ctrl.Pawn );
 		}
 
 	}
