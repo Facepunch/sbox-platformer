@@ -156,6 +156,13 @@ namespace Platformer
 				postProcess.Saturate.Amount = 0.5f;
 			}
 		}
+
+		[ClientRpc]
+		public static void PropCarryBreak(Vector3 pos, string particle, string sound )
+		{
+			Particles.Create( particle, pos );
+			Sound.FromWorld( sound, pos );
+		}
 	}
 
 }

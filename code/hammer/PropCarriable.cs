@@ -6,13 +6,37 @@ namespace Platformer;
 
 [Library("plat_prop_carriable")]
 [Display( Name = "Prop Carriable", GroupName = "Platformer", Description = "A model the player can carry." )]
-internal class PropCarriable : Prop, IUse
+internal partial class PropCarriable : Prop, IUse
 {
+	public enum PropType
+	{
+		Wood,
+		Cardboard
+	}
+
+	[Property( "model_properties", Title = "Break Type" ), Net]
+	public PropType BreakType { get; set; } = PropType.Wood;
+
+	public string SoundBreak = "break.wood";
+
+	public string ParticleBreak = "particles/break/break.wood.vpcf";
+
 	public override void Spawn()
 	{
 		base.Spawn();
 
 		Transmit = TransmitType.Always;
+
+		if ( BreakType == PropType.Wood )
+		{
+			SoundBreak = "break.wood";
+			ParticleBreak = "particles/break/break.wood.vpcf";
+		}
+		if ( BreakType == PropType.Cardboard )
+		{
+			SoundBreak = "break.cardboard";
+			ParticleBreak = "particles/break/break.cardboard.vpcf";
+		}
 
 	}
 
@@ -51,5 +75,20 @@ internal class PropCarriable : Prop, IUse
 		Position += Vector3.Up * 20;
 		Rotation = Rotation.LookAt( p.Rotation.Forward );
 	}
+
+	public override void OnKilled()
+	{
+		DeathEffect();
+		base.OnKilled();
+	}
+
+
+	public void DeathEffect()
+	{
+		Platformer.PropCarryBreak( Position, ParticleBreak, SoundBreak );
+
+		Log.Info( "Slammed" );
+	}
+
 
 }
