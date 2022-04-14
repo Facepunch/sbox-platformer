@@ -52,16 +52,10 @@ public class PlatformerOrbitAnimator : PawnAnimator
 
 		SetAnimParameter( "duck", duck );
 
-		if ( player != null && player.ActiveChild is BaseCarriable carry )
-		{
-			carry.SimulateAnimator( this );
-		}
-		else
-		{
-			SetAnimParameter( "holdtype", 0 );
-			SetAnimParameter( "aim_body_weight", 0.5f );
-		}
+		if ( player is not PlatformerPawn p ) return;
+		var holdtype = p.HeldBody.IsValid() ? 4 : 0;
 
+		p.SetAnimParameter( "holdtype", holdtype );
 	}
 
 	public virtual void DoRotation( Rotation idealRotation )
