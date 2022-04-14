@@ -50,13 +50,6 @@ internal partial class PropCarriable : Prop, IUse
 		SetParent( null );
 	}
 
-	public void Throw()
-	{
-		if ( !Parent.IsValid() ) return;
-
-
-	}
-
 	public bool IsUsable( Entity user ) => !Parent.IsValid();
 
 	public bool OnUse( Entity user )
@@ -69,18 +62,10 @@ internal partial class PropCarriable : Prop, IUse
 		p.HeldBody = this;
 		EnableAllCollisions = false;
 
+		LocalPosition = Vector3.Up * 30 + Vector3.Forward * Model.RenderBounds.Size.x * 1.1f;
+		LocalRotation = Rotation.Identity;
+
 		return true;
-	}
-
-	[Event.Tick.Server]
-	private void OnTick()
-	{
-		if ( !Parent.IsValid() ) return;
-		if ( Parent is not PlatformerPawn p ) return;
-
-		Position = p.Position + p.Rotation.Forward * 60;
-		Position += Vector3.Up * 20;
-		Rotation = Rotation.LookAt( p.Rotation.Forward );
 	}
 
 	public override void OnKilled()
@@ -88,7 +73,6 @@ internal partial class PropCarriable : Prop, IUse
 		DeathEffect();
 		base.OnKilled();
 	}
-
 
 	public void DeathEffect()
 	{
