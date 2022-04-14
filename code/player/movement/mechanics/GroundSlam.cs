@@ -39,22 +39,17 @@ namespace Platformer.Movement
 			{
 				pl.IgnoreFallDamage = false;
 				IsActive = false;
+				GroundEffect();
 				return;
 			}
 
 			pl.IgnoreFallDamage = true;
-			
-			var tr = Trace.Ray( ctrl.Position, ctrl.Position + Vector3.Down * 12 )
-				.Ignore( ctrl.Pawn )
-				.Radius( 4 )
-				.Run();
 
-			if ( tr.Hit )
+			var ents = Entity.FindInSphere( ctrl.Position, 30f );
+			foreach( var ent in ents )
 			{
-				var damageInfo = DamageInfo.Generic( 80 );
-				var box = tr.Entity;
-				box.TakeDamage( damageInfo );
-				GroundEffect();
+				if ( ent is PlatformerPawn ) continue;
+				ent.TakeDamage( DamageInfo.Generic( 80 ) );
 			}
 
 			ctrl.Velocity += ctrl.Velocity.WithZ( -SlamGravity ) * Time.Delta;
