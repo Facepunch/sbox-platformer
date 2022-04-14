@@ -80,9 +80,9 @@ namespace Platformer.Movement
 			new ExplosionEntity()
 			{
 				Position = ctrl.Position,
-				Radius = 100f,
+				Radius = 60f,
 				Damage = 0,
-				ForceScale = 100f,
+				ForceScale = 25f,
 				ParticleOverride = "particles/gameplay/player/slamland/slamland.vpcf",
 				SoundOverride = "player.slam.land"
 			}.Explode( ctrl.Pawn );
