@@ -47,7 +47,7 @@ namespace Platformer.Movement
 			mechanics.Add( new LongJump( this ) );
 			mechanics.Add( new RailSlide( this ) );
 			mechanics.Add( new AirDash( this ) );
-			mechanics.Add( new GroundSlam( this ) );
+			mechanics.Add( new GroundSlam( this ) ); 
 			
 			
 

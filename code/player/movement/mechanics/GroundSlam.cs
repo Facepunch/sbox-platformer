@@ -13,8 +13,12 @@ namespace Platformer.Movement
 		public override bool TakesOverControl => false;
 		public override bool AlwaysSimulate => true;
 
-		private TimeSince tsGroundSlam;
+
+
 		private bool HasStartedSlam;
+
+		private bool JustLanded;
+
 
 		public GroundSlam( PlatformerController controller ) : base( controller )
 		{
@@ -31,7 +35,7 @@ namespace Platformer.Movement
 				pl.IgnoreFallDamage = false;
 				Slamming = false;
 				HasStartedSlam = false;
-				tsGroundSlam = 0;
+				JustLanded = false;
 				return;
 			}
 
@@ -39,7 +43,7 @@ namespace Platformer.Movement
 			{
 				ctrl.Velocity = 0;
 				ctrl.Velocity = ctrl.Velocity.WithZ( 150 );
-				
+
 				if ( HasStartedSlam ) return;
 				HasStartedSlam = true;
 				await GameTask.Delay( 250 );
@@ -47,6 +51,8 @@ namespace Platformer.Movement
 				pl.IgnoreFallDamage = true;
 			}
 			SlameTime();
+
+
 		}
 
 		[Event.Tick]
@@ -54,9 +60,32 @@ namespace Platformer.Movement
 		{
 			if ( Slamming )
 			{
-
 				ctrl.Velocity = ctrl.Velocity.WithZ( -SlamGravity );
+
+				var tr = Trace.Ray( ctrl.Position, ctrl.Position + Vector3.Down * 12 )
+					.Ignore( ctrl.Pawn )
+					.Radius( 4 )
+					.Run();
+				if(tr.Hit )
+				{
+					GroundEffect();
+
+				}
 			}
 		}
+
+
+		private void GroundEffect()
+		{
+			if ( !ctrl.Pawn.IsServer ) return;
+
+			using var _ = Prediction.Off();
+
+			ctrl.AddEvent( "sitting" );
+
+			Particles.Create( "particles/gameplay/player/slamland/slamland.vpcf", ctrl.Pawn );
+			Sound.FromWorld( "player.slam.land", ctrl.Pawn.Position );
+		}
+
 	}
 }
