@@ -33,7 +33,7 @@ namespace Platformer
 
 			var tr = Trace.Ray( center, targetPos )
 				.Ignore( pawn )
-				.Radius( 10 )
+				.Radius( 8 )
 				.Run();
 
 			if ( tr.Hit )

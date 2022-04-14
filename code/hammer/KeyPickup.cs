@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Platformer;
 
 [Library( "plat_key", Description = "Key Pickup" )]
-[Model( Model = "models/citizen_props/coin01.vmdl" )]
+[Hammer.EditorModel( "models/editor/collectables/collectables.vmdl", FixedBounds = true )]
 [Display( Name = "Key Pickup", GroupName = "Platformer", Description = "Key Pickup" )]
 internal partial class KeyPickup : AnimEntity
 {
@@ -33,7 +33,7 @@ internal partial class KeyPickup : AnimEntity
 	public override void Spawn()
 	{
 		base.Spawn();
-
+		
 		if ( ModelTypeList == ModelType.FoamFinger )
 		{
 			SetModel( "models/citizen_props/foamhand.vmdl" );
