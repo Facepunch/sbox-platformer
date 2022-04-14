@@ -73,7 +73,7 @@ internal partial class KeyPickup : AnimEntity
 	private void CollectedHealthPickup()
 	{
 		Sound.FromEntity( "life.pickup", this );
-		Particles.Create( "particles/explosion/barrel_explosion/explosion_gib.vpcf", this );
+		Particles.Create( "particles/gameplay/player/collectpickup/collectpickup.vpcf", this );
 
 	}
 
