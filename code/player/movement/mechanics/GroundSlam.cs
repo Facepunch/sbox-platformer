@@ -68,6 +68,11 @@ namespace Platformer.Movement
 					.Run();
 				if(tr.Hit )
 				{
+					var damageInfo = DamageInfo.Generic( 80 );
+
+					var box = tr.Entity;
+					Log.Info( box );
+					box.TakeDamage( damageInfo );
 					GroundEffect();
 
 				}
