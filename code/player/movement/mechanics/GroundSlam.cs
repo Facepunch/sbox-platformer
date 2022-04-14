@@ -22,7 +22,7 @@ namespace Platformer.Movement
 			if ( ctrl.GroundEntity.IsValid() ) return false;
 			if ( !InputActions.Duck.Pressed() ) return false;
 
-			ctrl.Velocity *= .35f;
+			ctrl.Velocity = 0f;
 			FreezeTimer = .25f;
 
 			return true;
