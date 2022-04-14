@@ -46,7 +46,8 @@ namespace Platformer.Movement
 			mechanics.Add( new FallDamage( this ) );
 			mechanics.Add( new LongJump( this ) );
 			mechanics.Add( new RailSlide( this ) );
-			//mechanics.Add( new GroundSlam( this ) ); Needs work.
+			mechanics.Add( new AirDash( this ) );
+			mechanics.Add( new GroundSlam( this ) );
 			
 			
 
