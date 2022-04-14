@@ -1,89 +1,69 @@
-﻿using Sandbox;
-using System.Threading;
+﻿
+using Sandbox;
 
 namespace Platformer.Movement
 {
 	class GroundSlam : BaseMoveMechanic
 	{
 
-		[Net]
-		public float SlamGravity => 750f;
-		public bool Slamming { get; set; }
+		public float SlamGravity => 2250f;
 
-		public override bool TakesOverControl => false;
-		public override bool AlwaysSimulate => true;
-
-
-
-		private bool HasStartedSlam;
-
-		private bool JustLanded;
-
+		public override bool TakesOverControl => true;
+		public override bool AlwaysSimulate => false;
 
 		public GroundSlam( PlatformerController controller ) : base( controller )
 		{
 		}
 
-		public override async void PreSimulate()
+		protected override bool TryActivate()
 		{
-			base.PreSimulate();
+			if ( ctrl.GroundEntity.IsValid() ) return false;
+			if ( !InputActions.Duck.Pressed() ) return false;
 
-			if ( ctrl.Pawn is not PlatformerPawn pl ) return;
+			ctrl.Velocity *= .35f;
+
+			return true;
+		}
+
+		public override void Simulate()
+		{
+			base.Simulate();
+
+			if ( ctrl.Pawn is not PlatformerPawn pl )
+			{
+				IsActive = false;
+				return;
+			}
 
 			if ( ctrl.GroundEntity != null )
 			{
 				pl.IgnoreFallDamage = false;
-				Slamming = false;
-				HasStartedSlam = false;
-				JustLanded = false;
+				IsActive = false;
 				return;
 			}
 
-			if ( InputActions.Duck.Pressed() && Slamming == false )
+			pl.IgnoreFallDamage = true;
+			
+			var tr = Trace.Ray( ctrl.Position, ctrl.Position + Vector3.Down * 12 )
+				.Ignore( ctrl.Pawn )
+				.Radius( 4 )
+				.Run();
+
+			if ( tr.Hit )
 			{
-				ctrl.Velocity = 0;
-				ctrl.Velocity = ctrl.Velocity.WithZ( 150 );
-
-				if ( HasStartedSlam ) return;
-				HasStartedSlam = true;
-				await GameTask.Delay( 250 );
-				Slamming = true;
-				pl.IgnoreFallDamage = true;
+				var damageInfo = DamageInfo.Generic( 80 );
+				var box = tr.Entity;
+				box.TakeDamage( damageInfo );
+				GroundEffect();
 			}
-			SlameTime();
 
-
+			ctrl.Velocity += ctrl.Velocity.WithZ( -SlamGravity ) * Time.Delta;
+			ctrl.Move();
 		}
-
-		[Event.Tick]
-		public void SlameTime()
-		{
-			if ( Slamming )
-			{
-				ctrl.Velocity = ctrl.Velocity.WithZ( -SlamGravity );
-
-				var tr = Trace.Ray( ctrl.Position, ctrl.Position + Vector3.Down * 12 )
-					.Ignore( ctrl.Pawn )
-					.Radius( 4 )
-					.Run();
-				if(tr.Hit )
-				{
-					var damageInfo = DamageInfo.Generic( 80 );
-
-					var box = tr.Entity;
-					Log.Info( box );
-					box.TakeDamage( damageInfo );
-					GroundEffect();
-
-				}
-			}
-		}
-
 
 		private void GroundEffect()
 		{
 			if ( !ctrl.Pawn.IsServer ) return;
-
 			using var _ = Prediction.Off();
 
 			ctrl.AddEvent( "sitting" );
