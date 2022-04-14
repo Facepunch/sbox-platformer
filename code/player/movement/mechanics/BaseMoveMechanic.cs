@@ -22,7 +22,15 @@ namespace Platformer.Movement
 		public bool Try()
 		{
 			IsActive = TryActivate();
-			if ( IsActive ) TimeSinceActivate = 0;
+			if ( IsActive )
+			{
+				TimeSinceActivate = 0;
+
+				if ( BasePlayerController.Debug )
+				{
+					Log.Info( "ACTIVATED: " + GetType().Name );
+				}
+			}
 
 			return IsActive;
 		}
