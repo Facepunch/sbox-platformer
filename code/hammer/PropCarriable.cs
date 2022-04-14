@@ -32,22 +32,29 @@ internal partial class PropCarriable : Prop, IUse
 			SoundBreak = "break.wood";
 			ParticleBreak = "particles/break/break.wood.vpcf";
 		}
+
 		if ( BreakType == PropType.Cardboard )
 		{
 			SoundBreak = "break.cardboard";
 			ParticleBreak = "particles/break/break.cardboard.vpcf";
 		}
+	}
 
+	public void Drop( Vector3 velocity )
+	{
+		if ( !Parent.IsValid() ) return;
+
+		Velocity = velocity;
+		EnableAllCollisions = true;
+
+		SetParent( null );
 	}
 
 	public void Throw()
 	{
 		if ( !Parent.IsValid() ) return;
 
-		Velocity = Parent.Velocity + Parent.Rotation.Forward * 300 + Parent.Rotation.Up * 100;
-		EnableAllCollisions = true;
 
-		SetParent( null );
 	}
 
 	public bool IsUsable( Entity user ) => !Parent.IsValid();

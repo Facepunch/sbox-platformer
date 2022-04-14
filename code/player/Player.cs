@@ -221,13 +221,7 @@ namespace Platformer
 
 			if ( !IsServer ) return;
 
-			if ( HeldBody.IsValid() && InputActions.Use.Pressed() )
-			{
-				HeldBody.Throw();
-				HeldBody = null;
-				TimeUntilCanUse = 1f;
-			}
-
+			TickPlayerThrow();
 			TickPlayerUse();
 
 			if ( Controller is PlatformerController controller )
@@ -265,6 +259,32 @@ namespace Platformer
 					NumberOfKeys = 0;
 				}
 			}
+		}
+
+		private void TickPlayerThrow()
+		{
+			if ( !HeldBody.IsValid() ) return;
+
+			var drop = false;
+			var vel = Vector3.Zero;
+
+			if ( InputActions.RightClick.Down() )
+			{
+				drop = true;
+				vel = Velocity + Rotation.Forward * 30 + Rotation.Up * 10;
+			}
+
+			if ( InputActions.LeftClick.Down() )
+			{
+				drop = true;
+				vel = Velocity + Rotation.Forward * 300 + Rotation.Up * 100;
+			}
+
+			if ( !drop ) return;
+
+			HeldBody.Drop( vel );
+			HeldBody = null;
+			TimeUntilCanUse = 1f;
 		}
 
 		[Event.Frame]
