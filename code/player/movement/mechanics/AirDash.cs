@@ -54,6 +54,11 @@ namespace Platformer.Movement
 				ctrl.Velocity = ctrl.Velocity.WithZ( flMul * flGroundFactor );
 				ctrl.Velocity -= new Vector3( 0, 0, 800f * 0.5f ) * Time.Delta;
 
+				if( ctrl.GetMechanic<GroundSlam>()?.IsActive ?? false )
+				{
+					ctrl.Velocity = ctrl.Velocity.WithZ( 400 );
+				}
+
 				LongJumpEffect();
 			}
 		}
