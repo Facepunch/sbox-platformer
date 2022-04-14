@@ -1,10 +1,12 @@
 ﻿using Sandbox;
+using System.Threading;
 
 namespace Platformer.Movement
 {
 	class GroundSlam : BaseMoveMechanic
 	{
 
+		[Net]
 		public float SlamGravity => 750f;
 		public bool Slamming { get; set; }
 
@@ -12,40 +14,49 @@ namespace Platformer.Movement
 		public override bool AlwaysSimulate => true;
 
 		private TimeSince tsGroundSlam;
+		private bool HasStartedSlam;
 
 		public GroundSlam( PlatformerController controller ) : base( controller )
 		{
 		}
 
-		public override void PreSimulate()
+		public override async void PreSimulate()
 		{
 			base.PreSimulate();
 
-			Slamming = false;
-
 			if ( ctrl.Pawn is not PlatformerPawn pl ) return;
 
-			if ( ctrl.GroundEntity != null ) return;
-			if ( ctrl.Energy == 0 ) return;
-			if ( !InputActions.Duck.Down() )
+			if ( ctrl.GroundEntity != null )
 			{
-				tsGroundSlam = 0;
 				pl.IgnoreFallDamage = false;
+				Slamming = false;
+				HasStartedSlam = false;
+				tsGroundSlam = 0;
 				return;
 			}
-			if ( ctrl.Velocity.z > 0 ) return;
-			if ( tsGroundSlam < .15f ) return;
 
-
-			if ( InputActions.Duck.Down() )
+			if ( InputActions.Duck.Pressed() && Slamming == false )
 			{
+				ctrl.Velocity = 0;
+				ctrl.Velocity = ctrl.Velocity.WithZ( 150 );
+				
+				if ( HasStartedSlam ) return;
+				HasStartedSlam = true;
+				await GameTask.Delay( 250 );
 				Slamming = true;
-				ctrl.Energy = (ctrl.Energy - ctrl.EnergyDrain * Time.Delta).Clamp( 0f, ctrl.MaxEnergy );
-				ctrl.Velocity = ctrl.Velocity.WithZ( -SlamGravity );
 				pl.IgnoreFallDamage = true;
 			}
+			SlameTime();
+		}
 
+		[Event.Tick]
+		public void SlameTime()
+		{
+			if ( Slamming )
+			{
 
+				ctrl.Velocity = ctrl.Velocity.WithZ( -SlamGravity );
+			}
 		}
 	}
 }
