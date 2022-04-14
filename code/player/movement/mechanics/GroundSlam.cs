@@ -64,6 +64,11 @@ namespace Platformer.Movement
 			ctrl.Move();
 		}
 
+		public void Cancel()
+		{
+			IsActive = false;
+		}
+
 		private void GroundEffect()
 		{
 			if ( !ctrl.Pawn.IsServer ) return;
