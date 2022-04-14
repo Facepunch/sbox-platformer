@@ -11,6 +11,8 @@ namespace Platformer.Movement
 		public override bool TakesOverControl => true;
 		public override bool AlwaysSimulate => false;
 
+		private TimeUntil FreezeTimer;
+
 		public GroundSlam( PlatformerController controller ) : base( controller )
 		{
 		}
@@ -21,6 +23,7 @@ namespace Platformer.Movement
 			if ( !InputActions.Duck.Pressed() ) return false;
 
 			ctrl.Velocity *= .35f;
+			FreezeTimer = .25f;
 
 			return true;
 		}
@@ -37,9 +40,14 @@ namespace Platformer.Movement
 
 			if ( ctrl.GroundEntity != null )
 			{
-				pl.IgnoreFallDamage = false;
-				IsActive = false;
 				GroundEffect();
+				IsActive = false;
+				pl.IgnoreFallDamage = false;
+				return;
+			}
+
+			if ( FreezeTimer > 0 )
+			{
 				return;
 			}
 
