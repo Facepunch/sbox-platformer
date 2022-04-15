@@ -11,7 +11,8 @@ partial class PlatformerPawn
 
 	[Net, Predicted]
 	public TimerState TimerState { get; set; }
-	[Net, Predicted]
+
+	[Net]
 	public TimeSince TimeSinceStart { get; set; }
 
 	[Net, Change]
