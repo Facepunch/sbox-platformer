@@ -106,6 +106,14 @@ namespace Platformer
 				tx.Position = tx.Position + Vector3.Up * 50.0f; // raise it up
 				pawn.Transform = tx;
 			}
+			PlatformerChatBox.AddInformation( To.Everyone, $"{client.Name} has joined the game", $"avatar:{client.PlayerId}" );
+		}
+
+		public override void ClientDisconnect( Client client, NetworkDisconnectionReason reason )
+		{
+			base.ClientDisconnect( client, reason );
+
+			PlatformerChatBox.AddInformation( To.Everyone, $"{client.Name} has left the game", $"avatar:{client.PlayerId}" );
 		}
 
 		public override void OnKilled( Client client, Entity pawn )
