@@ -55,6 +55,8 @@ namespace Platformer
 		[Net]
 		public PropCarriable HeldBody { get; set; }
 
+		public Particles HeldParticle { get; set; }
+
 		public PlatformerPawn() { }
 
 		public PlatformerPawn( Client cl )
@@ -280,9 +282,21 @@ namespace Platformer
 				vel = Velocity + Rotation.Forward * 30 + Rotation.Up * 10;
 			}
 
-			if ( InputActions.LeftClick.Down() )
+			if ( InputActions.LeftClick.Pressed() )
+			{
+				using var _ = Prediction.Off();
+
+				HeldParticle = Particles.Create( "particles/gameplay/player/throwline/throw_line.vpcf" );
+				HeldParticle.SetEntity( 0, HeldBody, Vector3.Up * 16 );
+				HeldParticle.SetPosition( 6, PlayerColor * 255 );
+
+			//	HeldParticle.SetPosition( 0, Vector3.Up *500 );
+
+			}
+			if ( InputActions.LeftClick.Released() )
 			{
 				drop = true;
+				HeldParticle.Destroy(true);
 				vel = Velocity + Rotation.Forward * 300 + Rotation.Up * 100;
 			}
 
@@ -292,6 +306,7 @@ namespace Platformer
 			HeldBody = null;
 			TimeUntilCanUse = 1f;
 		}
+
 
 		[Event.Frame]
 		public void PlayerShadow()
