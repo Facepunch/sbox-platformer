@@ -183,9 +183,12 @@ namespace Platformer
 			EnableDrawing = false;
 
 			CameraMode = new PlatformerRagdollCamera();
-
-			HeldBody.Drop( 2 );
-			HeldBody = null;
+			
+			if(HeldBody != null)
+			{
+				HeldBody.Drop( 2 );
+				HeldBody = null;
+			}
 
 			foreach ( var child in Children )
 			{
