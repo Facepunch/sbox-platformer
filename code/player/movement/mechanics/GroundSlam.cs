@@ -80,7 +80,7 @@ namespace Platformer.Movement
 			new ExplosionEntity()
 			{
 				Position = ctrl.Position,
-				Radius = 60f,
+				Radius = 6f,//Low so doesn't effect others players as much for now.
 				Damage = 0,
 				ForceScale = 25f,
 				ParticleOverride = "particles/gameplay/player/slamland/slamland.vpcf",
