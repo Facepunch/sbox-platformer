@@ -26,7 +26,6 @@ namespace Platformer.UI
 			
 			foreach (var key in Entity.All.OfType<KeyPickup>())
 			{
-				Log.Info( key.KeyIcon );
 				Current.KeyPanels.Add( Current.Add.KeyPanel( $"{key.KeyIcon}", "key1", key.KeyNumber ) );
 			}
 		}

@@ -78,7 +78,6 @@ internal partial class PropCarriable : Prop, IUse
 	{
 		Platformer.PropCarryBreak( Position, ParticleBreak, SoundBreak );
 
-		Log.Info( "Slammed" );
 	}
 
 
