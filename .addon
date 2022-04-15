@@ -21,6 +21,7 @@
     "RankType": 2,
     "LeaderboardType": 2,
     "PerMapRanking": false,
-    "MapSelect": 3
+    "MapSelect": 3,
+    "MaxPlayers": 32
   }
 }

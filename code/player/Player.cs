@@ -184,6 +184,9 @@ namespace Platformer
 
 			CameraMode = new PlatformerRagdollCamera();
 
+			HeldBody.Drop( 2 );
+			HeldBody = null;
+
 			foreach ( var child in Children )
 			{
 				child.EnableDrawing = false;
