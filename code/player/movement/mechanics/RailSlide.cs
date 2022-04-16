@@ -67,7 +67,6 @@ internal class RailSlide : BaseMoveMechanic
 				Path = null;
 				SlideStopped();
 				DoOnce = false;
-				Log.Info( "end" );
 
 				TimeSinceJump = 0;
 				IsActive = false;
