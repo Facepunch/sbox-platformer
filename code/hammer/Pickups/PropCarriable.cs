@@ -45,7 +45,7 @@ internal partial class PropCarriable : Prop, IUse
 		if ( !Parent.IsValid() ) return;
 
 		Velocity = velocity;
-		EnableAllCollisions = true;
+		EnableCollisionWithDelay( .1f );
 
 		SetParent( null );
 	}
@@ -77,6 +77,13 @@ internal partial class PropCarriable : Prop, IUse
 	public void DeathEffect()
 	{
 		Platformer.PropCarryBreak( Position, ParticleBreak, SoundBreak );
+	}
+
+	private async void EnableCollisionWithDelay( float delay )
+	{
+		await Task.DelaySeconds( delay );
+
+		EnableAllCollisions = true;
 	}
 
 	protected override void OnPhysicsCollision( CollisionEventData eventData )
