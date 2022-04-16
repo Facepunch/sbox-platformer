@@ -29,6 +29,7 @@ namespace Platformer
 
 			var height = 48f.LerpTo( 96f, distanceA );
 			var center = targetPosition + Vector3.Up * height;
+			center += Input.Rotation.Backward * 8f;
 			var targetPos = center + Input.Rotation.Backward * targetDistance;
 
 			var tr = Trace.Ray( center, targetPos )
