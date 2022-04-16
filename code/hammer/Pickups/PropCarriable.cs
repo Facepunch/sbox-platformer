@@ -77,6 +77,13 @@ internal partial class PropCarriable : Prop, IUse
 	public void DeathEffect()
 	{
 		Platformer.PropCarryBreak( Position, ParticleBreak, SoundBreak );
-
 	}
+
+	protected override void OnPhysicsCollision( CollisionEventData eventData )
+	{
+		if ( eventData.Entity is PlatformerPawn p ) return;
+
+		base.OnPhysicsCollision( eventData );
+	}
+
 }
