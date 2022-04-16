@@ -67,6 +67,16 @@ internal class RailSlide : BaseMoveMechanic
 				Path = null;
 				SlideStopped();
 				DoOnce = false;
+				Log.Info( "end" );
+
+				TimeSinceJump = 0;
+				IsActive = false;
+
+				// todo: add velocity up from rail normal,
+				// and fix getting grounded immediately so we don't have to set position
+				ctrl.Velocity = ctrl.Velocity.WithZ( 320f );
+				ctrl.Position = ctrl.Position.WithZ( ctrl.Position.z + 10 );
+
 				return;
 			}
 		}
