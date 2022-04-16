@@ -57,7 +57,7 @@ namespace Platformer
 			var fov = 70f.LerpTo( 80f, spd );
 
 			FieldOfView = FieldOfView.LerpTo( fov, Time.Delta );
-
+			ZNear = 6;
 			Viewer = null;
 		}
 
