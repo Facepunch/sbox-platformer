@@ -10,7 +10,7 @@ namespace Sandbox.UI
 	{
 
 		public Label Number;
-		//public Label Text;
+
 		public Image Image;
 
 		private float _life;

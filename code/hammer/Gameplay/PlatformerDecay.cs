@@ -6,7 +6,7 @@ using Sandbox;
 
 namespace Platformer;
 /// <summary>
-/// A simple platform that moves between two locations and can be controlled through Entity IO.
+/// A simple platform that will destroy if player stands on for too long.
 /// </summary>
 [Library( "plat_platform" )]
 [Display( Name = "Platform Decay", GroupName = "Platformer", Description = "Platform dies after time." )]

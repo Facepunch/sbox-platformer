@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Platformer;
 
 /// <summary>
-/// When the player is inside the trigger it will display the location on the hud. It will fall back to the map name.
+/// Triggers when Prop Carriable is inside volume.
 /// </summary>
 [Library( "plat_buttontrigger", Description = "Triggers when Prop Carriable is inside volume" )]
 [Hammer.AutoApplyMaterial( "materials/editor/areatrigger/areatrigger.vmat" )]
@@ -44,14 +44,9 @@ internal partial class ButtonTrigger : BaseTrigger
 
 	}
 
-	/// <summary>
-	/// Fired when the door starts to close. This can be called multiple times during a single "door closing"
-	/// </summary>
+
 	protected Output OnPressed { get; set; }
 
-	/// <summary>
-	/// Fired when the door starts to close. This can be called multiple times during a single "door closing"
-	/// </summary>
 	protected Output UnPressed { get; set; }
 
 	public override void EndTouch( Entity other )

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Platformer
 {
 	/// <summary>
-	/// A generic brush/mesh that can toggle its visibilty and collisions, and can be broken.
+	/// A mesh ent that will disable and enable if coop mode.
 	/// </summary>
     [Library( "plat_coop" )]
 	[Hammer.Solid]
@@ -23,11 +23,6 @@ namespace Platformer
 		public override void Spawn()
 		{
 			base.Spawn();
-
-			//SetupPhysicsFromModel( PhysicsMotionType.Dynamic );
-			//EnableAllCollisions = true;
-
-
 
 		}
 

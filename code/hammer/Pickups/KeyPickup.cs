@@ -18,7 +18,7 @@ internal partial class KeyPickup : AnimEntity
 	}
 
 	/// <summary>
-	/// 🍆💦 😝
+	/// This will set the model and icon for the HUD.
 	/// </summary>
 	[Property( "model_type", Title = "Model Type" ), Net]
 	public ModelType ModelTypeList { get; set; } = ModelType.FoamFinger;

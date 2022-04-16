@@ -16,8 +16,8 @@ namespace Platformer.UI
 
 			Current = this;
 
-			RootPanel.StyleSheet.Load( "/ui/PlatformerHud.scss" );
-			RootPanel.StyleSheet.Load( "/ui/NewArea.scss" );
+			RootPanel.StyleSheet.Load( "/ui/PlayerHud/PlatformerHud.scss" );
+			RootPanel.StyleSheet.Load( "/ui/Area/NewArea.scss" );
 
 			RootPanel.AddChild<PlatformerScoreboard>();
 
@@ -33,7 +33,7 @@ namespace Platformer.UI
 			RootPanel.AddChild<RoundTimer>();
 			RootPanel.AddChild<EnergyCurrent>();
 			RootPanel.AddChild<CourseTimer>();
-			//RootPanel.AddChild<DeathUI>();
+			//RootPanel.AddChild<DeathUI>(); Enable this once the HUD is working correctly.
 
 		}
 

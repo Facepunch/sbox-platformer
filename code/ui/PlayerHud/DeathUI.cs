@@ -22,7 +22,6 @@ public class DeathUI : Panel
 
 		if ( Local.Pawn is not PlatformerPawn pl ) return;
 
-		//DeadImage.SetClass( "died", pl.LifeState == LifeState.Dead );
 		if ( pl.LifeState == LifeState.Dead )
 		{
 			Died();
@@ -38,17 +37,15 @@ public class DeathUI : Panel
 		DeadImage.SetClass( "limbo", true );
 
 		await Task.DelayRealtimeSeconds( 1.5f );
+
 		DeadImage.SetClass( "alive", false );
-		//DeadImage.SetTexture( "ui/hud/death/respawn.png" );
 		DeadImage.SetClass( "died",true);
 
 	}
 	public void Alive()
 	{
 		DeadImage.SetClass( "limbo", false );
-		//DeadImage.SetTexture( "ui/hud/death/respawn.png" );
 		DeadImage.SetClass( "died", false );
-		//DeadImage.SetClass( "limbo", false );
 		DeadImage.SetClass( "alive", true );
 	}
 }

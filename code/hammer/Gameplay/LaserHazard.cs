@@ -18,8 +18,6 @@ public partial class LaserHazard : ModelEntity
 	[DefaultValue( "500" )]
 	public float maxDist { get; set; }
 
-	//public string BeamParticle = "particles/gameplay/laser_beam/beam_lazer.vpcf";
-
 	[Net]
 	[Property( "effect_name" ), Hammer.EntityReportSource, FGDType( "particlesystem" )]
 	public string BeamParticle { get; set; }

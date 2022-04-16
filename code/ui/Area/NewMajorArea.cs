@@ -13,8 +13,7 @@ namespace Platformer.UI
 		public Label newlandmark;
 		public NewMajorArea()
 		{
-			StyleSheet.Load( "/ui/NewMajorArea.scss" );
-			//usetext.SetText( "Interact [E]" )
+			StyleSheet.Load( "/ui/Area/NewMajorArea.scss" );
 
 			newlandmark = AddChild<Label>( "newlandmark" );
 

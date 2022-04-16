@@ -55,16 +55,6 @@ internal partial class AreaTrigger : BaseTrigger
 		{
 			pl.CurrentArea = LandMarkName;
 		}
-
-		//pl.CurrentArea = LandMarkName;
-
-		if ( other != null )
-		{
-			
-			//NewArea.EnteredNewArea();
-
-		}
-
 	}
 	public override void StartTouch( Entity other )
 	{

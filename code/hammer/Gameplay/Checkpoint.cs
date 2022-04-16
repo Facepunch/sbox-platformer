@@ -39,8 +39,6 @@ internal partial class Checkpoint : ModelEntity
 	{
 		base.Spawn();
 
-		//SetModel( "models/gameplay/checkpoint/editor_checkpoint/editor_checkpoint.vmdl" );
-
 		Transmit = TransmitType.Always;
 		EnableAllCollisions = true;
 		EnableTouch = true;
@@ -112,7 +110,6 @@ internal partial class Checkpoint : ModelEntity
 
 	private bool CanPlayerCheckpoint( PlatformerPawn pl )
 	{
-		//if ( pl.GroundEntity == null ) return false;
 		if ( pl.TimerState != TimerState.Live ) return false;
 
 		return true;

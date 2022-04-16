@@ -17,7 +17,7 @@ namespace Platformer.UI
 		{
 			Current = this;
 
-			StyleSheet.Load( "/ui/PlatformerChatBox.scss" );
+			StyleSheet.Load( "/ui/Chatbox/PlatformerChatBox.scss" );
 
 			Canvas = Add.Panel( "chat_canvas" );
 

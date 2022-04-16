@@ -15,10 +15,6 @@ class WorldSignPanel : WorldPanel
 		PanelBounds = new Rect( -(w / 2), -(h / 2), w, h );
 
 		StyleSheet.Load( "/ui/World/WorldSignPanel.scss" );
-
-		//Add.Label( "The", "hole" );
-		//Add.Label( "_____", "name" );
-		//Add.Label( "Wall", "par" );
 	}
 
 	public override void Tick()

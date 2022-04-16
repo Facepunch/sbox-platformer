@@ -45,8 +45,6 @@ public partial class SignPost : Entity
 		var ttext = TopText;
 		var btext = BottomText;
 
-		//WorldPanel.StyleSheet.Load( "/hammer/SignPost.scss" );
-
 		// Bring it out the smallest amount from the sign
 		WorldPanel.Transform = WorldPanel.Transform.WithPosition( WorldPanel.Transform.Position + WorldPanel.Transform.Rotation.Forward * 0.05f );
 
@@ -55,18 +53,14 @@ public partial class SignPost : Entity
 		WorldPanel.Add.Label( $"{btext}", "bottom" );
 
 	}
-	/// <summary>
-	/// Stop s sound event
-	/// </summary>
+
+
 	[ClientRpc, Input]
 	public void DisplayText()
 	{
 		WorldPanel.Style.Opacity = 1;
 	}
 
-	/// <summary>
-	/// Stop the d event
-	/// </summary>
 	[ClientRpc,Input]
 	public void HideText()
 	{

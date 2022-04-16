@@ -42,7 +42,7 @@ namespace Platformer.UI
 
 		public PlatfotmerNameTags()
 		{
-			StyleSheet.Load( "/ui/PlatfotmerNameTags.scss" );
+			StyleSheet.Load( "/ui/World/PlatfotmerNameTags.scss" );
 		}
 
 		public override void Tick()

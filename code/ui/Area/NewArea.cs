@@ -32,20 +32,6 @@ namespace Platformer.UI
 
 			base.Tick();
 
-			//if ( Time.Now - timesince < 5000 )
-			//{
-			//	AddClass( "visible" );
-			//}
-			//else
-			//{
-			//	RemoveClass( "visible" );
-			//}
-
 		}
-
-		//public void EnteredNewArea()
-		//{
-		//	Destination.Text = $"{CArea}";
-		//}
 	}
 }

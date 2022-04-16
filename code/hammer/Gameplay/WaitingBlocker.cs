@@ -6,9 +6,9 @@ using System.ComponentModel.DataAnnotations;
 namespace Platformer
 {
 	/// <summary>
-	/// A generic brush/mesh that can toggle its visibilty and collisions, and can be broken.
+	/// A generic brush/mesh that will disable after the waiting period.
 	/// </summary>
-    [Library( "plat_wait" )]
+	[Library( "plat_wait" )]
 	[Hammer.Solid]
 	[Hammer.RenderFields]
 	[Hammer.VisGroup( Hammer.VisGroup.Dynamic )]

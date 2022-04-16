@@ -26,7 +26,6 @@ namespace Platformer.UI
 
 			if ( Local.Pawn is not PlatformerPawn pl ) return;
 
-			//Number.Text = $"{pl.GliderEnergy}";
 			Number.Style.Width = Length.Fraction(Math.Max( pl.GliderEnergy / 120 , 0));
 			Number.Style.Dirty();
 

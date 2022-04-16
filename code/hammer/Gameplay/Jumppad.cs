@@ -35,10 +35,6 @@ public partial class Jumppad : BaseTrigger
 			var direction = (target.Position - other.Position).Normal;
 			pl.ApplyForce( new Vector3( 0f, 0f, VerticalBoost ) );
 			pl.ApplyForce( direction * Force );
-
-			DebugOverlay.Line( Position, target.Position, Color.Green, 10, false );
-			DebugOverlay.Axis( Position, Rotation,20,10 );
-			DebugOverlay.Axis( target.Position, target.Rotation, 20,10 );
 		}
 
 		base.Touch( other );
