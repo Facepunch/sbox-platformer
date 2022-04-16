@@ -1,5 +1,6 @@
 ﻿
 using Sandbox;
+using System;
 
 namespace Platformer.Movement
 {
@@ -77,15 +78,42 @@ namespace Platformer.Movement
 
 			using var _ = Prediction.Off();
 
-			new ExplosionEntity()
+			Sound.FromWorld( "player.slam.land", ctrl.Position );
+			Particles.Create( "particles/gameplay/player/slamland/slamland.vpcf", ctrl.Position );
+
+			var effectRadius = 100f;
+			var overlaps = Entity.FindInSphere( ctrl.Position, effectRadius );
+
+			foreach( var overlap in overlaps )
 			{
-				Position = ctrl.Position,
-				Radius = 25f,//Low so doesn't effect others players as much for now.
-				Damage = 0,
-				ForceScale = 30f,
-				ParticleOverride = "particles/gameplay/player/slamland/slamland.vpcf",
-				SoundOverride = "player.slam.land"
-			}.Explode( ctrl.Pawn );
+				if ( overlap is not ModelEntity ent || !ent.IsValid() )
+					continue;
+
+				if ( ent.LifeState != LifeState.Alive )
+					continue;
+
+				if ( !ent.PhysicsBody.IsValid() )
+					continue;
+
+				if ( ent.IsWorld )
+					continue;
+
+				if ( ent is PlatformerPawn )
+					continue;
+
+				var targetPos = ent.PhysicsBody.MassCenter;
+
+				var dist = Vector3.DistanceBetween( ctrl.Position, targetPos );
+				if ( dist > effectRadius )
+					continue;
+
+				var forceMult = ent is PropGib ? 60f : 6f;
+				var distanceMul = 1.0f - Math.Clamp( dist / effectRadius, 0.0f, 1.0f );
+				var force = (forceMult * distanceMul) * ent.PhysicsBody.Mass;
+				var forceDir = (targetPos - ctrl.Position).Normal;
+
+				ent.ApplyAbsoluteImpulse( forceDir * force );
+			}
 		}
 
 	}
