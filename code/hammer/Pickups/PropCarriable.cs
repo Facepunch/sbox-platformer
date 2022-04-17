@@ -1,10 +1,11 @@
 ﻿
 using Sandbox;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Platformer;
 
-[Library("plat_prop_carriable")]
+[Library( "plat_prop_carriable" )]
 [Display( Name = "Prop Carriable", GroupName = "Platformer", Description = "A model the player can carry." )]
 internal partial class PropCarriable : Prop, IUse
 {
@@ -14,8 +15,26 @@ internal partial class PropCarriable : Prop, IUse
 		Cardboard
 	}
 
+	//public enum SpawnType
+	//{
+	//	Coin,
+	//	Life,
+	//	Health
+	//}
+
 	[Property( "model_properties", Title = "Break Type" ), Net]
 	public PropType BreakType { get; set; } = PropType.Wood;
+
+	[Property( Title = "Spawn Pickups on Destroyed." ), Net]
+	public bool SpawnOnDeath { get; set; } = false;
+
+	//Maybe revist this later.
+	//[Property( "spawn_properties", Title = "Break Type" ), Net]
+	//public SpawnType PickUpType { get; set; } = SpawnType.Coin;
+
+	[Property( Title = "Amount to Spawn" ), Net]
+	public int AmountToSpawn { get; set; } = 0;
+
 
 	public string SoundBreak = "break.wood";
 
@@ -77,6 +96,21 @@ internal partial class PropCarriable : Prop, IUse
 	public void DeathEffect()
 	{
 		Platformer.PropCarryBreak( Position, ParticleBreak, SoundBreak );
+
+		if ( SpawnOnDeath )
+		{
+			for ( int i = 0; i < AmountToSpawn; i++ )
+			{
+				var Coins = new CoinPickup
+				{
+					Position = Position + Rotation.Up * new Random().Next( 40, 60 ),
+				};
+
+				Coins.SpawnWithPhys();
+				Coins.CollisionGroup = CollisionGroup.Weapon;
+				Coins.SetInteractsAs( CollisionLayer.Debris );
+			}
+		}
 	}
 
 	private async void EnableCollisionWithDelay( float delay )
