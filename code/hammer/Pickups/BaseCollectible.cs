@@ -25,6 +25,11 @@ internal partial class BaseCollectible : ModelEntity
 	[Event.Frame]
 	public void OnFrame()
 	{
+		OnFrameEvent();
+	}
+
+	public virtual void OnFrameEvent()
+	{
 		if ( !Local.Pawn.IsValid() ) return;
 
 		var render = !PlayersWhoCollected.Contains( Local.Pawn );
