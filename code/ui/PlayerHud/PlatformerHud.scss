@@ -211,6 +211,7 @@ EnergyCurrent {
     left: 210px;
     top: 12.45%;
     width: 200px;
+    opacity: 0;
 
     .energynm {
         font-family: "Fredoka One";
@@ -250,6 +251,11 @@ EnergyCurrent {
         width: auto;
         height: 24px;
         transform-origin: 50%,50%;
+    }
+
+    &.Active {
+        opacity: 1;
+        background-image-tint: white;
     }
 }
 

@@ -10,12 +10,15 @@ namespace Platformer.UI
 	{
 
 		public Label Number;
+		public Label Text;
+		public Label Bg;
+		
 
 		public EnergyCurrent()
 		{
-			Add.Label( "Energy", "energynm" );
+			Text = Add.Label( "Energy", "energynm" );
 			Number = Add.Label( "", "energy" );
-			Add.Label( "", "energybg" );
+			Bg = Add.Label( "", "energybg" );
 		}
 
 		public override void Tick()
@@ -25,11 +28,11 @@ namespace Platformer.UI
 			if ( player == null ) return;
 
 			if ( Local.Pawn is not PlatformerPawn pl ) return;
+		
+			SetClass( "active", pl.PlayerHasGlider );
 
-			Number.Style.Width = Length.Fraction(Math.Max( pl.GliderEnergy / 120 , 0));
+			Number.Style.Width = Length.Fraction( Math.Max( pl.GliderEnergy / 120, 0 ) );
 			Number.Style.Dirty();
-
 		}
-
 	}
 }

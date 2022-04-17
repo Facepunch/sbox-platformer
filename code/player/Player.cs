@@ -29,6 +29,7 @@ namespace Platformer
 		public bool IgnoreFallDamage = false;
 		public Color Color { get; private set; }
 
+		[Net]
 		public bool PlayerHasGlider { get; set; } = false;
 
 		[Net]
@@ -412,6 +413,7 @@ namespace Platformer
 				if ( Controller is PlatformerController controller )
 				{
 					controller.EnableGliderControl();
+					PlayerHasGlider = true;
 				}
 			}
 		}
