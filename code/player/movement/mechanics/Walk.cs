@@ -90,6 +90,8 @@ namespace Platformer.Movement
 			ctrl.Accelerate( wishdir, wishspeed, 0, accel );
 			ctrl.Velocity = ctrl.Velocity.WithZ( 0 );
 
+			
+
 			// Add in any base velocity to the current velocity.
 			//ctrl.Velocity += ctrl.BaseVelocity;
 
@@ -108,6 +110,7 @@ namespace Platformer.Movement
 
 				if ( pm.Fraction == 1 )
 				{
+					
 					ctrl.Position = pm.EndPosition;
 					StayOnGround();
 					return;

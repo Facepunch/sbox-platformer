@@ -74,6 +74,7 @@ namespace Platformer.Movement
 
 			var color = ctrl.Pawn is PlatformerPawn p ? p.PlayerColor : Color.Green;
 			var particle = Particles.Create( "particles/gameplay/player/longjumptrail/longjumptrail.vpcf", ctrl.Pawn );
+			Particles.Create( "particles/gameplay/player/airdash/airdash.vpcf", ctrl.Pawn );
 			Sound.FromWorld( "player.ljump", ctrl.Pawn.Position );
 			particle.SetPosition( 6, color * 255f );
 		}

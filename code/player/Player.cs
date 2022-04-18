@@ -58,6 +58,8 @@ namespace Platformer
 
 		public Particles HeldParticle { get; set; }
 
+		private Particles WalkCloud;
+
 		public PlatformerPawn() { }
 
 		public PlatformerPawn( Client cl )
@@ -97,6 +99,9 @@ namespace Platformer
 			RemoveCollisionLayer( CollisionLayer.Solid );
 
 			Health = 4;
+			Log.Info( WalkCloud );
+
+			
 
 			if ( NumberLife == 0 )
 			{
@@ -186,8 +191,11 @@ namespace Platformer
 			EnableDrawing = false;
 
 			CameraMode = new PlatformerRagdollCamera();
+
+			WalkCloud.Destroy();
 			
-			if(HeldBody != null)
+
+			if (HeldBody != null)
 			{
 				HeldBody.Drop( 2 );
 				HeldBody = null;
@@ -197,6 +205,8 @@ namespace Platformer
 			{
 				child.EnableDrawing = false;
 			}
+
+			WalkCloud = null;
 		}
 
 		public void FinishedReset()
@@ -308,6 +318,31 @@ namespace Platformer
 			TimeUntilCanUse = 1f;
 		}
 
+		[Event.Frame]
+		public void WalkCloudParticle()
+		{
+			if ( WalkCloud == null )
+			{
+				WalkCloud = Particles.Create( "particles/gameplay/player/walkcloud/walkcloud.vpcf" );
+				WalkCloud.SetEntity( 0, this );
+			}
+
+			if(LifeState == LifeState.Dead)
+			{
+				WalkCloud.SetPosition( 6, new Vector3( 0, 0, 0 ) );
+			}
+
+			if ( GroundEntity != null && Velocity.Length >= .2f )
+			{
+				var speed = Velocity.Length.Remap( 0f, 280, 0f, 1f );
+				WalkCloud.SetPosition( 6, new Vector3( speed, 0f, 0f ) );
+			}
+			else
+			{
+				WalkCloud.SetPosition( 6, new Vector3( 0, 0, 0 ) );
+			}
+
+		}
 
 		[Event.Frame]
 		public void PlayerShadow()
@@ -425,6 +460,7 @@ namespace Platformer
 		}
 
 		TimeSince timeSinceLastFootstep = 0;
+
 
 		public override void OnAnimEventFootstep( Vector3 pos, int foot, float volume )
 		{
