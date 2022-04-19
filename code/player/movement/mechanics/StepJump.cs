@@ -6,7 +6,7 @@ namespace Platformer.Movement
 	class StepJump : BaseMoveMechanic
 	{
 
-		public float JumpPower => 350f;
+		public float JumpPower => 240f;
 
 		public override bool TakesOverControl => true;
 

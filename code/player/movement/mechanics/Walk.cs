@@ -11,7 +11,7 @@ namespace Platformer.Movement
 		public float StepSize => 18.0f;
 		public float GroundAngle => 46.0f;
 		public bool AutoJump => false;
-		public float JumpPower => 322f;
+		public float JumpPower => 250f;
 		public float DefaultSpeed => 280f;
 		public float WalkSpeed => 140f;
 		public float GroundFriction => 4.0f;

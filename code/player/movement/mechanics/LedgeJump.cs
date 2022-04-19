@@ -6,7 +6,7 @@ namespace Platformer.Movement
 	class LedgeJump : BaseMoveMechanic
 	{
 
-		public float JumpPower => 250f;
+		public float JumpPower => 200f;
 		public float VelocityMulti => 1.2f;
 		public float MinLedgeHeight => 64;
 

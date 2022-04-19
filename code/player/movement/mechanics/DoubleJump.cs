@@ -6,13 +6,13 @@ namespace Platformer.Movement
 	partial class DoubleJump : BaseMoveMechanic
 	{
 
-		public float DoubleJumpStrength => 320f;
+		public float DoubleJumpStrength => 240f;
 		public override bool TakesOverControl => false;
 		public override bool AlwaysSimulate => true;
 
 		public int DoubleJumpsRemaining { get; set; }
 
-		private TimeUntil timeUntilCanDoubleJump;
+		public TimeUntil TimeUntilCanDoubleJump;
 		private bool justJumped;
 
 		public DoubleJump( PlatformerController controller ) : base( controller )
@@ -35,7 +35,7 @@ namespace Platformer.Movement
 
 			if( ctrl.GroundEntity != null )
 			{
-				timeUntilCanDoubleJump = .25f;
+				TimeUntilCanDoubleJump = .25f;
 				DoubleJumpsRemaining = 1;
 
 				if ( InputActions.Jump.Pressed() )
@@ -47,7 +47,7 @@ namespace Platformer.Movement
 			if ( justJumped ) return;
 			if ( ctrl.GroundEntity != null ) return;
 			if ( !InputActions.Jump.Pressed() ) return;
-			if ( timeUntilCanDoubleJump > 0 ) return;
+			if ( TimeUntilCanDoubleJump > 0 ) return;
 			if ( ctrl.GetMechanic<Glide>()?.Gliding ?? false ) return;
 			if ( ctrl.GetMechanic<DuckJump>().IsDuckjumping == true ) return;
 			if ( DoubleJumpsRemaining <= 0 ) return;
