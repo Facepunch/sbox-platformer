@@ -34,7 +34,7 @@ namespace Platformer
 
 			Vector3 backwardNormal = ViewNormal;
 
-			var height = 48f.LerpTo( 96f, distanceA );
+			var height = 48f.LerpTo( 64f, distanceA );
 			var center = targetPosition + Vector3.Up * height;
 			center += backwardNormal * 8f;
 			var cameraTargetPos = center + backwardNormal * targetDistance;

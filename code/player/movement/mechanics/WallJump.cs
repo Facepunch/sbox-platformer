@@ -8,7 +8,7 @@ namespace Platformer.Movement
         private float WallJumpConnectangle => 0.75f;
 		public float WallJumpStrength => 240f;
         public float WallJumpKickStrength => 500f;
-        public float WallJumpFriction => 7.0f;
+        public float WallJumpFriction => 3.0f;
 		public override bool TakesOverControl => true;
 		public override bool AlwaysSimulate => false;
         public TimeUntil TimeUntilNextWallJump = Time.Now;
@@ -95,7 +95,6 @@ namespace Platformer.Movement
             ctrl.Velocity *= new Vector3(1).WithZ( 1.0f - ( Time.Delta * WallJumpFriction ) );
             ctrl.Rotation =  Rotation.LookAt( HitNormal * 10.0f, Vector3.Up );
             
-            Particles.Create( "particles/gameplay/player/Doublejump/Doublejump.vpcf" , ctrl.Pawn );
 
             //If ground entity, then we hit the ground, stop simulating
             if( ctrl.GroundEntity != null )
@@ -121,7 +120,8 @@ namespace Platformer.Movement
 
             TimeUntilWallJumpDisengage = Time.Now + 1.5f;
 
-            ctrl.Pawn.PlaySound( "slide.stop" );
+			Particles.Create( "particles/gameplay/player/slamtrail/slamtrail.vpcf", ctrl.Pawn );
+			ctrl.Pawn.PlaySound( "slide.stop" );
 			SlideSound.Stop();
 			SlideSound = ctrl.Pawn.PlaySound( "rail.slide.loop" );
 
@@ -168,7 +168,7 @@ namespace Platformer.Movement
 
 			ctrl.AddEvent( "jump" );
 
-			Particles.Create( "particles/gameplay/player/Walljump/Walljump.vpcf", ctrl.Pawn );
+			Particles.Create( "particles/gameplay/player/airdash/airdash.vpcf", ctrl.Pawn );
 			Sound.FromWorld( "player.djump", ctrl.Pawn.Position );
 		}
 
