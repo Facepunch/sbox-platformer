@@ -55,6 +55,14 @@ namespace Platformer.Movement
 			ctrl.Velocity = ctrl.Velocity.WithZ( DoubleJumpStrength );
 			DoubleJumpsRemaining--;
 
+
+			var groundslam = ctrl.GetMechanic<GroundSlam>();
+			if ( groundslam != null && groundslam.IsActive )
+			{
+				groundslam.Cancel();
+				ctrl.Velocity = ctrl.Velocity.WithZ( 220 );
+			}
+
 			DoubleJumpEffect();
 		}
 

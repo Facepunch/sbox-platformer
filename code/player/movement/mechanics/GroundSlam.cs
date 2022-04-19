@@ -23,6 +23,7 @@ namespace Platformer.Movement
 			if ( ctrl.GroundEntity.IsValid() ) return false;
 			if ( !InputActions.Duck.Pressed() ) return false;
 
+			Particles.Create( "particles/gameplay/player/slamtrail/slamtrail.vpcf", ctrl.Pawn );
 			ctrl.Velocity = 0f;
 			FreezeTimer = .25f;
 
@@ -53,7 +54,7 @@ namespace Platformer.Movement
 			}
 
 			pl.IgnoreFallDamage = true;
-
+			
 			var ents = Entity.FindInSphere( ctrl.Position, 30f );
 			foreach( var ent in ents )
 			{

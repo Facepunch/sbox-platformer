@@ -12,6 +12,7 @@ namespace Platformer.Movement
 		[Net] public float MaxEnergy { get; set; } = 120f;
 		[Net] public bool IsRegeneratingEnergy { get; set; }
 		[Net] public bool IsSliding { get; set; }
+		[Net] public bool IsHolding { get; set; }
 		[Net] public float EnergyDrain { get; set; } = 20f;
 		[Net, Predicted] public Vector3 Impulse { get; set; }
 

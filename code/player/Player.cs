@@ -192,7 +192,7 @@ namespace Platformer
 
 			CameraMode = new PlatformerRagdollCamera();
 
-			WalkCloud.Destroy();
+			WalkCloud?.Destroy();
 			
 
 			if (HeldBody != null)
@@ -287,35 +287,51 @@ namespace Platformer
 			var drop = false;
 			var vel = Vector3.Zero;
 
-			if ( InputActions.RightClick.Down() )
+			if(Input.UsingController)
 			{
-				drop = true;
-				vel = Velocity + Rotation.Forward * 30 + Rotation.Up * 10;
-			}
+				if ( InputActions.Walk.Pressed() && InputActions.Duck.Down() )
+				{
+					drop = true;
+					vel = Velocity + Rotation.Forward * 30 + Rotation.Up * 10;
 
-			if ( InputActions.LeftClick.Pressed() )
+				}
+
+				if ( InputActions.Walk.Pressed() && !InputActions.Duck.Down() )
+				{
+					drop = true;
+					//HeldParticle.Destroy(true);
+					vel = Velocity + Rotation.Forward * 300 + Rotation.Up * 100;
+
+				}
+				Log.Info( "Controller" );
+
+				if ( !drop ) return;
+				HeldBody.Drop( vel );
+				HeldBody = null;
+				TimeUntilCanUse = 1f;
+			}
+			if ( !Input.UsingController )
 			{
-				using var _ = Prediction.Off();
+				if ( InputActions.Use.Pressed() && InputActions.Duck.Down() )
+				{
+					drop = true;
+					vel = Velocity + Rotation.Forward * 30 + Rotation.Up * 10;
 
-				HeldParticle = Particles.Create( "particles/gameplay/player/throwline/throw_line.vpcf" );
-				HeldParticle.SetEntity( 0, HeldBody, Vector3.Up * 16 );
-				HeldParticle.SetPosition( 6, PlayerColor * 255 );
+				}
 
-			//	HeldParticle.SetPosition( 0, Vector3.Up *500 );
+				if ( InputActions.Use.Pressed() && !InputActions.Duck.Down() )
+				{
+					drop = true;
+					//HeldParticle.Destroy(true);
+					vel = Velocity + Rotation.Forward * 300 + Rotation.Up * 100;
 
+				}
+
+				if ( !drop ) return;
+				HeldBody.Drop( vel );
+				HeldBody = null;
+				TimeUntilCanUse = 1f;
 			}
-			if ( InputActions.LeftClick.Released() )
-			{
-				drop = true;
-				HeldParticle.Destroy(true);
-				vel = Velocity + Rotation.Forward * 300 + Rotation.Up * 100;
-			}
-
-			if ( !drop ) return;
-
-			HeldBody.Drop( vel );
-			HeldBody = null;
-			TimeUntilCanUse = 1f;
 		}
 
 		[Event.Frame]
@@ -449,6 +465,25 @@ namespace Platformer
 				{
 					controller.EnableGliderControl();
 					PlayerHasGlider = true;
+				}
+			}
+		}
+
+		[Event.Tick]
+		public void PlayerHolding()
+		{
+			if ( HeldBody != null )
+			{
+				if ( Controller is PlatformerController controller )
+				{
+					controller.IsHolding = true;
+				}
+			}
+			else
+			{
+				if ( Controller is PlatformerController controller )
+				{
+					controller.IsHolding = false;
 				}
 			}
 		}
