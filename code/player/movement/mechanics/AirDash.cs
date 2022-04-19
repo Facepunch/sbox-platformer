@@ -23,7 +23,8 @@ namespace Platformer.Movement
 		{
 			base.PostSimulate();
 
-			if ( ctrl.GroundEntity != null )
+
+			if ( ctrl.GroundEntity != null || ctrl.IsHolding )
 			{
 				CanDash = true;
 				IsAirDashing = false;

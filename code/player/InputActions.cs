@@ -42,15 +42,15 @@ public static class InputActionsExtensions
 				InputActions.Back => InputButton.Back,
 				InputActions.Left => InputButton.Left,
 				InputActions.Right => InputButton.Right,
-				InputActions.Walk => InputButton.Duck,
+				InputActions.Walk => InputButton.Reload,
 				InputActions.Jump => InputButton.Jump,
 				InputActions.Duck => InputButton.Attack2,
-				InputActions.Kill => InputButton.Use,
-				InputActions.LeftClick => InputButton.Attack1,
-				InputActions.RightClick => InputButton.Attack2,
+				InputActions.Kill => InputButton.Menu,
+				InputActions.LeftClick => InputButton.Reload,
+				InputActions.RightClick => InputButton.SlotNext,
 				InputActions.Spray => InputButton.Flashlight,
 				InputActions.Menu => InputButton.SlotNext,
-				InputActions.Use => InputButton.SlotPrev,
+				InputActions.Use => InputButton.Use,
 				_ => default
 			};
 		}
