@@ -192,7 +192,7 @@ namespace Platformer
 
 			CameraMode = new PlatformerRagdollCamera();
 
-			WalkCloud.Destroy();
+			WalkCloud?.Destroy();
 			
 
 			if (HeldBody != null)
