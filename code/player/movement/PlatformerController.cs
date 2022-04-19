@@ -49,8 +49,9 @@ namespace Platformer.Movement
 			mechanics.Add( new AirDash( this ) );
 			mechanics.Add( new GroundSlam( this ) ); 
 			
+			mechanics.Add( new LedgeGrab( this ) ); 
+			mechanics.Add( new WallJump( this ) ); 
 			
-
 			mechanics.Add( new MoveDebug( this ) );
 		}
 
