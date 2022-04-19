@@ -71,7 +71,7 @@ namespace Platformer.Movement
                 ctrl.Pawn.PlaySound( "player.slam.land" );
                 Particles.Create( "particles/gameplay/player/slamland/slamland.vpcf", ctrl.Position );
 
-                TimeToDisengage = Time.Now + 1.0f;
+                TimeToDisengage = Time.Now + 0.5f;
                 TargetLocation = LedgeDestination;
             }
 
@@ -84,19 +84,27 @@ namespace Platformer.Movement
                 return false;
 
             var center = ctrl.Position;
-            center.z += 64;
-            var dest = (center + ( ctrl.Pawn.Rotation.Forward * 58.0f ) );
+            center.z += 48;
+            var dest = (center + ( ctrl.Pawn.Rotation.Forward.WithZ(0).Normal * 48.0f ) );
+
+            // Todo: check if nothing is blocking our head
 
             var tr = Trace.Ray( center, dest )
 				.Ignore( ctrl.Pawn )
-				.Radius( 8 )
+				.Radius( 4 )
 				.Run();
 
             if( tr.Hit )
             {
                 var normal = tr.Normal;
-                var destinationTestPos = tr.EndPosition - ( normal * PlayerRadius * 4.0f ) + ( Vector3.Up * 64.0f);
+                var destinationTestPos = tr.EndPosition - ( normal * PlayerRadius ) + ( Vector3.Up * 64.0f);
                 var originTestPos = tr.EndPosition + ( normal * GrabDistance );
+
+                // Trace again to check if we have a valid ground
+                tr = Trace.Ray( destinationTestPos, destinationTestPos - ( Vector3.Up * 64.0f) )
+                    .Ignore( ctrl.Pawn )
+                    .Radius( 4 )
+                    .Run();
                 
                 if( tr.Hit )
                 {
@@ -111,7 +119,7 @@ namespace Platformer.Movement
                         .Ignore( ctrl.Pawn )
                         .Radius( PlayerRadius )
                         .Run();
-                    
+
                     if( tr.Hit )
                     {
                         // We can't climb

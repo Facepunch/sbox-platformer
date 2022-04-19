@@ -11,9 +11,12 @@ namespace Platformer.Movement
         public float WallJumpFriction => 7.0f;
 		public override bool TakesOverControl => true;
 		public override bool AlwaysSimulate => false;
-        public float TimeUntilNextWallJump = Time.Now;
+        public TimeUntil TimeUntilNextWallJump = Time.Now;
+        public TimeUntil TimeUntilWallJumpDisengage = Time.Now;
 
         private Vector3 HitNormal;
+
+        private Sound SlideSound;
 		public WallJump( PlatformerController controller ) : base( controller )
 		{
 		}
@@ -40,21 +43,19 @@ namespace Platformer.Movement
                 return false;
 
             // first try just moving to the destination
+            var playerEyeNormal = ctrl.Pawn.Rotation.Forward.WithZ(0).Normal;
             var center = ctrl.Position;
             center.z += 48;
-            var dest = (center + ( ctrl.Pawn.Rotation.Forward * 40.0f ) );
+            var dest = (center + ( playerEyeNormal * 40.0f ) );
 
             var tr = Trace.Ray( center, dest )
 				.Ignore( ctrl.Pawn )
-				.Radius( 8 )
 				.Run();
-
-            //DebugOverlay.Line( center, dest, Color.Green, 5.0f, false );
 
             if( tr.Hit )
             {
                 //If we are on a desired angle, then we can grab the wall
-                bool canGrab = tr.Normal.Dot( -ctrl.Pawn.Rotation.Forward ) > 1.0 - WallJumpConnectangle;
+                bool canGrab = tr.Normal.Dot( -playerEyeNormal ) > 1.0 - WallJumpConnectangle;
 
                 if( canGrab )
                 {
@@ -81,6 +82,12 @@ namespace Platformer.Movement
                 Cancel();
                 return;
             }
+
+            if( TimeUntilWallJumpDisengage < Time.Now )
+            {
+                Cancel();
+                return;
+            }
             
             ctrl.SetTag( "grabbing_wall" );
             
@@ -97,6 +104,8 @@ namespace Platformer.Movement
                 return;
             }
 
+            SlideSound.SetPitch( ctrl.Velocity.z );
+
             //If no longer holding wall, then we have nothing to hold on, stop simulating
 
             ctrl.Move();
@@ -108,7 +117,13 @@ namespace Platformer.Movement
             ctrl.Velocity = 0;
 
             // Stick to wall
-            ctrl.Position = ( tr.EndPosition + ( HitNormal * 16.0f ) ).WithZ( ctrl.Position.z );
+            ctrl.Position = ( tr.EndPosition + ( HitNormal * 24.0f ) ).WithZ( ctrl.Position.z );
+
+            TimeUntilWallJumpDisengage = Time.Now + 1.5f;
+
+            ctrl.Pawn.PlaySound( "slide.stop" );
+			SlideSound.Stop();
+			SlideSound = ctrl.Pawn.PlaySound( "rail.slide.loop" );
 
             ctrl.Move();
         }
@@ -133,11 +148,16 @@ namespace Platformer.Movement
             ctrl.GetMechanic<DoubleJump>().TimeUntilCanDoubleJump += .25f;
             ctrl.GetMechanic<DoubleJump>().DoubleJumpsRemaining = 0;
 
+            SlideSound.Stop();
         }
 
         private void Cancel()
         {
             IsActive = false;
+            
+            TimeUntilNextWallJump = Time.Now + 2.0f;
+
+            SlideSound.Stop();
         }
 
 		private void WallJumpEffect()
