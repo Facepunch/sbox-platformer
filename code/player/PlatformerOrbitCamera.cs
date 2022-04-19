@@ -14,7 +14,11 @@ namespace Platformer
 		public float MaxDistance => 350.0f;
 		public float DistanceStep => 60.0f;
 
+		public Vector3 ViewNormal;
 		public Vector3 LastPosition;
+
+		public Rotation LastCameraRotation;
+
 		public override void Update()
 		{
 			var pawn = Local.Pawn as PlatformerPawn;
@@ -28,10 +32,12 @@ namespace Platformer
 			distance = distance.LerpTo( targetDistance, 10f * Time.Delta );
 			CalculateTargetPosition();
 
+			Vector3 backwardNormal = ViewNormal;
+
 			var height = 48f.LerpTo( 96f, distanceA );
 			var center = targetPosition + Vector3.Up * height;
-			center += Input.Rotation.Backward * 8f;
-			var cameraTargetPos = center + Input.Rotation.Backward * targetDistance;
+			center += backwardNormal * 8f;
+			var cameraTargetPos = center + backwardNormal * targetDistance;
 
 			var tr = Trace.Ray( center, cameraTargetPos )
 				.Ignore( pawn )
@@ -40,13 +46,13 @@ namespace Platformer
 
 			if ( tr.Hit )
 			{
-				distance = Math.Min( distance, tr.Distance );
+			//	distance = Math.Min( distance, tr.Distance );
 			}
 
-			var endpos = center + Input.Rotation.Backward * distance;
+			var endpos = center + backwardNormal * distance;
 
 			Position = endpos;
-			Rotation = Input.Rotation;
+			Rotation = Rotation.LookAt( center - endpos );
 
 			var fov = 80.0f;
 
@@ -54,20 +60,23 @@ namespace Platformer
 			ZNear = 6;
 			Viewer = null;
 
-			LastPosition = Position;
+			ViewNormal = -( Input.Rotation.Forward ).Normal;
 		}
 
 		public void CalculateTargetPosition()
 		{
 			// How far can our target can be from the player
 			// Jump height works well enough for this
-			float maxDistance = 40.0f;
+			float maxDistance = 50.0f;
 
-			targetPosition += Local.Pawn.Velocity.WithZ( 0 ) * Time.Delta * 1.1f;
+			targetPosition += Local.Pawn.Velocity.WithZ( 0 ) * Time.Delta * 1.333f;
 
-			// Fixme:
 			// If player is rotating the camera manually, we should
 			// Focus on center again
+			float delta = LastCameraRotation.Distance( Input.Rotation );
+			targetPosition = targetPosition.LerpTo( Local.Pawn.Position, delta * 0.01f );
+
+			LastCameraRotation = Input.Rotation;
 
 			// Clamp distance
 			if ( Local.Pawn.Position.Distance( targetPosition ) > maxDistance )
@@ -84,7 +93,6 @@ namespace Platformer
 
 			FieldOfView = 70;
 			targetPosition = Local.Pawn.Position;
-			LastPosition = Local.Pawn.Position;
 		}
 
 		private void UpdateViewBlockers( PlatformerPawn pawn )
