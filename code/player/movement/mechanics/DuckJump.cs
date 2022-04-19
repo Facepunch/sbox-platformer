@@ -65,6 +65,7 @@ namespace Platformer.Movement
 			using var _ = Prediction.Off();
 
 			Sound.FromWorld( "player.duckjump", ctrl.Pawn.Position );
+			Particles.Create( "particles/gameplay/player/airdash/airdash.vpcf", ctrl.Pawn );
 
 		}
 
