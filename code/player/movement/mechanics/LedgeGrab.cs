@@ -16,6 +16,9 @@ namespace Platformer.Movement
         public float TimeUntilNextGrab;
         public float TimeToDisengage = -1;
 
+        public float GrabDistance => 16.0f;
+        public float PlayerRadius => 32.0f;
+
 		public LedgeGrab( PlatformerController controller ) : base( controller )
 		{
 		}
@@ -34,20 +37,40 @@ namespace Platformer.Movement
         public override void Simulate()
         {
             base.Simulate();
+            
+            ctrl.SetTag( "grabbing_wall" );
 
             ctrl.Velocity = 0;
-
+            ctrl.Rotation = (-GrabNormal).EulerAngles.WithPitch(0).ToRotation();
             ctrl.Position = Vector3.Lerp( ctrl.Position, TargetLocation, Time.Delta * 10.0f );
 
-            if( TimeToDisengage > 0 && Time.Now > TimeToDisengage )
+            if( TimeToDisengage > 0 )
             {
-                IsActive = false;
-                TimeToDisengage = -1;
+                if( Time.Now > TimeToDisengage )
+                {
+                    IsActive = false;
+                    TimeToDisengage = -1;
+                }
+
                 return;
             }
 
-            if( InputActions.Jump.Down() )
+            // Drop down
+            if( InputActions.Duck.Pressed() || InputActions.Back.Pressed() )
             {
+                TimeToDisengage = Time.Now;
+            }
+
+            // Climb up
+            if( InputActions.Jump.Pressed()    ||
+                InputActions.Forward.Pressed() ||
+                InputActions.Left.Pressed()    ||
+                InputActions.Right.Pressed()   )
+            {
+                // Effects
+                ctrl.Pawn.PlaySound( "player.slam.land" );
+                Particles.Create( "particles/gameplay/player/slamland/slamland.vpcf", ctrl.Position );
+
                 TimeToDisengage = Time.Now + 1.0f;
                 TargetLocation = LedgeDestination;
             }
@@ -60,8 +83,6 @@ namespace Platformer.Movement
             if ( ctrl.GroundEntity != null ) 
                 return false;
 
-            float playerRadius = 20.0f;
-
             var center = ctrl.Position;
             center.z += 64;
             var dest = (center + ( ctrl.Pawn.Rotation.Forward * 58.0f ) );
@@ -71,18 +92,12 @@ namespace Platformer.Movement
 				.Radius( 8 )
 				.Run();
 
-            DebugOverlay.Line( center, dest, tr.Hit ? Color.Red : Color.Green, 5.0f, false );
-
             if( tr.Hit )
             {
                 var normal = tr.Normal;
-                var destinationTestPos = tr.EndPosition - ( normal * playerRadius ) + ( Vector3.Up * 64.0f);
-                var originTestPos = tr.EndPosition + ( normal * playerRadius );
+                var destinationTestPos = tr.EndPosition - ( normal * PlayerRadius * 4.0f ) + ( Vector3.Up * 64.0f);
+                var originTestPos = tr.EndPosition + ( normal * GrabDistance );
                 
-                tr = Trace.Ray( destinationTestPos, destinationTestPos - ( Vector3.Up * 64.0f) )
-                    .Ignore( ctrl.Pawn )
-                    .Run();
-
                 if( tr.Hit )
                 {
                     // That's a valid position, set our destination pos
@@ -92,13 +107,11 @@ namespace Platformer.Movement
 
                     // Then check if we have enough room to climb
                     
-                    tr = Trace.Ray( destinationTestPos + ( Vector3.Up * playerRadius + 1.0f), destinationTestPos + ( Vector3.Up * 64.0f) )
+                    tr = Trace.Ray( destinationTestPos + ( Vector3.Up * PlayerRadius + 1.0f), destinationTestPos + ( Vector3.Up * 64.0f) )
                         .Ignore( ctrl.Pawn )
-                        .Radius( playerRadius )
+                        .Radius( PlayerRadius )
                         .Run();
                     
-                    DebugOverlay.TraceResult( tr, 5.0f );
-
                     if( tr.Hit )
                     {
                         // We can't climb
@@ -106,8 +119,6 @@ namespace Platformer.Movement
                     }
                     else
                     {
-                       
-
                         // Yeah, we can climb
                         LedgeDestination = destinationTestPos;
                         LedgeGrabLocation = originTestPos;
@@ -116,6 +127,10 @@ namespace Platformer.Movement
 
                         //Default bottom ledge to grab
                         TargetLocation = LedgeGrabLocation;
+
+                        //Effects
+                        ctrl.Pawn.PlaySound( "rail.slide.start" );
+			            Particles.Create( "particles/gameplay/player/sliding/railsliding.vpcf", LedgeGrabLocation + ( Vector3.Up * 64.0f ) - ( normal * 16.0f ) );
 
                         return true;
                     }
