@@ -99,7 +99,7 @@ namespace Platformer
 			RemoveCollisionLayer( CollisionLayer.Solid );
 
 			Health = 4;
-			Log.Info( WalkCloud );
+
 
 			
 
@@ -148,15 +148,15 @@ namespace Platformer
 
 			if ( IsServer )
 			{
-				Juice.Scale( 1, 1.15f, 1f )
-					.WithTarget( this )
-					.WithDuration( .45f )
-					.WithEasing( EasingType.EaseOut );
+				//Juice.Scale( 1, 1.15f, 1f )
+				//	.WithTarget( this )
+				//	.WithDuration( .45f )
+				//	.WithEasing( EasingType.EaseOut );
 
-				Juice.Color( Color.White, Color.Red, Color.White )
-					.WithTarget( this )
-					.WithDuration( .45f )
-					.WithEasing( EasingType.EaseOut );
+				//Juice.Color( Color.White, Color.Red, Color.White )
+				//	.WithTarget( this )
+				//	.WithDuration( .45f )
+				//	.WithEasing( EasingType.EaseOut );
 			}
 		}
 
@@ -303,7 +303,6 @@ namespace Platformer
 					vel = Velocity + Rotation.Forward * 300 + Rotation.Up * 100;
 
 				}
-				Log.Info( "Controller" );
 
 				if ( !drop ) return;
 				HeldBody.Drop( vel );
@@ -381,15 +380,15 @@ namespace Platformer
 		{
 			if ( IsServer )
 			{
-				Juice.Scale( 1, 1, 1 )
+				//Juice.Scale( 1, 1, 1 )
 
-					.WithDuration( .45f )
-					.WithEasing( EasingType.EaseOut );
+				//	.WithDuration( .45f )
+				//	.WithEasing( EasingType.EaseOut );
 
-				Juice.Color( Color.White, itempickedup, Color.White )
-					.WithTarget( this )
-					.WithDuration( .45f )
-					.WithEasing( EasingType.EaseOut );
+				//Juice.Color( Color.White, itempickedup, Color.White )
+				//	.WithTarget( this )
+				//	.WithDuration( .45f )
+				//	.WithEasing( EasingType.EaseOut );
 			}
 		}
 
@@ -397,15 +396,15 @@ namespace Platformer
 		{
 			if ( IsServer )
 			{
-				Juice.Scale( 1, 1, 1 )
-					.WithTarget( this )
-					.WithDuration( .45f )
-					.WithEasing( EasingType.EaseOut );
+				//Juice.Scale( 1, 1, 1 )
+				//	.WithTarget( this )
+				//	.WithDuration( .45f )
+				//	.WithEasing( EasingType.EaseOut );
 
-				Juice.Color( Color.White, Color.Red, Color.White )
-					.WithTarget( this )
-					.WithDuration( .45f )
-					.WithEasing( EasingType.EaseOut );
+				//Juice.Color( Color.White, Color.Red, Color.White )
+				//	.WithTarget( this )
+				//	.WithDuration( .45f )
+				//	.WithEasing( EasingType.EaseOut );
 
 				Sound.FromWorld( "player.lowhealth", Position );
 			}
@@ -505,8 +504,21 @@ namespace Platformer
 			if ( !IsServer )
 				return;
 
+			if ( foot == 0 )
+			{
+				var lfoot = Particles.Create( "particles/gameplay/player/footsteps/footstep_l.vpcf", pos );
+				lfoot.SetOrientation( 0, Transform.Rotation );
+			}
+			else
+			{
+				var rfoot = Particles.Create( "particles/gameplay/player/footsteps/footstep_r.vpcf", pos);
+				rfoot.SetOrientation( 0, Transform.Rotation );
+			}
+
 			if ( timeSinceLastFootstep < 0.2f )
 				return;
+
+
 
 			volume *= FootstepVolume();
 

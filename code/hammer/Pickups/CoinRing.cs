@@ -31,10 +31,10 @@ internal partial class CoinRing : BaseCollectible
 		if (render)
 
 		{
-			Juice.Scale( 0, 1, 1 )
-	.WithDuration( .3f )
-	.WithEasing( EasingType.EaseOut )
-	.WithTarget( this );
+	//		Juice.Scale( 0, 1, 1 )
+	//.WithDuration( .3f )
+	//.WithEasing( EasingType.EaseOut )
+	//.WithTarget( this );
 		}
 	}
 
@@ -47,10 +47,10 @@ internal partial class CoinRing : BaseCollectible
 		pl.PickedUpItem( Color.Yellow );
 		pl.Client.AddInt( "kills" );
 
-		Juice.Scale( 1, 0, 0 )
-			.WithDuration( .3f )
-			.WithEasing( EasingType.EaseOut )
-			.WithTarget( this );
+		//Juice.Scale( 1, 0, 0 )
+		//	.WithDuration( .3f )
+		//	.WithEasing( EasingType.EaseOut )
+		//	.WithTarget( this );
 
 		return true;
 	}
