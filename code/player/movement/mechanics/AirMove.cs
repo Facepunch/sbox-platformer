@@ -6,8 +6,17 @@ namespace Platformer.Movement
 {
 	class AirMove : BaseMoveMechanic
 	{
-
-		public float Gravity => 800.0f;
+		public float WorldGravity => 800.0f;
+		public float Gravity
+		{
+			get
+			{
+				if ( AirHoverAction )
+					return WorldGravity / 2.0f;
+				else
+					return WorldGravity;
+			}
+		}
 		public float AirControl => 30.0f;
 		public float AirAcceleration => 35.0f;
 
@@ -15,6 +24,8 @@ namespace Platformer.Movement
 
 		private Vector3 velocityAtStart;
 		private bool groundedAtStart;
+
+		private bool AirHoverAction = false;
 
 		public AirMove( PlatformerController controller )
 			: base( controller )
@@ -25,6 +36,8 @@ namespace Platformer.Movement
 		public override void Simulate()
 		{
 			if ( ctrl.GroundEntity != null ) return;
+
+			AirHoverAction = InputActions.Jump.Down() && ctrl.Velocity.z > 0;
 
 			var wishVel = ctrl.GetWishVelocity( true );
 			var wishdir = wishVel.Normal;
