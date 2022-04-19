@@ -91,6 +91,7 @@ namespace Platformer.Movement
 
             var tr = Trace.Ray( center, dest )
 				.Ignore( ctrl.Pawn )
+				.WorldOnly()
 				.Radius( 4 )
 				.Run();
 

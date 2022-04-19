@@ -17,6 +17,7 @@ namespace Platformer.Movement
         private Vector3 HitNormal;
 
         private Sound SlideSound;
+
 		public WallJump( PlatformerController controller ) : base( controller )
 		{
 		}
@@ -48,8 +49,9 @@ namespace Platformer.Movement
             center.z += 48;
             var dest = (center + ( playerEyeNormal * 40.0f ) );
 
-            var tr = Trace.Ray( center, dest )
+			var tr = Trace.Ray( center, dest )
 				.Ignore( ctrl.Pawn )
+				.WorldOnly()
 				.Run();
 
             if( tr.Hit )
