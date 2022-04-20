@@ -27,15 +27,9 @@ internal partial class CoinRing : BaseCollectible
 	public override void OnFrameEvent()
 	{
 		var render = !PlayersWhoCollected.Contains( Local.Pawn );
+		var alpha = render ? 1 : 0;
 
-		if (render)
-
-		{
-	//		Juice.Scale( 0, 1, 1 )
-	//.WithDuration( .3f )
-	//.WithEasing( EasingType.EaseOut )
-	//.WithTarget( this );
-		}
+		RenderColor = RenderColor.WithAlpha( alpha );
 	}
 
 	protected override bool OnCollected( PlatformerPawn pl )
