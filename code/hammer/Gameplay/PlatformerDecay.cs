@@ -50,11 +50,8 @@ public partial class PlatformerDecay : ModelEntity
 
 		TimeToHold++;
 
-
-
 		ColourChange( TimeToHold );
 
-		Log.Info( TimeToHold );
 		if ( TimeToHold/10 >= DecayTime )
 		{
 
