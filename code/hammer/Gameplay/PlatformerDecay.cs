@@ -50,6 +50,11 @@ public partial class PlatformerDecay : ModelEntity
 
 		TimeToHold++;
 
+
+
+		ColourChange( TimeToHold );
+
+		Log.Info( TimeToHold );
 		if ( TimeToHold/10 >= DecayTime )
 		{
 
@@ -63,6 +68,11 @@ public partial class PlatformerDecay : ModelEntity
 
 	}
 
+	[Event.Tick.Server]
+	public void ColourChange(float colorblend)
+	{
+		RenderColor = Color.Lerp( Color.White, Color.Red, (colorblend/ 10) / DecayTime );
+	}
 	public override void EndTouch( Entity other )
 	{
 		base.EndTouch( other );
@@ -70,6 +80,7 @@ public partial class PlatformerDecay : ModelEntity
 		if ( !other.IsServer ) return;
 		if ( other is not PlatformerPawn pl ) return;
 
+		RenderColor = Color.White;
 		TimeToHold = 0;
 
 	}
