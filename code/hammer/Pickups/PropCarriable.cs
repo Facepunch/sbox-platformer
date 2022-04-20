@@ -57,6 +57,8 @@ internal partial class PropCarriable : Prop, IUse
 			SoundBreak = "break.cardboard";
 			ParticleBreak = "particles/break/break.cardboard.vpcf";
 		}
+
+		Tags.Add( "PropCarry" );
 	}
 
 	public void Drop( Vector3 velocity )
