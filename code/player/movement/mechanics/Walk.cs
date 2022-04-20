@@ -32,7 +32,7 @@ namespace Platformer.Movement
 
 		public override void Simulate()
 		{
-			if ( ctrl.GroundEntity != null ) 
+			if ( ctrl.GroundEntity != null )
 				WalkMove();
 
 			CheckJumpButton();
@@ -51,9 +51,9 @@ namespace Platformer.Movement
 			base.PostSimulate();
 
 			CategorizePosition( ctrl.GroundEntity != null );
-			MoveWithGround();
+			UpdateBaseVelocity();
 
-			if( prevGrounded && !ctrl.GroundEntity.IsValid() )
+			if ( prevGrounded && !ctrl.GroundEntity.IsValid() )
 			{
 				if ( !Input.Pressed( InputButton.Jump ) )
 				{
@@ -64,7 +64,7 @@ namespace Platformer.Movement
 
 		public override float GetWishSpeed()
 		{
-			if ( InputActions.Walk.Down()) return WalkSpeed;
+			if ( InputActions.Walk.Down() ) return WalkSpeed;
 
 			return DefaultSpeed;
 		}
@@ -90,10 +90,8 @@ namespace Platformer.Movement
 			ctrl.Accelerate( wishdir, wishspeed, 0, accel );
 			ctrl.Velocity = ctrl.Velocity.WithZ( 0 );
 
-			
-
 			// Add in any base velocity to the current velocity.
-			//ctrl.Velocity += ctrl.BaseVelocity;
+			ctrl.Velocity += ctrl.BaseVelocity;
 
 			try
 			{
@@ -110,19 +108,18 @@ namespace Platformer.Movement
 
 				if ( pm.Fraction == 1 )
 				{
-					
 					ctrl.Position = pm.EndPosition;
 					StayOnGround();
 					return;
 				}
-				
+
 				ctrl.StepMove();
 			}
 			finally
 			{
 
 				// Now pull the base velocity back out.   Base velocity is set if you are on a moving object, like a conveyor (or maybe another monster?)
-				//ctrl.Velocity -= ctrl.BaseVelocity;
+				ctrl.Velocity -= ctrl.BaseVelocity;
 			}
 
 			StayOnGround();
@@ -148,28 +145,36 @@ namespace Platformer.Movement
 			new FallCameraModifier( jumpPower );
 		}
 
-		private Transform prevTx;
-		private Entity prevGroundEntity;
-		private void MoveWithGround()
+		private Transform LastGroundTx;
+		private Entity LastGroundEntity;
+		private void UpdateBaseVelocity()
 		{
+			var prevtx = LastGroundTx;
+			var prevground = LastGroundEntity;
+			LastGroundEntity = ctrl.GroundEntity;
+			LastGroundTx = ctrl.GroundEntity?.Transform ?? default;
+			ctrl.BaseVelocity = 0;
+
 			if ( ctrl.GroundEntity == null ) return;
-			if ( prevTx == ctrl.GroundEntity.Transform ) return;
+			if ( ctrl.GroundEntity != prevground ) return;
+			if ( prevtx == ctrl.GroundEntity.Transform ) return;
 
-			if ( prevGroundEntity == ctrl.GroundEntity )
+			var newPosition = ctrl.Position;
+
+			// just trying to guess BaseVelocity based on transform delta of ground we're standing on
+			// todo: fix platforms so all this can be removed
+			if ( prevtx.Rotation != ctrl.GroundEntity.Transform.Rotation )
 			{
-				if ( prevTx.Rotation != ctrl.GroundEntity.Transform.Rotation )
-				{
-					var rotdelta = Rotation.Difference( prevTx.Rotation, ctrl.GroundEntity.Rotation );
-					ctrl.Position = ctrl.Position.RotateAroundPivot( ctrl.GroundEntity.Position, rotdelta );
-				}
-
-				var posdelta = ctrl.GroundEntity.Position - prevTx.Position;
-				if ( posdelta.z < 0 ) posdelta.z = 0;
-				ctrl.Position += posdelta;
+				var rotdelta = Rotation.Difference( prevtx.Rotation, ctrl.GroundEntity.Rotation );
+				newPosition = newPosition.RotateAroundPivot( ctrl.GroundEntity.Position, rotdelta );
 			}
 
-			prevGroundEntity = ctrl.GroundEntity;
-			prevTx = ctrl.GroundEntity.Transform;
+			var posdelta = ctrl.GroundEntity.Position - prevtx.Position;
+			if ( posdelta.z < 0 ) posdelta.z = 0; // don't really need to move down, gravity handles that
+			newPosition += posdelta;
+
+			ctrl.Position = ctrl.Position.WithZ( newPosition.z ); // but if we're moving up we need to go with it
+			ctrl.BaseVelocity = (newPosition - ctrl.Position) / Time.Delta;
 		}
 
 		// todo: really need to do this in a way we can define simply
