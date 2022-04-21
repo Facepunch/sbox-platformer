@@ -9,28 +9,17 @@ namespace Platformer
 {
 	partial class PlatformerPawn : Sandbox.Player
 	{
-		public const float MaxRenderDistance = 128f;
-
-		public Clothing.Container Clothing = new();
-		private DamageInfo lastDamage;
-		private float LastHealth;
-
-		private TimeSince ts;
-
-		public string MapName => Global.MapName;
-		public bool JustPickedupHealth;
-		public int AmountOfFlash = 0;
-
-		public Particles FakeShadowParticle;
-
 		[Net]
 		public Color PlayerColor { get; set; }
 
-		public bool IgnoreFallDamage = false;
-		public Color Color { get; private set; }
-
 		[Net]
 		public bool PlayerHasGlider { get; set; } = false;
+
+		[Net] 
+		public float GliderEnergy { get; set; }
+
+		[Net]
+		public int Coin { get; set; }
 
 		[Net]
 		public IList<int> KeysPlayerHas { get; set; } = new List<int>();
@@ -42,23 +31,37 @@ namespace Platformer
 		public string CurrentArea { get; set; }
 		public int AreaPriority = 0;
 
-		[Net] public float GliderEnergy { get; set; }
-
 		[Net]
 		public TimeUntil TimeUntilVulnerable { get; set; }
+
 		[Net]
 		public int NumberLife { get; set; } = 3;
-		[Net]
-		public int Coin { get; set; }
+
 		[Net]
 		public List<Checkpoint> Checkpoints { get; set; } = new();
 
 		[Net]
 		public PropCarriable HeldBody { get; set; }
 
-		public Particles HeldParticle { get; set; }
 
+		public const float MaxRenderDistance = 128f;
+		public Clothing.Container Clothing = new();
+		private DamageInfo lastDamage;
+		private float LastHealth;
+		private TimeSince ts;
+		public string MapName => Global.MapName;
+		public bool JustPickedupHealth;
+		public int AmountOfFlash = 0;
+
+		public bool IgnoreFallDamage = false;
+		public Color Color { get; private set; }
+
+		public Particles HeldParticle { get; set; }
 		private Particles WalkCloud;
+		public Particles FakeShadowParticle;
+
+		[Net]
+		public bool Tagged { get; set; }
 
 		public PlatformerPawn() { }
 
@@ -78,15 +81,6 @@ namespace Platformer
 			Animator = new PlatformerOrbitAnimator();
 			CameraMode = new PlatformerOrbitCamera();
 
-			//if ( Input.UsingController )
-			//{
-			//	CameraMode = new PlatformerShiftCamera();
-			//}
-			//else
-			//{
-			//	CameraMode = new PlatformerOrbitCamera();
-			//}
-
 			EnableAllCollisions = true;
 			EnableDrawing = true;
 			EnableHideInFirstPerson = true;
@@ -96,12 +90,12 @@ namespace Platformer
 
 			base.Respawn();
 
-			RemoveCollisionLayer( CollisionLayer.Solid );
+			if ( Platformer.CurrentGameMode == Platformer.GameModes.Competitive )
+			{
+				RemoveCollisionLayer( CollisionLayer.Solid );
+			}
 
 			Health = 4;
-
-
-			
 
 			if ( NumberLife == 0 )
 			{
@@ -121,9 +115,20 @@ namespace Platformer
 
 			GotoBestCheckpoint();
 
+
 			Tags.Add( "Platplayer" );
 
+			if(Tagged)
+			{
+				RenderColor = Color.Red;
 
+
+				foreach ( var child in this.Children )
+				{
+					if ( child is not ModelEntity m || !child.IsValid() ) continue;
+					m.RenderColor = Color.Red;
+				}
+			}
 		}
 
 		public void ResetLifePickUps()
@@ -206,7 +211,24 @@ namespace Platformer
 				child.EnableDrawing = false;
 			}
 
+			if(Platformer.CurrentGameMode == Platformer.GameModes.Tag)
+			{
+				Tagged = true;
+			}
+
 			WalkCloud = null;
+		}
+
+		public override void StartTouch( Entity other )
+		{
+			base.StartTouch( other );
+			if ( Tagged )
+			{
+				if ( other is not PlatformerPawn pl ) return;
+				
+				pl.Tagged = true;
+			}
+
 		}
 
 		public void FinishedReset()
@@ -227,6 +249,9 @@ namespace Platformer
 		}
 
 		private TimeUntil TimeUntilCanUse;
+
+		private Vector3 Mins => new( -64, -64, 0 );
+		private Vector3 Maxs => new( 64, 64, 64 );
 
 		/// <summary>
 		/// Called every tick, clientside and serverside.
@@ -277,6 +302,46 @@ namespace Platformer
 					KeysPlayerHas.Clear();
 					NumberOfKeys = 0;
 				}
+			}
+
+			if ( Platformer.CurrentGameMode == Platformer.GameModes.Tag )
+			{
+				if ( Tagged )
+				{
+					//this is awful.
+					var lift = 4;
+
+					var bbox = new BBox( Mins, Maxs.WithZ( Maxs.z - lift ) );
+					var start = Position + Vector3.Up * lift;
+					var end = Position + Vector3.Down * (lift - 36);
+					var tr = Trace.Box( bbox, start, end )
+					.Ignore( this )
+					.Run();
+
+					if ( tr.Hit )
+					{
+						if ( tr.Entity is not PlatformerPawn pl ) return;
+						if ( pl.Tagged ) return;
+						pl.Tagged = true;
+						pl.BeenTagged();
+						Client.AddInt( "kills" );
+					}
+				}
+			}
+		}
+
+		public void BeenTagged()
+		{
+			if(!Tagged) return;
+
+			Sound.FromEntity( "life.pickup", this );
+
+			RenderColor = Color.Red;
+
+			foreach ( var child in this.Children )
+			{
+				if ( child is not ModelEntity m || !child.IsValid() ) continue;
+				m.RenderColor = Color.Red;
 			}
 		}
 
@@ -431,6 +496,7 @@ namespace Platformer
 			if ( Local.Pawn == this ) return;
 			if ( Local.Pawn == null ) return;
 			if ( !Local.Pawn.IsValid() ) return;
+			if ( Platformer.CurrentGameMode != Platformer.GameModes.Competitive ) return;
 
 			var dist = Local.Pawn.Position.Distance( Position );
 			var a = 1f - dist.LerpInverse( MaxRenderDistance, MaxRenderDistance * .1f );

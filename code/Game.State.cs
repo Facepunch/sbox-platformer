@@ -1,6 +1,7 @@
 ﻿
 using Platformer;
 using Sandbox;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,6 +19,8 @@ namespace Platformer
 		[Net]
 		public string NextMap { get; set; } = "facepunch.tup_block";
 		public bool GameIsLive { get; private set; }
+		public bool GameIsEnded { get; set; }
+		internal PlatformerPawn TaggerPlayer { get; private set; }
 
 		[AdminCmd]
 		public static void SkipStage()
@@ -38,16 +41,65 @@ namespace Platformer
 			await Task.DelayRealtimeSeconds( 1.0f );
 		}
 
+		//public void SetGameMode( GameModes mode )
+		//{
+		//	GameMode = mode;
+
+		//	Log.Info( GameMode );
+
+		//}
+
 		private async Task GameLoopAsync()
 		{
-			GameState = GameStates.Warmup;
-			StateTimer = 10;
-			await WaitStateTimer();
+			if ( GameMode == GameModes.Competitive )
+			{
+				GameState = GameStates.Warmup;
+				StateTimer = 30;
+				await WaitStateTimer();
 
-			GameState = GameStates.Live;
-			StateTimer = 20*60f;
-			FreshStart();
-			await WaitStateTimer();
+				GameState = GameStates.Live;
+				StateTimer = 20 * 60f;
+				FreshStart();
+				await WaitStateTimer();
+
+				GameState = GameStates.GameEnd;
+				StateTimer = 10;
+				await WaitStateTimer();
+
+				GameState = GameStates.MapVote;
+				var mapVote = new MapVoteEntity();
+				mapVote.VoteTimeLeft = 15f;
+				StateTimer = mapVote.VoteTimeLeft;
+				await WaitStateTimer();
+
+				Global.ChangeLevel( mapVote.WinningMap );
+			}
+			if(GameMode == GameModes.Tag )
+			{
+				GameState = GameStates.Warmup;
+				StateTimer = 30;
+				await WaitStateTimer();			
+
+				GameState = GameStates.Runaway;
+				StateTimer = 1 * 60f;
+				StartTag();
+				FreshStart();
+				await WaitStateTimer();
+				if ( GameIsEnded ) return;
+
+				GameState = GameStates.Live;
+				StateTimer = 10 * 60f;
+				MoveTagPlayer();
+				await WaitStateTimer();
+				if ( GameIsEnded ) return;
+
+				_ = EndGame();
+			}
+		}
+
+		public async Task EndGame()
+		{
+			GameIsEnded = true;
 
 			GameState = GameStates.GameEnd;
 			StateTimer = 10;
@@ -61,14 +113,17 @@ namespace Platformer
 
 			Global.ChangeLevel( mapVote.WinningMap );
 		}
+
 		private void FreshStart()
 		{
+
 			foreach ( var cl in Client.All )
 			{
 				cl.SetInt( "points", 0 );
 				cl.SetInt( "deaths", 0 );
 
 				if ( cl.Pawn is not PlatformerPawn pl ) continue;
+				if ( pl.Tagged == true ) return;
 				pl.ResetTimer();
 				pl.ResetBestTime();
 				pl.GotoBestCheckpoint();
@@ -82,6 +137,42 @@ namespace Platformer
 			} );
 		}
 
+		public void StartTag()
+		{
+			var allplayers = Entity.All.OfType<PlatformerPawn>();
+
+			var randomplayer = allplayers.OrderBy( x => Guid.NewGuid() ).FirstOrDefault();
+
+			var tagspawnpoint = Entity.All.OfType<TaggerSpawn>().OrderBy( x => Guid.NewGuid() ).FirstOrDefault();
+
+			if ( tagspawnpoint == null ) return;
+			TaggerPlayer = randomplayer;
+			randomplayer.Position = tagspawnpoint.Position;
+			randomplayer.Tagged = true;
+
+		}
+
+		public void MoveTagPlayer()
+		{
+
+			var pawn = TaggerPlayer;
+			pawn.Respawn();
+
+			// Get all of the spawnpoints
+			var spawnpoints = Entity.All.OfType<SpawnPoint>();
+
+			// chose a random one
+			var randomSpawnPoint = spawnpoints.OrderBy( x => Guid.NewGuid() ).FirstOrDefault();
+
+			// if it exists, place the pawn there
+			if ( randomSpawnPoint != null )
+			{
+				var tx = randomSpawnPoint.Transform;
+				tx.Position = tx.Position + Vector3.Up * 50.0f; // raise it up
+				pawn.Transform = tx;
+			}
+		}
+
 		private bool HasEnoughPlayers()
 		{
 			if ( All.OfType<Player>().Count() < 1 )
@@ -92,6 +183,7 @@ namespace Platformer
 		public enum GameStates
 		{
 			Warmup,
+			Runaway,
 			Live,
 			GameEnd,
 			MapVote

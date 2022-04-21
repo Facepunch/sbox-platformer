@@ -16,6 +16,11 @@ namespace Platformer
 	/// </summary>
 	public partial class Platformer : Sandbox.Game
 	{
+		public static GameModes CurrentGameMode => (Current as Platformer)?.GameMode ?? GameModes.Competitive;
+
+		[Net]
+		public GameModes GameMode { get; set; } = GameModes.Competitive;
+
 		[Net]
 		public static float NumberOfCollectables { get; set; }
 
@@ -33,13 +38,22 @@ namespace Platformer
 			"{0} Couldn't stand"
 		};
 
+		public enum GameModes
+		{
+			Competitive,
+			Coop,
+			Tag
+		}
+
 		public Platformer()
 		{
+
 			if ( IsServer )
 			{
 				var hud = new PlatformerHud();
 				hud.Parent = this;
-				_ = GameLoopAsync();
+				
+
 			}
 
 			if ( IsClient )
@@ -53,6 +67,7 @@ namespace Platformer
 					Keys.ToString();
 				}
 			}
+
 		}
 
 		[Event.Entity.PostSpawn]
@@ -66,6 +81,24 @@ namespace Platformer
 
 			if ( !Host.IsServer ) return;
 
+			var GetGameMode = Entity.All.FirstOrDefault( x => x is GameModeSelect ) as GameModeSelect;
+			if ( GetGameMode.IsValid() )
+			{
+				if ( GetGameMode.ModeTypeList == GameModeSelect.ModeType.Competitive )
+				{
+					GameMode = GameModes.Competitive;
+				}
+				if ( GetGameMode.ModeTypeList == GameModeSelect.ModeType.Coop )
+				{
+					GameMode = GameModes.Coop;
+				}
+				if ( GetGameMode.ModeTypeList == GameModeSelect.ModeType.Tag )
+				{
+					GameMode = GameModes.Tag;
+				}
+				_ = GameLoopAsync();
+			}
+
 			// temp thing til we do our own path entity for rails
 			All.OfType<GenericPathEntity>()
 				.ToList()
@@ -78,7 +111,6 @@ namespace Platformer
 
 			NumberOfCollectables = All.OfType<KeyPickup>().Count();
 
-			Log.Info( NumberOfCollectables );
 		}
 
 		/// <summary>
@@ -163,6 +195,30 @@ namespace Platformer
 
 				postProcess.Saturate.Amount = 0.5f;
 			}
+		}
+		
+		public static bool IsEndGame = false;
+
+		[Event.Tick.Server]
+		public void Tick()
+		{
+			if ( CurrentGameMode == GameModes.Tag )
+			{
+				var allplayerstagged = !Entity.All.OfType<PlatformerPawn>().Where( e => !e.Tagged ).Any();
+
+				if ( allplayerstagged == true )
+				{
+					if ( IsEndGame ) return;
+					EndTheGame();
+				}
+
+			}
+		}
+
+		public void EndTheGame()
+		{
+			IsEndGame = true;
+			_ = EndGame();
 		}
 
 		[ClientRpc]
