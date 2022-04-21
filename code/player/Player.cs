@@ -254,6 +254,8 @@ namespace Platformer
 		private Vector3 Mins => new( -64, -64, 0 );
 		private Vector3 Maxs => new( 64, 64, 64 );
 
+		public Particles TagArrowParticle { get; set; }
+
 		/// <summary>
 		/// Called every tick, clientside and serverside.
 		/// </summary>
@@ -340,6 +342,8 @@ namespace Platformer
 			Sound.FromEntity( "life.pickup", this );
 
 			RenderColor = Color.Red;
+
+			PlayerTagArrow();
 
 			foreach ( var child in this.Children )
 			{
@@ -440,6 +444,20 @@ namespace Platformer
 			var result = Downtrace.Run();
 
 			FakeShadowParticle.SetPosition( 0, result.EndPosition );
+
+			//DebugOverlay.TraceResult( result );
+		}
+
+		[Event.Frame]
+		public void PlayerTagArrow()
+		{
+			if ( !Tagged ) return;
+			if ( TagArrowParticle == null )
+			{
+				TagArrowParticle = Particles.Create( "particles/gameplay/player/tag_arrow/tag_arrow.vpcf",this );
+			}
+
+			TagArrowParticle.SetPosition( 6, Color.Red * 255 );
 
 			//DebugOverlay.TraceResult( result );
 		}

@@ -168,6 +168,7 @@ namespace Platformer
 			TaggerPlayer = randomplayer;
 			randomplayer.Position = tagspawnpoint.Position;
 			randomplayer.Tagged = true;
+			randomplayer.PlayerTagArrow();
 
 		}
 
