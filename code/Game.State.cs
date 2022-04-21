@@ -81,14 +81,14 @@ namespace Platformer
 				await WaitStateTimer();			
 
 				GameState = GameStates.Runaway;
-				StateTimer = 1 * 60f;
+				StateTimer = 1 * 30f;
 				StartTag();
 				FreshStart();
 				await WaitStateTimer();
 				if ( GameIsEnded ) return;
 
 				GameState = GameStates.Live;
-				StateTimer = 10 * 60f;
+				StateTimer = 5 * 60f;
 				MoveTagPlayer();
 				await WaitStateTimer();
 				if ( GameIsEnded ) return;
