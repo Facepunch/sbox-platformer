@@ -26,41 +26,43 @@ namespace Platformer
 			if ( pawn == null ) return;
 
 			UpdateViewBlockers( pawn );
-
 			var distanceA = distance.LerpInverse( MinDistance, MaxDistance );
 
-			distance = distance.LerpTo( targetDistance, 10f * Time.Delta );
-			CalculateTargetPosition();
+			distance = distance.LerpTo( targetDistance, 5f * Time.Delta );
+			targetPosition = Vector3.Lerp( targetPosition, pawn.Position, 8f * Time.Delta );
 
-			Vector3 backwardNormal = ViewNormal;
-
-			var height = 48f.LerpTo( 64f, distanceA );
+			var height = 48f.LerpTo( 96f, distanceA );
 			var center = targetPosition + Vector3.Up * height;
-			center += backwardNormal * 8f;
-			var cameraTargetPos = center + backwardNormal * targetDistance;
+			center += Input.Rotation.Backward * 8f;
+			var targetPos = center + Input.Rotation.Backward * targetDistance;
 
-			var tr = Trace.Ray( center, cameraTargetPos )
+			var tr = Trace.Ray( center, targetPos )
 				.Ignore( pawn )
 				.Radius( 8 )
 				.Run();
 
 			if ( tr.Hit )
 			{
-			//	distance = Math.Min( distance, tr.Distance );
+				distance = Math.Min( distance, tr.Distance );
 			}
 
-			var endpos = center + backwardNormal * distance;
+			var endpos = center + Input.Rotation.Backward * distance;
 
 			Position = endpos;
-			Rotation = Rotation.LookAt( center - endpos );
+			Rotation = Input.Rotation;
+			Rotation *= Rotation.FromPitch( distanceA * 10f );
 
-			var fov = 80.0f;
+			var rot = pawn.Rotation.Angles() * .015f;
+			rot.yaw = 0;
+
+			Rotation *= Rotation.From( rot );
+
+			var spd = pawn.Velocity.WithZ( 0 ).Length / 350f;
+			var fov = 70f.LerpTo( 80f, spd );
 
 			FieldOfView = FieldOfView.LerpTo( fov, Time.Delta );
 			ZNear = 6;
 			Viewer = null;
-
-			ViewNormal = -( Input.Rotation.Forward ).Normal;
 		}
 
 		public void CalculateTargetPosition()
