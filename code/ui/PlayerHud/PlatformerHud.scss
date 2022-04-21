@@ -99,9 +99,21 @@ RoundTimer {
     border-radius: 50px;
 
 
-    .game-state {
+    .game-icon {
         width: 60px;
         height: 60px;
+    }
+
+    .game-state {
+        bottom: 12px;
+        width: 96px;
+        height: 60px;
+        font-size: 16px;
+        color: #607D8B;
+        font-family: Poppins;
+        font-weight: 800;
+        text-transform: uppercase;
+        align-items: center;
     }
 
     .game-timer {
@@ -113,7 +125,7 @@ RoundTimer {
         text-transform: uppercase;
         left: 65px;
         right: 0;
-        bottom: 7%;
+        bottom: 0%;
     }
 }
 

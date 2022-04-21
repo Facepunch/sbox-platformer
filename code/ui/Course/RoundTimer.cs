@@ -11,12 +11,14 @@ namespace Platformer.UI
 	{
 
 		public Label Timer;
-		public Image State;
+		public Image image;
+		public Label State;
 
 		public RoundTimer()
 		{
 			Timer = Add.Label( string.Empty, "game-timer" );
-			State = Add.Image( "ui/hud/clock.png", "game-state" );
+			image = Add.Image( "ui/hud/clock.png", "game-icon" );
+			State = Add.Label( string.Empty, "game-state" );
 		}
 
 		public override void Tick()
@@ -29,6 +31,7 @@ namespace Platformer.UI
 			var span = TimeSpan.FromSeconds( (game.StateTimer * 60).Clamp( 0, float.MaxValue ) );
 
 			Timer.Text = span.ToString( @"hh\:mm" );
+			State.Text = game.GameState.ToString();
 		}
 	}
 }
