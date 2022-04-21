@@ -52,7 +52,7 @@ namespace Platformer.Movement
 			mechanics.Add( new GetPushed( this ) );
 			
 			mechanics.Add( new LedgeGrab( this ) ); 
-			mechanics.Add( new WallJump( this ) ); 
+			//mechanics.Add( new WallJump( this ) ); Bit too buggy atm
 			
 			mechanics.Add( new MoveDebug( this ) );
 		}
