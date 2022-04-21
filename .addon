@@ -15,7 +15,8 @@
   "RootNamespace": "Platformer",
   "Metadata": {
     "MapList": [
-      "facepunch.tup_block"
+      "facepunch.tup_block",
+      "facepunch.tup_yourit"
     ],
     "MinPlayers": 1,
     "RankType": 2,
