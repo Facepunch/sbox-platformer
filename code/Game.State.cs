@@ -1,5 +1,6 @@
 ﻿
 using Platformer;
+using Platformer.UI;
 using Sandbox;
 using System;
 using System.Linq;
@@ -54,8 +55,9 @@ namespace Platformer
 
 		private async Task GameLoopAsync()
 		{
+
 			if ( HasEnoughPlayers() == false ) return;
-			
+
 
 			if ( GameMode == GameModes.Competitive )
 			{
@@ -83,11 +85,13 @@ namespace Platformer
 			if(GameMode == GameModes.Tag )
 			{
 				EnoughPlayersToStart = true;
-
+				
+				Alerts( To.Everyone,( "Waiting For Players" ) );
 				GameState = GameStates.Warmup;
 				StateTimer = 30;
 				await WaitStateTimer();
 
+				Alerts( To.Everyone, ("Get Ready!") );
 				GameState = GameStates.Runaway;
 				StateTimer = 1 * 30f;
 				StartTag();
@@ -95,6 +99,7 @@ namespace Platformer
 				await WaitStateTimer();
 				if ( GameIsEnded ) return;
 
+				Alerts( To.Everyone, ("Don't Get Tagged!") );
 				GameState = GameStates.Live;
 				StateTimer = 5 * 60f;
 				MoveTagPlayer();
@@ -103,6 +108,12 @@ namespace Platformer
 
 				_ = EndGame();
 			}
+		}
+
+		[ClientRpc]
+		public static void Alerts( string Title )
+		{
+			NewMajorArea.ShowLandmark( Title );
 		}
 
 		public async Task EndGame()
