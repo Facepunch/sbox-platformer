@@ -176,8 +176,6 @@ namespace Platformer
 		{
 			base.FrameSimulate( cl );
 
-			Log.Info( HasEnoughPlayers() );
-
 			postProcess.Sharpen.Enabled = false;
 
 			postProcess.FilmGrain.Enabled = false;
