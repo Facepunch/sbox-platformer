@@ -213,6 +213,7 @@ namespace Platformer
 
 			if(Platformer.CurrentGameMode == Platformer.GameModes.Tag)
 			{
+				if ( Platformer.CurrentState == Platformer.GameStates.Warmup || Platformer.CurrentState == Platformer.GameStates.Runaway ) return;
 				Tagged = true;
 			}
 
@@ -277,6 +278,7 @@ namespace Platformer
 			{
 				if ( TimerState == TimerState.Finished )
 				{
+					if ( Platformer.CurrentState == Platformer.GameStates.Warmup && Tagged || Platformer.CurrentState == Platformer.GameStates.Runaway && Tagged ) return;
 					KeysPlayerHas.Clear();
 					NumberLife = 3;
 					NumberOfKeys = 0;
@@ -284,6 +286,7 @@ namespace Platformer
 				}
 				else
 				{
+					if ( Platformer.CurrentState == Platformer.GameStates.Warmup && Tagged || Platformer.CurrentState == Platformer.GameStates.Runaway && Tagged ) return;
 					Game.Current.DoPlayerSuicide( cl );
 				}
 			}
