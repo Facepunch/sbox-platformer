@@ -140,6 +140,7 @@ namespace Platformer
 			}
 			PlatformerChatBox.AddInformation( To.Everyone, $"{client.Name} has joined the game", $"avatar:{client.PlayerId}" );
 
+			if ( CurrentGameMode != GameModes.Tag ) return;
 			if(HasEnoughPlayers() == true)
 			{
 				if ( EnoughPlayersToStart ) return;
