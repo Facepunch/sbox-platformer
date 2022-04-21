@@ -55,6 +55,7 @@ LifeCurrent {
     flex-direction: row;
     z-index: 2;
 
+
     .number {
         font-family: "Fredoka One";
         text-stroke: 16px black;
@@ -68,9 +69,14 @@ LifeCurrent {
         padding: 0 0px;
         align-items: center;
         transition: all 0.25s ease-out;
+        opacity: 0;
 
         &.lifelow {
             color: #c0392b;
+        }
+
+        &.Active {
+            opacity: 1;
         }
     }
 
@@ -138,6 +144,11 @@ CourseTimer {
     font-family: Poppins;
     font-weight: 800;
     color: white;
+    opacity: 0;
+
+    &.Active {
+        opacity: 1;
+    }
 }
 
 CoinCurrent {
@@ -149,6 +160,7 @@ CoinCurrent {
     transition: all 0.25s ease-out;
     flex-direction: row;
     z-index: 2;
+    opacity: 0;
 
     .coinimage {
         position: absolute;
@@ -174,6 +186,10 @@ CoinCurrent {
         padding: 0 0px;
         align-items: center;
         transition: all 0.25s ease-out;
+    }
+
+    &.Active {
+        opacity: 1;
     }
 }
 

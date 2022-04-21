@@ -29,6 +29,11 @@ namespace Platformer.UI
 			if ( Local.Pawn is not PlatformerPawn pl ) return;
 			var Coin = pl.Coin;
 
+			if(Platformer.CurrentGameMode != Platformer.GameModes.Tag)
+			{
+				SetClass( "active", true );
+			}
+
 			Number.Text = $"{Coin}";
 		}
 	}

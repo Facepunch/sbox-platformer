@@ -26,6 +26,11 @@ public class CourseTimer : Panel
 			time = 0;
 		}
 
+		if ( Platformer.CurrentGameMode != Platformer.GameModes.Tag )
+		{
+			SetClass( "active", true );
+		}
+
 		Timer.Text = TimeSpan.FromSeconds( (time * 60).Clamp( 0, float.MaxValue ) ).ToString( @"hh\:mm" );
 	}
 }

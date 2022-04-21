@@ -4,7 +4,7 @@ using Sandbox.UI;
 using Sandbox.UI.Construct;
 using System.Collections.Generic;
 
-namespace Sandbox.UI
+namespace Platformer.UI
 {
 	public class LifeCurrent : Panel
 	{
@@ -47,6 +47,10 @@ namespace Sandbox.UI
 				HighHealth();
 			}
 
+			if ( Platformer.CurrentGameMode != Platformer.GameModes.Tag )
+			{
+				Number.SetClass( "active", true );
+			}
 		}
 
 		public void LowHealth()
