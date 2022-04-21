@@ -105,8 +105,6 @@ namespace Platformer.Movement
 				.Radius( 8 )
 				.Run();
 
-			DebugOverlay.TraceResult( trup,100 );
-
 			if ( trup.Hit ) return false;
 			if ( tr.Hit )
 			{
