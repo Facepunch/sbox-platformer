@@ -22,6 +22,9 @@ namespace Platformer
 		public bool GameIsEnded { get; set; }
 		internal PlatformerPawn TaggerPlayer { get; private set; }
 
+		[Net]
+		public bool EnoughPlayersToStart { get; private set; }
+
 		[AdminCmd]
 		public static void SkipStage()
 		{
@@ -51,6 +54,9 @@ namespace Platformer
 
 		private async Task GameLoopAsync()
 		{
+			if ( HasEnoughPlayers() == false ) return;
+			
+
 			if ( GameMode == GameModes.Competitive )
 			{
 				GameState = GameStates.Warmup;
@@ -76,9 +82,11 @@ namespace Platformer
 			}
 			if(GameMode == GameModes.Tag )
 			{
+				EnoughPlayersToStart = true;
+
 				GameState = GameStates.Warmup;
 				StateTimer = 30;
-				await WaitStateTimer();			
+				await WaitStateTimer();
 
 				GameState = GameStates.Runaway;
 				StateTimer = 1 * 30f;
@@ -175,7 +183,7 @@ namespace Platformer
 
 		private bool HasEnoughPlayers()
 		{
-			if ( All.OfType<Player>().Count() < 1 )
+			if ( All.OfType<PlatformerPawn>().Count() < 2 )
 				return false;
 
 			return true;

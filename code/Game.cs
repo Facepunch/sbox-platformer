@@ -139,6 +139,12 @@ namespace Platformer
 				pawn.Transform = tx;
 			}
 			PlatformerChatBox.AddInformation( To.Everyone, $"{client.Name} has joined the game", $"avatar:{client.PlayerId}" );
+
+			if(HasEnoughPlayers() == true)
+			{
+				if ( EnoughPlayersToStart ) return;
+				_ = GameLoopAsync();
+			}
 		}
 
 		public override void ClientDisconnect( Client client, NetworkDisconnectionReason reason )
@@ -170,6 +176,8 @@ namespace Platformer
 		{
 			base.FrameSimulate( cl );
 
+			Log.Info( HasEnoughPlayers() );
+
 			postProcess.Sharpen.Enabled = false;
 
 			postProcess.FilmGrain.Enabled = false;
@@ -186,7 +194,6 @@ namespace Platformer
 			postProcess.Saturate.Amount = 1;
 
 			postProcess.Blur.Enabled = false;
-
 
 			if ( CurrentState == GameStates.Warmup )
 			{
