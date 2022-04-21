@@ -112,6 +112,9 @@
 			m_nOutputField = "4"
 		},
 		{
+			_class = "C_INIT_CreateWithinSphere"
+		},
+		{
 			_class = "C_INIT_PositionOffset"
 			m_OffsetMin = [ 0.0, 0.0, 80.0 ]
 			m_OffsetMax = [ 0.0, 0.0, 80.0 ]
