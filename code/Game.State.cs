@@ -55,10 +55,6 @@ namespace Platformer
 
 		private async Task GameLoopAsync()
 		{
-
-			if ( HasEnoughPlayers() == false ) return;
-
-
 			if ( GameMode == GameModes.Competitive )
 			{
 				GameState = GameStates.Warmup;
@@ -82,7 +78,8 @@ namespace Platformer
 
 				Global.ChangeLevel( mapVote.WinningMap );
 			}
-			if(GameMode == GameModes.Tag )
+			if ( HasEnoughPlayers() == false ) return;
+			if (GameMode == GameModes.Tag )
 			{
 				EnoughPlayersToStart = true;
 				
