@@ -11,7 +11,7 @@ namespace Platformer.Movement
 
 		public bool IsDuckjumping;
 
-		public float JumpPower => 644f;
+		public float JumpPower => 480f;
 
 		public DuckJump( PlatformerController controller )
 			: base( controller )
