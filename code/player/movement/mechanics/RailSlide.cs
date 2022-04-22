@@ -15,6 +15,7 @@ internal class RailSlide : BaseMoveMechanic
 	private bool IsRailSliding;
 	private bool DoOnce;
 	private Sound railSlideSound;
+	private bool Reverse;
 
 	public RailSlide( PlatformerController controller ) : base( controller )
 	{
@@ -22,22 +23,35 @@ internal class RailSlide : BaseMoveMechanic
 
 	protected override bool TryActivate()
 	{
-
 		if ( TimeSinceJump < .3f ) return false;
 
 		foreach ( var path in Entity.All.OfType<RailPathEntity>() )
 		{
-
 			if ( path.PathNodes.Count < 2 ) continue;
 
-			var nearestPoint = path.NearestPoint( ctrl.Position, out int node, out float t );
-			if ( nearestPoint.Distance( ctrl.Position ) > 30 ) continue;
+			var pa = path.NearestPoint( ctrl.Position + ctrl.Velocity * Time.Delta, false, out int na, out float ta );
+			var pb = path.NearestPoint( ctrl.Position + ctrl.Velocity * Time.Delta, true, out int nb, out float tb );
 
-			Path = path;
-			Node = node;
-			Alpha = t;
+			var dista = pa.Distance( ctrl.Position );
+			var distb = pb.Distance( ctrl.Position );
 
-			return true;
+			if( dista < 30 && ( na == 0 || dista < distb ) )
+			{
+				Path = path;
+				Node = na;
+				Alpha = ta;
+				Reverse = false;
+				return true;
+			}
+
+			if( distb < 30 && ( nb == path.PathNodes.Count - 1 || distb < dista ) )
+			{
+				Path = path;
+				Node = nb;
+				Alpha = tb;
+				Reverse = true;
+				return true;
+			}
 		}
 		
 		return false;
@@ -59,9 +73,21 @@ internal class RailSlide : BaseMoveMechanic
 		if ( Alpha >= 1 )
 		{
 			Alpha = 0;
-			Node++;
 
-			if ( Node >= Path.PathNodes.Count - 1 )
+			bool reachedEnd;
+
+			if ( Reverse )
+			{
+				Node--;
+				reachedEnd = Node <= 0;
+			}
+			else
+			{
+				Node++;
+				reachedEnd = Node >= Path.PathNodes.Count - 1;
+			}
+
+			if ( reachedEnd )
 			{
 				IsActive = false;
 				Path = null;
@@ -80,10 +106,13 @@ internal class RailSlide : BaseMoveMechanic
 			}
 		}
 
-		var node = Path.PathNodes[Node];
-		var nextNode = Path.PathNodes[Node + 1];
+		var currentNodeIdx = Node;
+		var nextNodeIdx = Reverse ? ( Node - 1 ) : ( Node + 1 );
+
+		var node = Path.PathNodes[currentNodeIdx];
+		var nextNode = Path.PathNodes[nextNodeIdx];
 		var currentPosition = ctrl.Position;
-		var nextPosition = Path.GetPointBetweenNodes( node, nextNode, Alpha );
+		var nextPosition = Path.GetPointBetweenNodes( node, nextNode, Alpha, Reverse );
 
 		ctrl.Velocity = (nextPosition - currentPosition).Normal * 300f;
 		ctrl.Position = nextPosition;
