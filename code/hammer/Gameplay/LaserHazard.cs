@@ -42,8 +42,9 @@ public partial class LaserHazard : ModelEntity
 	public void UpdateBeam()
 	{
 		var dir = Rotation.Forward;
-		var trace = Trace.Ray( Position, Position + dir * maxDist )
+		var trace = Trace.Ray( Position + Rotation.Forward * 5, Position + dir * maxDist )
 			.UseHitboxes()
+			.WorldOnly()
 			.Radius( 2.0f )
 			.HitLayer( CollisionLayer.Player )
 			.Run();
