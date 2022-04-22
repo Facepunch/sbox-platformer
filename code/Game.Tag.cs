@@ -37,7 +37,7 @@ namespace Platformer
 			await WaitStateTimer();
 			if ( GameIsEnded ) return;
 
-			if(RoundNumber == 6 )
+			if(RoundNumber == 5 )
 			{
 			 _ = EndGame();
 			}
@@ -50,7 +50,6 @@ namespace Platformer
 			foreach ( var cl in Client.All )
 			{
 				if ( cl.Pawn is not PlatformerPawn pl ) continue;
-				Log.Info( "Reset" );
 				pl.ResetTagged();
 			}
 
@@ -58,7 +57,6 @@ namespace Platformer
 
 		private async void RoundFinished()
 		{
-			Log.Info( "RoundFinished" );
 			RoundFinish = true;
 
 			GameState = GameStates.GameEnd;
