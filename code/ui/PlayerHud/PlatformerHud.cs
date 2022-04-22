@@ -34,6 +34,7 @@ namespace Platformer.UI
 			RootPanel.AddChild<EnergyCurrent>();
 			RootPanel.AddChild<CourseTimer>();
 			RootPanel.AddChild<TagHud>();
+			RootPanel.AddChild<TagRoundHud>();
 			//RootPanel.AddChild<DeathUI>(); Enable this once the HUD is working correctly.
 
 		}

@@ -238,6 +238,20 @@ namespace Platformer
 			NumberOfKeys = 0;
 		}
 
+		public void ResetTagged()
+		{
+		
+			Tagged = false;
+			RenderColor = Color.White;
+
+			foreach ( var child in this.Children )
+			{
+				if ( child is not ModelEntity m || !child.IsValid() ) continue;
+				m.RenderColor = Color.White;
+			}
+
+		}
+
 		protected override void TickPlayerUse()
 		{
 			if ( HeldBody.IsValid() )

@@ -88,22 +88,7 @@ namespace Platformer
 				StateTimer = 30;
 				await WaitStateTimer();
 
-				Alerts( To.Everyone, ("Get Ready!") );
-				GameState = GameStates.Runaway;
-				StateTimer = 1 * 30f;
-				StartTag();
-				FreshStart();
-				await WaitStateTimer();
-				if ( GameIsEnded ) return;
-
-				Alerts( To.Everyone, ("Don't Get Tagged!") );
-				GameState = GameStates.Live;
-				StateTimer = 5 * 60f;
-				MoveTagPlayer();
-				await WaitStateTimer();
-				if ( GameIsEnded ) return;
-
-				_ = EndGame();
+				TagRoundLoopAsync();
 			}
 		}
 
@@ -116,6 +101,7 @@ namespace Platformer
 		public async Task EndGame()
 		{
 			GameIsEnded = true;
+			RoundFinish = true;
 
 			GameState = GameStates.GameEnd;
 			StateTimer = 10;

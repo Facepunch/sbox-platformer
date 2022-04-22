@@ -425,3 +425,52 @@ TagHud {
         opacity: 1;
     }
 }
+
+TagRoundHud {
+    position: absolute;
+    right: 46%;
+    top: 120px;
+    width: 150px;
+    height: 40px;
+    margin: 0px 2px;
+    transition: all 0.6s ease-in-out;
+    margin-top: 10px;
+    font-family: poppins;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50px;
+    opacity: 0;
+
+
+    .round-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .round-text {
+        left: 24px;
+        bottom: 8px;
+        width: 96px;
+        height: 60px;
+        font-size: 16px;
+        color: #607D8B;
+        font-family: Poppins;
+        font-weight: 800;
+        text-transform: uppercase;
+        align-items: center;
+    }
+
+    .round-number {
+        position: absolute;
+        font-size: 24px;
+        color: #607D8B;
+        font-family: Poppins;
+        font-weight: 800;
+        text-transform: uppercase;
+        right: 40px;
+        top: 3px;
+    }
+
+    &.Active {
+        opacity: 1;
+    }
+}

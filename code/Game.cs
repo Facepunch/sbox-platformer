@@ -210,12 +210,19 @@ namespace Platformer
 		{
 			if ( CurrentGameMode == GameModes.Tag )
 			{
+				Log.Info( RoundNumber );
 				var allplayerstagged = !Entity.All.OfType<PlatformerPawn>().Where( e => !e.Tagged ).Any();
 
 				if ( allplayerstagged == true )
 				{
+					if( RoundNumber == 6)
+					{
+						EndTheGame();
+					}
+					if ( RoundFinish ) return;
 					if ( IsEndGame ) return;
-					EndTheGame();
+					RoundFinished();
+					
 				}
 
 			}
