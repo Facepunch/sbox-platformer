@@ -319,5 +319,109 @@ DeathUI {
             opacity: 1;
         }
     }
+}
 
+//I know this is awful :(
+TagHud {
+    position: absolute;
+    right: 50%;
+    top: 60px;
+    transition: all 0.6s ease-in-out;
+    opacity: 0;
+
+    .not-tagged {
+        left: 160px;
+        margin-top: 10px;
+        font-family: poppins;
+        background-color: rgb(255, 255, 255);
+        border-radius: 50px;
+        width: 175px;
+        height: 60px;
+        margin: 0px 2px;
+    }
+
+
+    .not-tagged-icon {
+        position: absolute;
+        left: 170px;
+        top: 10px;
+        width: 35px;
+        height: 35px;
+    }
+
+    .not-tagged-text {
+        left: 212px;
+        top: 5px;
+        font-size: 16px;
+        color: #607D8B;
+        font-family: Poppins;
+        font-weight: 800;
+        text-transform: uppercase;
+        align-items: center;
+        position: absolute;
+        font-family: Poppins;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    .not-tagged-amount {
+        left: 255px;
+        position: absolute;
+        font-size: 24px;
+        color: #607D8B;
+        font-family: Poppins;
+        font-weight: 800;
+        text-transform: uppercase;
+        bottom: 0%;
+    }
+
+    .tagged {
+        left: 200px;
+        margin-top: 10px;
+        font-family: poppins;
+        background-color: rgb(255, 100, 100);
+        border-radius: 50px;
+        width: 175px;
+        height: 60px;
+        margin: 0px 2px;
+    }
+
+
+    .tagged-icon {
+        position: absolute;
+        right: -180px;
+        top: 10px;
+        width: 35px;
+        height: 35px;
+    }
+
+    .tagged-text {
+        right: -130px;
+        top: 5px;
+        font-size: 16px;
+        color: #FFFFFF;
+        font-family: Poppins;
+        font-weight: 800;
+        text-transform: uppercase;
+        align-items: center;
+        position: absolute;
+        font-family: Poppins;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    .tagged-amount {
+        right: -110px;
+        position: absolute;
+        font-size: 24px;
+        color: #FFFFFF;
+        font-family: Poppins;
+        font-weight: 800;
+        text-transform: uppercase;
+        bottom: 0%;
+    }
+
+    &.Active {
+        opacity: 1;
+    }
 }
