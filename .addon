@@ -16,7 +16,8 @@
   "Metadata": {
     "MapList": [
       "facepunch.tup_block",
-      "facepunch.tup_yourit"
+      "facepunch.tup_yourit",
+      "fish.sawmill"
     ],
     "MinPlayers": 1,
     "RankType": 2,
