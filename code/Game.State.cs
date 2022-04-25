@@ -35,7 +35,8 @@ namespace Platformer
 		{
 			if( GameMode == GameModes.Tag )
 			{
-				if ( All.OfType<PlatformerPawn>().All( x => x is PlatformerPawn p && p.Tagged ) )
+				var alltagged = All.OfType<PlatformerPawn>().All( x => x is PlatformerPawn p && p.Tagged );
+				if ( GameState == GameStates.Live && alltagged )
 					return true;
 			}
 
