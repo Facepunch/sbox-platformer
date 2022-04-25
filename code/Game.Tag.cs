@@ -22,9 +22,9 @@ namespace Platformer
 				StateTimer = 1 * 30f;
 
 				Alerts( To.Everyone, "Get Ready!" );
-				StartTag();
 				FreshStart();
 				ClearTags();
+				StartTag();
 				await WaitStateTimer();
 
 				GameState = GameStates.Live;
@@ -47,21 +47,17 @@ namespace Platformer
 			}
 		}
 
-		public void StartTag()
+		private void StartTag()
 		{
-			ClearTags();
-
 			var allplayers = Entity.All.OfType<PlatformerPawn>();
-
 			var randomplayer = allplayers.OrderBy( x => Guid.NewGuid() ).FirstOrDefault();
-
 			var tagspawnpoint = Entity.All.OfType<TaggerSpawn>().OrderBy( x => Guid.NewGuid() ).FirstOrDefault();
 
 			if ( tagspawnpoint == null ) return;
+
 			TaggerPlayer = randomplayer;
 			randomplayer.Position = tagspawnpoint.Position;
 			randomplayer.Tagged = true;
-			randomplayer.PlayerTagArrow();
 		}
 
 		public void MoveTagPlayer()
@@ -69,17 +65,13 @@ namespace Platformer
 			var pawn = TaggerPlayer;
 			pawn.Respawn();
 
-			// Get all of the spawnpoints
 			var spawnpoints = Entity.All.OfType<SpawnPoint>();
-
-			// chose a random one
 			var randomSpawnPoint = spawnpoints.OrderBy( x => Guid.NewGuid() ).FirstOrDefault();
 
-			// if it exists, place the pawn there
 			if ( randomSpawnPoint != null )
 			{
 				var tx = randomSpawnPoint.Transform;
-				tx.Position = tx.Position + Vector3.Up * 50.0f; // raise it up
+				tx.Position += Vector3.Up * 50.0f;
 				pawn.Transform = tx;
 			}
 		}

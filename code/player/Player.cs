@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Platformer.Movement;
+using Platformer.Utility;
 
 namespace Platformer
 {
@@ -118,17 +119,7 @@ namespace Platformer
 
 			Tags.Add( "Platplayer" );
 
-			if(Tagged)
-			{
-				RenderColor = Color.Red;
-
-
-				foreach ( var child in this.Children )
-				{
-					if ( child is not ModelEntity m || !child.IsValid() ) continue;
-					m.RenderColor = Color.Red;
-				}
-			}
+			this.SetRenderColorRecursive( Tagged ? Color.Red : Color.White );
 		}
 
 		public void ResetLifePickUps()
@@ -223,13 +214,11 @@ namespace Platformer
 		public override void StartTouch( Entity other )
 		{
 			base.StartTouch( other );
-			if ( Tagged )
-			{
-				if ( other is not PlatformerPawn pl ) return;
-				
-				pl.Tagged = true;
-			}
 
+			if ( !Tagged ) return;
+			if ( other is not PlatformerPawn pl ) return;
+
+			pl.Tagged = true;
 		}
 
 		public void FinishedReset()
@@ -240,16 +229,9 @@ namespace Platformer
 
 		public void ResetTagged()
 		{
-		
 			Tagged = false;
-			RenderColor = Color.White;
 
-			foreach ( var child in this.Children )
-			{
-				if ( child is not ModelEntity m || !child.IsValid() ) continue;
-				m.RenderColor = Color.White;
-			}
-
+			this.SetRenderColorRecursive( Color.White );
 		}
 
 		protected override void TickPlayerUse()
@@ -351,13 +333,11 @@ namespace Platformer
 
 		public void BeenTagged()
 		{
-			if(!Tagged) return;
+			if( !Tagged ) return;
 
 			Sound.FromEntity( "life.pickup", this );
 
 			RenderColor = Color.Red;
-
-			PlayerTagArrow();
 
 			foreach ( var child in this.Children )
 			{
@@ -462,20 +442,6 @@ namespace Platformer
 			//DebugOverlay.TraceResult( result );
 		}
 
-		[Event.Frame]
-		public void PlayerTagArrow()
-		{
-			if ( !Tagged ) return;
-			if ( TagArrowParticle == null )
-			{
-				TagArrowParticle = Particles.Create( "particles/gameplay/player/tag_arrow/tag_arrow.vpcf",this );
-			}
-
-			TagArrowParticle.SetPosition( 6, Color.Red * 255 );
-
-			//DebugOverlay.TraceResult( result );
-		}
-
 		public void PickedUpItem( Color itempickedup )
 		{
 			if ( IsServer )
@@ -538,14 +504,25 @@ namespace Platformer
 			a = Math.Max( a, .15f );
 			a = Easing.EaseOut( a );
 
-			this.RenderColor = this.RenderColor.WithAlpha( a );
+			this.SetRenderColorRecursive( RenderColor.WithAlpha( a ) );
+		}
 
-			foreach ( var child in this.Children )
+		[Event.Frame]
+		private void EnsureTagParticle()
+		{
+			var create = Tagged && TagArrowParticle == null;
+			var destroy = !Tagged && TagArrowParticle != null;
+
+			if ( create )
 			{
-				if ( child is not ModelEntity m || !child.IsValid() ) continue;
-				m.RenderColor = m.RenderColor.WithAlpha( a );
+				TagArrowParticle = Particles.Create( "particles/gameplay/player/tag_arrow/tag_arrow.vpcf", this );
+				TagArrowParticle.SetPosition( 6, Color.Red * 255 );
 			}
 
+			if ( destroy )
+			{
+				TagArrowParticle.Destroy();
+			}
 		}
 
 		public void ApplyForce( Vector3 force )
