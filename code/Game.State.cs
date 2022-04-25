@@ -82,6 +82,10 @@ namespace Platformer
 			{
 				await TagRoundLoopAsync();
 			}
+			else
+			{
+				await WaitStateTimer();
+			}
 
 			GameState = GameStates.GameEnd;
 			StateTimer = 10;
