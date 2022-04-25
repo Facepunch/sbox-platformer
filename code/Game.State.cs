@@ -31,10 +31,25 @@ namespace Platformer
 			plg.StateTimer = 1;
 		}
 
+		private bool CanBreakState()
+		{
+			if( GameMode == GameModes.Tag )
+			{
+				if ( All.OfType<PlatformerPawn>().All( x => x is PlatformerPawn p && p.Tagged ) )
+					return true;
+			}
+
+			return false;
+		}
+
 		private async Task WaitStateTimer()
 		{
 			while ( StateTimer > 0 )
 			{
+				if ( CanBreakState() )
+				{
+					break;
+				}
 				await Task.DelayRealtimeSeconds( 1.0f );
 			}
 
