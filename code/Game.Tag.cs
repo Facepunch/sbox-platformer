@@ -1,6 +1,4 @@
 ﻿
-using Platformer;
-using Platformer.UI;
 using Sandbox;
 using System;
 using System.Linq;
@@ -12,59 +10,79 @@ namespace Platformer
 	{
 
 		[Net]
-		public int RoundNumber { get; set; } = 1;
-
-		[Net]
-		public bool RoundFinish { get; set; }
+		public int RoundNumber { get; set; }
 
 		private async Task TagRoundLoopAsync()
 		{
-			RoundFinish = false;
+			RoundNumber = 1;
 
-			ClearTags();
-			Alerts( To.Everyone, ("Get Ready!") );
-			GameState = GameStates.Runaway;
-			StateTimer = 1 * 30f;
-			StartTag();
-			FreshStart();
-			await WaitStateTimer();
-			if ( GameIsEnded ) return;
-
-			Alerts( To.Everyone, ("Don't Get Tagged!") );
-			GameState = GameStates.Live;
-			StateTimer = 1 * 60f;
-			MoveTagPlayer();
-			await WaitStateTimer();
-			if ( GameIsEnded ) return;
-
-			if(RoundNumber == 5 )
+			while( RoundNumber < 5 )
 			{
-			 _ = EndGame();
-			}
+				GameState = GameStates.Runaway;
+				StateTimer = 1 * 30f;
 
+				Alerts( To.Everyone, "Get Ready!" );
+				StartTag();
+				FreshStart();
+				ClearTags();
+				await WaitStateTimer();
+
+				GameState = GameStates.Live;
+				StateTimer = 1 * 60f;
+
+				Alerts( To.Everyone, "Don't get tagged!" );
+				MoveTagPlayer();
+				await WaitStateTimer();
+
+				RoundNumber++;
+			}
 		}
 
 		private void ClearTags()
 		{
-
 			foreach ( var cl in Client.All )
 			{
 				if ( cl.Pawn is not PlatformerPawn pl ) continue;
 				pl.ResetTagged();
 			}
-
 		}
 
-		private async void RoundFinished()
+		public void StartTag()
 		{
-			RoundFinish = true;
+			ClearTags();
 
-			GameState = GameStates.GameEnd;
-			StateTimer = 10;
-			await WaitStateTimer();
+			var allplayers = Entity.All.OfType<PlatformerPawn>();
 
-			_ = TagRoundLoopAsync();
-			RoundNumber++;
+			var randomplayer = allplayers.OrderBy( x => Guid.NewGuid() ).FirstOrDefault();
+
+			var tagspawnpoint = Entity.All.OfType<TaggerSpawn>().OrderBy( x => Guid.NewGuid() ).FirstOrDefault();
+
+			if ( tagspawnpoint == null ) return;
+			TaggerPlayer = randomplayer;
+			randomplayer.Position = tagspawnpoint.Position;
+			randomplayer.Tagged = true;
+			randomplayer.PlayerTagArrow();
 		}
+
+		public void MoveTagPlayer()
+		{
+			var pawn = TaggerPlayer;
+			pawn.Respawn();
+
+			// Get all of the spawnpoints
+			var spawnpoints = Entity.All.OfType<SpawnPoint>();
+
+			// chose a random one
+			var randomSpawnPoint = spawnpoints.OrderBy( x => Guid.NewGuid() ).FirstOrDefault();
+
+			// if it exists, place the pawn there
+			if ( randomSpawnPoint != null )
+			{
+				var tx = randomSpawnPoint.Transform;
+				tx.Position = tx.Position + Vector3.Up * 50.0f; // raise it up
+				pawn.Transform = tx;
+			}
+		}
+
 	}
 }

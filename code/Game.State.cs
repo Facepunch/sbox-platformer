@@ -23,9 +23,6 @@ namespace Platformer
 		public bool GameIsEnded { get; set; }
 		internal PlatformerPawn TaggerPlayer { get; private set; }
 
-		[Net]
-		public bool EnoughPlayersToStart { get; private set; }
-
 		[AdminCmd]
 		public static void SkipStage()
 		{
@@ -45,63 +42,31 @@ namespace Platformer
 			await Task.DelayRealtimeSeconds( 1.0f );
 		}
 
-		//public void SetGameMode( GameModes mode )
-		//{
-		//	GameMode = mode;
-
-		//	Log.Info( GameMode );
-
-		//}
-
+		private bool GameLoopExecuting;
 		private async Task GameLoopAsync()
 		{
-			if ( GameMode == GameModes.Competitive )
+			Assert.False( GameLoopExecuting );
+
+			GameLoopExecuting = true;
+
+			while ( !HasEnoughPlayers() )
 			{
-				GameState = GameStates.Warmup;
-				StateTimer = 30;
-				await WaitStateTimer();
-
-				GameState = GameStates.Live;
-				StateTimer = 20 * 60f;
-				FreshStart();
-				await WaitStateTimer();
-
-				GameState = GameStates.GameEnd;
-				StateTimer = 10;
-				await WaitStateTimer();
-
-				GameState = GameStates.MapVote;
-				var mapVote = new MapVoteEntity();
-				mapVote.VoteTimeLeft = 15f;
-				StateTimer = mapVote.VoteTimeLeft;
-				await WaitStateTimer();
-
-				Global.ChangeLevel( mapVote.WinningMap );
+				Alerts( To.Everyone, "Waiting For Players" );
+				await Task.Delay( 1000 );
 			}
-			if ( HasEnoughPlayers() == false ) return;
-			if (GameMode == GameModes.Tag )
+
+			GameState = GameStates.Warmup;
+			StateTimer = 30;
+			await WaitStateTimer();
+
+			GameState = GameStates.Live;
+			StateTimer = 15 * 60;
+			FreshStart();
+
+			if( GameMode == GameModes.Tag )
 			{
-				EnoughPlayersToStart = true;
-				
-				Alerts( To.Everyone,( "Waiting For Players" ) );
-				GameState = GameStates.Warmup;
-				StateTimer = 30;
-				await WaitStateTimer();
-
-				TagRoundLoopAsync();
+				await TagRoundLoopAsync();
 			}
-		}
-
-		[ClientRpc]
-		public static void Alerts( string Title )
-		{
-			NewMajorArea.ShowLandmark( Title );
-		}
-
-		public async Task EndGame()
-		{
-			GameIsEnded = true;
-			RoundFinish = true;
 
 			GameState = GameStates.GameEnd;
 			StateTimer = 10;
@@ -116,9 +81,14 @@ namespace Platformer
 			Global.ChangeLevel( mapVote.WinningMap );
 		}
 
+		[ClientRpc]
+		public static void Alerts( string Title )
+		{
+			NewMajorArea.ShowLandmark( Title );
+		}
+
 		private void FreshStart()
 		{
-
 			foreach ( var cl in Client.All )
 			{
 				cl.SetInt( "points", 0 );
@@ -139,50 +109,19 @@ namespace Platformer
 			} );
 		}
 
-		public void StartTag()
-		{
-			var allplayers = Entity.All.OfType<PlatformerPawn>();
-
-			var randomplayer = allplayers.OrderBy( x => Guid.NewGuid() ).FirstOrDefault();
-
-			var tagspawnpoint = Entity.All.OfType<TaggerSpawn>().OrderBy( x => Guid.NewGuid() ).FirstOrDefault();
-
-			if ( tagspawnpoint == null ) return;
-			TaggerPlayer = randomplayer;
-			randomplayer.Position = tagspawnpoint.Position;
-			randomplayer.Tagged = true;
-			randomplayer.PlayerTagArrow();
-
-		}
-
-		public void MoveTagPlayer()
-		{
-
-			var pawn = TaggerPlayer;
-			pawn.Respawn();
-
-			// Get all of the spawnpoints
-			var spawnpoints = Entity.All.OfType<SpawnPoint>();
-
-			// chose a random one
-			var randomSpawnPoint = spawnpoints.OrderBy( x => Guid.NewGuid() ).FirstOrDefault();
-
-			// if it exists, place the pawn there
-			if ( randomSpawnPoint != null )
-			{
-				var tx = randomSpawnPoint.Transform;
-				tx.Position = tx.Position + Vector3.Up * 50.0f; // raise it up
-				pawn.Transform = tx;
-			}
-		}
-
 		private bool HasEnoughPlayers()
 		{
-			if ( All.OfType<PlatformerPawn>().Count() < 2 )
+			var playerCount = All.OfType<PlatformerPawn>().Count();
+
+			if ( GameMode == GameModes.Tag && playerCount < 2 )
+				return false;
+
+			if ( GameMode == GameModes.Competitive && playerCount < 1 )
 				return false;
 
 			return true;
 		}
+
 		public enum GameStates
 		{
 			Warmup,

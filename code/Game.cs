@@ -138,14 +138,8 @@ namespace Platformer
 				tx.Position = tx.Position + Vector3.Up * 50.0f; // raise it up
 				pawn.Transform = tx;
 			}
-			PlatformerChatBox.AddInformation( To.Everyone, $"{client.Name} has joined the game", $"avatar:{client.PlayerId}" );
 
-			if ( CurrentGameMode != GameModes.Tag ) return;
-			if(HasEnoughPlayers() == true)
-			{
-				if ( EnoughPlayersToStart ) return;
-				_ = GameLoopAsync();
-			}
+			PlatformerChatBox.AddInformation( To.Everyone, $"{client.Name} has joined the game", $"avatar:{client.PlayerId}" );
 		}
 
 		public override void ClientDisconnect( Client client, NetworkDisconnectionReason reason )
@@ -201,38 +195,6 @@ namespace Platformer
 
 				postProcess.Saturate.Amount = 0.5f;
 			}
-		}
-		
-		public static bool IsEndGame = false;
-
-		[Event.Tick.Server]
-		public void Tick()
-		{
-			if ( CurrentGameMode == GameModes.Tag )
-			{
-				var allplayerstagged = !Entity.All.OfType<PlatformerPawn>().Where( e => !e.Tagged ).Any();
-
-				if ( allplayerstagged == true )
-				{
-					if( RoundNumber == 5)
-					{
-						if ( IsEndGame ) return;
-						EndTheGame();
-					}
-					if ( RoundFinish ) return;
-					if ( IsEndGame ) return;
-					RoundFinished();
-					
-				}
-
-			}
-		}
-
-		public void EndTheGame()
-		{
-			if ( IsEndGame ) return;
-			IsEndGame = true;
-			_ = EndGame();
 		}
 
 		[ClientRpc]
