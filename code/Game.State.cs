@@ -115,7 +115,7 @@ namespace Platformer
 				cl.SetInt( "deaths", 0 );
 
 				if ( cl.Pawn is not PlatformerPawn pl ) continue;
-				if ( pl.Tagged == true ) return;
+				if ( pl.Tagged == true ) continue;
 				pl.ResetTimer();
 				pl.ResetBestTime();
 				pl.GotoBestCheckpoint();
