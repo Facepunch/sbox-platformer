@@ -86,6 +86,8 @@ namespace Platformer
 			EnableDrawing = true;
 			EnableHideInFirstPerson = true;
 			EnableShadowInFirstPerson = true;
+			TagArrowParticle?.Destroy();
+			TagArrowParticle = null;
 
 			Clothing.DressEntity( this );
 
@@ -522,6 +524,7 @@ namespace Platformer
 			if ( destroy )
 			{
 				TagArrowParticle.Destroy();
+				TagArrowParticle = null;
 			}
 		}
 
