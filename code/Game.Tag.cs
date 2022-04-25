@@ -34,6 +34,10 @@ namespace Platformer
 				MoveTagPlayer();
 				await WaitStateTimer();
 
+				GameState = GameStates.GameEnd;
+				StateTimer = 1 * 10f;
+				await WaitStateTimer();
+
 				RoundNumber++;
 			}
 		}
