@@ -78,8 +78,9 @@ namespace Platformer
 			GameState = GameStates.Live;
 			StateTimer = 15 * 60;
 			FreshStart();
+			StartCoopTimer();
 
-			if( GameMode == GameModes.Tag )
+			if ( GameMode == GameModes.Tag )
 			{
 				await TagRoundLoopAsync();
 			}
@@ -127,6 +128,14 @@ namespace Platformer
 			{
 				x.Respawn();
 			} );
+		}
+		public static void StartCoopTimer()
+		{
+			foreach ( var cl in Client.All )
+			{
+				if ( cl.Pawn is not PlatformerPawn pl ) continue;
+				pl.StartCourse();
+			}
 		}
 
 		private bool HasEnoughPlayers()

@@ -23,7 +23,7 @@ internal partial class Checkpoint : ModelEntity
 	[Property( "maxs", Title = "Checkpoint maxs" )]
 	[Net]
 	[DefaultValue( "32 32 64" )]
-	public Vector3 Maxs { get; set; } = new Vector3(32, 32, 64);
+	public Vector3 Maxs { get; set; } = new Vector3( 32, 32, 64 );
 
 	[Net, Property]
 	public bool IsStart { get; set; }
@@ -47,7 +47,7 @@ internal partial class Checkpoint : ModelEntity
 		SetupPhysicsFromModel( PhysicsMotionType.Static );
 
 		var bounds = new BBox( Position + Mins, Position + Maxs );
-		var extents = ( bounds.Maxs - bounds.Mins ) * 0.5f;
+		var extents = (bounds.Maxs - bounds.Mins) * 0.5f;
 
 		var trigger = new BaseTrigger();
 		trigger.SetParent( this, null, Transform.Zero );
@@ -89,16 +89,19 @@ internal partial class Checkpoint : ModelEntity
 		pl.TrySetCheckpoint( this );
 
 		if ( IsEnd && pl.NumberOfKeys == Platformer.NumberOfCollectables ) _ = pl.CompleteCourseAsync();
-		else if ( IsStart )
-		{
-			if ( pl.NumberOfKeys == 0 )
-			pl.ResetTimer();
-		}
 
+		if ( Platformer.CurrentGameMode == Platformer.GameModes.Competitive )
+		{
+			if ( IsStart )
+			{
+				if ( pl.NumberOfKeys == 0 )
+					pl.ResetTimer();
+			}
+		}
 
 		if ( Platformer.CurrentGameMode == Platformer.GameModes.Coop )
 		{
-			CoopRespawn(pl);
+			CoopRespawn( pl );
 		}
 
 		if ( !IsStart ) return;
@@ -112,7 +115,7 @@ internal partial class Checkpoint : ModelEntity
 
 		if ( !IsStart ) return;
 
-		if ( pl.NumberOfKeys == 0 )
+		if ( Platformer.CurrentGameMode == Platformer.GameModes.Competitive && pl.NumberOfKeys == 0 )
 		{
 			pl.StartCourse();
 		}
@@ -140,7 +143,7 @@ internal partial class Checkpoint : ModelEntity
 
 			flag.SetModel( "models/flag/flag.vmdl" );
 		}
-		else if( active && !isLatestCheckpoint )
+		else if ( active && !isLatestCheckpoint )
 		{
 			active = false;
 
@@ -154,11 +157,9 @@ internal partial class Checkpoint : ModelEntity
 		rotation = Rotation;
 	}
 
-	public void CoopRespawn(PlatformerPawn toucher)
+	public void CoopRespawn( PlatformerPawn toucher )
 	{
-		Platformer.RespawnAsAlive(toucher);
+		Platformer.RespawnAsAlive( toucher );
 		EnableTouch = false;
-
-
 	}
 }

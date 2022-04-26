@@ -96,20 +96,33 @@ namespace Platformer
 			if ( Platformer.CurrentGameMode == Platformer.GameModes.Competitive )
 			{
 				RemoveCollisionLayer( CollisionLayer.Solid );
+
+				if ( NumberLife == 0 )
+				{
+					ClearCheckpoints();
+					NumberLife = 3;
+					ResetHealthPickUps();
+					ResetLifePickUps();
+					Coin = 0;
+					KeysPlayerHas.Clear();
+					NumberOfKeys = 0;
+				}
+			}
+
+			if ( Platformer.CurrentGameMode == Platformer.GameModes.Coop )
+			{
+				RemoveCollisionLayer( CollisionLayer.Solid );
+
+				if ( NumberLife == 0 )
+				{
+					NumberLife = 1;
+					ResetHealthPickUps();
+					ResetLifePickUps();
+				}
 			}
 
 			Health = 4;
 
-			if ( NumberLife == 0 )
-			{
-				ClearCheckpoints();
-				NumberLife = 3;
-				ResetHealthPickUps();
-				ResetLifePickUps();
-				Coin = 0;
-				KeysPlayerHas.Clear();
-				NumberOfKeys = 0;
-			}
 
 			if ( CurrentArea == null )
 			{
