@@ -1,8 +1,8 @@
 ﻿
 using Hammer;
 using Sandbox;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Platformer;
 
@@ -63,10 +63,18 @@ internal partial class KeyPickup : AnimEntity
 		if ( pl.KeysPlayerHas.Contains( KeyNumber ) ) return;
 
 		pl.PickedUpItem( Color.Yellow );
+
 		pl.KeysPlayerHas.Add( KeyNumber );
 		pl.NumberOfKeys++;
 
 		CollectedHealthPickup(To.Single (other.Client) );
+
+		if ( Platformer.CurrentGameMode == Platformer.GameModes.Coop )
+		{
+			var pawns = Entity.All.OfType<PlatformerPawn>().FirstOrDefault();
+			pawns.KeysPlayerHas.Add( KeyNumber );
+			pawns.NumberOfKeys++;
+		}
 	}
 
 	[ClientRpc]
