@@ -120,6 +120,19 @@ namespace Platformer
 		{
 			base.ClientJoined( client );
 
+			if ( CurrentGameMode == GameModes.Coop )
+			{
+				if ( CurrentState == GameStates.Live )
+				{
+					var deathpawn = new PlatformerDeadPawn( client );
+					client.Pawn = deathpawn;
+
+					var allplayers = Entity.All.OfType<PlatformerPawn>();
+					var randomplayer = allplayers.OrderBy( x => Guid.NewGuid() ).FirstOrDefault();
+
+					deathpawn.Position = randomplayer.Position + Vector3.Up * 32;
+				}
+			}return;
 			// Create a pawn for this client to play with
 			var pawn = new PlatformerPawn( client);
 			pawn.Respawn();
@@ -139,6 +152,11 @@ namespace Platformer
 				pawn.Transform = tx;
 			}
 
+			if ( CurrentGameMode == GameModes.Coop )
+			{
+				pawn.NumberLife = 1;
+			}
+
 			PlatformerChatBox.AddInformation( To.Everyone, $"{client.Name} has joined the game", $"avatar:{client.PlayerId}" );
 		}
 
@@ -155,8 +173,6 @@ namespace Platformer
 				if ( toucher is not PlatformerPawn pl ) return;
 				pawn.Checkpoints = pl.Checkpoints;
 				pawn.GotoBestCheckpoint();
-
-
 			}
 		}
 		public override void ClientDisconnect( Client client, NetworkDisconnectionReason reason )
