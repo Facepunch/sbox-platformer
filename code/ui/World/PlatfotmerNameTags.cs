@@ -27,9 +27,13 @@ namespace Platformer.UI
 
 		public virtual void UpdateFromPlayer( Player player )
 		{
-			if ( player is not PlatformerPawn p ) return;
-			Style.BackgroundColor = p.PlayerColor;
+			if ( player is PlatformerPawn p) Style.BackgroundColor = p.PlayerColor;
+			if ( player is PlatformerDeadPawn d) Style.BackgroundColor = d.PlayerColor;
+
+			//Style.BackgroundColor = p.PlayerColor;
+
 			// Nothing to do unless we're showing health and shit
+
 		}
 	}
 

@@ -154,6 +154,14 @@ namespace Platformer
 			base.OnKilled( client, pawn );
 
 			PlatformerKillfeed.AddEntryOnClient( To.Everyone, GetRandomFallMessage( client.Name ), client.NetworkIdent );
+
+			if ( CurrentGameMode == GameModes.Coop )
+			{
+				var deathpawn = new PlatformerDeadPawn( client );
+				client.Pawn = deathpawn;
+
+				client.Pawn.Transform = pawn.Transform;
+			}
 		}
 
 		private int lastFallMessage;

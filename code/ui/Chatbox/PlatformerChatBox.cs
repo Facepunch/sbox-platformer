@@ -71,16 +71,33 @@ namespace Platformer.UI
 			var player = Local.Pawn;
 			if ( player == null ) return;
 
-			if ( Local.Pawn is not PlatformerPawn pl ) return;
+			if ( Local.Pawn is PlatformerPawn pl )
 
-			var CurrentA = pl.CurrentArea.ToUpper();
+			{
+				var CurrentA = pl.CurrentArea.ToUpper();
 
-			e.Message.Text = message;
-			e.NameLabel.Text =  $"{name} : {CurrentA} :";
-			e.Avatar.SetTexture( avatar );
+				e.Message.Text = message;
+				e.NameLabel.Text = $"{name} : {CurrentA} :";
+				e.Avatar.SetTexture( avatar );
 
-			e.SetClass( "noname", string.IsNullOrEmpty( name ) );
-			e.SetClass( "noavatar", string.IsNullOrEmpty( avatar ) );
+
+				e.SetClass( "noname", string.IsNullOrEmpty( name ) );
+				e.SetClass( "noavatar", string.IsNullOrEmpty( avatar ) );
+			}
+
+			if ( Local.Pawn is PlatformerDeadPawn dpl )
+
+			{
+				var CurrentA = dpl.CurrentArea.ToUpper();
+
+				e.Message.Text = message;
+				e.NameLabel.Text = $"{name} : {CurrentA} :";
+				e.Avatar.SetTexture( avatar );
+
+
+				e.SetClass( "noname", string.IsNullOrEmpty( name ) );
+				e.SetClass( "noavatar", string.IsNullOrEmpty( avatar ) );
+			}
 
 			if ( lobbyState == "ready" || lobbyState == "staging" )
 			{
