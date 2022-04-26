@@ -22,6 +22,8 @@ public partial class PlatformerFall : ModelEntity
 
 	[Net, Property] public float RespawnTime { get; set; } = 10f;
 
+	[Net, Property] public float FallSpeed { get; set; } = 50f;
+
 	[Net,Property] public bool DontReturn { get; set; } = false;
 
 	[Net, Property] 
@@ -106,7 +108,7 @@ public partial class PlatformerFall : ModelEntity
 	{
 		if ( StartFalling )
 		{
-			Position = Position.WithZ( Position.z + Time.Delta * -50 );
+			Position = Position.WithZ( Position.z + Time.Delta * -FallSpeed );
 		}
 	}
 
