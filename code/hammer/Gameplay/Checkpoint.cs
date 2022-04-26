@@ -87,7 +87,7 @@ internal partial class Checkpoint : ModelEntity
 
 		pl.TrySetCheckpoint( this );
 
-		if ( IsEnd && pl.NumberOfKeys == Platformer.NumberOfCollectables ) pl.CompleteCourseAsync();
+		if ( IsEnd && pl.NumberOfKeys == Platformer.NumberOfCollectables ) _ = pl.CompleteCourseAsync();
 		else if ( IsStart )
 		{
 			if ( pl.NumberOfKeys == 0 )
