@@ -26,6 +26,7 @@ namespace Platformer
 
 		public override void Spawn()
 		{
+
 			SetModel( "models/gameplay/spectator_head/spectator_head.vmdl" );
 
 			Controller = new FlyingController();

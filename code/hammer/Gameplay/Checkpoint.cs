@@ -1,6 +1,7 @@
 ﻿using Hammer;
 using Sandbox;
 using Sandbox.Internal;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
@@ -93,6 +94,14 @@ internal partial class Checkpoint : ModelEntity
 			if ( pl.NumberOfKeys == 0 )
 			pl.ResetTimer();
 		}
+
+
+		if ( Platformer.CurrentGameMode == Platformer.GameModes.Coop )
+		{
+			CoopRespawn(pl);
+		}
+
+		if ( !IsStart ) return;
 	}
 
 	public override void EndTouch( Entity other )
@@ -100,6 +109,7 @@ internal partial class Checkpoint : ModelEntity
 		base.EndTouch( other );
 
 		if ( other is not PlatformerPawn pl ) return;
+
 		if ( !IsStart ) return;
 
 		if ( pl.NumberOfKeys == 0 )
@@ -129,7 +139,6 @@ internal partial class Checkpoint : ModelEntity
 			active = true;
 
 			flag.SetModel( "models/flag/flag.vmdl" );
-
 		}
 		else if( active && !isLatestCheckpoint )
 		{
@@ -145,4 +154,11 @@ internal partial class Checkpoint : ModelEntity
 		rotation = Rotation;
 	}
 
+	public void CoopRespawn(PlatformerPawn toucher)
+	{
+		Platformer.RespawnAsAlive(toucher);
+		EnableTouch = false;
+
+
+	}
 }

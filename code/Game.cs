@@ -142,6 +142,23 @@ namespace Platformer
 			PlatformerChatBox.AddInformation( To.Everyone, $"{client.Name} has joined the game", $"avatar:{client.PlayerId}" );
 		}
 
+		public static void RespawnAsAlive( Entity toucher )
+		{
+			foreach ( var client in Client.All.Where( c => c.Pawn is PlatformerDeadPawn ) )
+			{ 
+				client.Pawn.Delete();
+
+				var pawn = new PlatformerPawn( client );
+				pawn.Respawn();
+				client.Pawn = pawn;
+
+				if ( toucher is not PlatformerPawn pl ) return;
+				pawn.Checkpoints = pl.Checkpoints;
+				pawn.GotoBestCheckpoint();
+
+
+			}
+		}
 		public override void ClientDisconnect( Client client, NetworkDisconnectionReason reason )
 		{
 			base.ClientDisconnect( client, reason );
@@ -155,11 +172,11 @@ namespace Platformer
 
 			PlatformerKillfeed.AddEntryOnClient( To.Everyone, GetRandomFallMessage( client.Name ), client.NetworkIdent );
 
+			if ( CurrentState == GameStates.Warmup ) return;
 			if ( CurrentGameMode == GameModes.Coop )
 			{
 				var deathpawn = new PlatformerDeadPawn( client );
 				client.Pawn = deathpawn;
-
 				client.Pawn.Transform = pawn.Transform;
 			}
 		}
