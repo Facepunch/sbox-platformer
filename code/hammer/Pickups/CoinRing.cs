@@ -32,6 +32,13 @@ internal partial class CoinRing : BaseCollectible
 		RenderColor = RenderColor.WithAlpha( alpha );
 	}
 
+
+	[Event.Tick.Server]
+	public void Tick()
+	{
+		Position = Position.WithZ( Position.z + MathF.Sin( Time.Now ) / 40 );
+	}
+
 	protected override bool OnCollected( PlatformerPawn pl )
 	{
 		base.OnCollected( pl );
