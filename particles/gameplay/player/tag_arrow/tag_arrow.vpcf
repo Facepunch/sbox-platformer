@@ -247,4 +247,10 @@
 			m_hTexture = resource:"materials/particles/ui_arrow_01.vtex"
 		},
 	]
+	m_Children = 
+	[
+		{
+			m_ChildRef = resource:"particles/gameplay/player/tag_effect/tag_effect.vpcf"
+		},
+	]
 }

@@ -11,9 +11,9 @@ namespace Platformer;
 internal partial class KillTrigger : BaseTrigger
 {
 
-	public override void StartTouch( Entity other )
+	public override void Touch( Entity other )
 	{
-		base.StartTouch( other );
+		base.Touch( other );
 
 		if ( !other.IsServer ) return;
 		if ( other is not PlatformerPawn pl ) return;
