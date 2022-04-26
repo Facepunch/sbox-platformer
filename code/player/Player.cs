@@ -346,6 +346,8 @@ namespace Platformer
 				if ( child is not ModelEntity m || !child.IsValid() ) continue;
 				m.RenderColor = Color.Red;
 			}
+
+			Platformer.Alerts( To.Everyone, $"{ Client.Name} Has been Tagged.");
 		}
 
 		private void TickPlayerThrow()
