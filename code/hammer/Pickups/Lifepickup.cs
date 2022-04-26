@@ -2,17 +2,37 @@
 using Hammer;
 using Sandbox;
 using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace Platformer;
 
 [Library( "plat_lifepickup", Description = "Addition Life" )]
-[Model( Model = "models/gameplay/temp/temp_heart_01.vmdl" )]
+[Model( Model = "models/gameplay/collect/life/life.vmdl" )]
 [Display( Name = "Life Pickup", GroupName = "Platformer", Description = "Addition Life" )]
 internal partial class LifePickup : BaseCollectible
 {
 
 	[Net, Property]
 	public int NumberOfLife { get; set; }
+
+	private Vector3 OGPos;
+
+	public override void Spawn()
+	{
+		base.Spawn();
+
+		OGPos = Position;
+
+	}
+
+	[Event.Tick.Server]
+	public void Tick()
+	{
+		Position = Position.WithZ( Position.z + MathF.Sin( Time.Now ) / 6);
+
+		Rotation = Rotation.FromYaw( Rotation.Yaw() + -50 * Time.Delta );
+
+	}
 
 	protected override bool OnCollected( PlatformerPawn pl )
 	{
