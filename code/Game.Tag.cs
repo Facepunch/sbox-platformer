@@ -28,7 +28,7 @@ namespace Platformer
 				await WaitStateTimer();
 
 				GameState = GameStates.Live;
-				StateTimer = 1 * 60f;
+				StateTimer = 3 * 60f;
 
 				Alerts( To.Everyone, "Don't get tagged!" );
 				MoveTagPlayer();
