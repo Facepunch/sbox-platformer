@@ -111,8 +111,6 @@ namespace Platformer
 
 			if ( Platformer.CurrentGameMode == Platformer.GameModes.Coop )
 			{
-				RemoveCollisionLayer( CollisionLayer.Solid );
-
 				if ( NumberLife == 0 )
 				{
 					NumberLife = 1;

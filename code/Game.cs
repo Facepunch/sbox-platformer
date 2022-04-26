@@ -131,33 +131,58 @@ namespace Platformer
 					var randomplayer = allplayers.OrderBy( x => Guid.NewGuid() ).FirstOrDefault();
 
 					deathpawn.Position = randomplayer.Position + Vector3.Up * 32;
+
+					PlatformerChatBox.AddInformation( To.Everyone, $"{client.Name} has joined the game", $"avatar:{client.PlayerId}" );
+
 				}
-			}return;
-			// Create a pawn for this client to play with
-			var pawn = new PlatformerPawn( client);
-			pawn.Respawn();
-			client.Pawn = pawn;
+				if( CurrentState != GameStates.Live )
+				{
+					var pawn = new PlatformerPawn( client );
+					pawn.Respawn();
+					client.Pawn = pawn;
 
-			// Get all of the spawnpoints
-			var spawnpoints = Entity.All.OfType<SpawnPoint>();
+					var spawnpoints = Entity.All.OfType<SpawnPoint>();
 
-			// chose a random one
-			var randomSpawnPoint = spawnpoints.OrderBy( x => Guid.NewGuid() ).FirstOrDefault();
+					var randomSpawnPoint = spawnpoints.OrderBy( x => Guid.NewGuid() ).FirstOrDefault();
 
-			// if it exists, place the pawn there
-			if ( randomSpawnPoint != null )
-			{
-				var tx = randomSpawnPoint.Transform;
-				tx.Position = tx.Position + Vector3.Up * 50.0f; // raise it up
-				pawn.Transform = tx;
+					if ( randomSpawnPoint != null )
+					{
+						var tx = randomSpawnPoint.Transform;
+						tx.Position = tx.Position + Vector3.Up * 50.0f;
+						pawn.Transform = tx;
+					}
+
+					if ( CurrentGameMode == GameModes.Coop )
+					{
+						pawn.NumberLife = 1;
+					}
+
+					PlatformerChatBox.AddInformation( To.Everyone, $"{client.Name} has joined the game", $"avatar:{client.PlayerId}" );
+				}
 			}
-
-			if ( CurrentGameMode == GameModes.Coop )
+			if ( CurrentGameMode != GameModes.Coop )
 			{
-				pawn.NumberLife = 1;
-			}
+				// Create a pawn for this client to play with
+				var pawn = new PlatformerPawn( client );
+				pawn.Respawn();
+				client.Pawn = pawn;
 
-			PlatformerChatBox.AddInformation( To.Everyone, $"{client.Name} has joined the game", $"avatar:{client.PlayerId}" );
+				// Get all of the spawnpoints
+				var spawnpoints = Entity.All.OfType<SpawnPoint>();
+
+				// chose a random one
+				var randomSpawnPoint = spawnpoints.OrderBy( x => Guid.NewGuid() ).FirstOrDefault();
+
+				// if it exists, place the pawn there
+				if ( randomSpawnPoint != null )
+				{
+					var tx = randomSpawnPoint.Transform;
+					tx.Position = tx.Position + Vector3.Up * 50.0f; // raise it up
+					pawn.Transform = tx;
+				}
+
+				PlatformerChatBox.AddInformation( To.Everyone, $"{client.Name} has joined the game", $"avatar:{client.PlayerId}" );
+			}
 		}
 
 		public static void RespawnAsAlive( Entity toucher )
@@ -175,6 +200,15 @@ namespace Platformer
 				pawn.GotoBestCheckpoint();
 			}
 		}
+		public static void EndAllPlayerTime()
+		{
+			foreach ( var cl in Client.All )
+			{
+				if ( cl.Pawn is not PlatformerPawn pl ) continue;
+				_ = pl.CompleteCourseAsync();
+			}
+		}
+
 		public override void ClientDisconnect( Client client, NetworkDisconnectionReason reason )
 		{
 			base.ClientDisconnect( client, reason );

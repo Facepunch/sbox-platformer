@@ -101,6 +101,7 @@ internal partial class Checkpoint : ModelEntity
 
 		if ( Platformer.CurrentGameMode == Platformer.GameModes.Coop )
 		{
+			if ( IsStart ) return;
 			CoopRespawn( pl );
 		}
 
