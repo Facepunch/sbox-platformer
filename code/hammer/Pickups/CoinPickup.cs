@@ -12,8 +12,8 @@ namespace Platformer;
 [Display( Name = "Coin Pickup", GroupName = "Platformer", Description = "Coin Pickup." )]
 internal partial class CoinPickup : BaseCollectible
 {
-	private Particles CoinPart;
-	private ModelEntity CoinModel;
+	private Particles CoinParticle;
+
 
 	public override void Spawn()
 	{
@@ -32,7 +32,6 @@ internal partial class CoinPickup : BaseCollectible
 		SetModel( "models/gameplay/collect/coin/coin01.vmdl" );
 
 		SetMaterialGroup( new Random().Next( 0, 3 ).ToString() );
-
 	}
 
 	public void SpawnWithPhys()
@@ -51,6 +50,8 @@ internal partial class CoinPickup : BaseCollectible
 
 		pl.Client.AddInt( "kills" );
 
+		CoinParticle.Destroy();
+
 		return true;
 	}
 
@@ -64,5 +65,10 @@ internal partial class CoinPickup : BaseCollectible
 	public void Tick()
 	{
 		Rotation = Rotation.FromYaw( Rotation.Yaw() + -75 * Time.Delta );
+
+		if(CoinParticle == null)
+		{
+			CoinParticle = Particles.Create( "particles/gameplay/idle_coin/idle_coin.vpcf", this );
+		}
 	}
 }
