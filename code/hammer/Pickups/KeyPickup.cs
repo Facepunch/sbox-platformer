@@ -60,20 +60,27 @@ internal partial class KeyPickup : AnimEntity
 		base.StartTouch( other );
 
 		if ( other is not PlatformerPawn pl ) return;
-		if ( pl.KeysPlayerHas.Contains( KeyNumber ) ) return;
 
-		pl.PickedUpItem( Color.Yellow );
+		if ( Platformer.CurrentGameMode == Platformer.GameModes.Competitive )
+		{
+			if ( pl.KeysPlayerHas.Contains( KeyNumber ) ) return;
+			pl.PickedUpItem( Color.Yellow );
 
-		pl.KeysPlayerHas.Add( KeyNumber );
-		pl.NumberOfKeys++;
+			pl.KeysPlayerHas.Add( KeyNumber );
+			pl.NumberOfKeys++;
 
-		CollectedHealthPickup(To.Single (other.Client) );
-
+			CollectedHealthPickup( To.Single( other.Client ) );
+		}
+		
 		if ( Platformer.CurrentGameMode == Platformer.GameModes.Coop )
 		{
-			var pawns = Entity.All.OfType<PlatformerPawn>().FirstOrDefault();
-			pawns.KeysPlayerHas.Add( KeyNumber );
-			pawns.NumberOfKeys++;
+			if ( Platformer.KeysAllPlayerHas.Contains( KeyNumber ) ) return;
+			Platformer.KeysAllPlayerHas.Add( KeyNumber );
+			Platformer.NumberOfKeys++;
+
+			Log.Info( Platformer.NumberOfKeys );
+
+			CollectedHealthPickup( To.Single( other.Client ) );
 		}
 	}
 
@@ -94,8 +101,16 @@ internal partial class KeyPickup : AnimEntity
 	[Event.Tick.Client]
 	private void ClientTick()
 	{
-		var a = ShouldRender() ? 1 : 0;
-		RenderColor = RenderColor.WithAlpha( a );
+		if ( Platformer.CurrentGameMode == Platformer.GameModes.Competitive )
+		{
+			var a = ShouldRender() ? 1 : 0;
+			RenderColor = RenderColor.WithAlpha( a );
+		}
+		if ( Platformer.CurrentGameMode == Platformer.GameModes.Coop )
+		{
+			var b = ShouldRenderAll() ? 1 : 0;
+			RenderColor = RenderColor.WithAlpha( b );
+		}
 	}
 
 	private bool ShouldRender()
@@ -106,4 +121,8 @@ internal partial class KeyPickup : AnimEntity
 		return !pl.KeysPlayerHas.Contains( KeyNumber );
 	}
 
+	private bool ShouldRenderAll()
+	{
+		return !Platformer.KeysAllPlayerHas.Contains( KeyNumber );
+	}
 }

@@ -32,16 +32,29 @@ namespace Platformer.UI
 
 		public override void Tick()
 		{
-
-			var player = Local.Pawn;
-			if ( player == null ) return;
-
-			if ( Local.Pawn is not PlatformerPawn pl ) return;
-
-			foreach ( var keypanel in KeyPanels )
+			if ( Platformer.CurrentGameMode == Platformer.GameModes.Competitive )
 			{
-				keypanel.SetClass( "active", pl.KeysPlayerHas.Contains( keypanel.KeyNumber ) );
-				
+				var player = Local.Pawn;
+				if ( player == null ) return;
+
+				if ( Local.Pawn is not PlatformerPawn pl ) return;
+
+				foreach ( var keypanel in KeyPanels )
+				{
+					keypanel.SetClass( "active", pl.KeysPlayerHas.Contains( keypanel.KeyNumber ) );
+
+				}
+			}
+			if ( Platformer.CurrentGameMode == Platformer.GameModes.Coop )
+			{
+				var player = Local.Pawn;
+				if ( player == null ) return;
+
+				foreach ( var keypanel in KeyPanels )
+				{
+					keypanel.SetClass( "active", Platformer.KeysAllPlayerHas.Contains( keypanel.KeyNumber ) );
+
+				}
 			}
 		}
 	}
