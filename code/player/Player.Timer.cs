@@ -46,6 +46,7 @@ partial class PlatformerPawn
 			var formattedTime = span.ToString( @"hh\:mm\:ss" );
 
 			PlatformerKillfeed.AddEntryOnClient( To.Everyone, $"{Client.Name} has completed the course in {formattedTime}", Client.NetworkIdent );
+
 		}
 
 		if ( Platformer.CurrentGameMode == Platformer.GameModes.Competitive )
