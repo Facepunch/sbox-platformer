@@ -17,6 +17,7 @@ namespace Platformer
 
 		[Net]
 		public GameStates GameState { get; set; } = GameStates.Warmup;
+
 		[Net]
 		public string NextMap { get; set; } = "facepunch.tup_block";
 		public bool GameIsLive { get; private set; }
@@ -78,7 +79,10 @@ namespace Platformer
 			GameState = GameStates.Live;
 			StateTimer = 15 * 60;
 			FreshStart();
-			StartCoopTimer();
+			if ( GameMode == GameModes.Coop )
+			{
+				StartCoopTimer();
+			}
 
 			if ( GameMode == GameModes.Tag )
 			{
@@ -128,14 +132,6 @@ namespace Platformer
 			{
 				x.Respawn();
 			} );
-		}
-		public static void StartCoopTimer()
-		{
-			foreach ( var cl in Client.All )
-			{
-				if ( cl.Pawn is not PlatformerPawn pl ) continue;
-				pl.StartCourse();
-			}
 		}
 
 		private bool HasEnoughPlayers()

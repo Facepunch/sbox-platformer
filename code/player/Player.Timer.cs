@@ -24,6 +24,7 @@ partial class PlatformerPawn
 		TimerState = TimerState.Live;
 		Velocity = Velocity.ClampLength( 240 );
 	}
+
 	public bool CourseIncomplete => BestTime == defaultBestTime;
 
 	private const float defaultBestTime = 3600f;
@@ -35,26 +36,40 @@ partial class PlatformerPawn
 
 	public async Task CompleteCourseAsync()
 	{
-		TimerState = TimerState.Finished;
-
-		if ( !IsServer ) return;
-
-		var span = TimeSpan.FromSeconds( TimeSinceStart );
-		var formattedTime = span.ToString( @"mm\:ss" );
-
-		ClearCheckpoints();
-		PlatformerKillfeed.AddEntryOnClient( To.Everyone, $"{Client.Name} has completed the course in {formattedTime}", Client.NetworkIdent );
-		Celebrate();
-		FinishedReset();
-
-		if ( TimeSinceStart < BestTime )
+		if(Platformer.CurrentGameMode == Platformer.GameModes.Coop)
 		{
-			BestTime = TimeSinceStart;
+			Platformer.CoopTimerState = Platformer.TimerState.Finished;
 
-			var scoreResult = await GameServices.SubmitScore( Client.PlayerId, BestTime );
+			var game = Game.Current as Platformer;
 
+			var span = TimeSpan.FromSeconds( (game.TimeCoopStart * 60).Clamp( 0, float.MaxValue ) );
+			var formattedTime = span.ToString( @"hh\:mm\:ss" );
+
+			PlatformerKillfeed.AddEntryOnClient( To.Everyone, $"{Client.Name} has completed the course in {formattedTime}", Client.NetworkIdent );
 		}
 
+		if ( Platformer.CurrentGameMode == Platformer.GameModes.Competitive )
+		{
+			TimerState = TimerState.Finished;
+
+			if ( !IsServer ) return;
+
+			var span = TimeSpan.FromSeconds( TimeSinceStart );
+			var formattedTime = span.ToString( @"mm\:ss" );
+
+			ClearCheckpoints();
+			PlatformerKillfeed.AddEntryOnClient( To.Everyone, $"{Client.Name} has completed the course in {formattedTime}", Client.NetworkIdent );
+			Celebrate();
+			FinishedReset();
+
+			if ( TimeSinceStart < BestTime )
+			{
+				BestTime = TimeSinceStart;
+
+				var scoreResult = await GameServices.SubmitScore( Client.PlayerId, BestTime );
+
+			}
+		}
 
 	}
 

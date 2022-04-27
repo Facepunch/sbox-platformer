@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using Platformer.UI;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Platformer
 {
@@ -200,14 +201,6 @@ namespace Platformer
 				pawn.GotoBestCheckpoint();
 			}
 		}
-		public static void EndAllPlayerTime()
-		{
-			foreach ( var cl in Client.All )
-			{
-				if ( cl.Pawn is not PlatformerPawn pl ) continue;
-				_ = pl.CompleteCourseAsync();
-			}
-		}
 
 		public override void ClientDisconnect( Client client, NetworkDisconnectionReason reason )
 		{
@@ -279,5 +272,4 @@ namespace Platformer
 			Sound.FromWorld( sound, pos );
 		}
 	}
-
 }

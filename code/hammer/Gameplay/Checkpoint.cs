@@ -101,6 +101,8 @@ internal partial class Checkpoint : ModelEntity
 
 		if ( Platformer.CurrentGameMode == Platformer.GameModes.Coop )
 		{
+			if( Platformer.CoopTimerState == Platformer.TimerState.Finished) return;
+			if ( IsEnd && Platformer.NumberOfKeys == Platformer.NumberOfCollectables ) _ = pl.CompleteCourseAsync();
 			if ( IsStart ) return;
 			CoopRespawn( pl );
 		}
