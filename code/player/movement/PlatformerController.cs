@@ -25,6 +25,8 @@ namespace Platformer.Movement
 		private List<BaseMoveMechanic> mechanics = new();
 		private BaseMoveMechanic activeMechanic => mechanics.FirstOrDefault( x => x.IsActive );
 
+		public IReadOnlyList<BaseMoveMechanic> Mechanics => mechanics;
+
 		public bool PlayerPickedUpGlider { get; private set; } = false;
 
 		public PlatformerController()

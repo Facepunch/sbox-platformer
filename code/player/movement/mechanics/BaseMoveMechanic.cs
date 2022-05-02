@@ -6,6 +6,9 @@ namespace Platformer.Movement
 	partial class BaseMoveMechanic : BaseNetworkable
 	{
 
+		public virtual string Name { get; protected set; } = "Base Mechanic";
+		public virtual string Description { get; protected set; } = "Helps your player move";
+
 		public bool IsActive { get; protected set; }
 		public virtual bool AlwaysSimulate { get; private set; }
 		public virtual bool TakesOverControl { get; }
