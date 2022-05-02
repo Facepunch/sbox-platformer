@@ -31,7 +31,14 @@ internal class ControlPanel : Panel
 
 		foreach ( var mech in ctrl.Mechanics )
 		{
-			AddChild( new ControlEntry( mech ) );
+			if ( string.IsNullOrEmpty( mech.HudName ) ) 
+				continue;
+
+			AddChild( new ControlEntry()
+			{
+				Name = mech.HudName,
+				Description = mech.HudDescription
+			} );
 		}
 	}
 

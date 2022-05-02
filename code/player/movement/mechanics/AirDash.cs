@@ -6,6 +6,9 @@ namespace Platformer.Movement
 	class AirDash : BaseMoveMechanic
 	{
 
+		public override string HudName => "Air Dash";
+		public override string HudDescription => "Dash in the air";
+
 		public override bool AlwaysSimulate => true;
 		public override bool TakesOverControl => false;
 
