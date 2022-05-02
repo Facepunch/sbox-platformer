@@ -2,6 +2,7 @@
 using Sandbox;
 using Sandbox.Internal;
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
@@ -9,7 +10,7 @@ namespace Platformer;
 
 [Library( "plat_checkpoint", Description = "Defines a checkpoint where the player will respawn after falling" )]
 [Model( Model = "models/gameplay/checkpoint/editor_checkpoint/editor_checkpoint.vmdl" )]
-[Display( Name = "Player Checkpoint", GroupName = "Platformer", Description = "Defines a checkpoint where the player will respawn after falling" )]
+[Display( Name = "Player Checkpoint", GroupName = "Platformer", Description = "Defines a checkpoint where the player will respawn after falling" ), Category( "Player" ), Icon( "flag_circle" )]
 [BoundsHelper( "mins", "maxs", false, true )]
 internal partial class Checkpoint : ModelEntity
 {
@@ -17,12 +18,10 @@ internal partial class Checkpoint : ModelEntity
 
 	[Property( "mins", Title = "Checkpoint mins" )]
 	[Net]
-	[DefaultValue( "-32 -32 0" )]
 	public Vector3 Mins { get; set; } = new Vector3( -32, -32, 0 );
 
 	[Property( "maxs", Title = "Checkpoint maxs" )]
 	[Net]
-	[DefaultValue( "32 32 64" )]
 	public Vector3 Maxs { get; set; } = new Vector3( 32, 32, 64 );
 
 	[Net, Property]
@@ -102,7 +101,11 @@ internal partial class Checkpoint : ModelEntity
 		if ( Platformer.CurrentGameMode == Platformer.GameModes.Coop )
 		{
 			if( Platformer.CoopTimerState == Platformer.TimerState.Finished) return;
-			if ( IsEnd && Platformer.NumberOfKeys == Platformer.NumberOfCollectables ) _ = pl.CompleteCourseAsync();
+			if ( IsEnd && Platformer.NumberOfKeys == Platformer.NumberOfCollectables )
+			{
+				_ = pl.CompleteCourseAsync();
+			//	Platformer.GameLoopCoopEndAsync();
+			}
 			if ( IsStart ) return;
 			CoopRespawn( pl );
 		}

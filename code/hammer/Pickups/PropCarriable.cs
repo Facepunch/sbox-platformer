@@ -1,12 +1,13 @@
 ﻿
 using Sandbox;
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Platformer;
 
 [Library( "plat_prop_carriable" )]
-[Display( Name = "Prop Carriable", GroupName = "Platformer", Description = "A model the player can carry." )]
+[Display( Name = "Prop Carriable", GroupName = "Platformer", Description = "A model the player can carry." ), Category( "Gameplay" ), Icon( "shopping_bag" )]
 internal partial class PropCarriable : Prop, IUse
 {
 	public enum PropType

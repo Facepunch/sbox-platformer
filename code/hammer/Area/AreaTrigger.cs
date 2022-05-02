@@ -2,6 +2,7 @@
 using Hammer;
 using Sandbox.UI;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace Platformer;
 
@@ -10,7 +11,7 @@ namespace Platformer;
 /// </summary>
 [Library( "plat_areatrigger")]
 [Hammer.AutoApplyMaterial( "materials/editor/areatrigger/areatrigger.vmat" )]
-[Display( Name = "Area Trigger",GroupName = "Platformer", Description = "When the player is inside the trigger it will display the location on the hud.")]
+[Display( Name = "Area Trigger",GroupName = "Platformer", Description = "When the player is inside the trigger it will display the location on the hud."), Category( "Triggers" ), Icon( "follow_the_signs" )]
 internal partial class AreaTrigger : BaseTrigger
 {
 	/// <summary>

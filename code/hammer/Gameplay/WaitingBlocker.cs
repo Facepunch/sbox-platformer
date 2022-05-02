@@ -2,6 +2,7 @@
 using Sandbox;
 using Hammer;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace Platformer
 {
@@ -12,7 +13,7 @@ namespace Platformer
 	[Hammer.Solid]
 	[Hammer.RenderFields]
 	[Hammer.VisGroup( Hammer.VisGroup.Dynamic )]
-	[Display( Name = "Waiting Blocker", GroupName = "Platformer", Description = "Waiting Blocker." )]
+	[Display( Name = "Waiting Blocker", GroupName = "Platformer", Description = "Waiting Blocker." ), Category( "Gameplay" ), Icon( "av_timer" )]
 
 	public partial class WaitingBlocker : BrushEntity
 	{

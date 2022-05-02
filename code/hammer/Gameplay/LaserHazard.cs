@@ -2,21 +2,21 @@
 using Hammer;
 using Sandbox;
 using Sandbox.Internal;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Platformer;
 
 [Library( "plat_LaserHazard", Description = "Laser Beam Hazard" )]
 [Model( Model = "models/gameplay/temp/temp_heart_01.vmdl" )]
-[Display( Name = "Laser Beam Hazard", GroupName = "Platformer", Description = "Laser Beam Hazard" )]
+[Display( Name = "Laser Beam Hazard", GroupName = "Platformer", Description = "Laser Beam Hazard" ), Category( "Gameplay" ), Icon( "flash_on" )]
 [Hammer.DrawAngles]
 public partial class LaserHazard : ModelEntity
 {
 
 	[Net]
 	[Property( "MaxDistance", Title = "Max Distance" )]
-	[DefaultValue( "500" )]
-	public float maxDist { get; set; }
+	public float maxDist { get; set; } = 500f;
 
 	[Net]
 	[Property( "effect_name" ), Hammer.EntityReportSource, FGDType( "particlesystem" )]

@@ -2,6 +2,7 @@
 using Sandbox;
 using Hammer;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace Platformer
 {
@@ -9,7 +10,7 @@ namespace Platformer
     [Library( "plat_gamemodeselect" )]
 	[Hammer.VisGroup( Hammer.VisGroup.Logic )]
 	[Hammer.EditorSprite( "materials/editor/gamemode/gamemode.vmat" )]
-	[Display( Name = "Game Mode Select", GroupName = "Platformer", Description = "Game Mode Select." )]
+	[Display( Name = "Game Mode Select", GroupName = "Platformer", Description = "Game Mode Select." ), Category( "Gamemode" ), Icon( "videogame_asset" )]
 
 	public partial class GameModeSelect : Entity
 	{

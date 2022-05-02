@@ -3,12 +3,13 @@ using Hammer;
 using Sandbox;
 using System.ComponentModel.DataAnnotations;
 using System;
+using System.ComponentModel;
 
 namespace Platformer;
 
 [Library( "plat_lifepickup", Description = "Addition Life" )]
 [Model( Model = "models/gameplay/collect/life/life.vmdl" )]
-[Display( Name = "Life Pickup", GroupName = "Platformer", Description = "Addition Life" )]
+[Display( Name = "Life Pickup", GroupName = "Platformer", Description = "Addition Life" ), Category( "Gameplay" ), Icon( "woman" )]
 internal partial class LifePickup : BaseCollectible
 {
 

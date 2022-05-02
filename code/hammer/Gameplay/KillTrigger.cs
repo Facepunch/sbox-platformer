@@ -2,12 +2,13 @@
 using Sandbox;
 using Hammer;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace Platformer;
 
 [Library( "plat_trigger_kill", Description = "Kills the player." )]
 [Hammer.AutoApplyMaterial( "materials/editor/killtrigger/killtrigger.vmat" )]
-[Display( Name = "Trigger Kill", GroupName = "Platformer", Description = "Kills the player." )]
+[Display( Name = "Trigger Kill", GroupName = "Platformer", Description = "Kills the player." ), Category( "Triggers" ), Icon( "church" )]
 internal partial class KillTrigger : BaseTrigger
 {
 

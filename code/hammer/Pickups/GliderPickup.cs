@@ -1,13 +1,14 @@
 ﻿
 using Hammer;
 using Sandbox;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Platformer;
 
 [Library( "plat_glider", Description = "Glider Pickup" )]
 [Hammer.EditorModel( "models/gameplay/glider/handglider.vmdl",FixedBounds = true )]
-[Display( Name = "Glider Pickup", GroupName = "Platformer", Description = "Glider Pickup." )]
+[Display( Name = "Glider Pickup", GroupName = "Platformer", Description = "Glider Pickup." ), Category( "Gameplay" ), Icon( "paragliding" )]
 internal partial class GliderPickup : BaseCollectible
 {
 	public override void Spawn()

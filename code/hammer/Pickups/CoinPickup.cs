@@ -2,6 +2,7 @@
 using Hammer;
 using Sandbox;
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Platformer;
@@ -9,7 +10,7 @@ namespace Platformer;
 [Library( "plat_coin", Description = "Coin Pickup" )]
 //[Model( Model = "models/gameplay/collect/coin/coin01.vmdl" )]
 [Hammer.EditorModel( "models/gameplay/collect/coin/coin01.vmdl", FixedBounds = true )]
-[Display( Name = "Coin Pickup", GroupName = "Platformer", Description = "Coin Pickup." )]
+[Display( Name = "Coin Pickup", GroupName = "Platformer", Description = "Coin Pickup." ), Category( "Gameplay" ), Icon( "currency_bitcoin" )]
 internal partial class CoinPickup : BaseCollectible
 {
 	private Particles CoinParticle;

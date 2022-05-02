@@ -2,12 +2,13 @@
 using Sandbox;
 using Hammer;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace Platformer;
 
 [Library( "plat_ignorefalldamage", Description = "Ignore Fall Damage." )]
 [Hammer.AutoApplyMaterial( "materials/editor/ignorefalldamage/ignorefalldamage.vmat" )]
-[Display( Name = "Ignore Fall Damage", GroupName = "Platformer", Description = "Ignore Fall Damage" )]
+[Display( Name = "Ignore Fall Damage", GroupName = "Platformer", Description = "Ignore Fall Damage" ), Category( "Triggers" ), Icon( "do_not_step" )]
 internal partial class IgnoreFallDamageTrigger : BaseTrigger
 {
 

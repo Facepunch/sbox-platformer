@@ -2,6 +2,7 @@
 using Sandbox;
 using Sandbox.Internal;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
@@ -9,7 +10,7 @@ namespace Platformer;
 
 [Library( "plat_soundscape", Description = "Platformer Soundscape" )]
 [Hammer.EditorSprite( "materials/editor/soundscape/soundscape.vmat" )]
-[Display( Name = "Platformer Soundscape", GroupName = "Platformer", Description = "Platformer Soundscape" )]
+[Display( Name = "Platformer Soundscape", GroupName = "Platformer", Description = "Platformer Soundscape" ), Category( "Sound" ), Icon( "speaker" )]
 [BoundsHelper( "mins", "maxs", true, false )]
 internal partial class SoundTrigger : Entity
 {
@@ -17,11 +18,9 @@ internal partial class SoundTrigger : Entity
 	public string SoundScapeName { get; set; }
 
 	[Property( "mins", Title = "Checkpoint mins" )]
-	[DefaultValue( "-32 -32 0" )]
 	public Vector3 Mins { get; set; } = new Vector3( -32, -32, 0 );
 
 	[Property( "maxs", Title = "Checkpoint maxs" )]
-	[DefaultValue( "32 32 64" )]
 	public Vector3 Maxs { get; set; } = new Vector3( 32, 32, 64 );
 
 	[Property(Title = "Sound" ), FGDType("sound")]

@@ -1,6 +1,7 @@
 ﻿
 using Hammer;
 using Sandbox;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
@@ -8,7 +9,7 @@ namespace Platformer;
 
 [Library( "plat_key", Description = "Key Pickup" )]
 [Hammer.EditorModel( "models/editor/collectables/collectables.vmdl", FixedBounds = true )]
-[Display( Name = "Key Pickup", GroupName = "Platformer", Description = "Key Pickup" )]
+[Display( Name = "Key Pickup", GroupName = "Platformer", Description = "Key Pickup" ), Category( "Gameplay" ), Icon( "vpn_key" )]
 internal partial class KeyPickup : AnimEntity
 {
 	public enum ModelType

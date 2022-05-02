@@ -9,7 +9,7 @@ namespace Platformer;
 /// A simple platform that will fall if the player touches.
 /// </summary>
 [Library( "plat_platform_fall" )]
-[Display( Name = "Platform Fall", GroupName = "Platformer", Description = "Platform starts falling on touched." )]
+[Display( Name = "Platform Fall", GroupName = "Platformer", Description = "Platform starts falling on touched." ), Category( "Gameplay" ), Icon( "water_drop" )]
 [Hammer.SupportsSolid]
 [Hammer.Model]
 [Hammer.RenderFields]

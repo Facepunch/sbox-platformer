@@ -2,6 +2,7 @@
 using Hammer;
 using Sandbox.UI;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace Platformer;
 
@@ -10,7 +11,7 @@ namespace Platformer;
 /// </summary>
 [Library( "plat_buttontrigger", Description = "Triggers when Prop Carriable is inside volume" )]
 [Hammer.AutoApplyMaterial( "materials/editor/areatrigger/areatrigger.vmat" )]
-[Display( Name = "Button Trigger", GroupName = "Platformer", Description = "Triggers when Prop Carriable is inside volume" )]
+[Display( Name = "Button Trigger", GroupName = "Platformer", Description = "Triggers when Prop Carriable is inside volume" ), Category( "Triggers" ), Icon( "radio_button_checked" )]
 internal partial class ButtonTrigger : BaseTrigger
 {
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ using Sandbox.UI.Construct;
 [Library( "plat_sign", Description = "Minigolf Sign Pole" )]
 [Hammer.DrawAngles]
 [Hammer.EditorSprite( "materials/editor/plat_sign/plat_sign.vmat" )]
-[Display( Name = "Sign Post", GroupName = "Platformer", Description = "A sign post that displays a location." )]
+[Display( Name = "Sign Post", GroupName = "Platformer", Description = "A sign post that displays a location." ), Category( "Gameplay" ), Icon( "signpost" )]
 public partial class SignPost : Entity
 {
 

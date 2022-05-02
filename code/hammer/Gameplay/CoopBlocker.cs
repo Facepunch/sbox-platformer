@@ -2,6 +2,7 @@
 using Sandbox;
 using Hammer;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace Platformer
 {
@@ -12,7 +13,7 @@ namespace Platformer
 	[Hammer.Solid]
 	[Hammer.RenderFields]
 	[Hammer.VisGroup( Hammer.VisGroup.Dynamic )]
-	[Display( Name = "Coop Blocker", GroupName = "Platformer", Description = "If its coop mode open routes." )]
+	[Display( Name = "Coop Blocker", GroupName = "Platformer", Description = "If its coop mode open routes." ), Category( "Gamemode" ), Icon( "piano_off" )]
 
 	public partial class CoopBlocker : BrushEntity
 	{

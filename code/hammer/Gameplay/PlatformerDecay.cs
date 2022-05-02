@@ -9,7 +9,7 @@ namespace Platformer;
 /// A simple platform that will destroy if player stands on for too long.
 /// </summary>
 [Library( "plat_platform" )]
-[Display( Name = "Platform Decay", GroupName = "Platformer", Description = "Platform dies after time." )]
+[Display( Name = "Platform Decay", GroupName = "Platformer", Description = "Platform dies after time." ), Category( "Gameplay" ), Icon( "blur_on" )]
 [Hammer.SupportsSolid]
 [Hammer.Model]
 [Hammer.RenderFields]

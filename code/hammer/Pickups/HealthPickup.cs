@@ -1,13 +1,14 @@
 ﻿
 using Hammer;
 using Sandbox;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Platformer;
 
 [Library( "plat_healthpickup", Description = "Addition Health" )]
 [Model( Model = "models/gameplay/temp/temp_health_01.vmdl" )]
-[Display( Name = "Health Pickup", GroupName = "Platformer", Description = "Addition Health." )]
+[Display( Name = "Health Pickup", GroupName = "Platformer", Description = "Addition Health." ), Category( "Gameplay" ), Icon( "heart_broken" )]
 internal partial class HealthPickup : BaseCollectible
 {
 
