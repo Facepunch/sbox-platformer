@@ -10,10 +10,13 @@ internal class ControlPanel : Panel
 {
 
 	private bool built;
+	private bool alwaysOpen => false;
 
 	public override void Tick()
 	{
 		base.Tick();
+
+		SetClass( "open", alwaysOpen || ( Input.Down( InputButton.Score ) ) );
 
 		if ( built ) return;
 

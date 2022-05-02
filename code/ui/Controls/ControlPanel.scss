@@ -4,12 +4,18 @@
 ControlPanel {
     color: $fontcolor;
     position: absolute;
-    bottom: 32px;
-    right: 32px;
+    bottom: 64px;
+    right: 64px;
     align-items: flex-end;
     z-index: 101;
     flex-direction: column;
     font-family: Poppins;
+    opacity: 0;
+    transition: all .15s ease-in;
+
+    &.open {
+        opacity: 1;
+    }
 
     ControlEntry {
         padding: 8px;
