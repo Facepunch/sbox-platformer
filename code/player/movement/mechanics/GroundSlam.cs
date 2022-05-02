@@ -7,6 +7,9 @@ namespace Platformer.Movement
 	class GroundSlam : BaseMoveMechanic
 	{
 
+		public override string HudName => "Ground Slam";
+		public override string HudDescription => $"Press {InputActions.Duck.GetButtonOrigin()} while in the air";
+
 		public float SlamGravity => 2250f;
 
 		public override bool TakesOverControl => true;

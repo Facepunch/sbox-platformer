@@ -6,6 +6,9 @@ namespace Platformer.Movement
 	class DuckJump : BaseMoveMechanic
 	{
 
+		public override string HudName => "Duck Jump";
+		public override string HudDescription => $"Press {InputActions.Duck.GetButtonOrigin()}+{InputActions.Jump.GetButtonOrigin()} while moving slowly";
+
 		public override bool AlwaysSimulate => true;
 		public override bool TakesOverControl => false;
 

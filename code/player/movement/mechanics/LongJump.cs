@@ -6,6 +6,9 @@ namespace Platformer.Movement
 	class LongJump : BaseMoveMechanic
 	{
 
+		public override string HudName => "Long Jump";
+		public override string HudDescription => $"Press {InputActions.Duck.GetButtonOrigin()}+{InputActions.Jump.GetButtonOrigin()} while running";
+
 		public override bool AlwaysSimulate => true;
 		public override bool TakesOverControl => false;
 

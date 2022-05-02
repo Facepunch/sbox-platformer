@@ -6,6 +6,9 @@ namespace Platformer.Movement
 	partial class DoubleJump : BaseMoveMechanic
 	{
 
+		public override string HudName => "Double Jump";
+		public override string HudDescription => $"Press {InputActions.Jump.GetButtonOrigin()} in air";
+
 		public float DoubleJumpStrength => 240f;
 		public override bool TakesOverControl => false;
 		public override bool AlwaysSimulate => true;

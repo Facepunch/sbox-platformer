@@ -7,7 +7,7 @@ namespace Platformer.Movement
 	{
 
 		public override string HudName => "Air Dash";
-		public override string HudDescription => "Dash in the air";
+		public override string HudDescription => $"Press {InputActions.Walk.GetButtonOrigin()} in air";
 
 		public override bool AlwaysSimulate => true;
 		public override bool TakesOverControl => false;
