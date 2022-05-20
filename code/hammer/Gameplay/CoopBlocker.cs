@@ -14,7 +14,7 @@ namespace Platformer
 	[RenderFields]
 	[VisGroup( VisGroup.Dynamic )]
 	[Display( Name = "Coop Blocker", GroupName = "Platformer", Description = "If its coop mode open routes." ), Category( "Gamemode" ), Icon( "piano_off" )]
-
+	[HammerEntity]
 	public partial class CoopBlocker : BrushEntity
 	{
 

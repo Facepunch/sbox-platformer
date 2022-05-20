@@ -12,6 +12,7 @@ namespace Platformer;
 [Library( "plat_areatrigger")]
 [AutoApplyMaterial( "materials/editor/areatrigger/areatrigger.vmat" )]
 [Display( Name = "Area Trigger",GroupName = "Platformer", Description = "When the player is inside the trigger it will display the location on the hud."), Category( "Triggers" ), Icon( "follow_the_signs" )]
+[HammerEntity]
 internal partial class AreaTrigger : BaseTrigger
 {
 	/// <summary>

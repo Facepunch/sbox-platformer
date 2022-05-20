@@ -11,6 +11,7 @@ namespace Platformer;
 [Model( Model = "models/gameplay/temp/temp_heart_01.vmdl" )]
 [Display( Name = "Laser Beam Hazard", GroupName = "Platformer", Description = "Laser Beam Hazard" ), Category( "Gameplay" ), Icon( "flash_on" )]
 [DrawAngles]
+[HammerEntity]
 public partial class LaserHazard : ModelEntity
 {
 

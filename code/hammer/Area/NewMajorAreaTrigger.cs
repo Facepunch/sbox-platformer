@@ -14,6 +14,7 @@ namespace Platformer
 	[AutoApplyMaterial( "materials/editor/landmark/landmark.vmat" )]
 	[Solid]
 	[Display( Name = "Landmark", GroupName = "Platformer", Description = "Landmark" ), Category( "Triggers" ), Icon( "landscape" )]
+	[HammerEntity]
 	public partial class NewMajorAreaTrigger : TriggerOnce
 	{
 

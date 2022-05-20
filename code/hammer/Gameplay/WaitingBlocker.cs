@@ -14,7 +14,7 @@ namespace Platformer
 	[RenderFields]
 	[VisGroup( VisGroup.Dynamic )]
 	[Display( Name = "Waiting Blocker", GroupName = "Platformer", Description = "Waiting Blocker." ), Category( "Gameplay" ), Icon( "av_timer" )]
-
+	[HammerEntity]
 	public partial class WaitingBlocker : BrushEntity
 	{
 

@@ -10,6 +10,7 @@ namespace Platformer
 	[Library( "platformer_path_rail" )]
 	[Display( Name = "Path Rail", GroupName = "Platformer", Description = "A rail path the player can slide along." )]
 	[Path( "path_generic_node" )]
+	[HammerEntity]
 	internal partial class RailPathEntity : GenericPathEntity
 	{
 

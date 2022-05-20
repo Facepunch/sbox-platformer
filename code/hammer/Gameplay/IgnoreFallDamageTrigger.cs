@@ -9,6 +9,7 @@ namespace Platformer;
 [Library( "plat_ignorefalldamage", Description = "Ignore Fall Damage." )]
 [AutoApplyMaterial( "materials/editor/ignorefalldamage/ignorefalldamage.vmat" )]
 [Display( Name = "Ignore Fall Damage", GroupName = "Platformer", Description = "Ignore Fall Damage" ), Category( "Triggers" ), Icon( "do_not_step" )]
+[HammerEntity]
 internal partial class IgnoreFallDamageTrigger : BaseTrigger
 {
 

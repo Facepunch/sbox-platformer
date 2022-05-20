@@ -11,7 +11,7 @@ namespace Platformer
 	[VisGroup( VisGroup.Logic )]
 	[EditorSprite( "materials/editor/gamemode/gamemode.vmat" )]
 	[Display( Name = "Game Mode Select", GroupName = "Platformer", Description = "Game Mode Select." ), Category( "Gamemode" ), Icon( "videogame_asset" )]
-
+	[HammerEntity]
 	public partial class GameModeSelect : Entity
 	{
 		public enum ModeType

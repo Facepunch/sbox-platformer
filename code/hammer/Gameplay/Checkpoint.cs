@@ -11,6 +11,7 @@ namespace Platformer;
 [Model( Model = "models/gameplay/checkpoint/editor_checkpoint/editor_checkpoint.vmdl" )]
 [Display( Name = "Player Checkpoint", GroupName = "Platformer", Description = "Defines a checkpoint where the player will respawn after falling" ), Category( "Player" ), Icon( "flag_circle" )]
 [BoundsHelper( "mins", "maxs", false, true )]
+[HammerEntity]
 internal partial class Checkpoint : ModelEntity
 {
 

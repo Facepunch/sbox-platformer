@@ -9,6 +9,7 @@ namespace Platformer;
 [EditorSprite( "materials/editor/cointrigger/cointrigger.vmat" )]
 [Display( Name = "Coin Checker", GroupName = "Platformer", Description = "A Volume that triggers if player has x amount of coins." ), Category( "Triggers" ), Icon( "fact_check" )]
 [BoundsHelper( "mins", "maxs", true, false )]
+[HammerEntity]
 internal partial class CoinTrigger : ModelEntity
 {
 	private bool BeenTrigger;

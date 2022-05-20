@@ -10,6 +10,7 @@ using Sandbox.UI.Construct;
 [DrawAngles]
 [EditorSprite( "materials/editor/plat_sign/plat_sign.vmat" )]
 [Display( Name = "Sign Post", GroupName = "Platformer", Description = "A sign post that displays a location." ), Category( "Gameplay" ), Icon( "signpost" )]
+[HammerEntity]
 public partial class SignPost : Entity
 {
 

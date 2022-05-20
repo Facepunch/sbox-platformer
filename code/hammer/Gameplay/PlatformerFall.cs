@@ -15,6 +15,7 @@ namespace Platformer;
 [Model]
 [RenderFields]
 [VisGroup( VisGroup.Dynamic )]
+[HammerEntity]
 public partial class PlatformerFall : ModelEntity
 {
 	public int TimeToHold { get; set; }

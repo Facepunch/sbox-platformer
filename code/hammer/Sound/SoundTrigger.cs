@@ -10,6 +10,7 @@ namespace Platformer;
 [EditorSprite( "materials/editor/soundscape/soundscape.vmat" )]
 [Display( Name = "Platformer Soundscape", GroupName = "Platformer", Description = "Platformer Soundscape" ), Category( "Sound" ), Icon( "speaker" )]
 [BoundsHelper( "mins", "maxs", true, false )]
+[HammerEntity]
 internal partial class SoundTrigger : Entity
 {
 	[Property( Title = "SoundScapeName" )]

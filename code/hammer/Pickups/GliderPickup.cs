@@ -9,6 +9,7 @@ namespace Platformer;
 [Library( "plat_glider", Description = "Glider Pickup" )]
 [EditorModel( "models/gameplay/glider/handglider.vmdl",FixedBounds = true )]
 [Display( Name = "Glider Pickup", GroupName = "Platformer", Description = "Glider Pickup." ), Category( "Gameplay" ), Icon( "paragliding" )]
+[HammerEntity]
 internal partial class GliderPickup : BaseCollectible
 {
 	public override void Spawn()

@@ -11,6 +11,7 @@ namespace Platformer;
 //[Model( Model = "models/gameplay/collect/coin/coin01.vmdl" )]
 [EditorModel( "models/gameplay/collect/coin/coin01.vmdl", FixedBounds = true )]
 [Display( Name = "Coin Pickup", GroupName = "Platformer", Description = "Coin Pickup." ), Category( "Gameplay" ), Icon( "currency_bitcoin" )]
+[HammerEntity]
 internal partial class CoinPickup : BaseCollectible
 {
 	private Particles CoinParticle;

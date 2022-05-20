@@ -10,6 +10,7 @@ namespace Platformer;
 [Display( Name = "Jump Pad", GroupName = "Platformer", Description = "A pad that launches players toward a target entity" ), Category( "Gameplay" ), Icon( "sports_gymnastics" )]
 [AutoApplyMaterial( "materials/editor/jumppad/jumppad.vmat" )]
 [Line( "targetname", "targetentity" )]
+[HammerEntity]
 public partial class Jumppad : BaseTrigger
 {
 	[Net, Property, FGDType( "target_destination" )] public string TargetEntity { get; set; } = "";

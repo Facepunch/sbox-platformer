@@ -10,6 +10,7 @@ namespace Platformer;
 [Library( "plat_key", Description = "Key Pickup" )]
 [EditorModel( "models/editor/collectables/collectables.vmdl", FixedBounds = true )]
 [Display( Name = "Key Pickup", GroupName = "Platformer", Description = "Key Pickup" ), Category( "Gameplay" ), Icon( "vpn_key" )]
+[HammerEntity]
 internal partial class KeyPickup : AnimatedEntity
 {
 	public enum ModelType

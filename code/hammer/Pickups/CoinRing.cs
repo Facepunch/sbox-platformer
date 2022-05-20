@@ -11,6 +11,7 @@ namespace Platformer;
 //[Model( Model = "models/gameplay/collect/coin/coin01.vmdl" )]
 [EditorModel( "models/gameplay/coinring/coinring.vmdl", FixedBounds = true )]
 [Display( Name = "Coin Ring", GroupName = "Platformer", Description = "Coin Ring." ), Category( "Gameplay" ), Icon( "currency_bitcoin" )]
+[HammerEntity]
 internal partial class CoinRing : BaseCollectible
 {
 	private Particles CollectedPart;
