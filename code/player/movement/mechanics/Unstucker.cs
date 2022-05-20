@@ -29,7 +29,7 @@ namespace Platformer.Movement
 
 			if ( BasePlayerController.Debug )
 			{
-				DebugOverlay.Text( ctrl.Position, $"[stuck in {result.Entity}]", Color.Red );
+				DebugOverlay.Text( $"[stuck in {result.Entity}]", ctrl.Position, Color.Red );
 				Box( result.Entity, Color.Red );
 			}
 
@@ -54,7 +54,7 @@ namespace Platformer.Movement
 				{
 					if ( BasePlayerController.Debug )
 					{
-						DebugOverlay.Text( ctrl.Position, $"unstuck after {_stuckTries} tries ({_stuckTries * AttemptsPerTick} tests)", Color.Green, 5.0f );
+						DebugOverlay.Text( $"unstuck after {_stuckTries} tries ({_stuckTries * AttemptsPerTick} tests)", ctrl.Position, Color.Green, 5.0f );
 						DebugOverlay.Line( pos, ctrl.Position, Color.Green, 5.0f, false );
 					}
 
@@ -78,11 +78,11 @@ namespace Platformer.Movement
 			if ( ent is ModelEntity modelEnt )
 			{
 				var bbox = modelEnt.CollisionBounds;
-				DebugOverlay.Box( duration, modelEnt.Position, modelEnt.Rotation, bbox.Mins, bbox.Maxs, color );
+				DebugOverlay.Box( modelEnt.Position, modelEnt.Rotation, bbox.Mins, bbox.Maxs, color, duration );
 			}
 			else
 			{
-				DebugOverlay.Box( duration, ent.Position, ent.Rotation, -1, 1, color );
+				DebugOverlay.Box( ent.Position, ent.Rotation, -1, 1, color, duration );
 			}
 		}
 

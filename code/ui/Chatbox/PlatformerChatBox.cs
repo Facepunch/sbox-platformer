@@ -53,15 +53,7 @@ namespace Platformer.UI
 			if ( string.IsNullOrWhiteSpace( msg ) )
 				return;
 
-			if ( Global.Lobby != null )
-			{
-				Log.Info( "Send Chat" );
-				Global.Lobby?.SendChat( msg );
-			}
-			else
-			{
-				Say( msg );
-			}
+			Say( msg );
 		}
 
 		public void AddEntry( string name, string message, string avatar, string lobbyState = null )
@@ -106,7 +98,7 @@ namespace Platformer.UI
 		}
 
 
-		[ClientCmd( "plat_chat_add", CanBeCalledFromServer = true )]
+		[ConCmd.Client( "plat_chat_add", CanBeCalledFromServer = true )]
 		public static void AddChatEntry( string name, string message, string avatar = null, string lobbyState = null )
 		{
 			Current?.AddEntry( name, message, avatar, lobbyState );
@@ -118,13 +110,13 @@ namespace Platformer.UI
 			}
 		}
 
-		[ClientCmd( "plat_chat_addinfo", CanBeCalledFromServer = true )]
+		[ConCmd.Client( "plat_chat_addinfo", CanBeCalledFromServer = true )]
 		public static void AddInformation( string message, string avatar = null )
 		{
 			Current?.AddEntry( null, message, avatar );
 		}
 
-		[ServerCmd( "plat_say" )]
+		[ConCmd.Server( "plat_say" )]
 		public static void Say( string message )
 		{
 			Assert.NotNull( ConsoleSystem.Caller );
@@ -137,15 +129,6 @@ namespace Platformer.UI
 			AddChatEntry( To.Everyone, ConsoleSystem.Caller.Name, message, $"avatar:{ConsoleSystem.Caller.PlayerId}" );
 		}
 
-		[Event( "lobby.chat" )]
-		public static void LobbyChat( Friend friend, string message )
-		{
-			if ( !Host.IsServer ) return;
-
-			Log.Info( $"Lobby Chat: {message}" );
-			AddChatEntry( To.Everyone, friend.Name, message, $"avatar:{friend.Id}", Global.Lobby?.GetMemberData( friend, "status" ) );
-		}
-
 	}
 }
 
@@ -155,7 +138,7 @@ namespace Sandbox.Hooks
 	{
 		public static event Action OnOpenChat;
 
-		[ClientCmd( "openchat" )]
+		[ConCmd.Client( "openchat" )]
 		internal static void MessageMode()
 		{
 			OnOpenChat?.Invoke();

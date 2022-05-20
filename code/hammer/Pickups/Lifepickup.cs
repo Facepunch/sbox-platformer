@@ -1,5 +1,5 @@
 ﻿
-using Hammer;
+using SandboxEditor;
 using Sandbox;
 using System.ComponentModel.DataAnnotations;
 using System;

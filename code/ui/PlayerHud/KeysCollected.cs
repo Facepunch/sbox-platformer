@@ -52,7 +52,7 @@ namespace Platformer.UI
 
 				foreach ( var keypanel in KeyPanels )
 				{
-					keypanel.SetClass( "active", Platformer.KeysAllPlayerHas.Contains( keypanel.KeyNumber ) );
+					keypanel.SetClass( "active", Platformer.Current.KeysAllPlayerHas.Contains( keypanel.KeyNumber ) );
 
 				}
 			}

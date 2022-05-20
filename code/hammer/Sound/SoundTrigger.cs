@@ -1,15 +1,13 @@
-﻿using Hammer;
+﻿
+using SandboxEditor;
 using Sandbox;
-using Sandbox.Internal;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 
 namespace Platformer;
 
 [Library( "plat_soundscape", Description = "Platformer Soundscape" )]
-[Hammer.EditorSprite( "materials/editor/soundscape/soundscape.vmat" )]
+[EditorSprite( "materials/editor/soundscape/soundscape.vmat" )]
 [Display( Name = "Platformer Soundscape", GroupName = "Platformer", Description = "Platformer Soundscape" ), Category( "Sound" ), Icon( "speaker" )]
 [BoundsHelper( "mins", "maxs", true, false )]
 internal partial class SoundTrigger : Entity

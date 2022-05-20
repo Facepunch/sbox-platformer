@@ -1,6 +1,6 @@
 
 using Sandbox;
-using Hammer;
+using SandboxEditor;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 
@@ -10,9 +10,9 @@ namespace Platformer
 	/// A generic brush/mesh that will disable after the waiting period.
 	/// </summary>
 	[Library( "plat_wait" )]
-	[Hammer.Solid]
-	[Hammer.RenderFields]
-	[Hammer.VisGroup( Hammer.VisGroup.Dynamic )]
+	[Solid]
+	[RenderFields]
+	[VisGroup( VisGroup.Dynamic )]
 	[Display( Name = "Waiting Blocker", GroupName = "Platformer", Description = "Waiting Blocker." ), Category( "Gameplay" ), Icon( "av_timer" )]
 
 	public partial class WaitingBlocker : BrushEntity

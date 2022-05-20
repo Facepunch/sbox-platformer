@@ -1,5 +1,5 @@
 ﻿
-using Hammer;
+using SandboxEditor;
 using Sandbox;
 using Sandbox.Internal;
 using System.ComponentModel;
@@ -10,7 +10,7 @@ namespace Platformer;
 [Library( "plat_LaserHazard", Description = "Laser Beam Hazard" )]
 [Model( Model = "models/gameplay/temp/temp_heart_01.vmdl" )]
 [Display( Name = "Laser Beam Hazard", GroupName = "Platformer", Description = "Laser Beam Hazard" ), Category( "Gameplay" ), Icon( "flash_on" )]
-[Hammer.DrawAngles]
+[DrawAngles]
 public partial class LaserHazard : ModelEntity
 {
 
@@ -19,7 +19,7 @@ public partial class LaserHazard : ModelEntity
 	public float maxDist { get; set; } = 500f;
 
 	[Net]
-	[Property( "effect_name" ), Hammer.EntityReportSource, FGDType( "particlesystem" )]
+	[Property( "effect_name" ), EntityReportSource, FGDType( "particlesystem" )]
 	public string BeamParticle { get; set; }
 
 	private Particles Beam;

@@ -24,7 +24,7 @@ namespace Platformer
 		public bool GameIsEnded { get; set; }
 		internal PlatformerPawn TaggerPlayer { get; private set; }
 
-		[AdminCmd]
+		[ConCmd.Admin]
 		public static void SkipStage()
 		{
 			if ( Current is not Platformer plg ) return;

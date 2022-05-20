@@ -36,7 +36,7 @@ internal partial class PlatformerKillfeed : Panel
 		}
 	}
 
-	[ClientCmd("plat_killfeed_add", CanBeCalledFromServer = true)]
+	[ConCmd.Client( "plat_killfeed_add", CanBeCalledFromServer = true)]
 	public static void AddEntryOnClient( string message, int clientId )
 	{
 		Current?.AddEntry( message, clientId );

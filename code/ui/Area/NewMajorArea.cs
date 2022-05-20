@@ -2,48 +2,47 @@
 using Sandbox;
 using Sandbox.UI;
 
-namespace Platformer.UI
+namespace Platformer.UI;
+
+public partial class NewMajorArea : Panel
 {
-	public class NewMajorArea : Panel
+	//public static PlatformerKillfeed Current;
+
+	public static NewMajorArea Instance;
+	public float timesince = 0;
+	public Label newlandmark;
+	public NewMajorArea()
 	{
-		//public static PlatformerKillfeed Current;
+		StyleSheet.Load( "/ui/Area/NewMajorArea.scss" );
 
-		public static NewMajorArea Instance;
-		public float timesince = 0;
-		public Label newlandmark;
-		public NewMajorArea()
+		newlandmark = AddChild<Label>( "newlandmark" );
+
+		Instance = this;
+	}
+	public override void Tick()
+	{
+		base.Tick();
+
+		if ( Time.Now - timesince < 5 )
 		{
-			StyleSheet.Load( "/ui/Area/NewMajorArea.scss" );
-
-			newlandmark = AddChild<Label>( "newlandmark" );
-
-			Instance = this;
+			AddClass( "visible" );
 		}
-		public override void Tick()
+		else
 		{
-			base.Tick();
-
-			if ( Time.Now - timesince < 5 )
-			{
-				AddClass( "visible" );
-			}
-			else
-			{
-				RemoveClass( "visible" );
-			}
+			RemoveClass( "visible" );
 		}
+	}
 
-		public static void ShowLandmark( string title )
-		{
-			Instance.newlandmark.SetText( title );
-			Instance.timesince = Time.Now;
+	public static void ShowLandmark( string title )
+	{
+		Instance.newlandmark.SetText( title );
+		Instance.timesince = Time.Now;
 
-		}
+	}
 
-		[ClientCmd( "plat_killfeed_add", CanBeCalledFromServer = true )]
-		public static void AddEntryOnClient( string message, int clientId )
-		{
-			PlatformerKillfeed.Current?.AddEntry( message, clientId );
-		}
+	[ConCmd.Client( "plat_killfeed_add", CanBeCalledFromServer = true )]
+	public static void AddEntryOnClient( string message, int clientId )
+	{
+		PlatformerKillfeed.Current?.AddEntry( message, clientId );
 	}
 }

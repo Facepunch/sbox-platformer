@@ -1,5 +1,5 @@
 ﻿
-using Hammer;
+using SandboxEditor;
 using Sandbox;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -8,9 +8,9 @@ using System.Linq;
 namespace Platformer;
 
 [Library( "plat_key", Description = "Key Pickup" )]
-[Hammer.EditorModel( "models/editor/collectables/collectables.vmdl", FixedBounds = true )]
+[EditorModel( "models/editor/collectables/collectables.vmdl", FixedBounds = true )]
 [Display( Name = "Key Pickup", GroupName = "Platformer", Description = "Key Pickup" ), Category( "Gameplay" ), Icon( "vpn_key" )]
-internal partial class KeyPickup : AnimEntity
+internal partial class KeyPickup : AnimatedEntity
 {
 	public enum ModelType
 	{
@@ -75,11 +75,11 @@ internal partial class KeyPickup : AnimEntity
 		
 		if ( Platformer.CurrentGameMode == Platformer.GameModes.Coop )
 		{
-			if ( Platformer.KeysAllPlayerHas.Contains( KeyNumber ) ) return;
-			Platformer.KeysAllPlayerHas.Add( KeyNumber );
-			Platformer.NumberOfKeys++;
+			if ( Platformer.Current.KeysAllPlayerHas.Contains( KeyNumber ) ) return;
+			Platformer.Current.KeysAllPlayerHas.Add( KeyNumber );
+			Platformer.Current.NumberOfKeys++;
 
-			Log.Info( Platformer.NumberOfKeys );
+			Log.Info( Platformer.Current.NumberOfKeys );
 
 			CollectedHealthPickup( To.Single( other.Client ) );
 		}
@@ -124,6 +124,6 @@ internal partial class KeyPickup : AnimEntity
 
 	private bool ShouldRenderAll()
 	{
-		return !Platformer.KeysAllPlayerHas.Contains( KeyNumber );
+		return !Platformer.Current.KeysAllPlayerHas.Contains( KeyNumber );
 	}
 }

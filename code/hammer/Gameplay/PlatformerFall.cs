@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Sandbox;
+using SandboxEditor;
 
 namespace Platformer;
 /// <summary>
@@ -10,10 +11,10 @@ namespace Platformer;
 /// </summary>
 [Library( "plat_platform_fall" )]
 [Display( Name = "Platform Fall", GroupName = "Platformer", Description = "Platform starts falling on touched." ), Category( "Gameplay" ), Icon( "water_drop" )]
-[Hammer.SupportsSolid]
-[Hammer.Model]
-[Hammer.RenderFields]
-[Hammer.VisGroup( Hammer.VisGroup.Dynamic )]
+[SupportsSolid]
+[Model]
+[RenderFields]
+[VisGroup( VisGroup.Dynamic )]
 public partial class PlatformerFall : ModelEntity
 {
 	public int TimeToHold { get; set; }

@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Sandbox;
+using SandboxEditor;
 
 namespace Platformer;
 /// <summary>
@@ -10,10 +11,10 @@ namespace Platformer;
 /// </summary>
 [Library( "plat_platform" )]
 [Display( Name = "Platform Decay", GroupName = "Platformer", Description = "Platform dies after time." ), Category( "Gameplay" ), Icon( "blur_on" )]
-[Hammer.SupportsSolid]
-[Hammer.Model]
-[Hammer.RenderFields]
-[Hammer.VisGroup( Hammer.VisGroup.Dynamic )]
+[SupportsSolid]
+[Model]
+[RenderFields]
+[VisGroup( VisGroup.Dynamic )]
 public partial class PlatformerDecay : ModelEntity
 {
 	public int TimeToHold { get; set; }

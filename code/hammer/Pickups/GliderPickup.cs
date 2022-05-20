@@ -1,5 +1,5 @@
 ﻿
-using Hammer;
+using SandboxEditor;
 using Sandbox;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Platformer;
 
 [Library( "plat_glider", Description = "Glider Pickup" )]
-[Hammer.EditorModel( "models/gameplay/glider/handglider.vmdl",FixedBounds = true )]
+[EditorModel( "models/gameplay/glider/handglider.vmdl",FixedBounds = true )]
 [Display( Name = "Glider Pickup", GroupName = "Platformer", Description = "Glider Pickup." ), Category( "Gameplay" ), Icon( "paragliding" )]
 internal partial class GliderPickup : BaseCollectible
 {

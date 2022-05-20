@@ -1,7 +1,6 @@
-﻿using Hammer;
+﻿
+using SandboxEditor;
 using Sandbox;
-using Sandbox.Internal;
-using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -87,7 +86,7 @@ internal partial class Checkpoint : ModelEntity
 
 		pl.TrySetCheckpoint( this );
 
-		if ( IsEnd && pl.NumberOfKeys == Platformer.NumberOfCollectables ) _ = pl.CompleteCourseAsync();
+		if ( IsEnd && pl.NumberOfKeys == Platformer.Current.NumberOfCollectables ) _ = pl.CompleteCourseAsync();
 
 		if ( Platformer.CurrentGameMode == Platformer.GameModes.Competitive )
 		{
@@ -100,8 +99,8 @@ internal partial class Checkpoint : ModelEntity
 
 		if ( Platformer.CurrentGameMode == Platformer.GameModes.Coop )
 		{
-			if( Platformer.CoopTimerState == Platformer.TimerState.Finished) return;
-			if ( IsEnd && Platformer.NumberOfKeys == Platformer.NumberOfCollectables )
+			if( Platformer.Current.CoopTimerState == Platformer.TimerState.Finished) return;
+			if ( IsEnd && Platformer.Current.NumberOfKeys == Platformer.Current.NumberOfCollectables )
 			{
 				_ = pl.CompleteCourseAsync();
 			//	Platformer.GameLoopCoopEndAsync();

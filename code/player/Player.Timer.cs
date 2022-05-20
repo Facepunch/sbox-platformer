@@ -38,7 +38,7 @@ partial class PlatformerPawn
 	{
 		if(Platformer.CurrentGameMode == Platformer.GameModes.Coop)
 		{
-			Platformer.CoopTimerState = Platformer.TimerState.Finished;
+			Platformer.Current.CoopTimerState = Platformer.TimerState.Finished;
 
 			var game = Game.Current as Platformer;
 

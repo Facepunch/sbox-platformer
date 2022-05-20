@@ -1,5 +1,6 @@
 ﻿
 using Sandbox;
+using SandboxEditor;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
@@ -8,11 +9,11 @@ namespace Platformer
 {
 	[Library( "platformer_path_rail" )]
 	[Display( Name = "Path Rail", GroupName = "Platformer", Description = "A rail path the player can slide along." )]
-	[Hammer.Path( "path_generic_node" )]
+	[Path( "path_generic_node" )]
 	internal partial class RailPathEntity : GenericPathEntity
 	{
 
-		[Net, Hammer.Skip, Change(nameof(OnclPathJsonChanged))]
+		[Net, HideInEditor, Change(nameof(OnclPathJsonChanged))]
 		public string clPathJson { set; get; }
 
 		public override void Spawn()

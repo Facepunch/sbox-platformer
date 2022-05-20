@@ -4,7 +4,8 @@ using System;
 
 namespace Platformer.Movement
 {
-	class FallCameraModifier : CameraModifier
+	// TODO: SCREENSHAKE
+	class FallCameraModifier 
 	{
 
 		private float fallSpeed;
@@ -21,7 +22,7 @@ namespace Platformer.Movement
 			this.fallSpeed = fallSpeed * .15f;
 		}
 
-		public override bool Update( ref CameraSetup setup )
+		public bool Update( ref CameraSetup setup )
 		{
 			var delta = t.LerpInverse( 0, length, true );
 			delta = Easing.EaseOut( delta );

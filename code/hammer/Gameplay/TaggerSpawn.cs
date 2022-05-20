@@ -1,9 +1,7 @@
-﻿using Hammer;
+﻿using SandboxEditor;
 using Sandbox;
-using Sandbox.Internal;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 
 namespace Platformer;
 

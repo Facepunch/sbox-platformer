@@ -1,6 +1,7 @@
-﻿using Platformer.UI;
+﻿
+using Platformer.UI;
 using Sandbox;
-using Sandbox.UI;
+using SandboxEditor;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -10,8 +11,8 @@ namespace Platformer
 	/// A simple trigger volume that fires once and then removes itself.
 	/// </summary>
 	[Library( "plat_landmark" )]
-	[Hammer.AutoApplyMaterial( "materials/editor/landmark/landmark.vmat" )]
-	[Hammer.Solid]
+	[AutoApplyMaterial( "materials/editor/landmark/landmark.vmat" )]
+	[Solid]
 	[Display( Name = "Landmark", GroupName = "Platformer", Description = "Landmark" ), Category( "Triggers" ), Icon( "landscape" )]
 	public partial class NewMajorAreaTrigger : TriggerOnce
 	{

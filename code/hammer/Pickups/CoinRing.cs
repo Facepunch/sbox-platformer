@@ -1,5 +1,5 @@
 ﻿
-using Hammer;
+using SandboxEditor;
 using Sandbox;
 using System;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ namespace Platformer;
 
 [Library( "plat_coinring", Description = "Coin Ring" )]
 //[Model( Model = "models/gameplay/collect/coin/coin01.vmdl" )]
-[Hammer.EditorModel( "models/gameplay/coinring/coinring.vmdl", FixedBounds = true )]
+[EditorModel( "models/gameplay/coinring/coinring.vmdl", FixedBounds = true )]
 [Display( Name = "Coin Ring", GroupName = "Platformer", Description = "Coin Ring." ), Category( "Gameplay" ), Icon( "currency_bitcoin" )]
 internal partial class CoinRing : BaseCollectible
 {

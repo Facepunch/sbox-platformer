@@ -10,13 +10,13 @@ namespace Platformer
 	public partial class Platformer : Game
 	{
 		[Net]
-		public static IList<int> KeysAllPlayerHas { get; set; } = new List<int>();
+		public IList<int> KeysAllPlayerHas { get; set; } = new List<int>();
 
 		[Net]
-		public static float NumberOfKeys { get; set; }
+		public float NumberOfKeys { get; set; }
 
 		[Net, Predicted]
-		public static TimerState CoopTimerState { get; set; }
+		public TimerState CoopTimerState { get; set; }
 
 		[Net]
 		public TimeSince TimeCoopStart { get; set; } = 0f;

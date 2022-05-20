@@ -17,13 +17,16 @@ namespace Platformer
 	/// </summary>
 	public partial class Platformer : Sandbox.Game
 	{
+
+		public new static Platformer Current;
+
 		public static GameModes CurrentGameMode => (Current as Platformer)?.GameMode ?? GameModes.Competitive;
 
 		[Net]
 		public GameModes GameMode { get; set; } = GameModes.Competitive;
 
 		[Net]
-		public static float NumberOfCollectables { get; set; }
+		public float NumberOfCollectables { get; set; }
 
 		[ConVar.Replicated( "plat_coop" )]
 		public static bool CoopMode { get; set; } = false;
@@ -48,6 +51,7 @@ namespace Platformer
 
 		public Platformer()
 		{
+			Current = this;
 
 			if ( IsServer )
 			{

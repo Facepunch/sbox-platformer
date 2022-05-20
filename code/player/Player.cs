@@ -46,7 +46,7 @@ namespace Platformer
 
 
 		public const float MaxRenderDistance = 128f;
-		public Clothing.Container Clothing = new();
+		public ClothingContainer Clothing = new();
 		private DamageInfo lastDamage;
 		private float LastHealth;
 		private TimeSince ts;
@@ -581,7 +581,7 @@ namespace Platformer
 			}
 		}
 
-		[AdminCmd]
+		[ConCmd.Admin]
 		public static void MapVote()
 		{
 			var vote = new MapVoteEntity();
