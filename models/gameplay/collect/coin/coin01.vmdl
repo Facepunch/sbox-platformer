@@ -1,0 +1,241 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc29:version{3cec427c-1b0e-4d48-a90a-0436f33a6041} -->
+{
+	rootNode = 
+	{
+		_class = "RootNode"
+		children = 
+		[
+			{
+				_class = "RenderMeshList"
+				children = 
+				[
+					{
+						_class = "RenderMeshFile"
+						name = "Coin01_LOD0"
+						filename = "models/gameplay/collect/coin/coin01.fbx"
+						import_translation = [ 0.0, 0.0, 0.25 ]
+						import_rotation = [ 90.0, 0.0, 0.0 ]
+						import_scale = 30.0
+						align_origin_x_type = "BoundsMax"
+						align_origin_y_type = "BoundsCenter"
+						align_origin_z_type = "BoundsCenter"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"Coin01_LOD0",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "Coin01_LOD1"
+						filename = "models/gameplay/collect/coin/coin01.fbx"
+						import_translation = [ 0.0, 0.0, 0.25 ]
+						import_rotation = [ 90.0, 0.0, 0.0 ]
+						import_scale = 30.0
+						align_origin_x_type = "BoundsMax"
+						align_origin_y_type = "BoundsCenter"
+						align_origin_z_type = "BoundsCenter"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"Coin01_LOD1",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "Coin01_LOD2"
+						filename = "models/gameplay/collect/coin/coin01.fbx"
+						import_translation = [ 0.0, 0.0, 0.25 ]
+						import_rotation = [ 90.0, 0.0, 0.0 ]
+						import_scale = 30.0
+						align_origin_x_type = "BoundsMax"
+						align_origin_y_type = "BoundsCenter"
+						align_origin_z_type = "BoundsCenter"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"Coin01_LOD2",
+							]
+						}
+					},
+				]
+			},
+			{
+				_class = "LODGroupList"
+				children = 
+				[
+					{
+						_class = "LODGroup"
+						name = "Coin01_LOD0"
+						switch_threshold = 0.0
+						meshes = 
+						[
+							"Coin01_LOD0",
+						]
+					},
+					{
+						_class = "LODGroup"
+						name = "Coin01_LOD1"
+						switch_threshold = 50.0
+						meshes = 
+						[
+							"Coin01_LOD1",
+						]
+					},
+					{
+						_class = "LODGroup"
+						name = "Coin01_LOD2"
+						switch_threshold = 100.0
+						meshes = 
+						[
+							"Coin01_LOD2",
+						]
+					},
+				]
+			},
+			{
+				_class = "MaterialGroupList"
+				children = 
+				[
+					{
+						_class = "DefaultMaterialGroup"
+						name = "0"
+						remaps = [  ]
+						use_global_default = true
+						global_default_material = "models/gameplay/collect/coin/coin01a.vmat"
+					},
+					{
+						_class = "MaterialGroup"
+						name = "1"
+						remaps = 
+						[
+							{
+								from = "models/gameplay/collect/coin/coin01a.vmat"
+								to = "models/gameplay/collect/coin/coin01b.vmat"
+							},
+						]
+					},
+					{
+						_class = "MaterialGroup"
+						name = "2"
+						remaps = 
+						[
+							{
+								from = "models/gameplay/collect/coin/coin01a.vmat"
+								to = "models/gameplay/collect/coin/coin01c.vmat"
+							},
+						]
+					},
+					{
+						_class = "MaterialGroup"
+						name = "3"
+						remaps = 
+						[
+							{
+								from = "models/gameplay/collect/coin/coin01a.vmat"
+								to = "models/gameplay/collect/coin/coin01d.vmat"
+							},
+						]
+					},
+				]
+			},
+			{
+				_class = "ModelModifierList"
+				children = 
+				[
+					{
+						_class = "ModelModifier_ScaleAndMirror"
+						disabled = true
+						scale = 30.0
+						mirror_x = false
+						mirror_y = false
+						mirror_z = false
+						flip_bone_forward = false
+						swap_left_and_right_bones = false
+					},
+				]
+			},
+			{
+				_class = "PhysicsShapeList"
+				children = 
+				[
+					{
+						_class = "PhysicsHullFromRender"
+						disabled = true
+						parent_bone = ""
+						surface_prop = "default"
+						collision_group = ""
+						collision_interact_as = ""
+						collision_interact_with = ""
+						collision_interact_exclude = ""
+						faceMergeAngle = 20.0
+						maxHullVertices = 32
+					},
+					{
+						_class = "PhysicsShapeCylinder"
+						parent_bone = ""
+						surface_prop = "rubber"
+						collision_group = ""
+						collision_interact_as = ""
+						collision_interact_with = ""
+						collision_interact_exclude = ""
+						radius = 13.98735
+						point0 = [ -2.27301, 0.0, 20.804501 ]
+						point1 = [ 2.317528, 0.0, 20.804501 ]
+					},
+				]
+			},
+			{
+				_class = "GameDataList"
+				children = 
+				[
+					{
+						_class = "GenericGameData"
+						game_class = "prop_data"
+						game_keys = 
+						{
+							allowstatic = false
+							bakelighting = true
+							spawn_motion_disabled = false
+							health = -1.0
+							min_impact_damage_speed = -1.0
+							impact_damage = -1.0
+							parent_bodygroup_name = ""
+							parent_bodygroup_value = 0
+						}
+					},
+				]
+			},
+			{
+				_class = "AttachmentList"
+				children = 
+				[
+					{
+						_class = "Attachment"
+						name = "Particle"
+						parent_bone = ""
+						relative_origin = [ 0.0, 0.0, 0.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+				]
+			},
+		]
+		model_archetype = "physics_prop_model"
+		primary_associated_entity = "prop_physics"
+		anim_graph_name = ""
+		base_model_name = ""
+	}
+}

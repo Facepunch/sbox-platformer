@@ -575,6 +575,11 @@
 						allowRotation = true
 					}
 				},
+				{
+					min = [ 0, 0 ]
+					max = [ 0, 2048 ]
+					properties = null
+				},
 			]
 		},
 	]

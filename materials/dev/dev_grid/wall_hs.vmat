@@ -37,6 +37,6 @@ Layer0
 
 	ToolAttributes
 	{
-		SubrectDefinition "materials\dev\dev_grid\dev_wall_hs.rect"
+		SubrectDefinition "materials/dev/dev_grid/wall_hs.rect"
 	}
 }
