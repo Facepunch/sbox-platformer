@@ -17,6 +17,9 @@ namespace Platformer
 		[Net, HideInEditor, Change(nameof(OnclPathJsonChanged))]
 		public string clPathJson { set; get; }
 
+		[Net]
+		public List<BasePathNode> PNodes { get; private set; }
+
 		public override void Spawn()
 		{
 			base.Spawn();
@@ -27,7 +30,8 @@ namespace Platformer
 
 		public void OnclPathJsonChanged()
 		{
-			PathNodes = JsonSerializer.Deserialize<List<BasePathNode>>( clPathJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true } );
+			PNodes = JsonSerializer.Deserialize<List<BasePathNode>>( clPathJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true } );
+			//this doesn't solve the issue?
 		}
 
 		public Vector3 NearestPoint( Vector3 from, bool reverse, out int node, out float t )
