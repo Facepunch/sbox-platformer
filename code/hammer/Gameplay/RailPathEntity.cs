@@ -30,8 +30,7 @@ namespace Platformer
 
 		public void OnclPathJsonChanged()
 		{
-			PNodes = JsonSerializer.Deserialize<List<BasePathNode>>( clPathJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true } );
-			//this doesn't solve the issue?
+			PathNodes = JsonSerializer.Deserialize<List<BasePathNode>>( clPathJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true } );
 		}
 
 		public Vector3 NearestPoint( Vector3 from, bool reverse, out int node, out float t )
