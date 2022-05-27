@@ -2,49 +2,45 @@
 using Sandbox;
 using Sandbox.UI;
 
-namespace Platformer.UI
+namespace Platformer.UI;
+
+public partial class PlatformerHud : HudEntity<RootPanel>
 {
-	[Library]
-	public partial class PlatformerHud : HudEntity<RootPanel>
+
+	public static PlatformerHud Current;
+
+	public override void ClientSpawn()
 	{
-		public static PlatformerHud Current;
+		base.ClientSpawn();
 
-		public PlatformerHud()
-		{
-			if ( !IsClient )
-				return;
+		Current = this;
 
-			Current = this;
+		RootPanel.StyleSheet.Load( "/ui/PlayerHud/PlatformerHud.scss" );
+		RootPanel.StyleSheet.Load( "/ui/Area/NewArea.scss" );
 
-			RootPanel.StyleSheet.Load( "/ui/PlayerHud/PlatformerHud.scss" );
-			RootPanel.StyleSheet.Load( "/ui/Area/NewArea.scss" );
-
-			RootPanel.AddChild<PlatformerScoreboard>();
-
-			RootPanel.AddChild<PlatfotmerNameTags>();
-			RootPanel.AddChild<HealthCurrent>();
-			RootPanel.AddChild<LifeCurrent>();
-			RootPanel.AddChild<CoinCurrent>();
-			RootPanel.AddChild<KeysCollected>();
-			RootPanel.AddChild<NewMajorArea>();
-			RootPanel.AddChild<NewArea>();
-			RootPanel.AddChild<PlatformerChatBox>();
-			RootPanel.AddChild<PlatformerKillfeed>();
-			RootPanel.AddChild<RoundTimer>();
-			RootPanel.AddChild<EnergyCurrent>();
-			RootPanel.AddChild<CourseTimer>();
-			RootPanel.AddChild<TagHud>();
-			RootPanel.AddChild<TagRoundHud>();
-			RootPanel.AddChild<ControlPanel>();
-			//RootPanel.AddChild<DeathUI>(); Enable this once the HUD is working correctly.
-
-		}
-
-		public void Tick()
-		{
-
-			RootPanel.SetClass( "game-end", Platformer.CurrentState == Platformer.GameStates.GameEnd );
-			RootPanel.SetClass( "game-warmup", Platformer.CurrentState == Platformer.GameStates.Warmup );
-		}
+		RootPanel.AddChild<PlatformerScoreboard>();
+		RootPanel.AddChild<PlatfotmerNameTags>();
+		RootPanel.AddChild<HealthCurrent>();
+		RootPanel.AddChild<LifeCurrent>();
+		RootPanel.AddChild<CoinCurrent>();
+		RootPanel.AddChild<KeysCollected>();
+		RootPanel.AddChild<NewMajorArea>();
+		RootPanel.AddChild<NewArea>();
+		RootPanel.AddChild<PlatformerChatBox>();
+		RootPanel.AddChild<PlatformerKillfeed>();
+		RootPanel.AddChild<RoundTimer>();
+		RootPanel.AddChild<EnergyCurrent>();
+		RootPanel.AddChild<CourseTimer>();
+		RootPanel.AddChild<TagHud>();
+		RootPanel.AddChild<TagRoundHud>();
+		RootPanel.AddChild<ControlPanel>();
+		//RootPanel.AddChild<DeathUI>(); Enable this once the HUD is working correctly.
 	}
+
+	public void Tick()
+	{
+		RootPanel.SetClass( "game-end", Platformer.CurrentState == Platformer.GameStates.GameEnd );
+		RootPanel.SetClass( "game-warmup", Platformer.CurrentState == Platformer.GameStates.Warmup );
+	}
+
 }

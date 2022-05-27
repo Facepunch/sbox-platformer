@@ -35,7 +35,7 @@ internal partial class KeyPickup : AnimatedEntity
 	public override void Spawn()
 	{
 		base.Spawn();
-		
+
 		if ( ModelTypeList == ModelType.FoamFinger )
 		{
 			SetModel( "models/citizen_props/foamhand.vmdl" );

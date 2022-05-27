@@ -76,16 +76,8 @@ namespace Platformer
 		}
 
 		[Event.Entity.PostSpawn]
-		private void PostEntitySpawn()
+		public void PostEntitySpawn()
 		{
-			if ( Host.IsClient )
-			{
-				KeysCollected.InitKeys();
-
-			}
-
-			if ( !Host.IsServer ) return;
-
 			var GetGameMode = Entity.All.FirstOrDefault( x => x is GameModeSelect ) as GameModeSelect;
 			if ( GetGameMode.IsValid() )
 			{

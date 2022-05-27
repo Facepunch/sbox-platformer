@@ -10,28 +10,21 @@ namespace Platformer.UI
 	{
 
 		private List<KeyPanel> KeyPanels = new();
-		private static KeysCollected Current { get; set; }
-
-		public static float numbkey { get; set; }
-
-		public KeysCollected()
-		{
-
-			Current = this;
-
-		}
-
-		public static void InitKeys()
-		{
-			
-			foreach (var key in Entity.All.OfType<KeyPickup>())
-			{
-				Current.KeyPanels.Add( Current.Add.KeyPanel( $"{key.KeyIcon}", "key1", key.KeyNumber ) );
-			}
-		}
+		private bool Built;
 
 		public override void Tick()
 		{
+			// build this once on first tick, theoretically all entities exist by now
+			if ( !Built )
+			{
+				Built = true;
+
+				foreach ( var key in Entity.All.OfType<KeyPickup>() )
+				{
+					KeyPanels.Add( Add.KeyPanel( $"{key.KeyIcon}", "key1", key.KeyNumber ) );
+				}
+			}
+
 			if ( Platformer.CurrentGameMode == Platformer.GameModes.Competitive )
 			{
 				var player = Local.Pawn;
@@ -53,7 +46,6 @@ namespace Platformer.UI
 				foreach ( var keypanel in KeyPanels )
 				{
 					keypanel.SetClass( "active", Platformer.Current.KeysAllPlayerHas.Contains( keypanel.KeyNumber ) );
-
 				}
 			}
 		}
