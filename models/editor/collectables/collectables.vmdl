@@ -15,7 +15,7 @@
 						[
 							{
 								from = "iconshd.vmat"
-								to = "materials/dev/dev_grid/floor_128.vmat"
+								to = "materials/dev/simple/floor_simple_128.vmat"
 							},
 						]
 						use_global_default = false
