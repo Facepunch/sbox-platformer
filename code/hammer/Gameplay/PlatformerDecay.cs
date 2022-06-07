@@ -78,6 +78,9 @@ public partial class PlatformerDecay : ModelEntity
 		EnableDrawing = false;
 		EnableAllCollisions = false;
 
+		Sound.FromEntity( "physics.glass.shard.impact", this ).SetVolume( 2f );
+		Particles.Create( "particles/break/break.cardboard.vpcf", Position );
+
 		UnbreakAfter( RespawnTime );
 	}
 
