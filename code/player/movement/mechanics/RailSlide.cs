@@ -116,7 +116,11 @@ internal class RailSlide : BaseMoveMechanic
 
 		ctrl.Velocity = (nextPosition - currentPosition).Normal * 300f;
 		ctrl.Position = nextPosition;
-		ctrl.Rotation = Rotation.LookAt( ctrl.Velocity.Normal );
+
+		var rot = Rotation.LookAt( ctrl.Velocity.Normal ).Angles();
+		rot.roll = 0;
+
+		ctrl.Rotation = Rotation.From( rot );
 		ctrl.GroundEntity = Path;
 		ctrl.SetTag( "skidding" );
 		Particles.Create( "particles/gameplay/player/sliding/railsliding.vpcf", ctrl.Pawn );

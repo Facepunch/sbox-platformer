@@ -81,7 +81,11 @@ namespace Platformer.Movement
 
 			if ( Velocity.WithZ( 0 ).Length > 0 )
 			{
-				Rotation = Rotation.Slerp( Rotation, Rotation.LookAt( Velocity.WithZ( 0 ) ), 5f * Time.Delta );
+				var targetAngles = Rotation.LookAt( Velocity ).Angles();
+				targetAngles.pitch = 0;
+				targetAngles.roll = 0;
+
+				Rotation = Rotation.Slerp( Rotation, Rotation.From( targetAngles ), 5f * Time.Delta );
 				EyeRotation = Rotation;
 			}
 
