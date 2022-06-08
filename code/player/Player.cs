@@ -78,6 +78,7 @@ namespace Platformer
 		{
 			SetModel( "models/citizen/citizen.vmdl" );
 
+			Controller = null;
 			Controller = new PlatformerController();
 			Animator = new PlatformerOrbitAnimator();
 			CameraMode = new PlatformerOrbitCamera();
