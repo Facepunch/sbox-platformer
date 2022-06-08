@@ -12,6 +12,13 @@ namespace Platformer
 		[Net]
 		public int RoundNumber { get; set; }
 
+		private static bool DoSkipToLive;
+		[ConCmd.Admin]
+		public static void SkipToLive()
+		{
+			DoSkipToLive = !DoSkipToLive;
+		}
+
 		private async Task TagRoundLoopAsync()
 		{
 			RoundNumber = 1;
@@ -19,7 +26,7 @@ namespace Platformer
 			while( RoundNumber < 5 )
 			{
 				GameState = GameStates.Runaway;
-				StateTimer = 1 * 30f;
+				StateTimer = DoSkipToLive ? 0 : (1 * 30f);
 
 				Alerts( To.Everyone, "Get Ready!" );
 				FreshStart();
@@ -37,7 +44,7 @@ namespace Platformer
 				if( RoundNumber < 4 )
 				{
 					GameState = GameStates.GameEnd;
-					StateTimer = 1 * 10f;
+					StateTimer = DoSkipToLive ? 0 : (1 * 10f);
 					await WaitStateTimer();
 				}
 
