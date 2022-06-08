@@ -27,6 +27,10 @@ public partial class PlatformerDecay : ModelEntity
 	[Net]
 	public bool Broken { get; set; }
 
+	[Net]
+	[Property( "effect_name" ), EntityReportSource, FGDType( "particlesystem" )]
+	public string EffectParticle { get; set; } = "particles/break/break.cardboard.vpcf";
+
 	private Color DefaultColor;
 	public override void Spawn()
 	{
@@ -79,7 +83,7 @@ public partial class PlatformerDecay : ModelEntity
 		EnableAllCollisions = false;
 
 		Sound.FromEntity( "physics.glass.shard.impact", this ).SetVolume( 2f );
-		Particles.Create( "particles/break/break.cardboard.vpcf", Position );
+		Particles.Create( EffectParticle, Position );
 
 		UnbreakAfter( RespawnTime );
 	}
