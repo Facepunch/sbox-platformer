@@ -1,0 +1,322 @@
+HealthCurrent {
+    position: absolute;
+    left: 46px;
+    top: 24px;
+    transition: all 0.25s ease-out;
+    width: 196px;
+    height: 196px;
+    z-index: 2;
+
+    .health-block {
+        position: absolute;
+        background-image: url("/ui/hud/circlehud.png");
+        background-size: cover;
+        background-tint: #e74c3c;
+        width: 100px;
+        height: 100px;
+        transform-origin: 50% 50%;
+    }
+
+    .health-block-0 {
+        left: 0;
+        top: 0;
+    }
+
+    .health-block-1 {
+        transform: rotate(90deg);
+        top: 0;
+        right: 0;
+    }
+
+    .health-block-2 {
+        transform: rotate(180deg);
+        bottom: 0;
+        right: 0;
+    }
+
+    .health-block-3 {
+        transform: rotate(270deg);
+        bottom: 0;
+        left: 0;
+    }
+
+    .visible {
+        background-tint: #2ecc71;
+    }
+}
+
+LifeCurrent {
+    position: absolute;
+    transform: rotate(-10deg);
+    left: 93px;
+    top: 118px;
+    padding: 0 20px;
+    transition: all 0.25s ease-out;
+    flex-direction: row;
+    z-index: 2;
+
+
+    .number {
+        font-family: "Fredoka One";
+        text-stroke: 16px black;
+        transform: rotate(20deg);
+        left: 48px;
+        top: 32px;
+        font-size: 64px;
+        font-weight: bold;
+        color: #f1c40f;
+        height: 30px;
+        padding: 0 0px;
+        align-items: center;
+        transition: all 0.25s ease-out;
+        opacity: 0;
+
+        &.lifelow {
+            color: #c0392b;
+        }
+
+        &.Active {
+            opacity: 1;
+        }
+    }
+
+    .playerimage {
+        position: absolute;
+        width: 110px;
+        aspect-ratio: 1;
+        top: -50px;
+        left: -2px;
+        border-radius: 50%;
+        border: 6px black;
+    }
+}
+
+RoundTimer {
+    position: absolute;
+    right: 100px;
+    top: 48px;
+    width: 175px;
+    height: 60px;
+    margin: 0px 2px;
+    transition: all 0.6s ease-in-out;
+    margin-top: 10px;
+    font-family: poppins;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50px;
+
+
+    .game-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .game-state {
+        bottom: 12px;
+        width: 96px;
+        height: 60px;
+        font-size: 16px;
+        color: #607D8B;
+        font-family: Poppins;
+        font-weight: 800;
+        text-transform: uppercase;
+        align-items: center;
+    }
+
+    .game-timer {
+        position: absolute;
+        font-size: 24px;
+        color: #607D8B;
+        font-family: Poppins;
+        font-weight: 800;
+        text-transform: uppercase;
+        left: 65px;
+        right: 0;
+        bottom: 0%;
+    }
+}
+
+CourseTimer {
+    position: absolute;
+    top: 145px;
+    left: 225px;
+    text-stroke: 11px black;
+    font-size: 20px;
+    font-family: Poppins;
+    font-weight: 800;
+    color: white;
+    opacity: 0;
+
+    &.Active {
+        opacity: 1;
+    }
+}
+
+CoinCurrent {
+    position: absolute;
+    transform: rotate(-10deg);
+    left: 200px;
+    top: 65px;
+    padding: 0 0px;
+    transition: all 0.25s ease-out;
+    flex-direction: row;
+    z-index: 2;
+    opacity: 0;
+
+    .coinimage {
+        position: absolute;
+        width: 65px;
+        aspect-ratio: 1;
+        top: -48px;
+        left: 1.5%;
+        border-radius: 50%;
+        border: 4px black;
+    }
+
+    .coinnumber {
+        position: absolute;
+        font-family: "Fredoka One";
+        text-stroke: 16px black;
+        transform: rotate(20deg);
+        left: 45px;
+        top: 2px;
+        font-size: 48px;
+        font-weight: bold;
+        color: #f1c40f;
+        height: 30px;
+        padding: 0 0px;
+        align-items: center;
+        transition: all 0.25s ease-out;
+    }
+
+    &.Active {
+        opacity: 1;
+    }
+}
+
+KeysCollected {
+    position: absolute;
+    right: 105px;
+    top: 128px;
+    padding: 1 1px;
+    transition: all 0.25s ease-out;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    min-width: 50px;
+    max-width: 400px;
+    min-height: 50px;
+    max-height: 500px;
+
+
+    KeyPanel {
+        margin: 2;
+        opacity: .2;
+        aspect-ratio: 1;
+        // transform: rotate(20deg);
+        padding-left: 10px;
+        color: #3498db;
+        transition: all 0.25s ease-out;
+
+
+        &.Active {
+            opacity: 1;
+            background-image-tint: white;
+        }
+    }
+
+    .key1 {
+        opacity: .2;
+        padding: 2 6px;
+        background-image-tint: #212121;
+    }
+}
+
+EnergyCurrent {
+    color: #fff;
+    font-family: "Fredoka One";
+    flex-direction: column;
+    //justify-content: center;
+    position: absolute;
+    left: 210px;
+    top: 12.45%;
+    width: 200px;
+    opacity: 0;
+
+    .energynm {
+        font-family: "Fredoka One";
+        text-stroke: 14px black;
+        font-size: 24px;
+        font-weight: bold;
+        position: absolute;
+        bottom: 32px;
+        left: 96px;
+        right: 0;
+        width: auto;
+        height: 24px;
+        transform-origin: 50%,50%;
+        transition: all 0.25s ease-out;
+    }
+
+    .energy {
+        background-color: yellow;
+        position: absolute;
+        opacity: .75;
+        bottom: 0px;
+        left: 0;
+        right: 0;
+        width: auto;
+        height: 24px;
+        transform-origin: 50%,50%;
+        transition: all 0.25s ease-out;
+    }
+
+    .energybg {
+        background-color: rgb(150, 150, 150,.25);
+        position: absolute;
+        border: 4px black;
+        bottom: 0px;
+        left: 0px;
+        right: 0;
+        width: auto;
+        height: 24px;
+        transform-origin: 50%,50%;
+    }
+
+    &.Active {
+        opacity: 1;
+        background-image-tint: white;
+    }
+}
+
+DeathUI {
+    position: absolute;
+    left: 47.5%;
+    top: 45.5%;
+    width: 100px;
+    height: 100px;
+    aspect-ratio: 0;
+    //  background-image: url("/ui/hud/death/respawn.png");
+    background-size: cover;
+    z-index: -1;
+
+
+    .deathimage {
+
+        &.alive {
+            transform: scale(50);
+            transition: all .2s ease-in;
+            opacity: 0;
+        }
+
+        &.limbo {
+            transform: scale(15);
+            transition: all 1s ease-in-out;
+            opacity: 1;
+        }
+
+        &.died {
+            transform: scale(.1 );
+            transition: all 1s ease-out;
+            opacity: 1;
+        }
+    }
+}

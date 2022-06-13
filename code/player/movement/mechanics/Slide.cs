@@ -3,7 +3,7 @@ using Sandbox;
 
 namespace Platformer.Movement
 {
-    class Slide : BaseMoveMechanic
+	class Slide : BaseMoveMechanic
 	{
 
 		public float StopSpeed => 50f;
@@ -20,8 +20,8 @@ namespace Platformer.Movement
 		private Vector3 originalMins;
 		private Vector3 originalMaxs;
 
-		public Slide(PlatformerController ctrl)
-			: base(ctrl)
+		public Slide( PlatformerController ctrl )
+			: base( ctrl )
 		{
 
 		}
@@ -43,7 +43,7 @@ namespace Platformer.Movement
 			Sound.FromEntity( "slide.stop", ctrl.Pawn );
 
 			new FallCameraModifier( -300 );
-			
+
 			return true;
 		}
 
@@ -61,9 +61,34 @@ namespace Platformer.Movement
 		{
 			return 100;
 		}
+
 		TimeSince timeSinceLastSlide = 0;
 		public override void Simulate()
 		{
+			if ( ctrl.Pawn.IsServer )
+			{
+				var hits = Entity.FindInSphere( ctrl.Position, 50f );
+
+				if ( BasePlayerController.Debug )
+				{
+					DebugOverlay.Sphere( ctrl.Position, 50f, Color.Red );
+				}
+				
+				foreach ( var hit in hits )
+				{
+					if ( hit is not PlatformerPawn pl ) continue;
+					if ( pl == ctrl.Pawn ) continue;
+
+					pl.TakeDamage( new DamageInfo()
+					{
+						Attacker = ctrl.Pawn,
+						Damage = 1,
+						Force = ctrl.Pawn.Velocity.Normal * 620f + Vector3.Up * 150f,
+						Flags = DamageFlags.Sonic
+					} );
+				}
+			}
+
 			if ( !StillSliding() )
 			{
 				IsActive = false;
@@ -76,7 +101,7 @@ namespace Platformer.Movement
 			if ( ctrl.GroundNormal.z < 1 )
 			{
 				//Sliding = false;
-				
+
 
 				var slopeDir = Vector3.Cross( Vector3.Up, Vector3.Cross( Vector3.Up, ctrl.GroundNormal ) );
 				var dot = Vector3.Dot( ctrl.Velocity.Normal, slopeDir );

@@ -5,632 +5,368 @@ using System.Collections.Generic;
 using System.Linq;
 using Platformer.Movement;
 using Platformer.Utility;
+using Platformer.Gamemodes;
 
-namespace Platformer
+namespace Platformer;
+
+public partial class PlatformerPawn : Sandbox.Player
 {
-	partial class PlatformerPawn : Sandbox.Player
+
+	[Net]
+	public Color PlayerColor { get; set; }
+	[Net]
+	public bool PlayerHasGlider { get; set; }
+	[Net]
+	public float GliderEnergy { get; set; }
+	[Net]
+	public TimeUntil TimeUntilVulnerable { get; set; }
+	[Net]
+	public int NumberLife { get; set; } = 3;
+	[Net]
+	public PropCarriable HeldBody { get; set; }
+	[Net]
+	public string CurrentArea { get; set; }
+	[Net]
+	public int Coin { get; set; }
+	[Net]
+	public List<Checkpoint> Checkpoints { get; set; } = new();
+
+	public int AreaPriority = 0;
+	public bool IgnoreFallDamage = false;
+
+	private ClothingContainer Clothing;
+	private DamageInfo lastDamage;
+	private TimeSince ts;
+	private Particles WalkCloud;
+	private Particles FakeShadowParticle;
+
+	public override void Respawn()
 	{
-		[Net]
-		public Color PlayerColor { get; set; }
+		SetModel( "models/citizen/citizen.vmdl" );
 
-		[Net]
-		public bool PlayerHasGlider { get; set; } = false;
+		Controller ??= new PlatformerController();
+		Animator = new PlatformerOrbitAnimator();
+		CameraMode = new PlatformerOrbitCamera();
 
-		[Net]
-		public float GliderEnergy { get; set; }
+		EnableAllCollisions = true;
+		EnableDrawing = true;
+		EnableHideInFirstPerson = true;
+		EnableShadowInFirstPerson = true;
+		CurrentArea ??= Global.MapName;
+		Health = 4;
 
-		[Net]
-		public int Coin { get; set; }
+		Clothing ??= new ClothingContainer();
+		Clothing.LoadFromClient( Client );
+		Clothing.DressEntity( this );
 
-		[Net]
-		public IList<int> KeysPlayerHas { get; set; } = new List<int>();
+		base.Respawn();
 
-		[Net]
-		public float NumberOfKeys { get; set; }
+		Tags.Add( "Platplayer" );
+		GotoBestCheckpoint();
+		Platformer.Current.Gamemode.DoPlayerRespawn( this );
+	}
 
-		[Net]
-		public string CurrentArea { get; set; }
-		public int AreaPriority = 0;
-
-		[Net]
-		public TimeUntil TimeUntilVulnerable { get; set; }
-
-		[Net]
-		public int NumberLife { get; set; } = 3;
-
-		[Net]
-		public List<Checkpoint> Checkpoints { get; set; } = new();
-
-		[Net]
-		public PropCarriable HeldBody { get; set; }
-
-
-		public const float MaxRenderDistance = 128f;
-		public ClothingContainer Clothing = new();
-		private DamageInfo lastDamage;
-		//private float LastHealth;
-		private TimeSince ts;
-		public string MapName => Global.MapName;
-		//public bool JustPickedupHealth;
-		public int AmountOfFlash = 0;
-
-		public bool IgnoreFallDamage = false;
-		public Color Color { get; private set; }
-
-		public Particles HeldParticle { get; set; }
-		private Particles WalkCloud;
-		public Particles FakeShadowParticle;
-
-		[Net]
-		public bool Tagged { get; set; }
-
-		public PlatformerPawn() { }
-
-		public PlatformerPawn( Client cl )
+	public void ResetCollectibles<T>() where T : BaseCollectible
+	{
+		foreach ( var item in All.OfType<T>() )
 		{
-			// Load clothing from client data
-			Clothing.LoadFromClient( cl );
+			item.Reset( this );
+		}
+	}
 
-			PlayerColor = Color.Random;
+	public void SetInvulnerable( float duration )
+	{
+		TimeUntilVulnerable = duration;
+	}
+
+	public override void TakeDamage( DamageInfo info )
+	{
+		if ( TimeUntilVulnerable > 0 ) return;
+		if ( info.Flags == DamageFlags.Sonic && !BaseGamemode.Instance.EnablePvP ) return;
+
+		base.TakeDamage( info );
+
+		if ( info.Force.z > 50f )
+		{
+			GroundEntity = null;
 		}
 
-		public override void Respawn()
+		Velocity += info.Force;
+	}
+
+	public override void OnKilled()
+	{
+		base.OnKilled();
+
+		NumberLife--;
+		Coin = (int)(Coin * .5f);
+
+		Controller = null;
+		EnableAllCollisions = false;
+		EnableDrawing = false;
+		CameraMode = new PlatformerRagdollCamera();
+
+		WalkCloud?.Destroy();
+		WalkCloud = null;
+
+		HeldBody?.Drop( 2 );
+		HeldBody = null;
+
+		foreach ( var child in Children )
 		{
-			SetModel( "models/citizen/citizen.vmdl" );
-
-			Controller = null;
-			Controller = new PlatformerController();
-			Animator = new PlatformerOrbitAnimator();
-			CameraMode = new PlatformerOrbitCamera();
-
-			EnableAllCollisions = true;
-			EnableDrawing = true;
-			EnableHideInFirstPerson = true;
-			EnableShadowInFirstPerson = true;
-			TagArrowParticle?.Destroy();
-			TagArrowParticle = null;
-
-			Clothing.DressEntity( this );
-
-			base.Respawn();
-
-			if ( Platformer.CurrentGameMode == Platformer.GameModes.Competitive )
-			{
-				RemoveCollisionLayer( CollisionLayer.Solid );
-
-				if ( NumberLife == 0 )
-				{
-					ClearCheckpoints();
-					NumberLife = 3;
-					ResetHealthPickUps();
-					ResetLifePickUps();
-					Coin = 0;
-					KeysPlayerHas.Clear();
-					NumberOfKeys = 0;
-				}
-			}
-
-			if ( Platformer.CurrentGameMode == Platformer.GameModes.Coop )
-			{
-				if ( NumberLife == 0 )
-				{
-					NumberLife = 1;
-					ResetHealthPickUps();
-					ResetLifePickUps();
-				}
-			}
-
-			Health = 4;
-
-
-			if ( CurrentArea == null )
-			{
-				CurrentArea = $"{MapName}";
-			}
-
-			GotoBestCheckpoint();
-
-
-			Tags.Add( "Platplayer" );
-
-			this.SetRenderColorRecursive( Tagged ? Color.Red : Color.White );
+			child.EnableDrawing = false;
 		}
 
-		public void ResetLifePickUps()
+		BaseGamemode.Instance.DoPlayerKilled( this );
+
+		BecomeRagdollOnClient( Velocity, lastDamage.Flags, lastDamage.Position, lastDamage.Force, GetHitboxBone( lastDamage.HitboxIndex ) );
+	}
+
+	private TimeUntil TimeUntilCanUse;
+	protected override void TickPlayerUse()
+	{
+		if ( HeldBody.IsValid() )
+			return;
+
+		if ( TimeUntilCanUse > 0 )
+			return;
+
+		base.TickPlayerUse();
+	}
+
+	public override void Simulate( Client cl )
+	{
+		if ( Platformer.GameState == GameStates.GameEnd )
+			return;
+
+		base.Simulate( cl );
+
+		if ( !IsServer ) return;
+
+		TickPlayerThrow();
+		TickPlayerUse();
+
+		if ( Controller is PlatformerController controller )
 		{
-			foreach ( var lifeitem in All.OfType<LifePickup>() )
-			{
-				lifeitem.Reset( this );
-			}
+			GliderEnergy = (float)Math.Round( controller.Energy );
 		}
 
-		public void ResetHealthPickUps()
+		if ( Health == 1 && ts > 2 )
 		{
-			foreach ( var healthitem in All.OfType<HealthPickup>() )
+			LowHealth();
+			ts = 0;
+		}
+	}
+
+	private void TickPlayerThrow()
+	{
+		if ( !HeldBody.IsValid() ) return;
+
+		var drop = false;
+		var vel = Vector3.Zero;
+
+		if ( Input.UsingController )
+		{
+			if ( InputActions.Walk.Pressed() && InputActions.Duck.Down() )
 			{
-				healthitem.Reset( this );
+				drop = true;
+				vel = Velocity + Rotation.Forward * 30 + Rotation.Up * 10;
 			}
+
+			if ( InputActions.Walk.Pressed() && !InputActions.Duck.Down() )
+			{
+				drop = true;
+				//HeldParticle.Destroy(true);
+				vel = Velocity + Rotation.Forward * 300 + Rotation.Up * 100;
+			}
+
+			if ( !drop ) return;
+			HeldBody.Drop( vel );
+			HeldBody = null;
+			TimeUntilCanUse = 1f;
 		}
 
-		public void PlayerBeenDamaged()
+		if ( !Input.UsingController )
 		{
-			//LastHealth = Health;
-
-			if ( IsServer )
+			if ( InputActions.Use.Pressed() && InputActions.Duck.Down() )
 			{
-				//Juice.Scale( 1, 1.15f, 1f )
-				//	.WithTarget( this )
-				//	.WithDuration( .45f )
-				//	.WithEasing( EasingType.EaseOut );
+				drop = true;
+				vel = Velocity + Rotation.Forward * 30 + Rotation.Up * 10;
 
-				//Juice.Color( Color.White, Color.Red, Color.White )
-				//	.WithTarget( this )
-				//	.WithDuration( .45f )
-				//	.WithEasing( EasingType.EaseOut );
 			}
-		}
 
-		public void SetInvulnerable( float duration )
+			if ( InputActions.Use.Pressed() && !InputActions.Duck.Down() )
+			{
+				drop = true;
+				//HeldParticle.Destroy(true);
+				vel = Velocity + Rotation.Forward * 300 + Rotation.Up * 100;
+
+			}
+
+			if ( !drop ) return;
+			HeldBody.Drop( vel );
+			HeldBody = null;
+			TimeUntilCanUse = 1f;
+		}
+	}
+
+	public void PickedUpItem( Color itempickedup )
+	{
+		if ( IsServer )
 		{
-			TimeUntilVulnerable = duration;
 		}
+	}
 
-		public override void TakeDamage( DamageInfo info )
+	public void LowHealth()
+	{
+		if ( IsServer )
 		{
-			if ( TimeUntilVulnerable > 0 ) return;
-
-			base.TakeDamage( info );
-
-			PlayerBeenDamaged();
-			lastDamage = info;
-			Velocity += info.Force;
+			Sound.FromWorld( "player.lowhealth", Position );
 		}
+	}
 
-		public override void OnKilled()
+	protected override Entity FindUsable()
+	{
+		var startpos = Position + Vector3.Up * 5;
+		var endpos = startpos + Rotation.Forward * 60f;
+		var tr = Trace.Sphere( 5f, startpos, endpos )
+			.Ignore( this )
+			.EntitiesOnly()
+			.Run();
+
+		if ( tr.Entity.IsValid() && tr.Entity is IUse use && use.IsUsable( this ) )
+			return tr.Entity;
+
+		return null;
+	}
+
+	public void ApplyForce( Vector3 force )
+	{
+		if ( Controller is PlatformerController controller )
 		{
-			base.OnKilled();
-
-			NumberLife--;
-
-			Coin /= 2;
-
-			BecomeRagdollOnClient( Velocity, lastDamage.Flags, lastDamage.Position, lastDamage.Force, GetHitboxBone( lastDamage.HitboxIndex ) );
-
-			Controller = null;
-
-			EnableAllCollisions = false;
-			EnableDrawing = false;
-
-			CameraMode = new PlatformerRagdollCamera();
-
-			WalkCloud?.Destroy();
-
-
-			if (HeldBody != null)
-			{
-				HeldBody.Drop( 2 );
-				HeldBody = null;
-			}
-
-			foreach ( var child in Children )
-			{
-				child.EnableDrawing = false;
-			}
-
-			if(Platformer.CurrentGameMode == Platformer.GameModes.Tag)
-			{
-				if ( Platformer.CurrentState == Platformer.GameStates.Warmup || Platformer.CurrentState == Platformer.GameStates.Runaway ) return;
-				Tagged = true;
-			}
-
-			WalkCloud = null;
+			controller.Impulse += force;
 		}
+	}
 
-		public override void StartTouch( Entity other )
-		{
-			base.StartTouch( other );
-
-			if ( !Tagged ) return;
-			if ( other is not PlatformerPawn pl ) return;
-
-			pl.Tagged = true;
-		}
-
-		public void FinishedReset()
-		{
-			KeysPlayerHas.Clear();
-			NumberOfKeys = 0;
-		}
-
-		public void ResetTagged()
-		{
-			Tagged = false;
-
-			this.SetRenderColorRecursive( Color.White );
-		}
-
-		protected override void TickPlayerUse()
-		{
-			if ( HeldBody.IsValid() )
-				return;
-
-			if ( TimeUntilCanUse > 0 )
-				return;
-
-			base.TickPlayerUse();
-		}
-
-		private TimeUntil TimeUntilCanUse;
-
-		private Vector3 Mins => new( -64, -64, 0 );
-		private Vector3 Maxs => new( 64, 64, 64 );
-
-		public Particles TagArrowParticle { get; set; }
-
-		/// <summary>
-		/// Called every tick, clientside and serverside.
-		/// </summary>
-		public override void Simulate( Client cl )
-		{
-			if ( Platformer.CurrentState == Platformer.GameStates.GameEnd )
-				return;
-
-			base.Simulate( cl );
-
-			if ( !IsServer ) return;
-
-			TickPlayerThrow();
-			TickPlayerUse();
-
-			if ( Controller is PlatformerController controller )
-			{
-				GliderEnergy = (float)Math.Round( controller.Energy );
-			}
-
-			if ( InputActions.Kill.Down() )
-			{
-				if ( TimerState == TimerState.Finished )
-				{
-					if ( Platformer.CurrentState == Platformer.GameStates.Warmup && Tagged || Platformer.CurrentState == Platformer.GameStates.Runaway && Tagged ) return;
-					KeysPlayerHas.Clear();
-					NumberLife = 3;
-					NumberOfKeys = 0;
-					Game.Current.DoPlayerSuicide( cl );
-				}
-				else
-				{
-					if ( Platformer.CurrentState == Platformer.GameStates.Warmup && Tagged || Platformer.CurrentState == Platformer.GameStates.Runaway && Tagged ) return;
-					Game.Current.DoPlayerSuicide( cl );
-				}
-			}
-
-			if ( Health == 1 && ts > 2 )
-			{
-				LowHealth();
-				ts = 0;
-			}
-
-			if ( LifeState == LifeState.Alive )
-			{
-				if ( GetActiveController() == DevController )
-				{
-					ResetTimer();
-					KeysPlayerHas.Clear();
-					NumberOfKeys = 0;
-				}
-			}
-
-			if ( Platformer.CurrentGameMode == Platformer.GameModes.Tag )
-			{
-				if ( Tagged )
-				{
-					//this is awful.
-					var lift = 4;
-
-					var bbox = new BBox( Mins, Maxs.WithZ( Maxs.z - lift ) );
-					var start = Position + Vector3.Up * lift;
-					var end = Position + Vector3.Down * (lift - 36);
-					var tr = Trace.Box( bbox, start, end )
-					.Ignore( this )
-					.Run();
-
-					if ( tr.Hit )
-					{
-						if ( tr.Entity is not PlatformerPawn pl ) return;
-						if ( pl.Tagged ) return;
-						pl.Tagged = true;
-						pl.BeenTagged();
-						Client.AddInt( "kills" );
-					}
-				}
-			}
-		}
-
-		public void BeenTagged()
-		{
-			if( !Tagged ) return;
-
-			Sound.FromEntity( "life.pickup", this );
-
-			RenderColor = Color.Red;
-
-			foreach ( var child in this.Children )
-			{
-				if ( child is not ModelEntity m || !child.IsValid() ) continue;
-				m.RenderColor = Color.Red;
-			}
-
-			Platformer.Alerts( To.Everyone, $"{ Client.Name} Has been Tagged.");
-		}
-
-		private void TickPlayerThrow()
-		{
-			if ( !HeldBody.IsValid() ) return;
-
-			var drop = false;
-			var vel = Vector3.Zero;
-
-			if(Input.UsingController)
-			{
-				if ( InputActions.Walk.Pressed() && InputActions.Duck.Down() )
-				{
-					drop = true;
-					vel = Velocity + Rotation.Forward * 30 + Rotation.Up * 10;
-
-				}
-
-				if ( InputActions.Walk.Pressed() && !InputActions.Duck.Down() )
-				{
-					drop = true;
-					//HeldParticle.Destroy(true);
-					vel = Velocity + Rotation.Forward * 300 + Rotation.Up * 100;
-
-				}
-
-				if ( !drop ) return;
-				HeldBody.Drop( vel );
-				HeldBody = null;
-				TimeUntilCanUse = 1f;
-			}
-			if ( !Input.UsingController )
-			{
-				if ( InputActions.Use.Pressed() && InputActions.Duck.Down() )
-				{
-					drop = true;
-					vel = Velocity + Rotation.Forward * 30 + Rotation.Up * 10;
-
-				}
-
-				if ( InputActions.Use.Pressed() && !InputActions.Duck.Down() )
-				{
-					drop = true;
-					//HeldParticle.Destroy(true);
-					vel = Velocity + Rotation.Forward * 300 + Rotation.Up * 100;
-
-				}
-
-				if ( !drop ) return;
-				HeldBody.Drop( vel );
-				HeldBody = null;
-				TimeUntilCanUse = 1f;
-			}
-		}
-
-		[Event.Frame]
-		public void WalkCloudParticle()
-		{
-			if ( WalkCloud == null )
-			{
-				WalkCloud = Particles.Create( "particles/gameplay/player/walkcloud/walkcloud.vpcf" );
-				WalkCloud.SetEntity( 0, this );
-			}
-
-			if(LifeState == LifeState.Dead)
-			{
-				WalkCloud.SetPosition( 6, new Vector3( 0, 0, 0 ) );
-			}
-
-			if ( GroundEntity != null && Velocity.Length >= .2f )
-			{
-				var speed = Velocity.Length.Remap( 0f, 280, 0f, 1f );
-				WalkCloud.SetPosition( 6, new Vector3( speed, 0f, 0f ) );
-			}
-			else
-			{
-				WalkCloud.SetPosition( 6, new Vector3( 0, 0, 0 ) );
-			}
-
-		}
-
-		[Event.Frame]
-		public void PlayerShadow()
-		{
-			if ( FakeShadowParticle == null )
-			{
-				FakeShadowParticle = Particles.Create( "particles/gameplay/fake_shadow/fake_shadow.vpcf" );
-			}
-
-			var Downtrace = Trace.Ray( Position, Position + Vector3.Down * 2000 );
-			Downtrace = Downtrace.WorldOnly();
-			var result = Downtrace.Run();
-
-			FakeShadowParticle.SetPosition( 0, result.EndPosition );
-
-			//DebugOverlay.TraceResult( result );
-		}
-
-		public void PickedUpItem( Color itempickedup )
-		{
-			if ( IsServer )
-			{
-				//Juice.Scale( 1, 1, 1 )
-
-				//	.WithDuration( .45f )
-				//	.WithEasing( EasingType.EaseOut );
-
-				//Juice.Color( Color.White, itempickedup, Color.White )
-				//	.WithTarget( this )
-				//	.WithDuration( .45f )
-				//	.WithEasing( EasingType.EaseOut );
-			}
-		}
-
-		public void LowHealth()
-		{
-			if ( IsServer )
-			{
-				//Juice.Scale( 1, 1, 1 )
-				//	.WithTarget( this )
-				//	.WithDuration( .45f )
-				//	.WithEasing( EasingType.EaseOut );
-
-				//Juice.Color( Color.White, Color.Red, Color.White )
-				//	.WithTarget( this )
-				//	.WithDuration( .45f )
-				//	.WithEasing( EasingType.EaseOut );
-
-				Sound.FromWorld( "player.lowhealth", Position );
-			}
-		}
-
-		protected override Entity FindUsable()
-		{
-			var startpos = Position + Vector3.Up * 5;
-			var endpos = startpos + Rotation.Forward * 60f;
-			var tr = Trace.Sphere( 5f, startpos, endpos )
-				.Ignore( this )
-				.EntitiesOnly()
-				.Run();
-
-			if ( tr.Entity.IsValid() && tr.Entity is IUse use && use.IsUsable( this ) )
-				return tr.Entity;
-
-			return null;
-		}
-
-		[Event.Frame]
-		private void UpdateRenderAlpha()
-		{
-			if ( Local.Pawn == this ) return;
-			if ( Local.Pawn == null ) return;
-			if ( !Local.Pawn.IsValid() ) return;
-			if ( Platformer.CurrentGameMode != Platformer.GameModes.Competitive ) return;
-
-			var dist = Local.Pawn.Position.Distance( Position );
-			var a = 1f - dist.LerpInverse( MaxRenderDistance, MaxRenderDistance * .1f );
-			a = Math.Max( a, .15f );
-			a = Easing.EaseOut( a );
-
-			this.SetRenderColorRecursive( RenderColor.WithAlpha( a ) );
-		}
-
-		[Event.Frame]
-		private void EnsureTagParticle()
-		{
-			var create = Tagged && TagArrowParticle == null;
-			var destroy = !Tagged && TagArrowParticle != null;
-
-			if ( create )
-			{
-				TagArrowParticle = Particles.Create( "particles/gameplay/player/tag_arrow/tag_arrow.vpcf", this );
-				TagArrowParticle.SetPosition( 6, Color.Red * 255 );
-			}
-
-			if ( destroy )
-			{
-				TagArrowParticle.Destroy();
-				TagArrowParticle = null;
-			}
-		}
-
-		public void ApplyForce( Vector3 force )
+	public void PlayerPickedUpGlider()
+	{
+		if ( PlayerHasGlider )
 		{
 			if ( Controller is PlatformerController controller )
 			{
-				controller.Impulse += force;
-
+				controller.EnableGliderControl();
+				PlayerHasGlider = true;
 			}
 		}
+	}
 
-		public void PlayerPickedUpGlider()
+	[Event.Frame]
+	public void UpdateWalkCloud()
+	{
+		WalkCloud ??= Particles.Create( "particles/gameplay/player/walkcloud/walkcloud.vpcf", this );
+
+		if ( LifeState == LifeState.Dead || GroundEntity == null )
 		{
-			if ( PlayerHasGlider )
-			{
-				if ( Controller is PlatformerController controller )
-				{
-					controller.EnableGliderControl();
-					PlayerHasGlider = true;
-				}
-			}
+			WalkCloud.SetPosition( 6, new Vector3( 0, 0, 0 ) );
+			return;
 		}
 
-		[Event.Tick]
-		public void PlayerHolding()
+		var speed = Velocity.Length.Remap( 0f, 280, 0f, 1f );
+		WalkCloud.SetPosition( 6, new Vector3( speed, 0f, 0f ) );
+	}
+
+	[Event.Frame]
+	public void UpdatePlayerShadow()
+	{
+		FakeShadowParticle ??= Particles.Create( "particles/gameplay/fake_shadow/fake_shadow.vpcf" );
+
+		var tr = Trace.Ray( Position, Position + Vector3.Down * 2000 )
+			.WorldOnly()
+			.Run();
+
+		FakeShadowParticle.SetPosition( 0, tr.EndPosition );
+	}
+
+	[Event.Frame]
+	private void UpdateRenderAlpha()
+	{
+		const float MaxRenderDistance = 128f;
+
+		if ( Local.Pawn == this ) return;
+		if ( Local.Pawn == null ) return;
+		if ( !Local.Pawn.IsValid() ) return;
+		if ( Platformer.Mode != Platformer.GameModes.Competitive ) return;
+
+		var dist = Local.Pawn.Position.Distance( Position );
+		var a = 1f - dist.LerpInverse( MaxRenderDistance, MaxRenderDistance * .1f );
+		a = Math.Max( a, .15f );
+		a = Easing.EaseOut( a );
+
+		this.SetRenderColorRecursive( RenderColor.WithAlpha( a ) );
+	}
+
+	[Event.Tick]
+	public void PlayerHolding()
+	{
+		if ( HeldBody != null )
 		{
-			if ( HeldBody != null )
+			if ( Controller is PlatformerController controller )
 			{
-				if ( Controller is PlatformerController controller )
-				{
-					controller.IsHolding = true;
-				}
-			}
-			else
-			{
-				if ( Controller is PlatformerController controller )
-				{
-					controller.IsHolding = false;
-				}
+				controller.IsHolding = true;
 			}
 		}
-
-		[ConCmd.Admin]
-		public static void MapVote()
+		else
 		{
-			var vote = new MapVoteEntity();
+			if ( Controller is PlatformerController controller )
+			{
+				controller.IsHolding = false;
+			}
 		}
+	}
 
-		TimeSince timeSinceLastFootstep = 0;
+	[ConCmd.Admin]
+	public static async void MapVote()
+	{
+		var vote = new MapVoteEntity();
+		vote.VoteTimeLeft = 15f;
+		await System.Threading.Tasks.Task.Delay( (int)vote.VoteTimeLeft * 1000 );
+		Global.ChangeLevel( vote.WinningMap );
+	}
 
+	TimeSince timeSinceLastFootstep = 0;
+	public override void OnAnimEventFootstep( Vector3 pos, int foot, float volume )
+	{
+		if ( LifeState != LifeState.Alive )
+			return;
 
-		public override void OnAnimEventFootstep( Vector3 pos, int foot, float volume )
+		if ( !IsServer )
+			return;
+
+		if ( foot == 0 )
 		{
-			if ( LifeState != LifeState.Alive )
-				return;
-
-			if ( !IsServer )
-				return;
-
-			if ( foot == 0 )
-			{
-				var lfoot = Particles.Create( "particles/gameplay/player/footsteps/footstep_l.vpcf", pos );
-				lfoot.SetOrientation( 0, Transform.Rotation );
-			}
-			else
-			{
-				var rfoot = Particles.Create( "particles/gameplay/player/footsteps/footstep_r.vpcf", pos);
-				rfoot.SetOrientation( 0, Transform.Rotation );
-			}
-
-			if ( timeSinceLastFootstep < 0.2f )
-				return;
-
-
-
-			volume *= FootstepVolume();
-
-			timeSinceLastFootstep = 0;
-
-			//DebugOverlay.Box( 1, pos, -1, 1, Color.Red );
-			//DebugOverlay.Text( pos, $"{volume}", Color.White, 5 );
-
-			var tr = Trace.Ray( pos, pos + Vector3.Down * 20 )
-				.Radius( 1 )
-				.Ignore( this )
-				.Run();
-
-			if ( !tr.Hit ) return;
-
-			tr.Surface.DoFootstep( this, tr, foot, volume * 10 );
+			var lfoot = Particles.Create( "particles/gameplay/player/footsteps/footstep_l.vpcf", pos );
+			lfoot.SetOrientation( 0, Transform.Rotation );
 		}
+		else
+		{
+			var rfoot = Particles.Create( "particles/gameplay/player/footsteps/footstep_r.vpcf", pos );
+			rfoot.SetOrientation( 0, Transform.Rotation );
+		}
+
+		if ( timeSinceLastFootstep < 0.2f )
+			return;
+
+		volume *= FootstepVolume();
+
+		timeSinceLastFootstep = 0;
+
+		var tr = Trace.Ray( pos, pos + Vector3.Down * 20 )
+			.Radius( 1 )
+			.Ignore( this )
+			.Run();
+
+		if ( !tr.Hit ) return;
+
+		tr.Surface.DoFootstep( this, tr, foot, volume * 10 );
 	}
 }

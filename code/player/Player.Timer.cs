@@ -1,4 +1,5 @@
 ﻿
+using Platformer.Gamemodes;
 using Sandbox;
 using System;
 using System.Linq;
@@ -15,7 +16,7 @@ partial class PlatformerPawn
 	[Net]
 	public TimeSince TimeSinceStart { get; set; }
 
-	[Net, Change]
+	[Net]
 	public float BestTime { get; set; } = defaultBestTime;
 
 	public void StartCourse()
@@ -36,20 +37,17 @@ partial class PlatformerPawn
 
 	public async Task CompleteCourseAsync()
 	{
-		if(Platformer.CurrentGameMode == Platformer.GameModes.Coop)
+		if( Coop.Current != null )
 		{
-			Platformer.Current.CoopTimerState = Platformer.TimerState.Finished;
+			Coop.Current.CoopTimerState = TimerState.Finished;
 
-			var game = Game.Current as Platformer;
-
-			var span = TimeSpan.FromSeconds( (game.TimeCoopStart * 60).Clamp( 0, float.MaxValue ) );
+			var span = TimeSpan.FromSeconds( (Coop.Current.TimeCoopStart * 60).Clamp( 0, float.MaxValue ) );
 			var formattedTime = span.ToString( @"hh\:mm\:ss" );
 
 			PlatformerKillfeed.AddEntryOnClient( To.Everyone, $"{Client.Name} has completed the course in {formattedTime}", Client.NetworkIdent );
-
 		}
 
-		if ( Platformer.CurrentGameMode == Platformer.GameModes.Competitive )
+		if( Competitive.Current != null )
 		{
 			TimerState = TimerState.Finished;
 
@@ -61,17 +59,20 @@ partial class PlatformerPawn
 			ClearCheckpoints();
 			PlatformerKillfeed.AddEntryOnClient( To.Everyone, $"{Client.Name} has completed the course in {formattedTime}", Client.NetworkIdent );
 			Celebrate();
-			FinishedReset();
+
+			if( this is CompetitivePlayer pl )
+			{
+				pl.KeysPlayerHas.Clear();
+				pl.NumberOfKeys = 0;
+			}
 
 			if ( TimeSinceStart < BestTime )
 			{
 				BestTime = TimeSinceStart;
 
 				var scoreResult = await GameServices.SubmitScore( Client.PlayerId, BestTime );
-
 			}
 		}
-
 	}
 
 	public void ResetTimer()
@@ -141,47 +142,6 @@ partial class PlatformerPawn
 		Sound.FromScreen( "course.complete" );
 
 	}
-
-	private void OnBestTimeChanged()
-	{
-		if ( !IsLocalPawn ) return;
-		MapStats.Local.SetBestTime( BestTime );
-	}
-
-	//[ServerCmd( "par_nextcp" )]
-	//private static void GotoNextCheckpoint()
-	//{
-	//	if ( !ConsoleSystem.Caller.IsValid() || ConsoleSystem.Caller.Pawn is not Player pl ) return;
-
-	//	var currentCp = pl.Checkpoints.LastOrDefault();
-	//	var targetCp = currentCp == null ? 1 : currentCp.Number + 1;
-	//	var nextCp = Entity.All.FirstOrDefault( x => x is Checkpoint cp && cp.Number == targetCp ) as Checkpoint;
-	//	if ( nextCp == null ) return;
-	//	pl.TeleportToCheckpoint( nextCp );
-	//}
-
-	//[ServerCmd( "par_prevcp" )]
-	//private static void GotoPreviousCheckpoint()
-	//{
-	//	if ( !ConsoleSystem.Caller.IsValid() || ConsoleSystem.Caller.Pawn is not Player pl ) return;
-
-	//	var currentCp = pl.Checkpoints.LastOrDefault();
-	//	var targetCp = currentCp == null ? 0 : currentCp.Number - 1;
-	//	var nextCp = Entity.All.FirstOrDefault( x => x is Checkpoint cp && cp.Number == targetCp ) as Checkpoint;
-	//	if ( nextCp == null ) return;
-	//	pl.TeleportToCheckpoint( nextCp );
-	//}
-
-	//private async void TeleportToCheckpoint( Checkpoint cp )
-	//{
-	//	TimerState = TimerState.InStartZone;
-	//	TrySetCheckpoint( cp, true );
-	//	GotoBestCheckpoint();
-
-	//	await System.Threading.Tasks.Task.Delay( 100 );
-
-	//	TimerState = TimerState.InStartZone;
-	//}
 
 }
 

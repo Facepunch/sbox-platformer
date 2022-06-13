@@ -59,10 +59,24 @@ namespace Platformer.Movement
 			pl.IgnoreFallDamage = true;
 			
 			var ents = Entity.FindInSphere( ctrl.Position, 30f );
+
+			if ( BasePlayerController.Debug )
+			{
+				DebugOverlay.Sphere( ctrl.Position, 30f, Color.Red, 3f );
+			}
+
 			foreach( var ent in ents )
 			{
-				if ( ent is PlatformerPawn ) continue;
-				ent.TakeDamage( DamageInfo.Generic( 80 ) );
+				if ( ent == ctrl.Pawn ) continue;
+				var dmgtype = ent is PlatformerPawn ? DamageFlags.Sonic : DamageFlags.Generic;
+				var dmgAmount = ent is PlatformerPawn ? 2 : 80;
+
+				ent.TakeDamage( new DamageInfo()
+				{
+					Attacker = ctrl.Pawn,
+					Flags = dmgtype,
+					Damage = dmgAmount
+				} );
 			}
 
 			ctrl.Velocity += ctrl.Velocity.WithZ( -SlamGravity ) * Time.Delta;

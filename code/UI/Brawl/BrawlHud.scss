@@ -1,0 +1,37 @@
+﻿
+@import "../_vars.scss";
+
+BrawlHud {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.title {
+    font-size: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 48px;
+    color: $green;
+    font-family: $stylefont;
+    text-stroke: 10px black;
+}
+
+HurtOverlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-image: url("ui/hud/hurtoverlay.png");
+    background-size: 115%;
+    background-position: center;
+    opacity: 0;
+    transition: opacity .1s ease-in;
+
+    &.active {
+        opacity: .5;
+    }
+}

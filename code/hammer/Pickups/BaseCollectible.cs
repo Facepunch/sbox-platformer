@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Platformer;
 
-internal partial class BaseCollectible : ModelEntity
+public partial class BaseCollectible : ModelEntity
 {
 
 	[Net]

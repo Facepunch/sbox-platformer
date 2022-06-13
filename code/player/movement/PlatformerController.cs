@@ -77,16 +77,13 @@ namespace Platformer.Movement
 		{
 			EyeLocalPosition = Vector3.Up * (64 * Pawn.Scale) + TraceOffset;
 			EyeLocalPosition *= activeMechanic != null ? activeMechanic.EyePosMultiplier : 1f;
-			//EyeRotation = Input.Rotation;
+			EyeRotation = Input.Rotation;
 
-			if ( Velocity.WithZ( 0 ).Length > 0 )
+			var wishdir = GetWishVelocity( true ).Normal;
+			if(wishdir.Length > 0 )
 			{
-				var targetAngles = Rotation.LookAt( Velocity ).Angles();
-				targetAngles.pitch = 0;
-				targetAngles.roll = 0;
-
-				Rotation = Rotation.Slerp( Rotation, Rotation.From( targetAngles ), 5f * Time.Delta );
-				EyeRotation = Rotation;
+				var targetRot = Rotation.LookAt( wishdir ).Angles().WithPitch( 0 ).WithRoll( 0 );
+				Rotation = Rotation.Slerp( Rotation, Rotation.From( targetRot ), 8f * Time.Delta );
 			}
 
 			UpdateBBox();
@@ -167,11 +164,13 @@ namespace Platformer.Movement
 			}
 
 		}
+
 		public virtual void SetBBox( Vector3 mins, Vector3 maxs )
 		{
 			Mins = mins;
 			Maxs = maxs;
 		}
+
 		public virtual void UpdateBBox()
 		{
 			var girth = BodyGirth * 0.5f;

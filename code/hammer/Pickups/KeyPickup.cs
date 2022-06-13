@@ -4,6 +4,7 @@ using Sandbox;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Platformer.Gamemodes;
 
 namespace Platformer;
 
@@ -41,46 +42,43 @@ internal partial class KeyPickup : AnimatedEntity
 			SetModel( "models/citizen_props/foamhand.vmdl" );
 			KeyIcon = ("ui/hud/collectables/Collect_FoamHand.png");
 		}
+
 		if ( ModelTypeList == ModelType.Ball )
 		{
 			SetModel( "models/citizen_props/beachball.vmdl" );
 			KeyIcon = ("ui/hud/collectables/Collect_BeachBall.png");
 		}
 
-		Transmit = TransmitType.Always;
-
-		SetupPhysicsFromModel(PhysicsMotionType.Keyframed);
+		SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
 		CollisionGroup = CollisionGroup.Trigger;
 		EnableSolidCollisions = false;
 		EnableAllCollisions = true;
-
-
+		Transmit = TransmitType.Always;
 	}
 
 	public override void StartTouch( Entity other )
 	{
 		base.StartTouch( other );
 
-		if ( other is not PlatformerPawn pl ) return;
+		if ( other is not CompetitivePlayer pl ) 
+			return;
 
-		if ( Platformer.CurrentGameMode == Platformer.GameModes.Competitive )
+		if ( pl.KeysPlayerHas.Contains( KeyNumber ) ) 
+			return;
+
+		pl.PickedUpItem( Color.Yellow );
+		pl.KeysPlayerHas.Add( KeyNumber );
+		pl.NumberOfKeys++;
+
+		CollectedHealthPickup( To.Single( other.Client ) );
+
+		if ( Coop.Current.IsValid() )
 		{
-			if ( pl.KeysPlayerHas.Contains( KeyNumber ) ) return;
-			pl.PickedUpItem( Color.Yellow );
+			if ( Coop.Current.KeysAllPlayerHas.Contains( KeyNumber ) ) 
+				return;
 
-			pl.KeysPlayerHas.Add( KeyNumber );
-			pl.NumberOfKeys++;
-
-			CollectedHealthPickup( To.Single( other.Client ) );
-		}
-		
-		if ( Platformer.CurrentGameMode == Platformer.GameModes.Coop )
-		{
-			if ( Platformer.Current.KeysAllPlayerHas.Contains( KeyNumber ) ) return;
-			Platformer.Current.KeysAllPlayerHas.Add( KeyNumber );
-			Platformer.Current.NumberOfKeys++;
-
-			Log.Info( Platformer.Current.NumberOfKeys );
+			Coop.Current.KeysAllPlayerHas.Add( KeyNumber );
+			Coop.Current.NumberOfKeys++;
 
 			CollectedHealthPickup( To.Single( other.Client ) );
 		}
@@ -103,12 +101,12 @@ internal partial class KeyPickup : AnimatedEntity
 	[Event.Tick.Client]
 	private void ClientTick()
 	{
-		if ( Platformer.CurrentGameMode == Platformer.GameModes.Competitive )
+		if ( Platformer.Mode == Platformer.GameModes.Competitive )
 		{
 			var a = ShouldRender() ? 1 : 0;
 			RenderColor = RenderColor.WithAlpha( a );
 		}
-		if ( Platformer.CurrentGameMode == Platformer.GameModes.Coop )
+		if ( Platformer.Mode == Platformer.GameModes.Coop )
 		{
 			var b = ShouldRenderAll() ? 1 : 0;
 			RenderColor = RenderColor.WithAlpha( b );
@@ -118,13 +116,13 @@ internal partial class KeyPickup : AnimatedEntity
 	private bool ShouldRender()
 	{
 		if ( !Local.Pawn.IsValid() ) return true;
-		if ( Local.Pawn is not PlatformerPawn pl ) return true;
+		if ( Local.Pawn is not CompetitivePlayer pl ) return true;
 
 		return !pl.KeysPlayerHas.Contains( KeyNumber );
 	}
 
 	private bool ShouldRenderAll()
 	{
-		return !Platformer.Current.KeysAllPlayerHas.Contains( KeyNumber );
+		return !Coop.Current?.KeysAllPlayerHas?.Contains( KeyNumber ) ?? false;
 	}
 }

@@ -4,6 +4,7 @@ using Sandbox;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Platformer.Gamemodes;
 
 namespace Platformer;
 
@@ -12,7 +13,7 @@ namespace Platformer;
 [Display( Name = "Player Checkpoint", GroupName = "Platformer", Description = "Defines a checkpoint where the player will respawn after falling" ), Category( "Player" ), Icon( "flag_circle" )]
 [BoundsHelper( "mins", "maxs", false, true )]
 [HammerEntity]
-internal partial class Checkpoint : ModelEntity
+public partial class Checkpoint : ModelEntity
 {
 
 
@@ -82,49 +83,42 @@ internal partial class Checkpoint : ModelEntity
 	{
 		base.Touch( other );
 
-		if ( other is not PlatformerPawn pl ) return;
+		if ( other is not CompetitivePlayer pl ) return;
 		if ( !CanPlayerCheckpoint( pl ) ) return;
 
 		pl.TrySetCheckpoint( this );
 
 		if ( IsEnd && pl.NumberOfKeys == Platformer.Current.NumberOfCollectables ) _ = pl.CompleteCourseAsync();
 
-		if ( Platformer.CurrentGameMode == Platformer.GameModes.Competitive )
-		{
-			if ( IsStart )
-			{
-				if ( pl.NumberOfKeys == 0 )
+		if( Competitive.Current != null && IsStart )
+		{				
+			if ( pl.NumberOfKeys == 0 )
 					pl.ResetTimer();
-			}
 		}
 
-		if ( Platformer.CurrentGameMode == Platformer.GameModes.Coop )
+		if( Coop.Current != null && Coop.Current.CoopTimerState != TimerState.Finished )
 		{
-			if( Platformer.Current.CoopTimerState == Platformer.TimerState.Finished) return;
-			if ( IsEnd && Platformer.Current.NumberOfKeys == Platformer.Current.NumberOfCollectables )
+			if ( IsEnd && Coop.Current.NumberOfKeys == Platformer.Current.NumberOfCollectables )
 			{
 				_ = pl.CompleteCourseAsync();
 			//	Platformer.GameLoopCoopEndAsync();
 			}
-			if ( IsStart ) return;
-			CoopRespawn( pl );
-		}
 
-		if ( !IsStart ) return;
+			if ( IsStart ) return;
+
+			Coop.Current.RespawnAsAlive( pl );
+			EnableTouch = false;
+		}
 	}
 
 	public override void EndTouch( Entity other )
 	{
 		base.EndTouch( other );
 
-		if ( other is not PlatformerPawn pl ) return;
+		if ( other is not CompetitivePlayer pl ) return;
+		if ( !IsStart || pl.NumberOfKeys != 0 ) return;
 
-		if ( !IsStart ) return;
-
-		if ( Platformer.CurrentGameMode == Platformer.GameModes.Competitive && pl.NumberOfKeys == 0 )
-		{
-			pl.StartCourse();
-		}
+		pl.StartCourse();
 	}
 
 	private bool CanPlayerCheckpoint( PlatformerPawn pl )
@@ -138,8 +132,8 @@ internal partial class Checkpoint : ModelEntity
 	[Event.Frame]
 	private void OnFrame()
 	{
-		if ( Local.Pawn is not PlatformerPawn pl ) return;
-		if ( this.IsEnd || this.IsStart ) return;
+		if ( Local.Pawn is not CompetitivePlayer pl ) return;
+		if ( IsEnd || IsStart ) return;
 
 		var isLatestCheckpoint = pl.Checkpoints.LastOrDefault() == this;
 
@@ -163,9 +157,4 @@ internal partial class Checkpoint : ModelEntity
 		rotation = Rotation;
 	}
 
-	public void CoopRespawn( PlatformerPawn toucher )
-	{
-		Platformer.RespawnAsAlive( toucher );
-		EnableTouch = false;
-	}
 }

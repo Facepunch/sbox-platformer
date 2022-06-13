@@ -21,6 +21,7 @@ namespace Platformer
 			ent.CopyBodyGroups( this );
 			ent.CopyMaterialGroup( this );
 			ent.TakeDecalsFrom( this );
+			ent.CopyMaterialOverrides( this );
 			ent.EnableHitboxes = true;
 			ent.EnableAllCollisions = true;
 			ent.SurroundingBoundsMode = SurroundingBoundsType.Physics;

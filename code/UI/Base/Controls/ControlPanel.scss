@@ -1,0 +1,35 @@
+﻿
+@import "../../_vars.scss";
+
+ControlPanel {
+    color: $fontcolor;
+    position: absolute;
+    bottom: 64px;
+    right: 64px;
+    align-items: flex-end;
+    z-index: 101;
+    flex-direction: column;
+    font-family: Poppins;
+    opacity: 0;
+    transition: all .15s ease-in;
+
+    &.open {
+        opacity: 1;
+    }
+
+    ControlEntry {
+        padding: 8px;
+        background-color: $bg;
+        margin-bottom: 2px;
+
+        .name {
+            margin-right: 4px;
+            border-right: 2px solid $green;
+            padding-right: 4px;
+            font-weight: 600;
+        }
+
+        .description {
+        }
+    }
+}

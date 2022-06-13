@@ -60,10 +60,9 @@ internal partial class CoinTrigger : ModelEntity
 			_ = HasEnoughCoins.Fire( this );
 
 			BeenTrigger = true;
-
 		}
-
 	}
+
 	/// <summary>
 	/// Triggers on set amount of coins.
 	/// </summary>

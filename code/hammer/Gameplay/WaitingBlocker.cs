@@ -1,36 +1,35 @@
 
+using Platformer.Gamemodes;
 using Sandbox;
 using SandboxEditor;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
 
-namespace Platformer
+namespace Platformer;
+
+/// <summary>
+/// A generic brush/mesh that will disable after the waiting period.
+/// </summary>
+[Library( "plat_wait" )]
+[Solid]
+[RenderFields]
+[VisGroup( VisGroup.Dynamic )]
+[Display( Name = "Waiting Blocker", GroupName = "Platformer", Description = "Waiting Blocker." ), Category( "Gameplay" ), Icon( "av_timer" )]
+[HammerEntity]
+public partial class WaitingBlocker : BrushEntity
 {
-	/// <summary>
-	/// A generic brush/mesh that will disable after the waiting period.
-	/// </summary>
-	[Library( "plat_wait" )]
-	[Solid]
-	[RenderFields]
-	[VisGroup( VisGroup.Dynamic )]
-	[Display( Name = "Waiting Blocker", GroupName = "Platformer", Description = "Waiting Blocker." ), Category( "Gameplay" ), Icon( "av_timer" )]
-	[HammerEntity]
-	public partial class WaitingBlocker : BrushEntity
+
+	public override void Spawn()
 	{
+		base.Spawn();
+	}
 
-		public override void Spawn()
+	[Event.Tick.Server]
+	public void Tick()
+	{
+		if ( Platformer.GameState == GameStates.Live )
 		{
-			base.Spawn();
-		}
-
-		[Event.Tick.Server]
-		public void Tick()
-		{
-			if(Platformer.CurrentState == Platformer.GameStates.Live)
-			{
-				Enabled = false;
-				Solid = false;
-			}	
+			Enabled = false;
+			Solid = false;
 		}
 	}
 }
