@@ -1745,4 +1745,10 @@
 			}
 		},
 	]
+	m_Children = 
+	[
+		{
+			m_ChildRef = resource:"particles/gameplay/laser_beam/beam_lazer_end_a.vpcf"
+		},
+	]
 }
