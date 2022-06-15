@@ -17,9 +17,6 @@ namespace Platformer
 		[Net, HideInEditor, Change(nameof(OnclPathJsonChanged))]
 		public string clPathJson { set; get; }
 
-		[Net]
-		public List<BasePathNode> PNodes { get; private set; }
-
 		public override void Spawn()
 		{
 			base.Spawn();
