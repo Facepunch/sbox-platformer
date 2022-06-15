@@ -16,7 +16,7 @@ namespace Platformer
 		[Net]
 		public bool PlayerHasGlider { get; set; } = false;
 
-		[Net] 
+		[Net]
 		public float GliderEnergy { get; set; }
 
 		[Net]
@@ -48,10 +48,10 @@ namespace Platformer
 		public const float MaxRenderDistance = 128f;
 		public ClothingContainer Clothing = new();
 		private DamageInfo lastDamage;
-		private float LastHealth;
+		//private float LastHealth;
 		private TimeSince ts;
 		public string MapName => Global.MapName;
-		public bool JustPickedupHealth;
+		//public bool JustPickedupHealth;
 		public int AmountOfFlash = 0;
 
 		public bool IgnoreFallDamage = false;
@@ -154,7 +154,7 @@ namespace Platformer
 
 		public void PlayerBeenDamaged()
 		{
-			LastHealth = Health;
+			//LastHealth = Health;
 
 			if ( IsServer )
 			{
@@ -182,6 +182,7 @@ namespace Platformer
 			base.TakeDamage( info );
 
 			PlayerBeenDamaged();
+			lastDamage = info;
 			Velocity += info.Force;
 		}
 
@@ -203,7 +204,7 @@ namespace Platformer
 			CameraMode = new PlatformerRagdollCamera();
 
 			WalkCloud?.Destroy();
-			
+
 
 			if (HeldBody != null)
 			{

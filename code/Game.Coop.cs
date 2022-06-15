@@ -30,7 +30,7 @@ namespace Platformer
 
 		public void StartCoopTimer()
 		{
-			if ( CurrentState == GameStates.Live ) ;
+			if ( CurrentState == GameStates.Live )
 			{
 				TimeCoopStart = 0;
 			}
