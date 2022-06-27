@@ -17,7 +17,7 @@
     "MapList": [
       "facepunch.tup_block",
       "facepunch.tup_yourit",
-      "fish.sawmill"
+      "facepunch.tup_brawl"
     ],
     "MinPlayers": 1,
     "RankType": 2,
