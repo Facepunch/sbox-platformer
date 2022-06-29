@@ -24,7 +24,7 @@ internal partial class BrawlPlayer : PlatformerPawn
 		Animator.SetAnimParameter( "holdtype", 5 );
 		Animator.SetAnimParameter( "aim_body_weight", 1.0f );
 
-		if ( Input.Pressed( InputButton.PrimaryAttack ) )
+		if ( Health > 0 && Input.Pressed( InputButton.PrimaryAttack ) )
 		{
 			TryPunch();
 		}
