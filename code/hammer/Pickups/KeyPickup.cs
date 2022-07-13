@@ -50,7 +50,7 @@ internal partial class KeyPickup : AnimatedEntity
 		}
 
 		SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
-		CollisionGroup = CollisionGroup.Trigger;
+		Tags.Add( "trigger" );
 		EnableSolidCollisions = false;
 		EnableAllCollisions = true;
 		Transmit = TransmitType.Always;

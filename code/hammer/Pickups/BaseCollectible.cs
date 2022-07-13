@@ -17,7 +17,7 @@ public partial class BaseCollectible : ModelEntity
 		Transmit = TransmitType.Always;
 
 		SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
-		CollisionGroup = CollisionGroup.Trigger;
+		Tags.Add( "trigger" );
 		EnableAllCollisions = true;
 		EnableSolidCollisions = false;
 	}

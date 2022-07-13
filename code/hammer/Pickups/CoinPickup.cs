@@ -26,7 +26,7 @@ internal partial class CoinPickup : BaseCollectible
 		MoveType = MoveType.Physics;
 		SetupPhysicsFromModel( PhysicsMotionType.Dynamic,true );
 
-		CollisionGroup = CollisionGroup.Trigger;
+		Tags.Add( "trigger" );
 		EnableAllCollisions = true;
 		PhysicsEnabled = false;
 		UsePhysicsCollision = false;

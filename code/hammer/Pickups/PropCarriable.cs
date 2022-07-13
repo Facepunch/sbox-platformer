@@ -112,8 +112,8 @@ public partial class PropCarriable : Prop, IUse
 				};
 
 				Coins.SpawnWithPhys();
-				Coins.CollisionGroup = CollisionGroup.Weapon;
-				Coins.SetInteractsAs( CollisionLayer.Debris );
+				Coins.Tags.Add( "Weapon" );
+				//Coins.SetInteractsAs( CollisionLayer.Debris );
 			}
 		}
 	}

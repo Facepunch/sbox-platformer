@@ -20,11 +20,41 @@
       "facepunch.tup_brawl"
     ],
     "MinPlayers": 1,
-    "RankType": 2,
-    "LeaderboardType": 2,
+    "RankType": "Best",
+    "LeaderboardType": "Ascending",
     "PerMapRanking": false,
-    "MapSelect": 3,
+    "MapSelect": "Official",
     "MaxPlayers": 32,
-    "GameNetworkType": 0
+    "GameNetworkType": "Multiplayer",
+    "Collision": {
+      "Defaults": {
+        "solid": "Collide",
+        "trigger": "Trigger",
+        "ladder": "Ignore",
+        "water": "Trigger"
+      },
+      "Pairs": [
+        {
+          "a": "solid",
+          "b": "solid",
+          "r": "Collide"
+        },
+        {
+          "a": "trigger",
+          "b": "playerclip",
+          "r": "Ignore"
+        },
+        {
+          "a": "solid",
+          "b": "trigger",
+          "r": "Trigger"
+        },
+        {
+          "a": "playerclip",
+          "b": "solid",
+          "r": "Collide"
+        }
+      ]
+    }
   }
 }

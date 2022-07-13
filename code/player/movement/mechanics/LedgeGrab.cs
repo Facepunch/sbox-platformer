@@ -91,6 +91,7 @@ namespace Platformer.Movement
 			// Should be done.
 			var trup = Trace.Ray( center, destup )
 				.Ignore( ctrl.Pawn )
+				.WithoutTags( "trigger" )
 				.WithoutTags( "PropCarry" )
 				.WithoutTags( "Platplayer" )
 				//.WorldOnly()
@@ -101,6 +102,7 @@ namespace Platformer.Movement
 				.Ignore( ctrl.Pawn )
 				.WithoutTags( "PropCarry" )
 				.WithoutTags( "Platplayer" )
+				.WithoutTags( "trigger" )
 				//.WorldOnly()
 				.Radius( 8 )
 				.Run();

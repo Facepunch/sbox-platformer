@@ -15,7 +15,7 @@ namespace Platformer
 			ent.MoveType = MoveType.Physics;
 			ent.UsePhysicsCollision = true;
 			ent.EnableAllCollisions = true;
-			ent.CollisionGroup = CollisionGroup.Debris;
+			ent.Tags.Add( "debris" );
 			ent.SetModel( GetModelName() );
 			ent.CopyBonesFrom( this );
 			ent.CopyBodyGroups( this );

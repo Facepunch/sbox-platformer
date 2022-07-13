@@ -23,8 +23,8 @@ public partial class Jumppadmodel : AnimatedEntity
 	public override void Spawn()
 	{
 		SetupPhysicsFromModel( PhysicsMotionType.Static );
-		CollisionGroup = CollisionGroup.Trigger;
-		SetInteractsExclude( CollisionLayer.STATIC_LEVEL | CollisionLayer.WORLD_GEOMETRY | CollisionLayer.PLAYER_CLIP );
+		Tags.Add( "trigger" );
+		//SetInteractsExclude( CollisionLayer.STATIC_LEVEL | CollisionLayer.WORLD_GEOMETRY | CollisionLayer.PLAYER_CLIP );
 		EnableAllCollisions = false;
 		EnableTouch = true;
 
