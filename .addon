@@ -23,7 +23,7 @@
     "RankType": "Best",
     "LeaderboardType": "Ascending",
     "PerMapRanking": false,
-    "MapSelect": "Official",
+    "MapSelect": "Tagged",
     "MaxPlayers": 32,
     "GameNetworkType": "Multiplayer",
     "Collision": {
@@ -55,6 +55,7 @@
           "r": "Collide"
         }
       ]
-    }
+    },
+    "GameCategory": "None"
   }
 }
