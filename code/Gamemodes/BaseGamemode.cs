@@ -159,6 +159,9 @@ public partial class BaseGamemode : Entity
 			if ( cl.Pawn is not PlatformerPawn pl ) continue;
 			pl.ResetTimer();
 			pl.ResetBestTime();
+			pl.ResetCollectibles<BaseCollectible>();
+			pl.NumberLife = 3;
+			pl.Coin = 0;
 			pl.GotoBestCheckpoint();
 		}
 
