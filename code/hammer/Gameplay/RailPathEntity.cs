@@ -1,33 +1,22 @@
 ﻿
 using Sandbox;
 using SandboxEditor;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
 
 namespace Platformer
 {
+	/// <summary>
+	/// A rail path the player can slide along.
+	/// </summary>
 	[Library( "platformer_path_rail" )]
-	[Display( Name = "Path Rail", GroupName = "Platformer", Description = "A rail path the player can slide along." )]
-	[Path( "path_generic_node" )]
-	[HammerEntity]
+	[Title( "Path Rail" ), Category( "Platformer" )]
+	[HammerEntity, Path( "path_generic_node" )]
 	internal partial class RailPathEntity : GenericPathEntity
 	{
-
-		[Net, HideInEditor, Change(nameof(OnclPathJsonChanged))]
-		public string clPathJson { set; get; }
-
 		public override void Spawn()
 		{
 			base.Spawn();
 
 			Transmit = TransmitType.Always;
-			clPathJson = pathNodesJSON;
-		}
-
-		public void OnclPathJsonChanged()
-		{
-			PathNodes = JsonSerializer.Deserialize<List<BasePathNode>>( clPathJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true } );
 		}
 
 		public Vector3 NearestPoint( Vector3 from, bool reverse, out int node, out float t )
