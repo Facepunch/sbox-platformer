@@ -31,7 +31,7 @@ public class PlatformerScoreboard : Sandbox.UI.Scoreboard<ScoreboardEntry>
 			//
 			// Sort by number of kills, then number of deaths
 			//
-			Canvas.SortChildren<ScoreboardEntry>( ( x ) => (-x.Client.GetInt( "points" ) * 1000) + x.Client.GetInt( "deaths" ) );
+			Canvas.SortChildren<ScoreboardEntry>( ( x ) => (-x.Client.GetInt( "kills" ) * 1000) + x.Client.GetInt( "deaths" ) );
 		}
 	}
 

@@ -153,7 +153,7 @@ public partial class BaseGamemode : Entity
 	{
 		foreach ( var cl in Client.All )
 		{
-			cl.SetInt( "points", 0 );
+			cl.SetInt( "kills", 0 );
 			cl.SetInt( "deaths", 0 );
 
 			if ( cl.Pawn is not PlatformerPawn pl ) continue;
