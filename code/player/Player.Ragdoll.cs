@@ -12,7 +12,7 @@ namespace Platformer
 			ent.Position = Position;
 			ent.Rotation = Rotation;
 			ent.Scale = Scale;
-			ent.MoveType = MoveType.Physics;
+			ent.PhysicsEnabled = true;
 			ent.UsePhysicsCollision = true;
 			ent.EnableAllCollisions = true;
 			ent.Tags.Add( "debris" );
@@ -27,10 +27,6 @@ namespace Platformer
 			ent.SurroundingBoundsMode = SurroundingBoundsType.Physics;
 			ent.RenderColor = RenderColor;
 			ent.PhysicsGroup.Velocity = velocity;
-
-			ent.SetInteractsAs( CollisionLayer.Debris );
-			ent.SetInteractsWith( CollisionLayer.WORLD_GEOMETRY );
-			ent.SetInteractsExclude( CollisionLayer.Player | CollisionLayer.Debris );
 
 			foreach ( var child in Children )
 			{
