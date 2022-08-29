@@ -92,6 +92,8 @@ public partial class PlatformerPawn : Sandbox.Player
 		}
 
 		Velocity += info.Force;
+
+		lastDamage = info;
 	}
 
 	public override void OnKilled()

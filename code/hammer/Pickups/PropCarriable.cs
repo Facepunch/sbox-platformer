@@ -127,7 +127,7 @@ public partial class PropCarriable : Prop, IUse
 
 	protected override void OnPhysicsCollision( CollisionEventData eventData )
 	{
-		if ( eventData.Entity is PlatformerPawn p ) return;
+		if ( eventData.This.Entity is PlatformerPawn p ) return;
 
 		base.OnPhysicsCollision( eventData );
 	}

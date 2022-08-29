@@ -70,7 +70,7 @@ partial class PlatformerPawn
 			{
 				BestTime = TimeSinceStart;
 
-				var scoreResult = await GameServices.SubmitScore( Client.PlayerId, BestTime );
+				_ = await GameServices.UpdateLeaderboard( Client.PlayerId, BestTime );
 			}
 		}
 	}
