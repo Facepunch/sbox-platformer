@@ -45,9 +45,8 @@ public partial class LaserHazard : ModelEntity
 		var dir = Rotation.Forward;
 		var trace = Trace.Ray( Position + Rotation.Forward * 5, Position + dir * maxDist )
 			.UseHitboxes()
-			.WorldOnly()
 			.Radius( 2.0f )
-			.HitLayer( CollisionLayer.Player )
+			.WithAnyTags( new[] { "player", "world", "solid" } )
 			.Run();
 
 		if ( IsClient )
@@ -58,7 +57,7 @@ public partial class LaserHazard : ModelEntity
 
 		if ( IsServer )
 		{
-			
+
 			if( trace.Entity is PlatformerPawn pl )
 			{
 				DoDamage( pl );

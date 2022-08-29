@@ -29,7 +29,7 @@ public partial class PlatformerPawn : Sandbox.Player
 	[Net]
 	public int Coin { get; set; }
 	[Net]
-	public List<Checkpoint> Checkpoints { get; set; } = new();
+	public IList<Checkpoint> Checkpoints { get; set; }
 
 	public int AreaPriority = 0;
 	public bool IgnoreFallDamage = false;

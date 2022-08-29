@@ -23,8 +23,7 @@ internal partial class CoinPickup : BaseCollectible
 
 		Transmit = TransmitType.Always;
 
-		MoveType = MoveType.Physics;
-		SetupPhysicsFromModel( PhysicsMotionType.Dynamic,true );
+		SetupPhysicsFromModel( PhysicsMotionType.Dynamic, true );
 
 		Tags.Add( "trigger" );
 		EnableAllCollisions = true;

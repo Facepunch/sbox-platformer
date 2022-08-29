@@ -8,7 +8,7 @@ public partial class BaseCollectible : ModelEntity
 {
 
 	[Net]
-	public List<Entity> PlayersWhoCollected { get; set; } = new();
+	public IList<Entity> PlayersWhoCollected { get; set; }
 
 	public override void Spawn()
 	{

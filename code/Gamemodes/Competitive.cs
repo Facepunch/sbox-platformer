@@ -24,8 +24,6 @@ namespace Platformer.Gamemodes
 
 			if ( player is not CompetitivePlayer pl ) return;
 
-			pl.RemoveCollisionLayer( CollisionLayer.Solid );
-
 			if ( pl.NumberLife == 0 )
 			{
 				pl.ClearCheckpoints();
