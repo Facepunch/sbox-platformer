@@ -113,40 +113,35 @@ public partial class BaseGamemode : Entity
 	protected virtual bool CanBreakState() => false;
 	protected virtual void OnGameLive() { }
 
-	StandardPostProcess postProcess;
 	[Event.Frame]
 	protected virtual void DoPostProcess()
 	{
-		if ( postProcess == null )
-		{
-			postProcess = new();
-			PostProcess.Add( postProcess );
-		}
+		var postProcess = Map.Camera.FindOrCreateHook<Sandbox.Effects.ScreenEffects>();
+		//Crashing Game
+		//postProcess.Sharpen.Enabled = false;
 
-		postProcess.Sharpen.Enabled = false;
+		//postProcess.FilmGrain.Enabled = false;
+		//postProcess.FilmGrain.Intensity = 0.2f;
+		//postProcess.FilmGrain.Response = 1;
 
-		postProcess.FilmGrain.Enabled = false;
-		postProcess.FilmGrain.Intensity = 0.2f;
-		postProcess.FilmGrain.Response = 1;
+		//postProcess.Vignette.Enabled = true;
+		//postProcess.Vignette.Intensity = 1.0f;
+		//postProcess.Vignette.Roundness = 1.5f;
+		//postProcess.Vignette.Smoothness = 0.5f;
+		//postProcess.Vignette.Color = Color.Black;
 
-		postProcess.Vignette.Enabled = true;
-		postProcess.Vignette.Intensity = 1.0f;
-		postProcess.Vignette.Roundness = 1.5f;
-		postProcess.Vignette.Smoothness = 0.5f;
-		postProcess.Vignette.Color = Color.Black;
+		//postProcess.Saturate.Enabled = true;
+		//postProcess.Saturate.Amount = 1;
 
-		postProcess.Saturate.Enabled = true;
-		postProcess.Saturate.Amount = 1;
+		//postProcess.Blur.Enabled = false;
 
-		postProcess.Blur.Enabled = false;
+		//if ( GameState == GameStates.Warmup )
+		//{
+		//	postProcess.FilmGrain.Intensity = 0.4f;
+		//	postProcess.FilmGrain.Response = 0.5f;
 
-		if ( GameState == GameStates.Warmup )
-		{
-			postProcess.FilmGrain.Intensity = 0.4f;
-			postProcess.FilmGrain.Response = 0.5f;
-
-			postProcess.Saturate.Amount = 0.5f;
-		}
+		//	postProcess.Saturate.Amount = 0.5f;
+		//}
 	}
 
 	protected virtual void FreshStart()

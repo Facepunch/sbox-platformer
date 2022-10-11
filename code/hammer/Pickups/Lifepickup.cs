@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Platformer;
 
 [Library( "plat_lifepickup", Description = "Addition Life" )]
-[Model( Model = "models/gameplay/collect/life/life.vmdl" )]
+[Model( Model = "models/gameplay/collect/life/life_pickup.vmdl" )]
 [Display( Name = "Life Pickup", GroupName = "Platformer", Description = "Addition Life" ), Category( "Gameplay" ), Icon( "woman" )]
 [HammerEntity]
 internal partial class LifePickup : BaseCollectible
