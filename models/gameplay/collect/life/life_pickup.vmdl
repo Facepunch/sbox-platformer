@@ -15,7 +15,7 @@
 						[
 							{
 								from = "citizen_skin.vmat"
-								to = "models/gameplay/collect/life/life_mat.vmat"
+								to = "models/gameplay/collect/life/life_red.vmat"
 							},
 							{
 								from = "citizen_eyes.vmat"
@@ -26,12 +26,8 @@
 								to = "models/citizen/skin/citizen_eyeao.vmat"
 							},
 							{
-								from = "cube.vmat"
-								to = "models/gameplay/collect/life/life_mat.vmat"
-							},
-							{
 								from = "number.vmat"
-								to = "models/gameplay/collect/life/life_num_mat.vmat"
+								to = "models/gameplay/collect/life/life_red.vmat"
 							},
 						]
 						use_global_default = false
@@ -97,10 +93,7 @@
 						_class = "PhysicsShapeBox"
 						parent_bone = ""
 						surface_prop = "default"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
+						collision_tags = "solid"
 						origin = [ 2.10494, -0.040067, 12.685322 ]
 						angles = [ 0.0, 0.0, 0.0 ]
 						dimensions = [ 16.119762, 16.799171, 24.532417 ]
