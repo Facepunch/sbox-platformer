@@ -18,7 +18,6 @@ public partial class BaseGamemode : Entity
 	public RealTimeUntil StateTimer { get; set; } = 0f;
 	[Net]
 	public bool EnablePvP { get; set; }
-
 	public virtual Platformer.GameModes Mode => Platformer.GameModes.Coop;
 
 	public BaseGamemode()
@@ -51,7 +50,7 @@ public partial class BaseGamemode : Entity
 		await WaitStateTimer();
 
 		GameState = GameStates.Live;
-		StateTimer = 15 * 60;
+		StateTimer = Platformer.GameTime * 60;
 		FreshStart();
 
 		OnGameLive();

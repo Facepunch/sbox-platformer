@@ -11,6 +11,7 @@ public class TagRound : Panel
 {
 
 	public int CurrentRound { get; set; }
+	public int TotalRound { get; set; }
 
 	public override void Tick()
 	{
@@ -20,6 +21,7 @@ public class TagRound : Panel
 			return;
 
 		CurrentRound = Tag.Current.RoundNumber;
+		TotalRound = Platformer.NumTagRounds;
 	}
 
 }

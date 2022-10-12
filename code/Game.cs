@@ -23,6 +23,14 @@ public partial class Platformer : Sandbox.Game
 	[ConVar.Replicated( "plat_coop" )]
 	public static bool CoopMode { get; set; } = false;
 
+
+	[ConVar.Replicated( "pl_gametime" )]
+	public static int GameTime { get; set; } = 10;
+
+	[ConVar.Replicated( "pl_tagrounds" )]
+	public static int NumTagRounds { get; set; } = 5;
+
+
 	public Platformer()
 	{
 		Current = this;
@@ -107,5 +115,4 @@ public partial class Platformer : Sandbox.Game
 		Tag = 2,
 		Brawl = 3
 	}
-
 }

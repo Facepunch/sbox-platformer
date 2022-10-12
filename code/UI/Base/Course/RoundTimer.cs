@@ -28,7 +28,6 @@ namespace Platformer.UI
 			if ( BaseGamemode.Instance == null ) return;
 
 			var span = TimeSpan.FromSeconds( (BaseGamemode.Instance.StateTimer * 60).Clamp( 0, float.MaxValue ) );
-
 			Timer.Text = span.ToString( @"hh\:mm" );
 			State.Text = BaseGamemode.Instance.GameState.ToString();
 		}

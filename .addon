@@ -56,6 +56,28 @@
         }
       ]
     },
-    "GameCategory": "None"
+    "GameCategory": "None",
+    "GameSettings": {
+      "pl_gametime": {
+        "DisplayType": "Integer",
+        "Choices": [],
+        "ConVarName": "pl_gametime",
+        "DisplayName": "Round Timer (Minutes)",
+        "DefaultValue": "15",
+        "Description": "How much time do the players have?",
+        "Minimum": 5,
+        "Maximum": 60
+      },
+      "pl_tagrounds": {
+        "DisplayType": "Integer",
+        "Choices": [],
+        "ConVarName": "pl_tagrounds",
+        "DisplayName": "Number Of Tag Rounds",
+        "DefaultValue": "5",
+        "Description": "Number of rounds allowed in the Tag gamemode.",
+        "Minimum": 3,
+        "Maximum": 20
+      }
+    }
   }
 }

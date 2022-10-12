@@ -43,7 +43,7 @@ internal partial class Tag : BaseGamemode
 	{
 		RoundNumber = 1;
 
-		while ( RoundNumber < 5 )
+		while ( RoundNumber < Platformer.NumTagRounds )
 		{
 			GameState = GameStates.Runaway;
 			StateTimer = DoSkipToLive ? 0 : (1 * 30f);
@@ -60,7 +60,7 @@ internal partial class Tag : BaseGamemode
 			MoveTaggers();
 			await WaitStateTimer();
 
-			if ( RoundNumber < 4 )
+			if ( RoundNumber < Platformer.NumTagRounds - 1 )
 			{
 				GameState = GameStates.GameEnd;
 				StateTimer = DoSkipToLive ? 0 : (1 * 10f);
