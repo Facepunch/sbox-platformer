@@ -7,6 +7,18 @@ HealthCurrent {
     height: 196px;
     z-index: 2;
 
+    > .avatar {
+        position: absolute;
+        width: 120px;
+        aspect-ratio: 1;
+        z-index: -1;
+        top: 35px;
+        left: 38px;
+        border-radius: 50%;
+        border: 6px black;
+        transform: rotate(-10deg);
+    }
+
     .health-block {
         position: absolute;
         background-image: url("/ui/hud/circlehud.png");
@@ -56,6 +68,7 @@ LifeCurrent {
     z-index: 2;
 
 
+
     .number {
         font-family: "Fredoka One";
         text-stroke: 16px black;
@@ -88,6 +101,7 @@ LifeCurrent {
         left: -2px;
         border-radius: 50%;
         border: 6px black;
+        opacity: 0;
     }
 }
 
