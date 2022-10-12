@@ -97,7 +97,7 @@ internal partial class Coop : BaseGamemode
 		}
 	}
 
-	public override PlatformerPawn CreatePlayerInstance() => new CompetitivePlayer();
+	public override PlatformerPawn CreatePlayerInstance( Client cl ) => new CompetitivePlayer( cl );
 
 	public void RespawnAsAlive( Entity toucher )
 	{
@@ -105,7 +105,7 @@ internal partial class Coop : BaseGamemode
 		{
 			client.Pawn.Delete();
 
-			var pawn = CreatePlayerInstance() as CompetitivePlayer;
+			var pawn = CreatePlayerInstance( client ) as CompetitivePlayer;
 			client.Pawn = pawn;
 			pawn.Respawn();
 

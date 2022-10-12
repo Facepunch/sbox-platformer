@@ -11,7 +11,6 @@ namespace Platformer;
 
 public partial class PlatformerPawn : Sandbox.Player
 {
-
 	[Net]
 	public Color PlayerColor { get; set; }
 	[Net]
@@ -40,6 +39,17 @@ public partial class PlatformerPawn : Sandbox.Player
 	private Particles WalkCloud;
 	private Particles FakeShadowParticle;
 
+	[Net] public string ClothingAsString { get; set; }
+
+	public PlatformerPawn( Client cl ) : this()
+	{
+		Clothing = new ClothingContainer();
+		Clothing.LoadFromClient( cl );
+		ClothingAsString = cl.GetClientData( "avatar", "" );
+	}
+
+	public PlatformerPawn() { } 
+
 	public override void Respawn()
 	{
 		SetModel( "models/citizen/citizen.vmdl" );
@@ -55,8 +65,6 @@ public partial class PlatformerPawn : Sandbox.Player
 		CurrentArea ??= Global.MapName;
 		Health = 4;
 
-		Clothing ??= new ClothingContainer();
-		Clothing.LoadFromClient( Client );
 		Clothing.DressEntity( this );
 
 		base.Respawn();

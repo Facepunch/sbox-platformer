@@ -89,7 +89,7 @@ public partial class BaseGamemode : Entity
 
 	public virtual void DoClientJoined( Client cl )
 	{
-		cl.Pawn = CreatePlayerInstance();
+		cl.Pawn = CreatePlayerInstance( cl );
 		(cl.Pawn as PlatformerPawn).Respawn();
 
 		var spawnpoints = All.OfType<SpawnPoint>();
@@ -105,7 +105,7 @@ public partial class BaseGamemode : Entity
 		PlatformerChatBox.AddInformation( To.Everyone, $"{cl.Name} has joined the game", $"avatar:{cl.PlayerId}" );
 	}
 
-	public virtual PlatformerPawn CreatePlayerInstance() => new PlatformerPawn();
+	public virtual PlatformerPawn CreatePlayerInstance( Client cl ) => new PlatformerPawn( cl );
 	public virtual void DoPlayerRespawn( PlatformerPawn player ) { }
 	public virtual void DoPlayerKilled( PlatformerPawn player ) { }
 	protected virtual bool CanStart() => false;

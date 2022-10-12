@@ -108,7 +108,7 @@ internal partial class Tag : BaseGamemode
 		}
 	}
 
-	public override PlatformerPawn CreatePlayerInstance() => new TagPlayer();
+	public override PlatformerPawn CreatePlayerInstance( Client cl ) => new TagPlayer( cl );
 
 	public void TagPlayer( PlatformerPawn player )
 	{

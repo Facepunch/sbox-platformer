@@ -12,6 +12,9 @@ internal partial class CompetitivePlayer : PlatformerPawn
 	[Net]
 	public float NumberOfKeys { get; set; }
 
+	public CompetitivePlayer( Client cl ) : base( cl ) { }
+	public CompetitivePlayer() : base() { }
+
 	public override void Simulate( Client cl )
 	{
 		base.Simulate( cl );
