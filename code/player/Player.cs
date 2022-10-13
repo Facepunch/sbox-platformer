@@ -69,11 +69,12 @@ public partial class PlatformerPawn : Sandbox.Player
 		EnableHideInFirstPerson = true;
 		EnableShadowInFirstPerson = true;
 		CurrentArea ??= Global.MapName;
-		Health = 4;
 
 		Clothing.DressEntity( this );
 
 		base.Respawn();
+
+		Health = 4;
 
 		Tags.Add( "Platplayer" );
 		GotoBestCheckpoint();
