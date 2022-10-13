@@ -117,8 +117,5 @@ public partial class QuestBoy : AnimatedEntity
 	}
 	public void Freeze(PlatformerPawn pl )
 	{
-
-		Log.Info( "s" );
-		Log.Info( "avoof" );
 	}
 }
