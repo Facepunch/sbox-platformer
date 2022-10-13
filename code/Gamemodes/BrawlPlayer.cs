@@ -6,6 +6,8 @@ namespace Platformer.Gamemodes;
 
 internal partial class BrawlPlayer : PlatformerPawn
 {
+	public BrawlPlayer( Client cl ) : base( cl ) { } 
+	public BrawlPlayer() : base() { }
 
 	[Net, Predicted]
 	public TimeSince TimeSincePunch { get; set; }

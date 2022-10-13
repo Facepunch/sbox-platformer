@@ -7,7 +7,7 @@ namespace Platformer.Gamemodes;
 internal class Brawl : BaseGamemode
 {
 
-	public override PlatformerPawn CreatePlayerInstance( Client cl ) => new BrawlPlayer();
+	public override PlatformerPawn CreatePlayerInstance( Client cl ) => new BrawlPlayer( cl );
 
 	public override void Spawn()
 	{
