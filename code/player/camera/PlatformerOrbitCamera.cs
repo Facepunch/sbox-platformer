@@ -38,6 +38,7 @@ namespace Platformer
 
 			var tr = Trace.Ray( center, targetPos )
 				.Ignore( pawn )
+				.WithAnyTags( "world", "solid", "player" )
 				.Radius( 8 )
 				.Run();
 
