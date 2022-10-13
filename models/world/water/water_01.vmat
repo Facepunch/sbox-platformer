@@ -15,6 +15,7 @@ Layer0
 	g_flFadeExponent "1.000"
 
 	//---- Fog ----
+	g_bFogEnabled "1"
 	g_fFogToneDistance "226.233"
 	g_vWaterFogColor "[0.545098 0.882353 0.929412 1.000000]"
 	g_vWaterFogColor2 "[0.309804 0.694118 0.847059 0.000000]"

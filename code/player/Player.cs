@@ -12,6 +12,11 @@ namespace Platformer;
 public partial class PlatformerPawn : Sandbox.Player
 {
 	[Net]
+	public AnimatedEntity Citizen { get; set; }
+
+	[Net] public Entity LookTarget { get; set; }
+
+	[Net]
 	public Color PlayerColor { get; set; }
 	[Net]
 	public bool PlayerHasGlider { get; set; }
@@ -53,9 +58,10 @@ public partial class PlatformerPawn : Sandbox.Player
 	public override void Respawn()
 	{
 		SetModel( "models/citizen/citizen.vmdl" );
-
+		
+		Citizen = this;
 		Controller ??= new PlatformerController();
-		Animator = new PlatformerOrbitAnimator();
+		Animator = new PlatformerLookAnimator();
 		CameraMode = new PlatformerOrbitCamera();
 
 		EnableAllCollisions = true;
@@ -143,10 +149,21 @@ public partial class PlatformerPawn : Sandbox.Player
 
 		base.TickPlayerUse();
 	}
+	[Net]
+	public bool TalkingToNPC { get; set; }
+
+	[Net]
+	public Entity NPCCameraTarget { get; set; }
+
+	[Net]
+	public Vector3 NPCCamera { get; set; }
 
 	public override void Simulate( Client cl )
 	{
 		if ( Platformer.GameState == GameStates.GameEnd )
+			return;
+		
+		if( TalkingToNPC )
 			return;
 
 		base.Simulate( cl );
@@ -159,6 +176,30 @@ public partial class PlatformerPawn : Sandbox.Player
 		if ( Controller is PlatformerController controller )
 		{
 			GliderEnergy = (float)Math.Round( controller.Energy );
+		}
+		
+		if ( LookTarget.IsValid() )
+		{
+			if ( Animator is PlatformerLookAnimator animator )
+			{
+				animator.LookAtMe = true;
+
+				SetAnimLookAt( "aim_eyes", LookTarget.Position + Vector3.Up * 64f );
+				SetAnimLookAt( "aim_head", LookTarget.Position + Vector3.Up * 64f );
+				SetAnimLookAt( "aim_body", LookTarget.Position + Vector3.Up * 64f );
+			}
+			//CameraMode = new LookAtCamera();
+			
+			//if ( CameraMode is LookAtCamera lookAtCamera )
+			//{
+			//	lookAtCamera.TargetEntity = NPCCameraTarget;
+			//	lookAtCamera.TargetOffset = new Vector3( 0, 0, 64 );
+			//	lookAtCamera.FieldOfView = 70;
+			//	lookAtCamera.MaxFov = 70;
+			//	lookAtCamera.MinFov = 50;
+			//	lookAtCamera.Origin = NPCCamera;
+			//}
+			//DebugOverlay.Sphere( NPCCamera, 5f, Color.Red );
 		}
 
 		if ( Health == 1 && ts > 2 )
