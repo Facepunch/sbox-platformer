@@ -67,7 +67,8 @@ internal partial class BrawlPlayer : PlatformerPawn
 	{
 		base.TakeDamage( info );
 
-		HurtOverlay.FlashTo( To.Single( Client ) );
+		if ( IsServer )
+			HurtOverlay.FlashTo( To.Single( Client ) );
 
 		using var _ = Prediction.Off();
 		Sound.FromWorld( "sounds/impacts/impact-bullet-flesh.sound", EyePosition )
