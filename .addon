@@ -22,7 +22,7 @@
     "MinPlayers": 1,
     "RankType": "Best",
     "LeaderboardType": "Ascending",
-    "PerMapRanking": false,
+    "PerMapRanking": true,
     "MapSelect": "Tagged",
     "MaxPlayers": 32,
     "GameNetworkType": "Multiplayer",

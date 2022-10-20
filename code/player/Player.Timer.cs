@@ -70,11 +70,7 @@ partial class PlatformerPawn
 			{
 				BestTime = TimeSinceStart;
 
-				//if ( await Leaderboard.FindOrCreate( "Time" , false ) is { } time )
-				//{
-					//await time.Submit( BestTime.CeilToInt() );
-				//}
-				//_ = await SubmitScore( Client.PlayerId, BestTime );
+				Platformer.SubmitScore( "Time", Client, BestTime.CeilToInt() );
 			}
 		}
 	}
