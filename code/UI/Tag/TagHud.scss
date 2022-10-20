@@ -10,14 +10,15 @@ TagHud {
 TagScore {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
-    top: 50px;
+    transform: translateX(-55%);
+    bottom: 50px;
 
     .icon {
-        width: 35px;
-        height: 35px;
         background-size: 100%;
-        margin-right: 10px;
+        font-size: 40px;
+        right: 5px;
+        font-family: "Material Icons";
+        color: linear-gradient( 180deg, rgba(#E04F55,1), rgba(#FFA7AA,1));
 
         &.tagged {
             background-image: url(ui/hud/tag/tagged.png);
@@ -29,36 +30,40 @@ TagScore {
     }
 
     .bubble {
-        font-family: poppins;
-        border-radius: 50px;
+        font-family: "Nunito-Black";
+        border-radius: 61px;
         align-items: center;
-        padding: 5px 30px;
+        padding: 5px 15px;
+        font-size: 22px;
+        box-shadow: 0px 4px 4px rgba(0,0,0,.5);
 
         .heading {
             font-weight: 800;
             text-transform: uppercase;
+            color: #87857e;
+            text-shadow: 0px 2px 0px rgba(#FFFFFF, 1);
         }
 
         .amount {
-            font-size: 24px;
+            margin-right: 6;
+            color: #13191b;
             font-weight: 800;
             text-transform: uppercase;
+            text-shadow: 0px 2px 0px rgba(#FFFFFF, 1);
         }
 
         &.not-tagged {
-            background-color: rgb(255, 255, 255);
+            background: linear-gradient(0deg, #FFF3E0E5 0%, #FFFFFFE5 100%);
             margin-right: 10px;
 
             label {
-                color: #607D8B;
             }
         }
 
         &.tagged {
-            background-color: rgb(255, 100, 100);
+            background: linear-gradient(0deg, #FFF3E0E5 0%, #FFFFFFE5 100%);
 
             label {
-                color: white;
             }
         }
     }
