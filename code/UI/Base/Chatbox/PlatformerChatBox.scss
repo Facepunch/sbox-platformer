@@ -1,24 +1,52 @@
-﻿platformerchatbox {
+﻿
+@import "../../_vars.scss";
+iconpanel {
+    font-family: "Material Icons";
+}
+platformerchatbox {
     position: absolute;
     bottom: 100px;
     left: 100px;
     z-index: 80;
     flex-direction: column;
     width: 500px;
-    font-family: "Fredoka One";
+    font-family: "Nunito-Black";
+    font-weight: 900;
     font-size: 13px;
+    pointer-events: none;
 
     textentry {
         background-color: black;
         opacity: 0;
-        color: white;
+        color: $NearBlack;
         padding: 15px;
-        background-color: rgba( 39,174,96,.5 );
-        border-radius: 5%;
-        font-size: 14px;
+        background-color: $BGCream;
+        border-radius: 50%;
+        font-size: 16px;
         flex-shrink: 0;
         flex-grow: 0;
-        width: 50%;
+        width: 120%;
+    }
+
+    .sendbutton {
+        font-family: "Material Icons";
+        font-size: 25px;
+        color: $BGCream;
+        text-align: center;
+        align-items: center;
+        background-color: $BGButton;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        opacity: 0;
+        margin-left: 110%;
+        top: 46px;
+        z-index: 2;
+    }
+
+    .placeholder {
+        color: $BGTxtFade;
     }
 
     .chat_canvas {
@@ -27,16 +55,21 @@
     }
 
     &.open {
+        pointer-events: all;
+
+        .sendbutton {
+            opacity: 1;
+        }
+
         textentry {
             opacity: 1;
-            backdrop-filter: blur( 10px );
         }
     }
 }
 
 platformerchatentry {
-    background-color: rgba( 39,174,96,.5 );
-    border-radius: 5%;
+    background-color: $BGCream;
+    border-radius: 10%;
     margin-bottom: 5px;
     color: white;
     transition: all 0.1s ease-out;
@@ -46,10 +79,11 @@ platformerchatentry {
     flex-grow: 0;
     padding: 12px;
     padding-left: 45px;
-    min-height: 47px;
+    min-height: 60px;
     max-width: 100%;
     transform: scale( 1 );
     backdrop-filter: blur( 5px );
+    
 
     &:intro {
         max-height: 0px;

@@ -10,14 +10,22 @@ namespace Platformer.UI
 
 		public Panel Canvas { get; protected set; }
 		public TextEntry Input { get; protected set; }
+		public TextEntry InputHint { get; protected set; }
+
+		public Label SendButton;
 
 		public bool IsOpen
 		{
 			get => HasClass( "open" );
 			set
 			{
-				if ( IsOpen ) Close();
-				else Open();
+				SetClass( "open", value );
+				if ( value )
+				{
+					Input.Focus();
+					Input.Text = string.Empty;
+					Input.Label.SetCaretPosition( 0 );
+				}
 			}
 		}
 
@@ -29,12 +37,33 @@ namespace Platformer.UI
 
 			Canvas = Add.Panel( "chat_canvas" );
 
+			SendButton = Add.Label("send","sendbutton" );
+
 			Input = Add.TextEntry( "" );
 			Input.AddEventListener( "onsubmit", () => Submit() );
 			Input.AddEventListener( "onblur", () => Close() );
 			Input.AcceptsFocus = true;
 			Input.AllowEmojiReplace = true;
 
+		}
+
+		public override void Tick()
+		{
+			SendButton.Focus();
+			if ( Sandbox.Input.Pressed( InputButton.Chat ) )
+			{
+				Open();
+			}
+			Input.Placeholder = string.IsNullOrEmpty( Input.Text ) ? "Enter your message..." : string.Empty;
+
+			base.Tick();
+		}
+
+		protected override void OnClick( MousePanelEvent e )
+		{
+			base.OnClick( e );
+
+			Submit();
 		}
 
 		void Open()
