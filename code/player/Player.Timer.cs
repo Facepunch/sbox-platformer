@@ -70,10 +70,15 @@ partial class PlatformerPawn
 			{
 				BestTime = TimeSinceStart;
 
-				_ = await GameServices.UpdateLeaderboard( Client.PlayerId, BestTime );
+				//if ( await Leaderboard.FindOrCreate( "Time" , false ) is { } time )
+				//{
+					//await time.Submit( BestTime.CeilToInt() );
+				//}
+				//_ = await SubmitScore( Client.PlayerId, BestTime );
 			}
 		}
 	}
+
 
 	public void ResetTimer()
 	{

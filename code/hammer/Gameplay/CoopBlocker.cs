@@ -32,8 +32,7 @@ namespace Platformer
 		{
 
 			Enabled = ForCoop ? !Platformer.CoopMode : Platformer.CoopMode;
-			Solid = ForCoop ? !Platformer.CoopMode : Platformer.CoopMode;
-
+			Collisions = ForCoop ? !Platformer.CoopMode : Platformer.CoopMode;
 
 		}
 	}

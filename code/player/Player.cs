@@ -136,7 +136,7 @@ public partial class PlatformerPawn : Sandbox.Player
 
 		BaseGamemode.Instance.DoPlayerKilled( this );
 
-		BecomeRagdollOnClient( Velocity, lastDamage.Flags, lastDamage.Position, lastDamage.Force, GetHitboxBone( lastDamage.HitboxIndex ) );
+		BecomeRagdollOnClient( Velocity, lastDamage.Flags, lastDamage.Position, lastDamage.Force, lastDamage.BoneIndex );
 	}
 
 	private TimeUntil TimeUntilCanUse;

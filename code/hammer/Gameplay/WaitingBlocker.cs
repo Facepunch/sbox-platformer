@@ -29,7 +29,7 @@ public partial class WaitingBlocker : BrushEntity
 		if ( Platformer.GameState == GameStates.Live )
 		{
 			Enabled = false;
-			Solid = false;
+			Collisions = false;
 		}
 	}
 }
