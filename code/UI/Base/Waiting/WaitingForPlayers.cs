@@ -3,18 +3,18 @@ using Sandbox.UI;
 
 namespace Platformer.UI;
 
-public partial class NewMajorArea : Panel
+public partial class WaitingForPlayers : Panel
 {
 
-	public static NewMajorArea Instance;
+	public static WaitingForPlayers Instance;
 	public float timesince = 0;
-	public Label newlandmark;
+	public Label newwaitingforplayers;
 
-	public NewMajorArea()
+	public WaitingForPlayers()
 	{
-		StyleSheet.Load( "/ui/base/area/NewMajorArea.scss" );
+		StyleSheet.Load( "/ui/base/Waiting/WaitingForPlayers.scss" );
 
-		newlandmark = AddChild<Label>( "newlandmark" );
+		newwaitingforplayers = AddChild<Label>( "waitingforplayers" );
 
 		Instance = this;
 	}
@@ -33,12 +33,12 @@ public partial class NewMajorArea : Panel
 		}
 	}
 
-	public static void ShowLandmark( string title )
+	public static void ShowWaitingForPlayers( string title )
 	{
 		if ( Instance == null ) 
 			return;
 
-		Instance.newlandmark.SetText( title );
+		Instance.newwaitingforplayers.SetText( title );
 		Instance.timesince = Time.Now;
 
 	}

@@ -109,6 +109,12 @@ public partial class Platformer : Sandbox.Game
 		NewMajorArea.ShowLandmark( Title );
 	}
 
+	[ClientRpc]
+	public static void Waiting( string Title )
+	{
+		WaitingForPlayers.ShowWaitingForPlayers( Title );
+	}
+
 	public enum GameModes
 	{
 		Competitive = 0,
