@@ -1,8 +1,6 @@
-﻿
-using Sandbox;
+﻿using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
-using System;
 
 namespace Platformer.UI
 {
@@ -12,6 +10,16 @@ namespace Platformer.UI
 
 		public Panel Canvas { get; protected set; }
 		public TextEntry Input { get; protected set; }
+
+		public bool IsOpen
+		{
+			get => HasClass( "open" );
+			set
+			{
+				if ( IsOpen ) Close();
+				else Open();
+			}
+		}
 
 		public PlatformerChatBox()
 		{
@@ -27,14 +35,13 @@ namespace Platformer.UI
 			Input.AcceptsFocus = true;
 			Input.AllowEmojiReplace = true;
 
-			Sandbox.Hooks.Chat.OnOpenChat += Open;
-
 		}
 
 		void Open()
 		{
 			AddClass( "open" );
 			Input.Focus();
+			Canvas.TryScrollToBottom();
 		}
 
 		void Close()

@@ -70,10 +70,11 @@ partial class PlatformerPawn
 			{
 				BestTime = TimeSinceStart;
 
-				_ = await GameServices.UpdateLeaderboard( Client.PlayerId, BestTime );
+				Platformer.SubmitScore( "Time", Client, BestTime.CeilToInt() );
 			}
 		}
 	}
+
 
 	public void ResetTimer()
 	{

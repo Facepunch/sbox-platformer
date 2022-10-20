@@ -22,7 +22,7 @@
     "MinPlayers": 1,
     "RankType": "Best",
     "LeaderboardType": "Ascending",
-    "PerMapRanking": false,
+    "PerMapRanking": true,
     "MapSelect": "Tagged",
     "MaxPlayers": 32,
     "GameNetworkType": "Multiplayer",
@@ -56,7 +56,7 @@
         }
       ]
     },
-    "GameCategory": "None",
+    "GameCategory": "Retro",
     "GameSettings": {
       "pl_gametime": {
         "DisplayType": "Integer",
@@ -78,6 +78,14 @@
         "Minimum": 3,
         "Maximum": 20
       }
+    },
+    "DefaultLeaderboards": [
+      "Time"
+    ],
+    "Compiler": {
+      "RootNamespace": "Sandbox",
+      "DefineConstants": "SANDBOX;ADDON;DEBUG",
+      "NoWarn": "1701;1702;1591;"
     }
   }
 }

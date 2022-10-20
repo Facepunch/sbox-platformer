@@ -5,6 +5,7 @@ using System.Linq;
 using Platformer.UI;
 using System.Collections.Generic;
 using Platformer.Gamemodes;
+using System.Threading.Tasks;
 
 namespace Platformer;
 
@@ -114,5 +115,22 @@ public partial class Platformer : Sandbox.Game
 		Coop = 1,
 		Tag = 2,
 		Brawl = 3
+	}
+	public static async void SubmitScore( string bucket, Client client, int score )
+	{
+
+		var leaderboard = await Leaderboard.FindOrCreate( bucket, false );
+
+		await leaderboard.Value.Submit( client, score );
+
+	}
+
+	public static async Task<LeaderboardEntry?> GetScore( string bucket, Client client )
+	{
+
+		var leaderboard = await Leaderboard.FindOrCreate( bucket, false );
+
+		return await leaderboard.Value.GetScore( client.PlayerId );
+
 	}
 }

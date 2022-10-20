@@ -60,9 +60,8 @@ platformerchatentry {
         transform: scale( 0 );
     }
 
-    &:outro {
+    &.faded {
         opacity: 0;
-        transition: all 2s ease-out;
     }
 
     image {
