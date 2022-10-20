@@ -41,7 +41,7 @@ public partial class BaseGamemode : Entity
 
 		while ( !CanStart() )
 		{
-			Platformer.Alerts( To.Everyone, "Waiting For Players" );
+			Platformer.Waiting( To.Everyone, "Waiting For Players" );
 			await Task.Delay( 1000 );
 		}
 
