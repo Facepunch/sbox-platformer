@@ -27,6 +27,8 @@ partial class MusicBoxTweaker : ModelEntity
 	private MusicBox MusicBox;
 	private Vector3[] DirectionLut = new Vector3[]
 	{
+		Vector3.Up,
+		Vector3.Down,
 		Vector3.Left,
 		Vector3.Right,
 		Vector3.Forward,
@@ -77,7 +79,7 @@ partial class MusicBoxTweaker : ModelEntity
 		foreach ( var dir in DirectionLut )
 		{
 			var closetsPoint = bbox.ClosestPoint( position + dir * 10000 );
-			var dist = Vector3.DistanceBetween( closetsPoint, position.WithZ( closetsPoint.z ) );
+			var dist = Vector3.DistanceBetween( closetsPoint, position + new Vector3( 0, 0, 48 ) );
 			if( dist < result )
 			{
 				point = closetsPoint;
@@ -88,7 +90,7 @@ partial class MusicBoxTweaker : ModelEntity
 		if ( BasePlayerController.Debug )
 		{
 			DebugOverlay.Sphere( point, 3f, Color.Red, 0, false );
-			DebugOverlay.Line( point, position, 0f, false );
+			DebugOverlay.Line( point, position + new Vector3(0,0,48), 0f, false );
 		}
 
 		return result;
