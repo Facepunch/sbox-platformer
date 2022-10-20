@@ -1,83 +1,57 @@
-﻿using SandboxEditor;
+﻿
+using SandboxEditor;
 using Sandbox;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace Platformer;
 
 [Library( "plat_musicboxtweakerradius", Description = "Music Box Tweaker Radius" )]
 [EditorSprite( "editor/ent_logic.vmat" )]
 [Display( Name = "Music Box Tweaker", GroupName = "Platformer", Description = "Platformer Soundscape" ), Category( "Sound" ), Icon( "speaker" )]
-//[HammerEntity]
+[HammerEntity]
 [Sphere( "radius" )]
 partial class MusicBoxTweakerRadius : ModelEntity
 {
 	[Net, Property, FGDType( "target_destination" )] public string TargetMusicBox { get; set; } = "";
 	[Net] public float Volume { get; set; } = 1;
-
 	[Net, Property]
 	public float Radius { get; set; } = 128.0f;
 
-	public Sound PlayingSound { get; protected set; }
-
+	private MusicBox MusicBox;
 
 	public override void Spawn()
 	{
 		base.Spawn();
 
-		Tags.Add( "trigger" );
-		EnableAllCollisions = true;
-		EnableTouch = true;
-
-		var trigger = new BaseTrigger();
-		trigger.SetParent( this, null, Transform.Zero );
-		trigger.SetupPhysicsFromSphere( PhysicsMotionType.Static, Vector3.Zero, Radius );
-		trigger.Transmit = TransmitType.Always;
-		trigger.EnableTouchPersists = true;
-
 		Transmit = TransmitType.Always;
-		
 	}
 
-	public override void Touch( Entity other )
+	[Event.Frame]
+	public void OnFrame()
 	{
-		base.Touch( other );
+		MusicBox ??= FindByName( TargetMusicBox ) as MusicBox;
+		if ( !MusicBox.IsValid() ) return;
 
-		if ( other is not PlatformerPawn pl ) return;
-
-		UpdateSound( To.Single( pl.Client ), Volume );
-	}
-
-	[ClientRpc]
-	public void UpdateSound( float sound)
-	{
-		var target = FindByName( TargetMusicBox );
-		if ( target is not MusicBox ent ) return;
-
-		var overlaps = FindInSphere( Position, Radius );
-
-		foreach ( var overlap in overlaps )
+		var pos = CurrentView.Position;
+		if ( Local.Pawn.IsValid() )
 		{
-			if ( overlap is not PlatformerPawn entity || !entity.IsValid() )
-				continue;
+			pos = Local.Pawn.Position;
+		}
 
+		var dist = Position.Distance( pos );
+		if ( dist > Radius )
+			return;
 
+		var vol = (Radius - dist).LerpInverse( 0, 64f );
+		vol = Math.Max( 0.1f, vol );
 
-			var targetPos = entity.PhysicsBody.MassCenter;
+		MusicBox.UpdateVolume( vol );
 
-			var dist = Vector3.DistanceBetween( Position, targetPos );
-			//Log.Info( dist );
-
-			ent.UpdateVolume( dist / Radius );
-			//PlayingSound = Sound.FromScreen( ent.SoundName ).SetVolume( Volume );
-			//ent.PlayingSound.SetVolume(dist / Radius);
-			//Log.Info( dist / Radius );
+		if ( BasePlayerController.Debug )
+		{
+			DebugOverlay.Text( vol.ToString(), Position );
 		}
 	}
 
-	[Event.Tick.Client]
-	public void Tick()
-	{
-
-	}
 }
