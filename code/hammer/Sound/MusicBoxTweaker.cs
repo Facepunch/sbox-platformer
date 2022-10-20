@@ -7,7 +7,7 @@ using System;
 namespace Platformer;
 
 [Library( "plat_musicboxtweaker", Description = "Music Box Tweaker" )]
-[EditorSprite( "editor/ent_logic.vmat" )]
+[EditorSprite( "materials/editor/musicboxtweaker/musicboxtweaker.vmat" )]
 [Display( Name = "Music Box Tweaker", GroupName = "Platformer", Description = "Platformer Soundscape" ), Category( "Sound" ), Icon( "speaker" )]
 [HammerEntity]
 [BoundsHelper( "mins", "maxs", false, true )]

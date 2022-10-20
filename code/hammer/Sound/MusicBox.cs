@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Platformer;
 
 [Library( "plat_musicbox", Description = "Music Box" )]
-[EditorSprite( "editor/ent_logic.vmat" )]
+[EditorSprite( "materials/editor/musicbox/musicbox.vmat" )]
 [Display( Name = "Music Box", GroupName = "Platformer", Description = "Platformer Soundscape" ), Category( "Sound" ), Icon( "speaker" )]
 [HammerEntity]
 partial class MusicBox : Entity
@@ -60,7 +60,7 @@ partial class MusicBox : Entity
 	[ClientRpc]
 	public void UpdateVolume(float vol)
 	{
-		PlayingSound.SetVolume( vol );
-		BGPlayingSound.SetVolume( 1 - vol );
+		PlayingSound.SetVolume( 1 - vol );
+		BGPlayingSound.SetVolume(  vol );
 	}
 }
