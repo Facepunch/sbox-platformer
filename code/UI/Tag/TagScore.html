@@ -2,18 +2,19 @@
 <root>
 
     <div class="bubble not-tagged">
-        <div class="icon not-tagged"></div>
-        <div style="flex-direction:column; align-items:center;">
-            <label class="heading">Not Tagged</label>
+        <div style="flex-direction:row; align-items:center;">
+            <label class="icon"> directions_run </label>
             <label class="amount" @text="NotTaggedCount">1</label>
+            <label class="heading">Not Tagged</label>
         </div>
     </div>
 
     <div class="bubble tagged">
         <div class="icon tagged"></div>
-        <div style="flex-direction:column; align-items:center;">
-            <label class="heading">Tagged</label>
+        <div style="flex-direction:row; align-items:center;">
+            <label class="icon"> back_hand </label>
             <label class="amount" @text="TaggedCount">0</label>
+            <label class="heading">Tagged</label>
         </div>
     </div>
 
