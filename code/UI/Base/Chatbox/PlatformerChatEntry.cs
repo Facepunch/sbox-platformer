@@ -5,26 +5,28 @@ using Sandbox.UI.Construct;
 
 namespace Platformer.UI
 {
+	[UseTemplate]
 	public partial class PlatformerChatEntry : Panel
 	{
+		// @ref
 		public Label NameLabel { get; internal set; }
+		// @ref
 		public Label Message { get; internal set; }
+		// @ref
 		public Image Avatar { get; internal set; }
 
 		public RealTimeSince TimeSinceBorn = 0;
 
-		public PlatformerChatEntry()
+		public PlatformerChatEntry( bool isMessage = false )
 		{
-			Avatar = Add.Image();
-			NameLabel = Add.Label( "Name", "name" );
-			Message = Add.Label( "Message", "message" );
+			SetClass( "is-message", isMessage );
 		}
 
 		public override void Tick() 
 		{
 			base.Tick();
 
-			SetClass( "faded", TimeSinceBorn > 10f );
+			SetClass( "faded", TimeSinceBorn > 60f );
 		}
 	}
 }

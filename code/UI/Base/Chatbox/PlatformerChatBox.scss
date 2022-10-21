@@ -12,23 +12,26 @@ platformerchatbox {
     width: 500px;
     font-family: "Nunito-Black";
     font-weight: 900;
-    font-size: 13px;
+    font-size: 16px;
     pointer-events: none;
 
     textentry {
+        transition: all 0.1s ease;
+        height: 54px;
         background-color: black;
         opacity: 0;
         color: $NearBlack;
         padding: 15px;
         background-color: $BGCream;
-        border-radius: 50%;
-        font-size: 16px;
+        border-radius: 32px;
+        font-size: 18px;
         flex-shrink: 0;
         flex-grow: 0;
-        width: 120%;
+        width: 70%;
     }
 
     .sendbutton {
+        transition: all 0.1s ease;
         font-family: "Material Icons";
         font-size: 25px;
         color: $BGCream;
@@ -40,7 +43,6 @@ platformerchatbox {
         height: 40px;
         cursor: pointer;
         opacity: 0;
-        margin-left: 110%;
         top: 46px;
         z-index: 2;
     }
@@ -58,18 +60,18 @@ platformerchatbox {
         pointer-events: all;
 
         .sendbutton {
+            margin-left: 110%;
             opacity: 1;
         }
 
         textentry {
             opacity: 1;
+            width: 120%;
         }
     }
 }
 
 platformerchatentry {
-    background-color: $BGCream;
-    border-radius: 10%;
     margin-bottom: 5px;
     color: white;
     transition: all 0.1s ease-out;
@@ -77,13 +79,13 @@ platformerchatentry {
     max-height: 200px;
     flex-shrink: 0;
     flex-grow: 0;
-    padding: 12px;
-    padding-left: 45px;
     min-height: 60px;
     max-width: 100%;
     transform: scale( 1 );
-    backdrop-filter: blur( 5px );
-    
+    flex-direction: column;
+
+    box-shadow: 2px 2px 20px rgba( black, 0.5 );
+    border-radius: 100px;
 
     &:intro {
         max-height: 0px;
@@ -98,27 +100,54 @@ platformerchatentry {
         opacity: 0;
     }
 
-    image {
-        width: 32px;
-        height: 32px;
+    .avatar {
+        width: 42px;
+        height: 42px;
         min-height: 32px;
-        border-radius: 5px;
+        border-radius: 100px;
+        border: 2px solid white;
         position: absolute;
-        left: 6px;
-        top: 6px;
+        left: 4px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 100;
+    }
+
+    .image {
+        border-radius: 100px;
+    }
+
+    .header {
+        padding: 4px;
+        padding-right: 16px;
+        padding-left: 8px;
+        background-color: #df4f54;
+        border-radius: 20px 20px 0px 0px;
+        text-shadow: 0px 0px 1px rgba( black, 0.3 );
     }
 
     .name {
-        padding-right: 6px;
+        margin-left: 46px;
+        padding-right: 12px;
         font-weight: 600;
-        font-size: 12px;
-        color: #f1c40f;
+        font-size: 17px;
+        color: white;
         flex-shrink: 0;
     }
 
+    .main {
+        padding: 4px;
+        padding-right: 16px;
+        padding-left: 8px;
+        background-color: white;
+        border-radius: 0px 0px 20px 20px;
+    }
+
     .message {
-        color: #ccc;
-        font-size: 14px;
+        margin-left: 46px;
+        color: black;
+        font-size: 17px;
+        font-weight: bolder;
         flex-grow: 1;
     }
 

@@ -92,36 +92,33 @@ namespace Platformer.UI
 			Say( msg );
 		}
 
-		public void AddEntry( string name, string message, string avatar, string lobbyState = null )
+		public void AddEntry( string name, string message, string avatar, string lobbyState = null, bool isMessage = true )
 		{
-			var e = Canvas.AddChild<PlatformerChatEntry>();
+			var e = new PlatformerChatEntry( isMessage );
+			Canvas.AddChild( e );
 
 			var player = Local.Pawn;
 			if ( player == null ) return;
 
 			if ( Local.Pawn is PlatformerPawn pl )
-
 			{
 				var CurrentA = pl.CurrentArea.ToUpper();
 
 				e.Message.Text = message;
-				e.NameLabel.Text = $"{name} : {CurrentA} :";
+				e.NameLabel.Text = $"{name}";
 				e.Avatar.SetTexture( avatar );
-
 
 				e.SetClass( "noname", string.IsNullOrEmpty( name ) );
 				e.SetClass( "noavatar", string.IsNullOrEmpty( avatar ) );
 			}
 
 			if ( Local.Pawn is PlatformerDeadPawn dpl )
-
 			{
 				var CurrentA = dpl.CurrentArea.ToUpper();
 
 				e.Message.Text = message;
-				e.NameLabel.Text = $"{name} : {CurrentA} :";
+				e.NameLabel.Text = $"{name}";
 				e.Avatar.SetTexture( avatar );
-
 
 				e.SetClass( "noname", string.IsNullOrEmpty( name ) );
 				e.SetClass( "noavatar", string.IsNullOrEmpty( avatar ) );
