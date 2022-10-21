@@ -1,9 +1,9 @@
-StatusCard {
+.status-card {
     width: 180px;
     height: 200px;
     flex-direction: column;
 
-    .icon {
+    > .icon {
         width: 40px;
         height: 40px;
         border-radius: 10px;
@@ -26,7 +26,7 @@ StatusCard {
         z-index: 100;
     }
 
-    .header {
+    > .header {
         border-radius: 20px 20px 0px 0px;
         background-color: #d93f53;
 
@@ -40,7 +40,7 @@ StatusCard {
         }
     }
 
-    .main {
+    > .main {
         border-radius: 0px 0px 20px 20px;
         background-color: #fbf4e9;
 
@@ -54,17 +54,17 @@ StatusCard {
     }
 
     &.reverse-color {
-        .icon {
+        > .icon {
             label {
                 color: #3aafb9;
             }
         }
 
-        .header {
+        > .header {
             background-color: #3aafb9;
         }
 
-        .main {
+        > .main {
             label {
                 color: #3aafb9;
             }
