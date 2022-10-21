@@ -9,7 +9,7 @@ platformerchatbox {
     left: 100px;
     z-index: 80;
     flex-direction: column;
-    width: 500px;
+    width: 450px;
     font-family: "Nunito-Black";
     font-weight: 900;
     font-size: 16px;
@@ -44,7 +44,6 @@ platformerchatbox {
         cursor: pointer;
         opacity: 0;
         top: 46px;
-        z-index: 2;
     }
 
     .placeholder {
@@ -72,18 +71,16 @@ platformerchatbox {
 }
 
 platformerchatentry {
-    margin-bottom: 5px;
+    margin-bottom: 16px;
     color: white;
     transition: all 0.1s ease-out;
     opacity: 1;
     max-height: 200px;
     flex-shrink: 0;
     flex-grow: 0;
-    min-height: 60px;
     max-width: 100%;
     transform: scale( 1 );
     flex-direction: column;
-
     box-shadow: 2px 2px 20px rgba( black, 0.5 );
     border-radius: 100px;
 
@@ -168,6 +165,40 @@ platformerchatentry {
     &.custom {
         .name {
             display: none;
+        }
+    }
+
+    &.not-message {
+        .main {
+            border-radius: 20px;
+            background-color: #df4f54;
+        }
+
+        .message {
+            margin-left: 0px;
+            color: rgba( white, 0.8 );
+            text-shadow: 0px 0px 1px rgba( black, 0.5 );
+        }
+
+        .name {
+            text-shadow: 0px 0px 1px rgba( black, 0.8 );
+        }
+
+        .avatar {
+            left: 0px;
+        }
+    }
+
+
+    &.not-me {
+        .header {
+            background-color: #3ebcba;
+        }
+
+        &.not-message {
+            .main {
+                background-color: #3ebcba;
+            }
         }
     }
 }
