@@ -161,8 +161,8 @@ namespace Platformer.UI
 		[ConCmd.Admin( "plat_debug_chat_other" )]
 		public static void DebugMsgOther()
 		{
-			PlatformerChatBox.AddChatEntry( To.Everyone, "bakscratch", "has joined the game", 76561198000823482, null, false );
-			PlatformerChatBox.AddChatEntry( To.Everyone, "bakscratch", "what's up",76561198000823482, null, true );
+			PlatformerChatBox.AddChatEntry( To.Everyone, "Eagle One Development Team", "has joined the game", 76561197967441886, null, false );
+			PlatformerChatBox.AddChatEntry( To.Everyone, "Eagle One Development Team", "what's up", 76561197967441886, null, true );
 		}
 
 		[ConCmd.Client( "plat_chat_addinfo", CanBeCalledFromServer = true )]
