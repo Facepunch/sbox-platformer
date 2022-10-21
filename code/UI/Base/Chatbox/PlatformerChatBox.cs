@@ -92,7 +92,7 @@ namespace Platformer.UI
 			Say( msg );
 		}
 
-		public void AddEntry( string name, string message, string avatar, string lobbyState = null, bool isMessage = true )
+		public void AddEntry( string name, string message, long playerId = 0, string lobbyState = null, bool isMessage = true )
 		{
 			var e = new PlatformerChatEntry( isMessage );
 			Canvas.AddChild( e );
@@ -102,26 +102,26 @@ namespace Platformer.UI
 
 			if ( Local.Pawn is PlatformerPawn pl )
 			{
-				var CurrentA = pl.CurrentArea.ToUpper();
-
 				e.Message.Text = message;
 				e.NameLabel.Text = $"{name}";
-				e.Avatar.SetTexture( avatar );
+
+				if ( playerId > 0 )
+					e.SetPlayerId( playerId );
 
 				e.SetClass( "noname", string.IsNullOrEmpty( name ) );
-				e.SetClass( "noavatar", string.IsNullOrEmpty( avatar ) );
+				e.SetClass( "noavatar", playerId == 0 );
 			}
 
 			if ( Local.Pawn is PlatformerDeadPawn dpl )
 			{
-				var CurrentA = dpl.CurrentArea.ToUpper();
-
 				e.Message.Text = message;
 				e.NameLabel.Text = $"{name}";
-				e.Avatar.SetTexture( avatar );
+
+				if ( playerId > 0 )
+					e.SetPlayerId( playerId );
 
 				e.SetClass( "noname", string.IsNullOrEmpty( name ) );
-				e.SetClass( "noavatar", string.IsNullOrEmpty( avatar ) );
+				e.SetClass( "noavatar", playerId == 0 );
 			}
 
 			if ( lobbyState == "ready" || lobbyState == "staging" )
@@ -130,11 +130,10 @@ namespace Platformer.UI
 			}
 		}
 
-
 		[ConCmd.Client( "plat_chat_add", CanBeCalledFromServer = true )]
-		public static void AddChatEntry( string name, string message, string avatar = null, string lobbyState = null )
+		public static void AddChatEntry( string name, string message, string playerId = "0", string lobbyState = null, bool isMessage = true )
 		{
-			Current?.AddEntry( name, message, avatar, lobbyState );
+			Current?.AddEntry( name, message, long.Parse( playerId ), lobbyState, isMessage );
 
 			// Only log clientside if we're not the listen server host
 			if ( !Global.IsListenServer )
@@ -143,10 +142,30 @@ namespace Platformer.UI
 			}
 		}
 
-		[ConCmd.Client( "plat_chat_addinfo", CanBeCalledFromServer = true )]
-		public static void AddInformation( string message, string avatar = null )
+		public static void AddChatEntry( To target, string name, string message, long playerId = 0, string lobbyState = null, bool isMessage = true )
 		{
-			Current?.AddEntry( null, message, avatar );
+			AddChatEntry( target, name, message, playerId.ToString(), lobbyState, isMessage );
+		}
+
+		[ConCmd.Admin( "plat_debug_chat_msg" )]
+		public static void DebugMsg()
+		{
+			var cl = ConsoleSystem.Caller;
+
+			PlatformerChatBox.AddChatEntry( To.Everyone, cl.Name, "has joined the game", cl.PlayerId, null, false );
+		}
+
+		[ConCmd.Admin( "plat_debug_chat_other" )]
+		public static void DebugMsgOther()
+		{
+			PlatformerChatBox.AddChatEntry( To.Everyone, "bakscratch", "has joined the game", 76561198000823482, null, false );
+			PlatformerChatBox.AddChatEntry( To.Everyone, "bakscratch", "what's up", 76561198000823482, null, true );
+		}
+
+		[ConCmd.Client( "plat_chat_addinfo", CanBeCalledFromServer = true )]
+		public static void AddInformation( string message, long playerId = 0 )
+		{
+			Current?.AddEntry( null, message, playerId );
 		}
 
 		[ConCmd.Server( "plat_say" )]
@@ -159,7 +178,7 @@ namespace Platformer.UI
 				return;
 
 			Log.Info( $"{ConsoleSystem.Caller}: {message}" );
-			AddChatEntry( To.Everyone, ConsoleSystem.Caller.Name, message, $"avatar:{ConsoleSystem.Caller.PlayerId}" );
+			AddChatEntry( To.Everyone, ConsoleSystem.Caller.Name, message, ConsoleSystem.Caller.PlayerId );
 		}
 
 	}

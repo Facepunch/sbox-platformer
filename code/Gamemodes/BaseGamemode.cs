@@ -102,7 +102,7 @@ public partial class BaseGamemode : Entity
 			cl.Pawn.Transform = tx;
 		}
 
-		PlatformerChatBox.AddInformation( To.Everyone, $"{cl.Name} has joined the game", $"avatar:{cl.PlayerId}" );
+		PlatformerChatBox.AddChatEntry( To.Everyone, cl.Name, "has joined the game", cl.PlayerId, null, false );
 	}
 
 	public virtual PlatformerPawn CreatePlayerInstance( Client cl ) => new PlatformerPawn( cl );
