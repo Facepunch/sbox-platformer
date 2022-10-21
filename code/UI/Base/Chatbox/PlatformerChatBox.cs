@@ -1,6 +1,7 @@
 ﻿using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
+using System;
 
 namespace Platformer.UI
 {
@@ -36,6 +37,7 @@ namespace Platformer.UI
 			StyleSheet.Load( "/ui/base/Chatbox/PlatformerChatBox.scss" );
 
 			Canvas = Add.Panel( "chat_canvas" );
+			Canvas.PreferScrollToBottom = true;
 
 			SendButton = Add.Label("send","sendbutton" );
 
@@ -99,7 +101,6 @@ namespace Platformer.UI
 
 			var player = Local.Pawn;
 			if ( player == null ) return;
-
 			if ( Local.Pawn is PlatformerPawn pl )
 			{
 				e.Message.Text = message;
@@ -128,6 +129,8 @@ namespace Platformer.UI
 			{
 				e.SetClass( "is-lobby", true );
 			}
+
+			Canvas.TryScrollToBottom();
 		}
 
 		[ConCmd.Client( "plat_chat_add", CanBeCalledFromServer = true )]
@@ -142,9 +145,9 @@ namespace Platformer.UI
 			}
 		}
 
-		public static void AddChatEntry( To target, string name, string message, long playerId = 0, string lobbyState = null, bool isMessage = true )
+		public static void AddChatEntry( To target, string name, string message, long playerId = 0, string lobbyState = null, bool isMessage = true)
 		{
-			AddChatEntry( target, name, message, playerId.ToString(), lobbyState, isMessage );
+			AddChatEntry( target, name, message, playerId.ToString(), lobbyState, isMessage);
 		}
 
 		[ConCmd.Admin( "plat_debug_chat_msg" )]
@@ -158,8 +161,8 @@ namespace Platformer.UI
 		[ConCmd.Admin( "plat_debug_chat_other" )]
 		public static void DebugMsgOther()
 		{
-			PlatformerChatBox.AddChatEntry( To.Everyone, "bakscratch", "has joined the game", 76561198000823482, null, false );
-			PlatformerChatBox.AddChatEntry( To.Everyone, "bakscratch", "what's up", 76561198000823482, null, true );
+			PlatformerChatBox.AddChatEntry( To.Everyone, "Eagle One Development Team", "has joined the game", 76561197967441886, null, false );
+			PlatformerChatBox.AddChatEntry( To.Everyone, "Eagle One Development Team", "what's up", 76561197967441886, null, true );
 		}
 
 		[ConCmd.Client( "plat_chat_addinfo", CanBeCalledFromServer = true )]
