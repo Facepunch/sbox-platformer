@@ -119,44 +119,7 @@ RoundTimer {
     position: absolute;
     right: 45%;
     top: 48px;
-    width: 175px;
-    height: 60px;
-    //margin: 0px 2px;
-    transition: all 0.6s ease-in-out;
     margin-top: 10px;
-    font-family: "Nunito-Black";
-    background-color: rgb(255, 255, 255);
-    border-radius: 50px;
-    align-items: center;
-
-    .game-icon {
-        width: 60px;
-        height: 60px;
-    }
-
-    .game-state {
-        bottom: 12px;
-        width: 96px;
-        height: 60px;
-        font-size: 16px;
-        color: #607D8B;
-        font-family: "Nunito-Black";
-        font-weight: 800;
-        text-transform: uppercase;
-        align-items: center;
-    }
-
-    .game-timer {
-        position: absolute;
-        font-size: 24px;
-        color: #607D8B;
-        font-family: "Nunito-Black";
-        font-weight: 800;
-        text-transform: uppercase;
-        left: 65px;
-        right: 0;
-        bottom: 0%;
-    }
 }
 
 CourseTimer {
@@ -318,35 +281,35 @@ EnergyCurrent {
     }
 
 DeathUI {
-        position: absolute;
-        left: 47.5%;
-        top: 45.5%;
-        width: 100px;
-        height: 100px;
-        aspect-ratio: 0;
-        //  background-image: url("/ui/hud/death/respawn.png");
-        background-size: cover;
-        z-index: -1;
+    position: absolute;
+    left: 47.5%;
+    top: 45.5%;
+    width: 100px;
+    height: 100px;
+    aspect-ratio: 0;
+    //  background-image: url("/ui/hud/death/respawn.png");
+    background-size: cover;
+    z-index: -1;
 
 
-        .deathimage {
+    .deathimage {
 
-            &.alive {
-                transform: scale(50);
-                transition: all .2s ease-in;
-                opacity: 0;
-            }
+        &.alive {
+            transform: scale(50);
+            transition: all .2s ease-in;
+            opacity: 0;
+        }
 
-            &.limbo {
-                transform: scale(15);
-                transition: all 1s ease-in-out;
-                opacity: 1;
-            }
+        &.limbo {
+            transform: scale(15);
+            transition: all 1s ease-in-out;
+            opacity: 1;
+        }
 
-            &.died {
-                transform: scale(.1 );
-                transition: all 1s ease-out;
-                opacity: 1;
-            }
+        &.died {
+            transform: scale(.1 );
+            transition: all 1s ease-out;
+            opacity: 1;
         }
     }
+}
