@@ -7,29 +7,23 @@ using System;
 
 namespace Platformer.UI
 {
-	public class RoundTimer : Panel
+	[UseTemplate( "/UI/Base/Course/StatusCard.html" )]
+	public class RoundTimer : StatusCard
 	{
-
-		public Label Timer;
-		public Image image;
-		public Label State;
-
 		public RoundTimer()
 		{
-			Timer = Add.Label( string.Empty, "game-timer" );
-			image = Add.Image( "ui/hud/clock.png", "game-icon" );
-			State = Add.Label( string.Empty, "game-state" );
+			Icon = "schedule";
 		}
 
 		public override void Tick()
 		{
-			base.Tick();
-
-			if ( BaseGamemode.Instance == null ) return;
+			if ( !BaseGamemode.Instance.IsValid() ) 
+				return;
 
 			var span = TimeSpan.FromSeconds( (BaseGamemode.Instance.StateTimer * 60).Clamp( 0, float.MaxValue ) );
-			Timer.Text = span.ToString( @"hh\:mm" );
-			State.Text = BaseGamemode.Instance.GameState.ToString();
+
+			Message = span.ToString( @"hh\:mm" );
+			Header = BaseGamemode.Instance.GameState.ToString().ToUpperInvariant();
 		}
 	}
 }
