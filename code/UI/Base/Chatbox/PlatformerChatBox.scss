@@ -11,7 +11,7 @@ platformerchatbox {
     left: 100px;
     z-index: 80;
     flex-direction: column;
-    width: 450px;
+    width: 550px;
     font-family: "Nunito-Black";
     font-weight: 900;
     font-size: 16px;
@@ -89,7 +89,7 @@ platformerchatentry {
     max-height: 200px;
     flex-shrink: 0;
     flex-grow: 0;
-    max-width: 100%;
+    max-width: 150%;
     transform: scale( 1 );
     flex-direction: column;
     box-shadow: 2px 2px 20px rgba( black, 0.5 );
