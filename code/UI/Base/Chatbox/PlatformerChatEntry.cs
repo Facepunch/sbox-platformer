@@ -45,7 +45,7 @@ namespace Platformer.UI
 		{
 			base.Tick();
 
-			SetClass( "faded", TimeSinceBorn > 60f );
+			SetClass( "faded", TimeSinceBorn > 10f );
 		}
 	}
 }
