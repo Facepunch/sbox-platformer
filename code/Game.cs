@@ -79,7 +79,7 @@ public partial class Platformer : Sandbox.Game
 	{
 		base.ClientDisconnect( client, reason );
 
-		PlatformerChatBox.AddInformation( To.Everyone, $"{client.Name} has left the game", $"avatar:{client.PlayerId}" );
+		PlatformerChatBox.AddInformation( To.Everyone, $"{client.Name} has left the game", client.PlayerId );
 	}
 
 	public override void OnKilled( Client client, Entity pawn )
