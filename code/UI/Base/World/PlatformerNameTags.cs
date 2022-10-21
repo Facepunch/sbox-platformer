@@ -8,160 +8,88 @@ using System.Linq;
 
 namespace Platformer.UI;
 
-public class BaseNameTag : Panel
+internal class NameTagComponent : EntityComponent<PlatformerPawn>
 {
-	public Label NameLabel;
-	public Image Avatar;
+	NameTag NameTag;
 
-	Player player;
-
-	public BaseNameTag( Player player )
+	protected override void OnActivate()
 	{
-		this.player = player;
-
-		var client = player.Client;
-
-		NameLabel = Add.Label( $"{client.Name}" );
-		Avatar = Add.Image( $"avatar:{client.PlayerId}" );
+		NameTag = new NameTag( Entity.Client?.Name ?? Entity.Name, Entity.Client?.PlayerId );
 	}
 
-	public virtual void UpdateFromPlayer( Player player )
+	protected override void OnDeactivate()
 	{
-		if ( player is PlatformerPawn p) Style.BackgroundColor = p.PlayerColor;
-		if ( player is PlatformerDeadPawn d) Style.BackgroundColor = d.PlayerColor;
+		NameTag?.Delete();
+		NameTag = null;
+	}
 
-		//Style.BackgroundColor = p.PlayerColor;
+	/// <summary>
+	/// Called for every tag, while it's active
+	/// </summary>
+	[Event.Frame]
+	public void FrameUpdate()
+	{
+		var tx = Entity.GetAttachment( "hat" ) ?? Entity.Transform;
+		tx.Position += Vector3.Up * 5.0f;
+		tx.Rotation = Rotation.LookAt( -CurrentView.Rotation.Forward );
 
-		// Nothing to do unless we're showing health and shit
+		NameTag.Transform = tx;
+	}
 
+	/// <summary>
+	/// Called once per frame to manage component creation/deletion
+	/// </summary>
+	[Event.Frame]
+	public static void SystemUpdate()
+	{
+		foreach ( var player in Sandbox.Entity.All.OfType<PlatformerPawn>() )
+		{
+			if ( player.IsLocalPawn )
+			{
+				var c = player.Components.Get<NameTagComponent>();
+				c?.Remove();
+				continue;
+			}
+
+			var shouldRemove = player.Position.Distance( CurrentView.Position ) > 500;
+			shouldRemove = shouldRemove || player.LifeState != LifeState.Alive;
+			shouldRemove = shouldRemove || player.IsDormant;
+
+			if ( shouldRemove )
+			{
+				var c = player.Components.Get<NameTagComponent>();
+				c?.Remove();
+				continue;
+			}
+
+			// Add a component if it doesn't have one
+			player.Components.GetOrCreate<NameTagComponent>();
+		}
 	}
 }
 
-public class PlatformerNameTags : Panel
+/// <summary>
+/// A nametag panel in the world
+/// </summary>
+public class NameTag : WorldPanel
 {
-	Dictionary<Player, BaseNameTag> ActiveTags = new Dictionary<Player, BaseNameTag>();
+	public Panel Avatar;
+	public Label NameLabel;
 
-	public float MaxDrawDistance = 400;
-	public int MaxTagsToShow = 5;
-
-	public PlatformerNameTags()
+	internal NameTag( string title, long? steamid )
 	{
 		StyleSheet.Load( "/ui/Base/World/PlatformerNameTags.scss" );
-	}
 
-	public override void Tick()
-	{
-		base.Tick();
-
-
-		var deleteList = new List<Player>();
-		deleteList.AddRange( ActiveTags.Keys );
-
-		int count = 0;
-		foreach ( var player in Entity.All.OfType<Player>().OrderBy( x => Vector3.DistanceBetween( x.Position, CurrentView.Position ) ) )
+		if ( steamid != null )
 		{
-			if ( UpdateNameTag( player ) )
-			{
-				deleteList.Remove( player );
-				count++;
-			}
-
-			if ( count >= MaxTagsToShow )
-				break;
+			Avatar = Add.Panel( "avatar" );
+			Avatar.Style.SetBackgroundImage( $"avatar:{steamid}" );
 		}
 
-		foreach( var player in deleteList )
-		{
-			ActiveTags[player].Delete();
-			ActiveTags.Remove( player );
-		}
+		NameLabel = Add.Label( title, "title" );
 
-	}
-
-	public virtual BaseNameTag CreateNameTag( Player player )
-	{
-		if ( player.Client == null )
-			return null;
-
-		var tag = new BaseNameTag( player );
-		tag.Parent = this;
-		return tag;
-	}
-
-	public bool UpdateNameTag( Player player )
-	{
-		// Don't draw local player
-		if ( player == Local.Pawn )
-			return false;
-
-		if ( player.LifeState != LifeState.Alive )
-			return false;
-
-		//
-		// Where we putting the label, in world coords
-		//
-		var head = player.GetAttachment( "hat" ) ?? new Transform( player.EyePosition );
-
-		var labelPos = head.Position + head.Rotation.Up * 5;
-
-
-		//
-		// Are we too far away?
-		//
-		float dist = labelPos.Distance( CurrentView.Position );
-		if ( dist > MaxDrawDistance )
-			return false;
-
-		//
-		// Are we looking in this direction?
-		//
-		var lookDir = (labelPos - CurrentView.Position).Normal;
-		if ( CurrentView.Rotation.Forward.Dot( lookDir ) < 0.5 )
-			return false;
-
-		// TODO - can we see them
-
-
-		MaxDrawDistance = 400;
-
-		// Max Draw Distance
-
-
-		var alpha = dist.LerpInverse( MaxDrawDistance, MaxDrawDistance * 0.1f, true );
-
-		// If I understood this I'd make it proper function
-		var objectSize = 0.05f / dist / (2.0f * MathF.Tan( (CurrentView.FieldOfView / 2.0f).DegreeToRadian() )) * 1500.0f;
-
-		objectSize = objectSize.Clamp( 0.05f, 1.0f );
-
-		if ( !ActiveTags.TryGetValue( player, out var tag ) )
-		{
-			tag = CreateNameTag( player );
-			if ( tag != null )
-			{
-				ActiveTags[player] = tag;
-			}
-		}
-
-		if ( tag == null )
-			return false;
-
-		tag.UpdateFromPlayer( player );
-
-		var screenPos = labelPos.ToScreen();
-
-		tag.Style.Left = Length.Fraction( screenPos.x );
-		tag.Style.Top = Length.Fraction( screenPos.y );
-		tag.Style.Opacity = alpha;
-
-		var transform = new PanelTransform();
-		transform.AddTranslateY( Length.Fraction( -1.0f ) );
-		transform.AddScale( objectSize );
-		transform.AddTranslateX( Length.Fraction( -0.5f ) );
-
-		tag.Style.Transform = transform;
-		tag.Style.Dirty();
-
-		return true;
+		// this is the actual size and shape of the world panel
+		PanelBounds = new Rect( -500, -100, 1000, 200 );
 	}
 }
+
