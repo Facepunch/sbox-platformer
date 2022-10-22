@@ -9,7 +9,7 @@ using Platformer.Gamemodes;
 namespace Platformer;
 
 [Library( "plat_checkpoint", Description = "Defines a checkpoint where the player will respawn after falling" )]
-[Model( Model = "models/gameplay/checkpoint/editor_checkpoint/editor_checkpoint.vmdl" )]
+[Model( Model = "models/flag_pole/flag_pole.vmdl" )]
 [Display( Name = "Player Checkpoint", GroupName = "Platformer", Description = "Defines a checkpoint where the player will respawn after falling" ), Category( "Player" ), Icon( "flag_circle" )]
 [BoundsHelper( "mins", "maxs", false, true )]
 [HammerEntity]
@@ -62,19 +62,19 @@ public partial class Checkpoint : ModelEntity
 
 		var flagAttachment = GetAttachment( "Flag" );
 
-		flag = new ModelEntity( "models/flag/flag_pole.vmdl" );
+		flag = new ModelEntity( "models/flag_pole/flag_pole_no_flag.vmdl" );
 		flag.Position = flagAttachment.Value.Position;
 		flag.Rotation = flagAttachment.Value.Rotation;
 
 		if ( this.IsStart )
 		{
-			flag.SetModel( "models/flag/flag.vmdl" );
+			flag.SetModel( "models/flag_pole/flag_pole.vmdl" );
 			flag.SetMaterialGroup( "Green" );
 		}
 
 		if ( this.IsEnd )
 		{
-			flag.SetModel( "models/flag/flag.vmdl" );
+			flag.SetModel( "models/flag_pole/flag_pole.vmdl" );
 			flag.SetMaterialGroup( "Checker" );
 		}
 	}
@@ -141,13 +141,13 @@ public partial class Checkpoint : ModelEntity
 		{
 			active = true;
 
-			flag.SetModel( "models/flag/flag.vmdl" );
+			flag.SetModel( "models/flag_pole/flag_pole.vmdl" );
 		}
 		else if ( active && !isLatestCheckpoint )
 		{
 			active = false;
 
-			flag.SetModel( "models/flag/flag_pole.vmdl" );
+			flag.SetModel( "models/flag_pole/flag_pole_no_flag.vmdl" );
 		}
 	}
 
