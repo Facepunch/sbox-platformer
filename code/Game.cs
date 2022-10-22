@@ -110,6 +110,12 @@ public partial class Platformer : Sandbox.Game
 	}
 
 	[ClientRpc]
+	public static void BeenTagged( string Title )
+	{
+		WaitingForPlayers.ShowWaitingForPlayers( Title );
+	}
+
+	[ClientRpc]
 	public static void Waiting( string Title )
 	{
 		WaitingForPlayers.ShowWaitingForPlayers( Title );

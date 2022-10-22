@@ -1,10 +1,11 @@
-﻿
-<root>
+﻿<div>
+    <image class="game-icon" @ref="GameIcon" />
 
-    <label class="round-text">Round</label>
-    <div style="width:20px;" />
-    <label class="round-number" @text="CurrentRound">232</label>
-    <label class="round-number"> / </label>
-    <label class="total-round-number" @text="TotalRound">232</label>
+    <div class="header">
+        <label class="game-timer" @ref="GameTimer">00:00</label>
+    </div>
 
-</root>
+    <div class="main">
+        <label class="game-state" @ref="GameState">WAITING</label>
+    </div>
+</div>
