@@ -48,7 +48,7 @@ internal partial class Tag : BaseGamemode
 			GameState = GameStates.Runaway;
 			StateTimer = DoSkipToLive ? 0 : (1 * 30f);
 
-			Platformer.Alerts( To.Everyone, "Get Ready!" );
+			Platformer.BeenTagged( To.Everyone, "Get Ready!" );
 			FreshStart();
 			StartTag();
 			await WaitStateTimer();
@@ -56,7 +56,7 @@ internal partial class Tag : BaseGamemode
 			GameState = GameStates.Live;
 			StateTimer = 3 * 60f;
 
-			Platformer.Alerts( To.Everyone, "Don't get tagged!" );
+			Platformer.BeenTagged( To.Everyone, "Don't get tagged!" );
 			MoveTaggers();
 			await WaitStateTimer();
 
