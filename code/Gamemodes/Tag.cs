@@ -118,7 +118,7 @@ internal partial class Tag : BaseGamemode
 			return;
 
 		Tagged.Add( player );
-		Platformer.Alerts( To.Everyone, $"{player.Client.Name} Has been Tagged." );
+		Platformer.BeenTagged( To.Everyone, $"{player.Client.Name} Has been Tagged." );
 
 		using var _ = Prediction.Off();
 		Sound.FromEntity( "life.pickup", player );
