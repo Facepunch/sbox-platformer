@@ -115,13 +115,6 @@ LifeCurrent {
     }
 }
 
-RoundTimer {
-    position: absolute;
-    right: 45%;
-    top: 48px;
-    margin-top: 10px;
-}
-
 CourseTimer {
     position: absolute;
     top: 145px;
@@ -310,6 +303,21 @@ DeathUI {
             transform: scale(.1 );
             transition: all 1s ease-out;
             opacity: 1;
+        }
+    }
+}
+
+.head {
+    position: absolute;
+    width: 100%;
+    top: 32px;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+
+    .status-card {
+        &:not( :first-child ) {
+            margin-left: 32px;
         }
     }
 }

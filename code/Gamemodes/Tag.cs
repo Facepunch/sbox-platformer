@@ -26,8 +26,6 @@ internal partial class Tag : BaseGamemode
 
 	public override void ClientSpawn()
 	{
-		base.ClientSpawn();
-
 		Local.Hud.AddChild<TagHud>();
 	}
 
