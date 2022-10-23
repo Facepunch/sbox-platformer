@@ -5,13 +5,14 @@ TagHud {
     height: 100%;
     left: 0;
     top: 0;
+    pointer-events: none;
 }
 
 TagScore {
     position: absolute;
     left: 50%;
     transform: translateX(-55%);
-    bottom: 50px;
+    bottom: 32px;
 
     .icon {
         background-size: 100%;
@@ -67,11 +68,4 @@ TagScore {
             }
         }
     }
-}
-
-TagRound {
-    position: absolute;
-    right: 35%;
-    top: 48px;
-    margin-top: 10px;
 }

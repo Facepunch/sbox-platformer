@@ -87,6 +87,13 @@ public partial class BaseGamemode : Entity
 		await WaitStateTimer();
 	}
 
+	public override void ClientSpawn()
+	{
+		base.ClientSpawn();
+
+		Local.Hud.AddChild<DefaultHud>();
+	}
+
 	public virtual void DoClientJoined( Client cl )
 	{
 		cl.Pawn = CreatePlayerInstance( cl );
