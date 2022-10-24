@@ -1,117 +1,69 @@
-HealthCurrent {
-    position: absolute;
-    left: 46px;
-    top: 24px;
-    transition: all 0.25s ease-out;
-    width: 196px;
-    height: 196px;
-    z-index: 2;
-
-    .health-block {
-        position: absolute;
-        background-image: url("/ui/hud/circlehud.png");
-        background-size: cover;
-        background-tint: #e74c3c;
-        width: 100px;
-        height: 100px;
-        transform-origin: 50% 50%;
-    }
-    
-    .health-block-0 {
-        left: 0;
-        top: 0;
-    }
-
-    .health-block-1 {
-        transform: rotate(90deg);
-        top: 0;
-        right: 0;
-    }
-
-    .health-block-2 {
-        transform: rotate(180deg);
-        bottom: 0;
-        right: 0;
-    }
-
-    .health-block-3 {
-        transform: rotate(270deg);
-        bottom: 0;
-        left: 0;
-    }
-
-    .visible {
-        background-tint: #2ecc71;
-    }
-}
-
 AvatarPanel {
     position: absolute;
-    left: 46px;
-    top: 24px;
+    right: 20px;
+    bottom: 10px;
     transition: all 0.25s ease-out;
     width: 196px;
     height: 196px;
     z-index: 2;
+
 
     > .avatar {
         position: absolute;
-        width: 120px;
+        width: 138px;
         aspect-ratio: 1;
         z-index: -1;
         top: 35px;
         left: 38px;
         border-radius: 50%;
-        border: 6px black;
+        border: 4px solid #F9F8E8;
         transform: rotate(-10deg);
+        background: linear-gradient(180deg, #D3C9B8 0%, #FBF1E0 100%);
+        box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.1);
     }
 }
 
 LifeCurrent {
     position: absolute;
-    transform: rotate(-10deg);
-    left: 93px;
-    top: 118px;
+    right: 20%;
+    bottom: 6%;
     padding: 0 20px;
     transition: all 0.25s ease-out;
     flex-direction: row;
-    z-index: 2;
+    z-index: 0;
+    border-radius: 20px 20px 0px 0px;
+    background-color: #fbf4e9;
+    width: 70px;
 
-
+    .icon {
+        color: #87857e;
+        text-shadow: 0px 1px 0px #FFFFFF;
+        font-family: Material Icons;
+        font-size: 24px;
+        height: 30px;
+        align-items: center;
+        right: 20px;
+        transition: all 0.25s ease-out;
+        opacity: 1;
+    }
 
     .number {
+        left: 20px;
+        color: #87857e;
+        text-shadow: 0px 1px 0px #FFFFFF;
         font-family: "Nunito-Black";
-        text-stroke: 16px black;
-        transform: rotate(20deg);
-        left: 48px;
-        top: 32px;
-        font-size: 64px;
-        font-weight: bold;
-        color: #f1c40f;
+        font-size: 24px;
         height: 30px;
-        padding: 0 0px;
         align-items: center;
         transition: all 0.25s ease-out;
         opacity: 0;
 
         &.lifelow {
-            color: #c0392b;
         }
 
         &.Active {
             opacity: 1;
         }
-    }
-
-    .playerimage {
-        position: absolute;
-        width: 110px;
-        aspect-ratio: 1;
-        top: -50px;
-        left: -2px;
-        border-radius: 50%;
-        border: 6px black;
-        opacity: 0;
     }
 }
 

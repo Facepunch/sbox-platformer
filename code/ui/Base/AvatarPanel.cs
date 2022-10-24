@@ -26,7 +26,7 @@ namespace Platformer.UI
 
 			if ( Local.Pawn is not Player pl ) return;
 
-			Avatar.Style.BackgroundColor = pl.Health >= 1 ? HighColor : LowColor;
+			//Avatar.Style.BackgroundColor = pl.Health >= 1 ? HighColor : LowColor;
 		}
 
 	}

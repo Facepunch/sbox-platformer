@@ -6,15 +6,24 @@ using System.Linq;
 
 namespace Platformer.UI
 {
+	[UseTemplate]
 	public class HealthCurrent : Panel
 	{
+		// @text
+		public string Icon { get; set; }
+		// @text
+		public string Message { get; set; }
+
 		private const int MaxHealth = 4;
-		public Image HealthImage;
 
 		List<Panel> Blocks { get; set; } = new();
 
 		public HealthCurrent()
 		{
+			AddClass( "HealthCurrent" );
+
+			Icon = "add_circle";
+
 			for ( int i = 0; i < MaxHealth; i++ )
 				Blocks.Add( Add.Panel( $"health-block health-block-{i}" ) );
 		}
@@ -31,6 +40,8 @@ namespace Platformer.UI
 				if ( block == null ) continue;
 
 				block.SetClass( "visible", pl.Health >= i + 1 );
+
+				Message = $"{pl.Health}/{MaxHealth}";
 			}
 		}
 
