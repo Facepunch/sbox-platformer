@@ -5,42 +5,46 @@ using Sandbox.UI;
 using Sandbox.UI.Construct;
 using System;
 
-namespace Platformer.UI;
-
-public class CourseTimer : Panel
+namespace Platformer.UI
 {
-
-	private Label Timer;
-
-	private TimeSince time;
-
-	public CourseTimer() => Timer = Add.Label( string.Empty, "timer" );
-
-	public override void Tick()
+	[UseTemplate( "/UI/Base/Course/StatusCard.html" )]
+	public class CourseTimer : StatusCard
 	{
-		base.Tick();
+		private TimeSince time;
 
-		var pawn = Local.Pawn as PlatformerPawn;
-		if ( !pawn.IsValid() ) return;
-
-		if( Competitive.Current != null )
+		public CourseTimer()
 		{
-			time = pawn.TimeSinceStart;
-			if ( pawn.TimerState != TimerState.Live )
+			Icon = "history_toggle_off ";
+			Header = "TIMER";
+			ReverseColor = true;
+		}
+
+		public override void Tick()
+		{
+			base.Tick();
+
+			var pawn = Local.Pawn as PlatformerPawn;
+			if ( !pawn.IsValid() ) return;
+
+			if ( Competitive.Current != null )
 			{
-				time = 0;
+				time = pawn.TimeSinceStart;
+				if ( pawn.TimerState != TimerState.Live )
+				{
+					time = 0;
+				}
+				Message = TimeSpan.FromSeconds( (time * 60).Clamp( 0, float.MaxValue ) ).ToString( @"hh\:mm\:ss" );
 			}
-			Timer.Text = TimeSpan.FromSeconds( (time * 60).Clamp( 0, float.MaxValue ) ).ToString( @"hh\:mm\:ss" );
-		}
 
-		if( Coop.Current != null )
-		{
-			Timer.Text = TimeSpan.FromSeconds( (Coop.Current.TimeCoopStart * 60).Clamp( 0, float.MaxValue ) ).ToString( @"hh\:mm\:ss" );
-		}
+			if ( Coop.Current != null )
+			{
+				Message = TimeSpan.FromSeconds( (Coop.Current.TimeCoopStart * 60).Clamp( 0, float.MaxValue ) ).ToString( @"hh\:mm\:ss" );
+			}
 
-		if( Tag.Current != null )
-		{
-			SetClass( "active", true );
+			if ( Tag.Current != null )
+			{
+				SetClass( "active", true );
+			}
 		}
 	}
 }
