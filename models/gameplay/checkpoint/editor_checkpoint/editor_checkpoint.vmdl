@@ -11,7 +11,7 @@
 				[
 					{
 						_class = "RenderMeshFile"
-						filename = "models\\gameplay\\checkpoint\\editor_checkpoint\\dmx\\mesh\\editor_checkpoint.dmx"
+						filename = "models/gameplay/checkpoint/editor_checkpoint/dmx/mesh/checkpoint_ring.fbx"
 						import_translation = [ 0.0, 0.0, 0.0 ]
 						import_rotation = [ 0.0, 0.0, 0.0 ]
 						import_scale = 1.0
@@ -42,9 +42,28 @@
 					},
 				]
 			},
+			{
+				_class = "MaterialGroupList"
+				children = 
+				[
+					{
+						_class = "DefaultMaterialGroup"
+						remaps = 
+						[
+							{
+								from = "dev/helper/testgrid.vmat"
+								to = "models/gameplay/checkpoint/editor_checkpoint/materials/chalk_line.vmat"
+							},
+						]
+						use_global_default = false
+						global_default_material = ""
+					},
+				]
+			},
 		]
 		model_archetype = ""
 		primary_associated_entity = ""
 		anim_graph_name = ""
+		base_model_name = ""
 	}
 }
