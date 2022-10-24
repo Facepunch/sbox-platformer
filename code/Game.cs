@@ -87,7 +87,9 @@ public partial class Platformer : Sandbox.Game
 		base.OnKilled( client, pawn );
 
 		var msg = string.Format( Rand.FromList( killMessages ), client.Name );
-		PlatformerKillfeed.AddEntryOnClient( To.Everyone, msg, client.NetworkIdent );
+
+
+		PlatformerChatBox.AddChatEntry( To.Everyone, client.Name, msg, client.PlayerId, null, false );
 	}
 
 	private List<string> killMessages = new()
