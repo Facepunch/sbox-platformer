@@ -55,22 +55,6 @@ LifeCurrent {
     }
 }
 
-CourseTimer {
-    position: absolute;
-    top: 145px;
-    left: 225px;
-    text-stroke: 11px black;
-    font-size: 20px;
-    font-family: "Nunito-Black";
-    font-weight: 800;
-    color: white;
-    opacity: 0;
-
-    &.Active {
-        opacity: 1;
-    }
-}
-
 CoinCurrent {
     position: absolute;
     right: 10%;
