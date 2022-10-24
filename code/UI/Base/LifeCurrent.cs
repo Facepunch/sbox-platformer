@@ -10,12 +10,15 @@ namespace Platformer.UI
 	{
 
 		public Label Number;
-		public Image Image;
+		public Label Icon;
+
+		//public Image Image;
 
 		public LifeCurrent()
 		{
-			Image = Add.Image( "ui/hud/citizen/citizen.png", "playerimage" );
+			//Image = Add.Image( "ui/hud/citizen/citizen.png", "playerimage" );
 			Number = Add.Label( "", "number" );
+			Icon = Add.Label( "favorite", "icon" );
 		}
 
 		public override void Tick()
@@ -41,12 +44,12 @@ namespace Platformer.UI
 
 		public void LowHealth()
 		{
-			Image.SetTexture( "ui/hud/citizen/citizen_low.png" );
+			//Image.SetTexture( "ui/hud/citizen/citizen_low.png" );
 		}
 
 		public void HighHealth()
 		{
-			Image.SetTexture( "ui/hud/citizen/citizen.png" );
+			//Image.SetTexture( "ui/hud/citizen/citizen.png" );
 		}
 
 	}
