@@ -1,0 +1,43 @@
+BlockBar {
+    background-color: rgba(234, 46, 80, 1);
+    flex-direction: row;
+    height: 35px;
+    align-items: center;
+    border-radius: 20px;
+
+    > .icon {
+        margin-left: 16px;
+        margin-right: 8px;
+        font-size: 24px;
+        color: white;
+        font-family: Material Icons;
+    }
+
+    > .layout {
+        padding: 5px;
+        align-items: center;
+
+        > .block {
+            border-radius: 10px;
+            width: 40px;
+            height: 14px;
+            background-color: rgba( white, 0.3 );
+
+            &:not( :first-child ) {
+                margin-left: 4px;
+            }
+
+            &.active {
+                background-color: white;
+            }
+        }
+    }
+
+    > .progress {
+        font-family: Nunito-Black;
+        margin-left: 8px;
+        margin-right: 16px;
+        font-size: 22px;
+        color: white;
+    }
+}
