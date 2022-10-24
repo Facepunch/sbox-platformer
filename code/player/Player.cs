@@ -159,6 +159,8 @@ public partial class PlatformerPawn : Sandbox.Player
 	[Net]
 	public Vector3 NPCCamera { get; set; }
 
+	public float MaxHealth { get; set; } = 4;
+
 	public override void Simulate( Client cl )
 	{
 		if ( Platformer.GameState == GameStates.GameEnd )
