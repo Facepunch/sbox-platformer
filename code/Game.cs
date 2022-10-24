@@ -86,7 +86,7 @@ public partial class Platformer : Sandbox.Game
 	{
 		base.OnKilled( client, pawn );
 
-		var msg = string.Format( Rand.FromList( killMessages ), client.Name );
+		var msg = Rand.FromList( killMessages );
 
 
 		PlatformerChatBox.AddChatEntry( To.Everyone, client.Name, msg, client.PlayerId, null, false );
@@ -94,8 +94,8 @@ public partial class Platformer : Sandbox.Game
 
 	private List<string> killMessages = new()
 	{
-		"{0} Died",
-		"{0} Couldn't stand"
+		"died",
+		"couldn't stand"
 	};
 
 	[ClientRpc]
