@@ -5,13 +5,17 @@ ControlPanel {
     color: $fontcolor;
     position: absolute;
     bottom: 64px;
-    right: 64px;
+    right: 40%;
     align-items: flex-end;
     z-index: 101;
     flex-direction: column;
-    font-family: Poppins;
+    font-family: Nunito-Black;
     opacity: 0;
     transition: all .15s ease-in;
+    align-items: center;
+    color: #87857e;
+    text-shadow: 0px 1px 0px #FFFFFF;
+    font-size: 16px;
 
     &.open {
         opacity: 1;
@@ -19,12 +23,13 @@ ControlPanel {
 
     ControlEntry {
         padding: 8px;
-        background-color: $bg;
+        background-color: #fbf4e9;
         margin-bottom: 2px;
+        border-radius: 20px;
 
         .name {
             margin-right: 4px;
-            border-right: 2px solid $green;
+            border-right: 2px solid rgba(234, 46, 80, 1);
             padding-right: 4px;
             font-weight: 600;
         }
