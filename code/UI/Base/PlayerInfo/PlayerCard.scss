@@ -27,6 +27,11 @@ PlayerCard {
                 margin-left: 60px;
             }
 
+
+            &.tag {
+                opacity: 0;
+            }
+
             > .icon {
                 font-family: Material Icons;
                 color: #87857e;
