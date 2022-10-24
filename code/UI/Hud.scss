@@ -1,20 +1,8 @@
 AvatarPanel {
-    position: absolute;
-    right: 20px;
-    bottom: 10px;
-    transition: all 0.25s ease-out;
-    width: 196px;
-    height: 196px;
-    z-index: 2;
-
-
     > .avatar {
-        position: absolute;
-        width: 138px;
-        aspect-ratio: 1;
+        width: 100%;
+        height: 100%;
         z-index: -1;
-        top: 35px;
-        left: 38px;
         border-radius: 50%;
         border: 4px solid #F9F8E8;
         transform: rotate(-10deg);
