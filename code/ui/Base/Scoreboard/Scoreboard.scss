@@ -2,8 +2,8 @@
     position: absolute;
     z-index: 100;
     flex-direction: column;
-    font-family: "Fredoka One";
-    font-size: 24px;
+    font-family: Nunito-Bold;
+    font-size: 20px;
     font-weight: 500;
     color: white;
     width: 100%;
@@ -11,25 +11,29 @@
     align-items: center;
     justify-content: center;
     opacity: 0;
-    background-color: rgba( 0, 0, 0, 0.5 );
+    background-color: rgba( 20, 10, 20, 0.8 );
     transition: all 0.1s ease-out;
     transform: scale( 1.05 );
     transform-origin: 50% 50%;
+    backdrop-filter: blur(50px);
 
     &.open {
         opacity: 1;
         transform: scale( 1 );
     }
 
-    .name {
+    .name, .player-name {
         flex-grow: 1;
+    }
+
+    .deaths, .kills, .ping, .player-name {
+        width: 150px;
+        text-align: center;
         text-transform: uppercase;
     }
 
-    .deaths, .kills, .ping {
-        width: 150px;
-        text-align: right;
-        text-transform: uppercase;
+    .player-name {
+        text-align: left;
     }
 
     .kills {
@@ -38,9 +42,9 @@
 
     .header {
         font-weight: 200;
-        opacity: 0.3;
-        border-bottom: 4px solid rgba( white, 0.6 );
         min-width: 40%;
+        margin-left: 40px;
+        margin-bottom: 20px;
     }
 
     .canvas {
@@ -50,10 +54,39 @@
 
         .entry {
             margin-bottom: 2px;
-            padding: 10px;
+            padding: 8px;
+            padding-left: 20px;
+            padding-right: 20px;
+            border-radius: 20px;
+            background-color: #5f6056;
+            box-shadow: 4px 4px 5px rgba( black, 0.3 );
+
+            &:nth-child(even) {
+                background-color: #484942;
+            }
+
+            &:not( :first-child ) {
+                margin-top: 4px;
+            }
+
+            .you {
+                position: absolute;
+                left: -60px;
+                color: rgba( black, 1 );
+                text-transform: uppercase;
+                height: 100%;
+                align-self: center;
+                font-family: Nunito-Black;
+                text-shadow: 1px 1px 2px rgba( black, 0.3 );
+            }
 
             &.me {
-                color: #b6ff00;
+                font-family: Nunito-Black;
+                background-image: linear-gradient( to top, #df4a64, #d72e4c );
+
+                .you {
+                    color: linear-gradient( to top, #df4a64, #d72e4c );
+                }
             }
 
             &:hover {

@@ -79,6 +79,12 @@ public class Scoreboard : Panel
 	{
 		var p = Canvas.AddChild<ScoreboardEntry>();
 		p.Client = entry;
+
+		if ( entry == Local.Client )
+		{
+			p.AddChild<Label>( "you" ).Text = "you";
+		}
+
 		return p;
 	}
 }
