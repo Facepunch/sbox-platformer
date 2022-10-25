@@ -39,7 +39,6 @@ namespace Platformer.UI
 			Canvas = Add.Panel( "chat_canvas" );
 			Canvas.PreferScrollToBottom = true;
 
-			SendButton = Add.Label("send","sendbutton" );
 
 			Input = Add.TextEntry( "" );
 			Input.AddEventListener( "onsubmit", () => Submit() );
@@ -47,6 +46,7 @@ namespace Platformer.UI
 			Input.AcceptsFocus = true;
 			Input.AllowEmojiReplace = true;
 
+			SendButton = Input.Add.Label( "send", "sendbutton" );
 		}
 
 		public override void Tick()
