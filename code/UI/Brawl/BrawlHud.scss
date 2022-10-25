@@ -10,13 +10,13 @@ BrawlHud {
 }
 
 .title {
-    font-size: 48px;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 48px;
-    color: $green;
-    font-family: $stylefont;
-    text-stroke: 10px black;
+    position: absolute;
+    left: 39%;
+    top: 20%;
+    width: 400px;
+    height: 100px;
+    background-position: center;
+    background-size: cover;
 }
 
 HurtOverlay {

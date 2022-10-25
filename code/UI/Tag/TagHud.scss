@@ -8,6 +8,22 @@ TagHud {
     pointer-events: none;
 }
 
+.title {
+    position: absolute;
+    left: 42%;
+    top: -20%;
+    width: 400px;
+    height: 100px;
+    background-position: center;
+    background-size: cover;
+    opacity: 0;
+
+    &.visible {
+        top: 20%;
+        opacity: 1;
+    }
+}
+
 TagScore {
     position: absolute;
     left: 50%;
