@@ -40,6 +40,15 @@
         padding-right: 20px;
     }
 
+    .logo {
+        top: 120px;
+        position: absolute;
+        width: 712px;
+        height: 121px;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
     .header {
         font-weight: 200;
         min-width: 40%;
@@ -49,7 +58,7 @@
 
     .canvas {
         flex-direction: column;
-        min-height: 50%;
+        min-height: 20%;
         min-width: 40%;
 
         .entry {
