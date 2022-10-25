@@ -6,6 +6,7 @@ namespace Platformer.Gamemodes;
 
 internal class Brawl : BaseGamemode
 {
+	public static Brawl Current => Instance as Brawl;
 
 	public override PlatformerPawn CreatePlayerInstance( Client cl ) => new BrawlPlayer( cl );
 

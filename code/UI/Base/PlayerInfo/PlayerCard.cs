@@ -27,6 +27,8 @@ public partial class PlayerCard : Panel
 
 		CoinsPanel.SetClass( "tag", Tag.Current.IsValid() );
 		LivesPanel.SetClass( "tag", Tag.Current.IsValid() );
+		CoinsPanel.SetClass( "tag", Brawl.Current.IsValid() );
+		LivesPanel.SetClass( "tag", Brawl.Current.IsValid() );
 
 		Lives = $"{pawn.NumberLife}";
 		Coins = $"{pawn.Coin}";
