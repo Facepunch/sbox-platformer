@@ -9,16 +9,16 @@ mapvotepanel {
     right: -50px;
     top: -50px;
     bottom: -50px;
-    font-family: "Fredoka One";
     pointer-events: all;
     opacity: .9;
     backdrop-filter: blur( 20px );
     z-index: 99;
+    text-transform: uppercase;
 }
 
 mapvotepanel > .inner
 {
-    margin: 150px 250px;
+    margin: 150px 150px;
     flex-direction: column;
     flex-grow: 1;
 }
@@ -29,37 +29,54 @@ mapvotepanel > .inner > .header {
     .left {
         flex-grow: 1;
         flex-direction: column;
+        align-items: center;
+        bottom: 50px;
 
         .title {
-            font-family: "Fredoka One";
-            font-size: 50px;
-            font-weight: bold;
-            color: #f1c40f;
-            text-stroke: 16px black;
+            text-align: center;
+            min-width: 400px;
+            border-radius: 20px 20px 0px 0px;
+            background-color: rgba(32, 184, 207, 1);
+            text-shadow: 0px 0px 2px rgba( black, 0.3 );
+            margin-left: 60px;
+            padding: 5px;
+            font-size: 30px;
+            color: white;
+            font-family: Nunito-Black;
+            box-shadow: 2px 2px 10px rgba( black, 0.5 );
         }
 
         .subtitle {
-            font-size: 24px;
-            font-weight: bold;
-            color: white;
-            text-stroke: 16px black;
+            text-align: center;
+            min-width: 400px;
+            color: rgba(32, 184, 207, 1);
+            margin-left: 60px;
+            padding: 15px;
+            font-family: Nunito-Black;
+            font-size: 16px;
+            border-radius: 0px 0px 20px 20px;
+            box-shadow: 2px 2px 10px rgba( black, 0.5 );
+            background-image: linear-gradient(0deg, rgba(255, 243, 224, 1), rgba(255, 255, 255, 1) 80% );
         }
-    }
 
-    .right {
         .countdown {
-            font-family: "Fredoka One";
-            font-size: 50px;
-            font-weight: bold;
-            color: white;
-            text-stroke: 16px black;
+            text-align: center;
+            margin-left: 60px;
+            min-width: 100px;
+            font-size: 30px;
+            color: rgba(32, 184, 207, 1);
+            font-family: Nunito-Black;
+            border-radius: 20px 20px 0px 0px;
+            box-shadow: 2px 2px 10px rgba( black, 0.5 );
+            background-image: linear-gradient(180deg, rgba(255, 243, 224, 1), rgba(255, 255, 255, 1) 80% );
         }
     }
 }
 
-mapvotepanel > .inner > .body
-{
-    flex-grow: 1;
-    margin: 50px;
+mapvotepanel > .inner > .body {
+    justify-content: center;
+    align-items: center;
+    flex-grow: 0;
     flex-wrap: wrap;
+    overflow: scroll;
 }

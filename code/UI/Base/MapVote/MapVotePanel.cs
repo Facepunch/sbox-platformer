@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 [UseTemplate]
 class MapVotePanel : Panel
 {
+	// @text
+	public string Icon { get; set; }
 	public string TitleText { get; set; } = "Map Vote";
 	public string SubtitleText { get; set; } = "Choose your next map";
 	public string TimeText { get; set; } = "00:33";
@@ -18,6 +20,7 @@ class MapVotePanel : Panel
 
 	public MapVotePanel()
 	{
+		Icon = "schedule";
 		_ = PopulateMaps();
 	}
 
