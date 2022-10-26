@@ -146,6 +146,8 @@ public partial class Checkpoint : ModelEntity
 			flag.SetModel( "models/circuit_board_flag/circuit_board_flag_top.vmdl" );
 			lighteffect = Particles.Create( "particles/gameplay/checkpoint_light/checkpoint_light.vpcf", this );
 			flag.SetMaterialGroup( "On" );
+			Particles.Create( "particles/gameplay/checkpoint_light/checkpoint_light_activated.vpcf", this );
+			Sound.FromEntity( "checkpoint_light", this );
 		}
 		else if ( active && !isLatestCheckpoint )
 		{
