@@ -42,6 +42,15 @@ public partial class Platformer : Sandbox.Game
 		}
 	}
 
+	/// <summary>
+	/// Someone is speaking via voice chat. This might be someone in your game,
+	/// or in your party, or in your lobby.
+	/// </summary>
+	public override void OnVoicePlayed( Client cl )
+	{
+		VoiceChatList.Current?.OnVoicePlayed( cl.PlayerId, cl.VoiceLevel );
+	}
+
 	[Event.Entity.PostSpawn]
 	public void PostEntitySpawn()
 	{
