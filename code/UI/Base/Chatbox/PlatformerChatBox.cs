@@ -95,18 +95,18 @@ namespace Platformer.UI
 
 		public void AddEntry( string name, string message, long playerId = 0, string lobbyState = null, bool isMessage = true )
 		{
-			var e = new PlatformerChatEntry( isMessage );
-			Canvas.AddChild( e );
+			var e = Canvas.AddChild<PlatformerChatEntry>();
+			e.IsChatMessage = isMessage;
 
 			var player = Local.Pawn;
 			if ( player == null ) return;
 			if ( Local.Pawn is PlatformerPawn pl )
 			{
-				e.Message.Text = message;
-				e.NameLabel.Text = $"{name}";
-
 				if ( playerId > 0 )
-					e.SetPlayerId( playerId );
+					e.PlayerId = playerId;
+
+				e.Message = message;
+				e.Name = $"{name}";
 
 				e.SetClass( "noname", string.IsNullOrEmpty( name ) );
 				e.SetClass( "noavatar", playerId == 0 );
@@ -114,11 +114,11 @@ namespace Platformer.UI
 
 			if ( Local.Pawn is PlatformerDeadPawn dpl )
 			{
-				e.Message.Text = message;
-				e.NameLabel.Text = $"{name}";
+				e.Message = message;
+				e.Name = $"{name}";
 
 				if ( playerId > 0 )
-					e.SetPlayerId( playerId );
+					e.PlayerId = playerId;
 
 				e.SetClass( "noname", string.IsNullOrEmpty( name ) );
 				e.SetClass( "noavatar", playerId == 0 );
