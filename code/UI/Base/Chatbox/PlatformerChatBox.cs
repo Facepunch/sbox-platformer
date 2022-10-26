@@ -51,7 +51,6 @@ namespace Platformer.UI
 
 		public override void Tick()
 		{
-			SendButton.Focus();
 			if ( Sandbox.Input.Pressed( InputButton.Chat ) )
 			{
 				Open();
