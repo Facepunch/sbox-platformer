@@ -9,7 +9,7 @@ platformerchatbox {
     position: absolute;
     bottom: 32px;
     left: 32px;
-    z-index: 1000;
+    z-index: 50;
     flex-direction: column;
     width: 550px;
     font-family: "Nunito-Black";
@@ -43,7 +43,6 @@ platformerchatbox {
         width: 40px;
         height: 40px;
         cursor: pointer;
-        opacity: 0;
         top: 6px;
         right: 8px;
     }
