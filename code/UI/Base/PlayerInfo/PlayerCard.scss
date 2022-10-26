@@ -13,15 +13,30 @@ PlayerCard {
     }
 
     > .header {
+        position: absolute;
         width: 100%;
-        margin-left: 65px;
+        z-index: -1;
+        height: 25px;
+        top: 35px;
+        right: 115px;
+        flex-direction: row-reverse;
 
         > .entry {
             padding-left: 8px;
             padding-right: 8px;
             height: 25px;
             background-color: #fbf4e9;
-            border-radius: 10px 10px 0px 0px;
+
+            &.lives {
+                width: 70px;
+                border-radius: 0px 0px 0px 0px;
+            }
+
+            &.coins {
+                width: 70px;
+                border-radius: 0px 0px 0px 10px;
+                right: 4px;
+            }
 
             &:not( :first-child ) {
                 margin-left: 60px;
