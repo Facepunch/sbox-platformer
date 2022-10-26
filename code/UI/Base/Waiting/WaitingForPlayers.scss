@@ -5,7 +5,7 @@ WaitingForPlayers {
     height: 100%;
     position: absolute;
     opacity: 0;
-    z-index: 100;
+    z-index: 1;
     font-weight: 100;
     transition: all .3s ease-out;
     transition: opacity .1s linear;
