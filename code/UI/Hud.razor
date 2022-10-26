@@ -1,0 +1,34 @@
+@using Sandbox.UI;
+@using Sandbox;
+
+@inherits RootPanel
+@attribute [StyleSheet( "/UI/Hud.scss" )]
+@namespace Platformer.UI
+
+<root class="@Classes()">
+	<Scoreboard/>
+	<PlayerCard />
+	<KeysCollected />
+	<NewMajorArea />
+	<WaitingForPlayers />
+	<NewArea />
+	<PlatformerChatBox />
+	<PlatformerKillfeed />
+	<EnergyCurrent />
+	<ControlPanel />
+	<VoiceChatList />
+	<VoiceIcon />
+</root>
+
+@code
+{
+	public Hud() => Local.Hud = this;
+
+	public string Classes()
+	{
+		if ( Platformer.GameState == Gamemodes.GameStates.GameEnd ) return "game-end";
+		if ( Platformer.GameState == Gamemodes.GameStates.Warmup ) return "game-warmup";
+
+		return "";
+	}
+}
