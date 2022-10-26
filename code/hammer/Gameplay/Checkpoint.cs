@@ -9,7 +9,7 @@ using Platformer.Gamemodes;
 namespace Platformer;
 
 [Library( "plat_checkpoint", Description = "Defines a checkpoint where the player will respawn after falling" )]
-[Model( Model = "models/gameplay/checkpoint/editor_checkpoint/editor_checkpoint.vmdl" )]
+[Model( Model = "models/circuit_board_flag/circuit_board_flag.vmdl" )]
 [Display( Name = "Player Checkpoint", GroupName = "Platformer", Description = "Defines a checkpoint where the player will respawn after falling" ), Category( "Player" ), Icon( "flag_circle" )]
 [BoundsHelper( "mins", "maxs", false, true )]
 [HammerEntity]
@@ -36,10 +36,12 @@ public partial class Checkpoint : ModelEntity
 
 	private ModelEntity flag;
 
+	private Particles lighteffect;
+
 	public override void Spawn()
 	{
 		base.Spawn();
-
+		
 		Transmit = TransmitType.Always;
 		EnableAllCollisions = true;
 		EnableTouch = true;
@@ -62,20 +64,20 @@ public partial class Checkpoint : ModelEntity
 
 		var flagAttachment = GetAttachment( "Flag" );
 
-		flag = new ModelEntity( "models/flag_pole/flag_pole_no_flag.vmdl" );
+		flag = new ModelEntity( "models/circuit_board_flag/circuit_board_flag_top.vmdl" );
 		flag.Position = flagAttachment.Value.Position;
 		flag.Rotation = flagAttachment.Value.Rotation;
 
 		if ( this.IsStart )
 		{
-			flag.SetModel( "models/flag_pole/flag_pole.vmdl" );
-			flag.SetMaterialGroup( "Green" );
+			flag.SetModel( "models/circuit_board_flag/circuit_board_flag_lights_start.vmdl" );
+			//flag.SetMaterialGroup( "Green" );
 		}
 
 		if ( this.IsEnd )
 		{
-			flag.SetModel( "models/flag_pole/flag_pole.vmdl" );
-			flag.SetMaterialGroup( "Checker" );
+			flag.SetModel( "models/circuit_board_flag/circuit_board_flag_lights.vmdl" ); 
+			//flag.SetMaterialGroup( "Checker" );
 		}
 	}
 
@@ -141,13 +143,18 @@ public partial class Checkpoint : ModelEntity
 		{
 			active = true;
 
-			flag.SetModel( "models/flag_pole/flag_pole.vmdl" );
+			flag.SetModel( "models/circuit_board_flag/circuit_board_flag_top.vmdl" );
+			lighteffect = Particles.Create( "particles/gameplay/checkpoint_light/checkpoint_light.vpcf", this );
+			flag.SetMaterialGroup( "On" );
 		}
 		else if ( active && !isLatestCheckpoint )
 		{
 			active = false;
 
-			flag.SetModel( "models/flag_pole/flag_pole_no_flag.vmdl" );
+			flag.SetModel( "models/circuit_board_flag/circuit_board_flag_top.vmdl" );
+			flag.SetMaterialGroup( "Off" );
+			if ( lighteffect != null )
+				lighteffect.Destroy( true );
 		}
 	}
 
