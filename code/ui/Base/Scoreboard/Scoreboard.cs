@@ -85,6 +85,13 @@ public class Scoreboard : Panel
 			p.AddChild<Label>( "you" ).Text = "you";
 		}
 
+		// Client.IsFriend in the future, this is shit
+		var friend = Friend.GetAll().FirstOrDefault( x => x.Id == entry.Id );
+		if ( friend.IsFriend )
+		{
+			p.AddChild<Label>( "friend" ).Text = "group";
+		}
+
 		return p;
 	}
 }
