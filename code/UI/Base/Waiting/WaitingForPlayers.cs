@@ -42,11 +42,4 @@ public partial class WaitingForPlayers : Panel
 		Instance.timesince = Time.Now;
 
 	}
-
-	[ConCmd.Client( "plat_killfeed_add", CanBeCalledFromServer = true )]
-	public static void AddEntryOnClient( string message, int clientId )
-	{
-		PlatformerKillfeed.Current?.AddEntry( message, clientId );
-	}
-
 }
