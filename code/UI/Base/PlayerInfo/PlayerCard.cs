@@ -25,10 +25,9 @@ public partial class PlayerCard : Panel
 		HealthBar.MaxBlocks = pawn.MaxHealth.CeilToInt();
 		HealthBar.CurrentBlocks = pawn.Health.CeilToInt();
 
-		CoinsPanel.SetClass( "tag", Tag.Current.IsValid() );
-		LivesPanel.SetClass( "tag", Tag.Current.IsValid() );
-		CoinsPanel.SetClass( "tag", Brawl.Current.IsValid() );
-		LivesPanel.SetClass( "tag", Brawl.Current.IsValid() );
+		var wantCoinsAndLives = Tag.Current.IsValid() || Brawl.Current.IsValid();
+		CoinsPanel.SetClass( "tag", wantCoinsAndLives );
+		LivesPanel.SetClass( "tag", wantCoinsAndLives );
 
 		Lives = $"{pawn.NumberLife}";
 		Coins = $"{pawn.Coin}";
