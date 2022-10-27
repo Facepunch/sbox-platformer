@@ -3,12 +3,13 @@ using SandboxEditor;
 using Sandbox;
 using System.ComponentModel.DataAnnotations;
 using System;
+using System.Reflection;
 
 namespace Platformer;
 
 [Library( "plat_musicboxtweakerradius", Description = "Music Box Tweaker Radius" )]
-[EditorSprite( "editor/ent_logic.vmat" )]
-[Display( Name = "Music Box Tweaker", GroupName = "Platformer", Description = "Platformer Soundscape" ), Category( "Sound" ), Icon( "speaker" )]
+[EditorSprite( "materials/editor/musicboxtweaker/musicboxtweaker.vmat" )]
+[Display( Name = "Music Box Tweaker Radius", GroupName = "Platformer", Description = "Platformer Soundscape" ), Category( "Sound" ), Icon( "speaker" )]
 [HammerEntity]
 [Sphere( "radius" )]
 partial class MusicBoxTweakerRadius : ModelEntity
@@ -33,24 +34,24 @@ partial class MusicBoxTweakerRadius : ModelEntity
 		MusicBox ??= FindByName( TargetMusicBox ) as MusicBox;
 		if ( !MusicBox.IsValid() ) return;
 
-		var pos = CurrentView.Position;
+		var pos = CurrentView.Position + new Vector3( 0, 0, 48 );
 		if ( Local.Pawn.IsValid() )
 		{
-			pos = Local.Pawn.Position;
+			pos = Local.Pawn.Position + new Vector3( 0, 0, 48 );
 		}
 
 		var dist = Position.Distance( pos );
 		if ( dist > Radius )
 			return;
-
-		var vol = (Radius - dist).LerpInverse( 0, 64f );
-		vol = Math.Max( 0.1f, vol );
+		var vol = 1 - (dist / Radius);
 
 		MusicBox.UpdateVolume( vol );
 
 		if ( BasePlayerController.Debug )
 		{
 			DebugOverlay.Text( vol.ToString(), Position );
+			DebugOverlay.Line( Position, pos, 0f, false );
+			DebugOverlay.Sphere( Position, Radius, Color.Red);
 		}
 	}
 
