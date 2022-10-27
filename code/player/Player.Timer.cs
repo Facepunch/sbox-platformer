@@ -111,12 +111,13 @@ partial class PlatformerPawn
 
 			if ( overridePosition )
 			{
-	
 				for ( int i = Checkpoints.Count - 1; i >= 0; i-- )
 				{
 					if ( Checkpoints[i] != checkpoint )
 						Checkpoints.RemoveAt( i );
+
 				}
+
 			}
 			return;
 		}

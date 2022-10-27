@@ -86,7 +86,7 @@ public partial class Checkpoint : ModelEntity
 
 		if ( other is not CompetitivePlayer pl ) return;
 		if ( !CanPlayerCheckpoint( pl ) ) return;
-
+		if( Platformer.GameState != GameStates.Live ) return;
 		pl.TrySetCheckpoint( this, true );
 
 		if ( IsEnd && pl.NumberOfKeys == Platformer.Current.NumberOfCollectables ) _ = pl.CompleteCourseAsync();
@@ -140,7 +140,7 @@ public partial class Checkpoint : ModelEntity
 		if ( !active && isLatestCheckpoint )
 		{
 			active = true;
-
+			Platformer.Alerts( "CHECKPOINT" );
 			flag.SetModel( "models/circuit_board_flag/circuit_board_flag_top.vmdl" );
 			lighteffect = Particles.Create( "particles/gameplay/checkpoint_light/checkpoint_light.vpcf", this );
 			flag.SetMaterialGroup( "On" );
