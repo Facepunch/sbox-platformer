@@ -4,24 +4,29 @@ using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
 
-namespace Platformer.UI;
-
-[UseTemplate]
-public class TagRound : Panel
+namespace Platformer.UI
 {
-
-	public int CurrentRound { get; set; }
-	public int TotalRound { get; set; }
-
-	public override void Tick()
+	[UseTemplate( "/UI/Base/Course/StatusCard.html" )]
+	public class TagRound : StatusCard
 	{
-		base.Tick();
+		public int CurrentRound { get; set; }
+		public int TotalRound { get; set; }
 
-		if ( !Tag.Current.IsValid() ) 
-			return;
+		public TagRound()
+		{
+			Icon = "history_toggle_off ";
+			Header = "ROUND";
+			ReverseColor = true;
+		}
 
-		CurrentRound = Tag.Current.RoundNumber;
-		TotalRound = Platformer.NumTagRounds;
+		public override void Tick()
+		{
+			base.Tick();
+
+			if ( !Tag.Current.IsValid() )
+				return;
+
+			Message = $"{Tag.Current.RoundNumber}/{Platformer.NumTagRounds}";
+		}
 	}
-
 }

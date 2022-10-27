@@ -60,7 +60,7 @@ internal partial class Coop : BaseGamemode
 			var randomplayer = allplayers.OrderBy( x => Rand.Int( 99999 ) ).FirstOrDefault();
 			deathpawn.Position = randomplayer.Position + Vector3.Up * 32;
 
-			PlatformerChatBox.AddInformation( To.Everyone, $"{cl.Name} has joined the game", $"avatar:{cl.PlayerId}" );
+			PlatformerChatBox.AddChatEntry( To.Everyone, cl.Name, "has joined the game", cl.PlayerId, null, false );
 		}
 
 		if ( GameState != GameStates.Live )
@@ -81,7 +81,7 @@ internal partial class Coop : BaseGamemode
 
 			pawn.NumberLife = 1;
 
-			PlatformerChatBox.AddInformation( To.Everyone, $"{cl.Name} has joined the game", $"avatar:{cl.PlayerId}" );
+			PlatformerChatBox.AddChatEntry( To.Everyone, cl.Name, "has joined the game", cl.PlayerId, null, false );
 		}
 	}
 

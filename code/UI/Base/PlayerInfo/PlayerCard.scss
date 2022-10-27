@@ -1,0 +1,75 @@
+PlayerCard {
+    position: absolute;
+    right: 32px;
+    bottom: 28px;
+    flex-direction: column-reverse;
+
+    AvatarPanel {
+        right: 0;
+        position: absolute;
+        width: 138px;
+        height: 138px;
+        z-index: 100;
+    }
+
+    > .header {
+        position: absolute;
+        width: 100%;
+        z-index: -1;
+        height: 25px;
+        top: 35px;
+        right: 115px;
+        flex-direction: row-reverse;
+
+        > .entry {
+            padding-left: 8px;
+            padding-right: 8px;
+            height: 25px;
+            background-color: #fbf4e9;
+
+            &.lives {
+                width: 70px;
+                border-radius: 0px 0px 0px 0px;
+            }
+
+            &.coins {
+                width: 70px;
+                border-radius: 0px 0px 0px 10px;
+                right: 4px;
+            }
+
+            &:not( :first-child ) {
+                margin-left: 60px;
+            }
+
+
+            &.tag {
+                opacity: 0;
+            }
+
+            > .icon {
+                font-family: Material Icons;
+                color: #87857e;
+                font-size: 24px;
+                margin-right: 4px;
+            }
+
+            > .text {
+                font-family: Nunito-Bold;
+                color: #87857e;
+                font-size: 20px;
+            }
+        }
+    }
+
+    > .bars {
+        width: 100%;
+        margin-right: 150px;
+        margin-bottom: 44px;
+
+        BlockBar {
+            width: 90%;
+            border-radius: 20px 0px 0px 20px;
+        }
+    }
+}

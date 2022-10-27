@@ -42,6 +42,15 @@ public partial class Platformer : Sandbox.Game
 		}
 	}
 
+	/// <summary>
+	/// Someone is speaking via voice chat. This might be someone in your game,
+	/// or in your party, or in your lobby.
+	/// </summary>
+	public override void OnVoicePlayed( Client cl )
+	{
+		VoiceChatList.Current?.OnVoicePlayed( cl.PlayerId, cl.VoiceLevel );
+	}
+
 	[Event.Entity.PostSpawn]
 	public void PostEntitySpawn()
 	{
@@ -79,21 +88,23 @@ public partial class Platformer : Sandbox.Game
 	{
 		base.ClientDisconnect( client, reason );
 
-		PlatformerChatBox.AddInformation( To.Everyone, $"{client.Name} has left the game", $"avatar:{client.PlayerId}" );
+		PlatformerChatBox.AddInformation( To.Everyone, $"{client.Name} has left the game", client.PlayerId );
 	}
 
 	public override void OnKilled( Client client, Entity pawn )
 	{
 		base.OnKilled( client, pawn );
 
-		var msg = string.Format( Rand.FromList( killMessages ), client.Name );
-		PlatformerKillfeed.AddEntryOnClient( To.Everyone, msg, client.NetworkIdent );
+		var msg = Rand.FromList( killMessages );
+
+
+		PlatformerChatBox.AddChatEntry( To.Everyone, client.Name, msg, client.PlayerId, null, false );
 	}
 
 	private List<string> killMessages = new()
 	{
-		"{0} Died",
-		"{0} Couldn't stand"
+		"died",
+		"couldn't stand"
 	};
 
 	[ClientRpc]
@@ -107,6 +118,18 @@ public partial class Platformer : Sandbox.Game
 	public static void Alerts( string Title )
 	{
 		NewMajorArea.ShowLandmark( Title );
+	}
+
+	[ClientRpc]
+	public static void BeenTagged( string Title )
+	{
+		WaitingForPlayers.ShowWaitingForPlayers( Title );
+	}
+
+	[ClientRpc]
+	public static void Waiting( string Title )
+	{
+		WaitingForPlayers.ShowWaitingForPlayers( Title );
 	}
 
 	public enum GameModes

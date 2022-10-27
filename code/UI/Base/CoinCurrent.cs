@@ -8,13 +8,16 @@ namespace Platformer.UI
 	public class CoinCurrent : Panel
 	{
 
-		public Image Image;
+		//public Image Image;
+		public Label Icon;
 		public Label Number;
+
 
 		public CoinCurrent()
 		{
 
-			Image = Add.Image( "ui/hud/coin.png", "coinimage" );
+			//Image = Add.Image( "ui/hud/coin.png", "coinimage" );
+			Icon = Add.Label( "paid", "icon" );
 			Number = Add.Label( "", "coinnumber" );
 
 		}

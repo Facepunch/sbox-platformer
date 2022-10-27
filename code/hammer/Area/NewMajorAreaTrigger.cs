@@ -42,21 +42,6 @@ namespace Platformer
 		public static void NewAreaHud( string Location, int clint )
 		{
 			PlatformerKillfeed.AddEntryOnClient( To.Everyone, Location, clint );
-		}
-
-		public override void OnTouchStart( Entity other )
-		{
-			base.OnTouchStart( other );
-
-			if ( !other.IsServer ) return;
-			if ( other is not PlatformerPawn pl ) return;
-
-			if ( other != null )
-			{
-				NewAreaHud($"{pl.Client.Name} has entered {LandMarkName}",pl.Client.NetworkIdent );
-				NewAreaAlert( To.Single( other ), $"NEW AREA : {LandMarkName} " );
-			}
-
-		}		
+		}	
 	}
 }

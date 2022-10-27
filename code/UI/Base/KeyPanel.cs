@@ -4,7 +4,7 @@ using Sandbox.UI.Construct;
 
 namespace Platformer.UI
 {
-	public class KeyPanel : Image
+	public class KeyPanel : Label
 	{
 		public int KeyNumber { get; set; }
 	}
@@ -16,7 +16,7 @@ namespace Platformer.UI
 			KeyPanel keypanel = self.panel.AddChild<KeyPanel>();
 			if ( image != null )
 			{
-				keypanel.SetTexture ( image );
+				keypanel.SetText ( image );
 			}
 
 			if ( classname != null )

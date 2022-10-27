@@ -41,7 +41,7 @@ public partial class BaseGamemode : Entity
 
 		while ( !CanStart() )
 		{
-			Platformer.Alerts( To.Everyone, "Waiting For Players" );
+			Platformer.Waiting( To.Everyone, "Waiting For Players" );
 			await Task.Delay( 1000 );
 		}
 
@@ -87,6 +87,13 @@ public partial class BaseGamemode : Entity
 		await WaitStateTimer();
 	}
 
+	public override void ClientSpawn()
+	{
+		base.ClientSpawn();
+
+		Local.Hud.AddChild<DefaultHud>();
+	}
+
 	public virtual void DoClientJoined( Client cl )
 	{
 		cl.Pawn = CreatePlayerInstance( cl );
@@ -102,7 +109,7 @@ public partial class BaseGamemode : Entity
 			cl.Pawn.Transform = tx;
 		}
 
-		PlatformerChatBox.AddInformation( To.Everyone, $"{cl.Name} has joined the game", $"avatar:{cl.PlayerId}" );
+		PlatformerChatBox.AddChatEntry( To.Everyone, cl.Name, "has joined the game", cl.PlayerId, null, false );
 	}
 
 	public virtual PlatformerPawn CreatePlayerInstance( Client cl ) => new PlatformerPawn( cl );

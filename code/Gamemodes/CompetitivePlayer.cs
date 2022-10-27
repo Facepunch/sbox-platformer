@@ -15,6 +15,13 @@ internal partial class CompetitivePlayer : PlatformerPawn
 	public CompetitivePlayer( Client cl ) : base( cl ) { }
 	public CompetitivePlayer() : base() { }
 
+	public override void Respawn()
+	{
+		base.Respawn();
+
+		Tags.Add( "Platplayer" );
+	}
+
 	public override void Simulate( Client cl )
 	{
 		base.Simulate( cl );

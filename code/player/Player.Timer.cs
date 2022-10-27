@@ -1,5 +1,6 @@
 ﻿
 using Platformer.Gamemodes;
+using Platformer.UI;
 using Sandbox;
 using System;
 using System.Linq;
@@ -44,7 +45,7 @@ partial class PlatformerPawn
 			var span = TimeSpan.FromSeconds( (Coop.Current.TimeCoopStart * 60).Clamp( 0, float.MaxValue ) );
 			var formattedTime = span.ToString( @"hh\:mm\:ss" );
 
-			PlatformerKillfeed.AddEntryOnClient( To.Everyone, $"{Client.Name} has completed the course in {formattedTime}", Client.NetworkIdent );
+			PlatformerChatBox.AddChatEntry( To.Everyone, Client.Name, $"Completed the course in {formattedTime}", Client.PlayerId );
 		}
 
 		if( Competitive.Current != null )
@@ -57,7 +58,7 @@ partial class PlatformerPawn
 			var formattedTime = span.ToString( @"mm\:ss" );
 
 			ClearCheckpoints();
-			PlatformerKillfeed.AddEntryOnClient( To.Everyone, $"{Client.Name} has completed the course in {formattedTime}", Client.NetworkIdent );
+			PlatformerChatBox.AddChatEntry( To.Everyone, Client.Name,$"Completed the course in {formattedTime}", Client.PlayerId );
 			Celebrate();
 
 			if( this is CompetitivePlayer pl )
@@ -75,8 +76,15 @@ partial class PlatformerPawn
 		}
 	}
 
+	[ConCmd.Admin( "plat_debug_coursecompleted" )]
+	public static void DebugMsgOther()
+	{
+		PlatformerChatBox.AddChatEntry( To.Everyone, "Eagle One Development Team", "Completed the course in 54:40!", 76561197967441886 );
+		//PlatformerKillfeed.AddEntryOnClient( To.Everyone, $"Eagle One Development Team has completed the course in 54:40", 1 );
+	}
 
-	public void ResetTimer()
+
+		public void ResetTimer()
 	{
 		TimerState = TimerState.InStartZone;
 		TimeSinceStart = 0;
@@ -100,13 +108,16 @@ partial class PlatformerPawn
 
 		if ( Checkpoints.Contains( checkpoint ) )
 		{
+
 			if ( overridePosition )
 			{
 				for ( int i = Checkpoints.Count - 1; i >= 0; i-- )
 				{
 					if ( Checkpoints[i] != checkpoint )
 						Checkpoints.RemoveAt( i );
+
 				}
+
 			}
 			return;
 		}

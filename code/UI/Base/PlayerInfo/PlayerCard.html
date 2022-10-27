@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="PlayerCard.scss" />
+
+<div>
+    <AvatarPanel />
+
+    <div class="bars">
+        <BlockBar max="4" current="2" icon="add_circle" @ref="HealthBar" />
+    </div>
+
+    <div class="header">
+        <!-- Lives -->
+        <div class="entry lives" @ref="LivesPanel">
+            <label class="icon">favorite</label>
+            <label class="text" @text="Lives">3</label>
+        </div>
+
+        <!-- Coins -->
+        <div class="entry coins" @ref="CoinsPanel">
+            <label class="icon">paid</label>
+            <label class="text" @text="Coins">500</label>
+        </div>
+    </div>
+</div>

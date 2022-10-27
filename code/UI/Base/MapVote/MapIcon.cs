@@ -11,6 +11,7 @@ class MapIcon : Panel
 	public string Org { get; set; } = "...";
 	public string Ident { get; internal set; }
 	public Panel OrgAvatar { get; set; }
+	public Panel ThumbnailIcon { get; set; }
 
 	public MapIcon( string fullIdent )
 	{
@@ -28,7 +29,7 @@ class MapIcon : Panel
 		Title = package.Title;
 		Org = package.Org.Title;
 
-		await Style.SetBackgroundImageAsync( package.Thumb );
+		await ThumbnailIcon.Style.SetBackgroundImageAsync( package.Thumb );
 		await OrgAvatar.Style.SetBackgroundImageAsync( package.Org.Thumb );
 	}
 }

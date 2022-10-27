@@ -4,14 +4,19 @@
 ControlPanel {
     color: $fontcolor;
     position: absolute;
-    bottom: 64px;
-    right: 64px;
+    bottom: 32px;
+    left: 32px;
     align-items: flex-end;
     z-index: 101;
     flex-direction: column;
-    font-family: Poppins;
+    font-family: Nunito-Bold;
     opacity: 0;
     transition: all .15s ease-in;
+    align-items: start;
+    color: #b7b7b7;
+    text-shadow: 0px 1px 0px rgba( black, 0.3 );
+    font-size: 16px;
+    border-left: 2px solid rgba(234, 46, 80, 1);
 
     &.open {
         opacity: 1;
@@ -19,17 +24,19 @@ ControlPanel {
 
     ControlEntry {
         padding: 8px;
-        background-color: $bg;
         margin-bottom: 2px;
+        border-radius: 20px;
 
         .name {
             margin-right: 4px;
-            border-right: 2px solid $green;
             padding-right: 4px;
-            font-weight: 600;
+            font-family: Nunito-Black;
+            font-size: 18px;
+            width: 150px;
         }
 
         .description {
+            font-size: 14px;
         }
     }
 }

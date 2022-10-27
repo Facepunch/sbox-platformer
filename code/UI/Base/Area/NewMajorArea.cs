@@ -1,4 +1,4 @@
-﻿
+﻿using Platformer.Gamemodes;
 using Sandbox;
 using Sandbox.UI;
 
@@ -24,7 +24,7 @@ public partial class NewMajorArea : Panel
 	{
 		base.Tick();
 
-		if ( Time.Now - timesince < 5 )
+		if ( Time.Now - timesince < 5 && Platformer.GameState == GameStates.Live )
 		{
 			AddClass( "visible" );
 		}
@@ -43,11 +43,4 @@ public partial class NewMajorArea : Panel
 		Instance.timesince = Time.Now;
 
 	}
-
-	[ConCmd.Client( "plat_killfeed_add", CanBeCalledFromServer = true )]
-	public static void AddEntryOnClient( string message, int clientId )
-	{
-		PlatformerKillfeed.Current?.AddEntry( message, clientId );
-	}
-
 }

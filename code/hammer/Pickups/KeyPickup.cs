@@ -41,13 +41,13 @@ internal partial class KeyPickup : AnimatedEntity
 		if ( ModelTypeList == ModelType.FoamFinger )
 		{
 			SetModel( "models/citizen_props/foamhand.vmdl" );
-			KeyIcon = ("ui/hud/collectables/Collect_FoamHand.png");
+			KeyIcon = ("pan_tool_alt");
 		}
 
 		if ( ModelTypeList == ModelType.Ball )
 		{
 			SetModel( "models/citizen_props/beachball.vmdl" );
-			KeyIcon = ("ui/hud/collectables/Collect_BeachBall.png");
+			KeyIcon = ("sports_basketball");
 		}
 		
 		if ( ModelTypeList == ModelType.IceCream )

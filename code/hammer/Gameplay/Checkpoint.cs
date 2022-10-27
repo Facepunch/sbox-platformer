@@ -1,5 +1,4 @@
-﻿
-using SandboxEditor;
+﻿using SandboxEditor;
 using Sandbox;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -9,7 +8,7 @@ using Platformer.Gamemodes;
 namespace Platformer;
 
 [Library( "plat_checkpoint", Description = "Defines a checkpoint where the player will respawn after falling" )]
-[Model( Model = "models/flag_pole/flag_pole.vmdl" )]
+[Model( Model = "models/circuit_board_flag/circuit_board_flag.vmdl" )]
 [Display( Name = "Player Checkpoint", GroupName = "Platformer", Description = "Defines a checkpoint where the player will respawn after falling" ), Category( "Player" ), Icon( "flag_circle" )]
 [BoundsHelper( "mins", "maxs", false, true )]
 [HammerEntity]
@@ -36,10 +35,12 @@ public partial class Checkpoint : ModelEntity
 
 	private ModelEntity flag;
 
+	private Particles lighteffect;
+
 	public override void Spawn()
 	{
 		base.Spawn();
-
+		
 		Transmit = TransmitType.Always;
 		EnableAllCollisions = true;
 		EnableTouch = true;
@@ -62,20 +63,20 @@ public partial class Checkpoint : ModelEntity
 
 		var flagAttachment = GetAttachment( "Flag" );
 
-		flag = new ModelEntity( "models/flag_pole/flag_pole_no_flag.vmdl" );
+		flag = new ModelEntity( "models/circuit_board_flag/circuit_board_flag_top.vmdl" );
 		flag.Position = flagAttachment.Value.Position;
 		flag.Rotation = flagAttachment.Value.Rotation;
 
 		if ( this.IsStart )
 		{
-			flag.SetModel( "models/flag_pole/flag_pole.vmdl" );
-			flag.SetMaterialGroup( "Green" );
+			flag.SetModel( "models/circuit_board_flag/circuit_board_flag_lights_start.vmdl" );
+			//flag.SetMaterialGroup( "Green" );
 		}
 
 		if ( this.IsEnd )
 		{
-			flag.SetModel( "models/flag_pole/flag_pole.vmdl" );
-			flag.SetMaterialGroup( "Checker" );
+			flag.SetModel( "models/circuit_board_flag/circuit_board_flag_lights.vmdl" ); 
+			//flag.SetMaterialGroup( "Checker" );
 		}
 	}
 
@@ -85,8 +86,8 @@ public partial class Checkpoint : ModelEntity
 
 		if ( other is not CompetitivePlayer pl ) return;
 		if ( !CanPlayerCheckpoint( pl ) ) return;
-
-		pl.TrySetCheckpoint( this );
+		if( Platformer.GameState != GameStates.Live ) return;
+		pl.TrySetCheckpoint( this, true );
 
 		if ( IsEnd && pl.NumberOfKeys == Platformer.Current.NumberOfCollectables ) _ = pl.CompleteCourseAsync();
 
@@ -103,7 +104,6 @@ public partial class Checkpoint : ModelEntity
 				_ = pl.CompleteCourseAsync();
 			//	Platformer.GameLoopCoopEndAsync();
 			}
-
 			if ( IsStart ) return;
 
 			Coop.Current.RespawnAsAlive( pl );
@@ -140,14 +140,21 @@ public partial class Checkpoint : ModelEntity
 		if ( !active && isLatestCheckpoint )
 		{
 			active = true;
-
-			flag.SetModel( "models/flag_pole/flag_pole.vmdl" );
+			Platformer.Alerts( "CHECKPOINT" );
+			flag.SetModel( "models/circuit_board_flag/circuit_board_flag_top.vmdl" );
+			lighteffect = Particles.Create( "particles/gameplay/checkpoint_light/checkpoint_light.vpcf", this );
+			flag.SetMaterialGroup( "On" );
+			Particles.Create( "particles/gameplay/checkpoint_light/checkpoint_light_activated.vpcf", this );
+			Sound.FromEntity( "checkpoint_light", this );
 		}
 		else if ( active && !isLatestCheckpoint )
 		{
 			active = false;
 
-			flag.SetModel( "models/flag_pole/flag_pole_no_flag.vmdl" );
+			flag.SetModel( "models/circuit_board_flag/circuit_board_flag_top.vmdl" );
+			flag.SetMaterialGroup( "Off" );
+			if ( lighteffect != null )
+				lighteffect.Destroy( true );
 		}
 	}
 

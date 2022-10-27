@@ -79,6 +79,19 @@ public class Scoreboard : Panel
 	{
 		var p = Canvas.AddChild<ScoreboardEntry>();
 		p.Client = entry;
+
+		if ( entry == Local.Client )
+		{
+			p.AddChild<Label>( "you" ).Text = "you";
+		}
+
+		// Client.IsFriend in the future, this is shit
+		var friend = Friend.GetAll().FirstOrDefault( x => x.Id == entry.Id );
+		if ( friend.IsFriend )
+		{
+			p.AddChild<Label>( "friend" ).Text = "group";
+		}
+
 		return p;
 	}
 }

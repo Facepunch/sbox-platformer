@@ -1,0 +1,33 @@
+@import "../../_vars.scss";
+
+WaitingForPlayers {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    opacity: 0;
+    z-index: 1;
+    font-weight: 100;
+    transition: all .3s ease-out;
+    transition: opacity .1s linear;
+    text-transform: uppercase;
+
+
+    &.visible {
+        top: 250px;
+        opacity: 1;
+    }
+
+    label {
+        background: linear-gradient (90deg, rgba(218, 63, 83, 0) 0%, #DA3F54 48.44%, rgba(217, 63, 83, 0) 100%);
+        font-family: "Nunito-Black";
+        color: #fff;
+        font-size: 32px;
+        position: absolute;
+        text-align: center;
+        top: -100px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 600px;
+        text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.55);
+    }
+}
