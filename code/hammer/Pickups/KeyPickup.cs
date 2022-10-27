@@ -17,7 +17,8 @@ internal partial class KeyPickup : AnimatedEntity
 	public enum ModelType
 	{
 		FoamFinger,
-		Ball
+		Ball,
+		IceCream
 	}
 
 	/// <summary>
@@ -47,6 +48,13 @@ internal partial class KeyPickup : AnimatedEntity
 		{
 			SetModel( "models/citizen_props/beachball.vmdl" );
 			KeyIcon = ("ui/hud/collectables/Collect_BeachBall.png");
+		}
+		
+		if ( ModelTypeList == ModelType.IceCream )
+		{
+			SetModel( "models/citizen_props/icecreamcone01.vmdl" );
+			KeyIcon = ("icecream");
+			Scale = 1.5f;
 		}
 
 		SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
