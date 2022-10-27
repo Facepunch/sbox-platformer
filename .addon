@@ -60,6 +60,11 @@
           "a": "platplayer",
           "b": "platplayer",
           "r": "Ignore"
+        },
+        {
+          "a": "trigger",
+          "b": "platplayer",
+          "r": "Trigger"
         }
       ]
     },
