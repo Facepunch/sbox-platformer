@@ -94,6 +94,7 @@ namespace Platformer.Movement
 				.WithoutTags( "trigger" )
 				.WithoutTags( "PropCarry" )
 				.WithoutTags( "Platplayer" )
+				.WithoutTags( "player" )
 				//.WorldOnly()
 				.Radius( 16 )
 				.Run();
@@ -103,6 +104,7 @@ namespace Platformer.Movement
 				.WithoutTags( "PropCarry" )
 				.WithoutTags( "Platplayer" )
 				.WithoutTags( "trigger" )
+				.WithoutTags( "player" )
 				//.WorldOnly()
 				.Radius( 8 )
 				.Run();
@@ -117,6 +119,7 @@ namespace Platformer.Movement
 				// Trace again to check if we have a valid ground
 				tr = Trace.Ray( destinationTestPos, destinationTestPos - (Vector3.Up * 64.0f) )
 					.Ignore( ctrl.Pawn )
+					.WithoutTags( "player" )
 					.Radius( 4 )
 					.Run();
 
@@ -131,6 +134,7 @@ namespace Platformer.Movement
 
 					tr = Trace.Ray( destinationTestPos + (Vector3.Up * PlayerRadius + 1.0f), destinationTestPos + (Vector3.Up * 64.0f) )
 						.Ignore( ctrl.Pawn )
+						.WithoutTags( "player" )
 						.Radius( PlayerRadius )
 						.Run();
 

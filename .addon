@@ -3,6 +3,7 @@
   "Type": "game",
   "Org": "facepunch",
   "Ident": "platformer",
+  "Tags": "",
   "Schema": 1,
   "HasAssets": true,
   "AssetsPath": "",
@@ -31,7 +32,8 @@
         "solid": "Collide",
         "trigger": "Trigger",
         "ladder": "Ignore",
-        "water": "Trigger"
+        "water": "Trigger",
+        "platplayer": "Ignore"
       },
       "Pairs": [
         {
@@ -53,6 +55,11 @@
           "a": "playerclip",
           "b": "solid",
           "r": "Collide"
+        },
+        {
+          "a": "platplayer",
+          "b": "platplayer",
+          "r": "Ignore"
         }
       ]
     },
@@ -86,6 +93,7 @@
       "RootNamespace": "Sandbox",
       "DefineConstants": "SANDBOX;ADDON;DEBUG",
       "NoWarn": "1701;1702;1591;"
-    }
+    },
+    "ParentPackage": ""
   }
 }

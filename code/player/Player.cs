@@ -76,7 +76,7 @@ public partial class PlatformerPawn : Sandbox.Player
 
 		Health = 4;
 
-		Tags.Add( "Platplayer" );
+		Tags.Add( "player" );
 		GotoBestCheckpoint();
 		Platformer.Current.Gamemode.DoPlayerRespawn( this );
 	}

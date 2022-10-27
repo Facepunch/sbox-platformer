@@ -210,7 +210,7 @@ namespace Platformer.Movement
 		public void StepMove( float groundAngle = 46f, float stepSize = 18f )
 		{
 			MoveHelper mover = new MoveHelper( Position, Velocity );
-			mover.Trace = mover.Trace.Size( Mins, Maxs ).Ignore( Pawn );
+			mover.Trace = mover.Trace.Size( Mins, Maxs ).Ignore( Pawn ).WithoutTags( "Platplayer" ); ;
 			mover.MaxStandableAngle = groundAngle;
 
 			mover.TryMoveWithStep( Time.Delta, stepSize );
@@ -222,7 +222,7 @@ namespace Platformer.Movement
 		public void Move( float groundAngle = 46f )
 		{
 			MoveHelper mover = new MoveHelper( Position, Velocity );
-			mover.Trace = mover.Trace.Size( Mins, Maxs ).Ignore( Pawn );
+			mover.Trace = mover.Trace.Size( Mins, Maxs ).Ignore( Pawn ).WithoutTags( "Platplayer" );
 			mover.MaxStandableAngle = groundAngle;
 
 			mover.TryMove( Time.Delta );
