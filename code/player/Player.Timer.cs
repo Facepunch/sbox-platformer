@@ -108,8 +108,10 @@ partial class PlatformerPawn
 
 		if ( Checkpoints.Contains( checkpoint ) )
 		{
+
 			if ( overridePosition )
 			{
+	
 				for ( int i = Checkpoints.Count - 1; i >= 0; i-- )
 				{
 					if ( Checkpoints[i] != checkpoint )

@@ -87,7 +87,7 @@ public partial class Checkpoint : ModelEntity
 		if ( other is not CompetitivePlayer pl ) return;
 		if ( !CanPlayerCheckpoint( pl ) ) return;
 
-		pl.TrySetCheckpoint( this );
+		pl.TrySetCheckpoint( this, true );
 
 		if ( IsEnd && pl.NumberOfKeys == Platformer.Current.NumberOfCollectables ) _ = pl.CompleteCourseAsync();
 
@@ -104,7 +104,6 @@ public partial class Checkpoint : ModelEntity
 				_ = pl.CompleteCourseAsync();
 			//	Platformer.GameLoopCoopEndAsync();
 			}
-
 			if ( IsStart ) return;
 
 			Coop.Current.RespawnAsAlive( pl );
