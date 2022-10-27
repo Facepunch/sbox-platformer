@@ -27,6 +27,7 @@ namespace Platformer.Gamemodes
 			if ( pl.NumberLife == 0 )
 			{
 				pl.ClearCheckpoints();
+				pl.GotoBestCheckpoint();
 				pl.ResetCollectibles<LifePickup>();
 				pl.ResetCollectibles<HealthPickup>();
 				pl.NumberLife = 3;
