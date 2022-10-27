@@ -53,7 +53,7 @@ partial class MusicBox : Entity
 	[ClientRpc]
 	protected void OnStartSound()
 	{
-		PlayingSound = Sound.FromScreen( SoundName ).SetVolume( 1 );
+		PlayingSound = Sound.FromScreen( SoundName ).SetVolume( .5f );
 		BGPlayingSound = Sound.FromScreen( BGSoundName ).SetVolume( .1f );
 	}
 
