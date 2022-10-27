@@ -35,6 +35,8 @@
 	public long PlayerId { get; set; }
 	public bool IsChatMessage { get; set; }
 
+	protected TimeSince Lifetime = 0;
+
 	public string PlayerClasses()
 	{
 		if ( Local.PlayerId != PlayerId ) return "not-me";
@@ -45,5 +47,13 @@
 	{
 		if ( !IsChatMessage ) return "not-message";
 		return "";
+	}
+
+	public override void Tick()
+	{
+		base.Tick();
+
+		if ( Lifetime > 10f && !IsDeleting )
+			Delete();
 	}
 }
