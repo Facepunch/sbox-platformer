@@ -93,17 +93,13 @@ platformerchatentry {
     box-shadow: 2px 2px 20px rgba( black, 0.5 );
     border-radius: 100px;
 
-    &:intro {
+    &:intro, &:outro {
         max-height: 0px;
         padding-top: 0;
         padding-bottom: 0;
         margin-bottom: 0;
         opacity: 0;
         transform: scale( 0 );
-    }
-
-    &.faded {
-        opacity: 0;
     }
 
     .avatar {
