@@ -116,6 +116,7 @@ internal partial class Tag : BaseGamemode
 			return;
 
 		Tagged.Add( player );
+
 		Platformer.BeenTagged( To.Everyone, $"{player.Client.Name} Has been Tagged." );
 
 		using var _ = Prediction.Off();

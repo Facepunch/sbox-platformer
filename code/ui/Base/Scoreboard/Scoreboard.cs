@@ -59,7 +59,7 @@ public class Scoreboard : Panel
 				//
 				// Sort by number of kills, then number of deaths
 				//
-				Canvas.SortChildren<ScoreboardEntry>( ( x ) => (-x.Client.GetInt( "kills" ) * 1000) + x.Client.GetInt( "deaths" ) );
+				Canvas.SortChildren<ScoreboardEntry>( ( x ) => (-x.Client.GetInt( "kills" ) * 1000) + x.Client.GetInt( "deaths" ));
 			}
 		}
 	}
@@ -97,14 +97,28 @@ public class Scoreboard : Panel
 }
 public class ScoreboardEntry : Sandbox.UI.ScoreboardEntry
 {
+	private Label Tagged;
 	public ScoreboardEntry()
 	{
-
+		Tagged = AddChild<Label>( "tagged" );
 	}
 
 	public void OnClick()
 	{
 		if ( Client == Local.Client ) return;
+	}
+
+	public override void UpdateData()
+	{
+		base.UpdateData();
+
+		SetClass( "me", Client == Local.Client );
+	}
+
+	public override void Tick()
+	{
+		base.Tick();
+		Tagged.Text = Client.GetInt( "tagged" ) < 1 ? "" : "back_hand";
 	}
 }
 

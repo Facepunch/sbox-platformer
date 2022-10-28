@@ -156,6 +156,7 @@ public partial class BaseGamemode : Entity
 		{
 			cl.SetInt( "kills", 0 );
 			cl.SetInt( "deaths", 0 );
+			cl.SetInt( "tagged", 0 );
 
 			if ( cl.Pawn is not PlatformerPawn pl ) continue;
 			pl.ResetTimer();

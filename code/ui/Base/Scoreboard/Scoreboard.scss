@@ -99,6 +99,19 @@
                 text-shadow: 1px 1px 2px rgba( black, 0.3 );
             }
 
+            .tagged {
+                position: absolute;
+                right: -30px;
+                color: linear-gradient( 180deg, rgba(#E04F55,1), rgba(#FFA7AA,1));
+                height: 100%;
+                font-size: 24px;
+                bottom: 7px;
+                align-self: center;
+                font-family: Material Icons;
+                text-shadow: 1px 1px 2px rgba( black, 0.3 );
+                opacity: 1;
+            }
+
             &.me {
                 font-family: Nunito-Black;
                 background-image: linear-gradient( to top, #df4a64, #d72e4c );

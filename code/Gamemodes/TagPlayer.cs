@@ -2,6 +2,7 @@
 using Platformer.Utility;
 using Sandbox;
 using System.Linq;
+using System.Numerics;
 
 namespace Platformer.Gamemodes;
 
@@ -24,6 +25,7 @@ internal partial class TagPlayer : PlatformerPawn
 		if ( Tagged )
 		{
 			TagNearbyPlayers();
+			cl.SetInt( "tagged", 1 );
 		}
 	}
 
