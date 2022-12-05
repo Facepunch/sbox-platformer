@@ -1,6 +1,7 @@
 ﻿
 using Sandbox;
 using Sandbox.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,18 +27,9 @@ class MapVotePanel : Panel
 
 	public async Task PopulateMaps()
 	{
-		var query = new Package.Query
-		{
-			Type = Package.Type.Map,
-			Order = Package.Order.User,
-			Take = 16,
-		};
+		var packages = await Package.FindAsync( "game:facepunch.platformer type:map" );
 
-		query.Tags.Add( "game:facepunch.platformer" ); // maybe this should be a "for this game" type of thing instead
-
-		var packages = await query.RunAsync( default );
-
-		foreach ( var package in packages )
+		foreach ( var package in packages?.Packages ?? Array.Empty<Package>() )
 		{
 			AddMap( package.FullIdent );
 		}
