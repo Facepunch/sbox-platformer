@@ -16,6 +16,7 @@ namespace Platformer.Movement
 		public virtual float EyePosMultiplier => 1f;
 
 		protected PlatformerController ctrl;
+		protected PlatformerPawn Player => ctrl.Pawn as PlatformerPawn;
 
 		public BaseMoveMechanic( PlatformerController controller )
 		{

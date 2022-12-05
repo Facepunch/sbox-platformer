@@ -19,6 +19,7 @@ namespace Platformer
 		{
 			var player = Local.Client;
 			if ( !player.IsValid() ) return;
+			if ( player.Pawn is not PlatformerPawn p ) return;
 
 			// lerp the focus point
 			FocusPoint = Vector3.Lerp( FocusPoint, GetSpectatePoint(), Time.Delta * 5.0f );
@@ -29,7 +30,7 @@ namespace Platformer
 				.Run();
 
 			Position = tr.EndPosition;
-			Rotation = Input.Rotation;
+			Rotation = p.ViewAngles.ToRotation();
 			FieldOfView = FieldOfView.LerpTo( 65, Time.Delta * 3.0f );
 
 			Viewer = null;
@@ -49,8 +50,9 @@ namespace Platformer
 		{
 			var player = Local.Client;
 			if ( player == null ) return Vector3.Zero;
+			if ( player.Pawn is not PlatformerPawn p ) return Vector3.Zero;
 
-			return Input.Rotation.Forward * (-350 * 1) + Vector3.Up * (20 * 1);
+			return p.ViewAngles.Forward * (-350 * 1) + Vector3.Up * (20 * 1);
 		}
 	}
 }

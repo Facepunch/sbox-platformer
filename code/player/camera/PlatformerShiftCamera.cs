@@ -39,7 +39,7 @@ namespace Platformer
 			var distanceA = distance.LerpInverse( MinDistance, MaxDistance );
 			var height = 48f.LerpTo( 128f, distanceA );
 			var center = targetPosition + Vector3.Up * height;
-			var targetPos = center + Input.Rotation.Forward * -distance;
+			var targetPos = center + pawn.ViewAngles.Forward * -distance;
 
 			var tr = Trace.Ray( center, targetPos )
 				.Ignore( pawn )
@@ -49,7 +49,7 @@ namespace Platformer
 			var endpos = tr.EndPosition;
 
 			Position = endpos;
-			Rotation = Input.Rotation;
+			Rotation = pawn.ViewAngles.ToRotation();
 			Rotation *= Rotation.FromPitch( distanceA * 10f );
 
 			var rot = pawn.Rotation.Angles() * .015f;
@@ -74,16 +74,16 @@ namespace Platformer
 		}
 
 		private float CameraAdjustment;
-		public override void BuildInput( InputBuilder input )
+		public override void BuildInput()
 		{
-			base.BuildInput( input );
+			if ( Local.Pawn is not PlatformerPawn p ) return;
 
 			if ( InputActions.Menu.Pressed() )
 				CameraAdjustment = -60;
 			if ( InputActions.Use.Pressed() )
 				CameraAdjustment = 60;
 
-			input.ViewAngles = currentForward;
+			p.ViewAngles = currentForward;
 
 			if ( Input.MouseWheel != 0 )
 			{

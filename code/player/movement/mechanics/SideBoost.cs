@@ -26,6 +26,9 @@ namespace Platformer.Movement
 			if ( ctrl.GroundEntity == null )
 				return false;
 
+			if ( !Player.IsValid() ) 
+				return false;
+
 			var moveLeft = Input.Pressed( InputButton.Left );
 			var moveRight = Input.Pressed( InputButton.Right );
 
@@ -53,7 +56,7 @@ namespace Platformer.Movement
 
 			ctrl.ClearGroundEntity();
 
-			var boostVelocity = new Vector3( 0, Input.Left, 0 ) * Input.Rotation;
+			var boostVelocity = new Vector3( 0, Player.InputDirection.x, 0 ) * Player.ViewAngles.ToRotation();
 			boostVelocity *= 325f;
 			boostVelocity += Vector3.Up * 130;
 

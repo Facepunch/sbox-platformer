@@ -29,6 +29,8 @@ namespace Platformer.Movement
 
 		public bool PlayerPickedUpGlider { get; private set; } = false;
 
+		private PlatformerPawn Player => Pawn as PlatformerPawn;
+
 		public PlatformerController()
 		{
 			//mechanics.Add( new StepJump( this ) );
@@ -70,14 +72,18 @@ namespace Platformer.Movement
 		{
 			base.FrameSimulate();
 
-			EyeRotation = Input.Rotation;
+			if ( Pawn is not PlatformerPawn p ) return;
+
+			EyeRotation = p.ViewAngles.ToRotation();
 		}
 
 		public override void Simulate()
 		{
+			if ( Pawn is not PlatformerPawn p ) return;
+
 			EyeLocalPosition = Vector3.Up * (64 * Pawn.Scale) + TraceOffset;
 			EyeLocalPosition *= activeMechanic != null ? activeMechanic.EyePosMultiplier : 1f;
-			EyeRotation = Input.Rotation;
+			EyeRotation = p.ViewAngles.ToRotation();
 
 			var wishdir = GetWishVelocity( true ).Normal;
 			if(wishdir.Length > 0 )
@@ -185,9 +191,9 @@ namespace Platformer.Movement
 
 		public Vector3 GetWishVelocity( bool zeroPitch = false )
 		{
-			var result = new Vector3( Input.Forward, Input.Left, 0 );
+			var result = new Vector3( Player.InputDirection.x, Player.InputDirection.y, 0 );
 			var inSpeed = result.Length.Clamp( 0, 1 );
-			result *= Input.Rotation;
+			result *= Player.ViewAngles.ToRotation();
 
 			if ( zeroPitch )
 				result.z = 0;

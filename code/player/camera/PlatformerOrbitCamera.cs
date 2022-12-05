@@ -33,8 +33,8 @@ namespace Platformer
 
 			var height = 48f.LerpTo( 96f, distanceA );
 			var center = targetPosition + Vector3.Up * height;
-			center += Input.Rotation.Backward * 8f;
-			var targetPos = center + Input.Rotation.Backward * targetDistance;
+			center += -pawn.ViewAngles.Forward * 8f;
+			var targetPos = center + -pawn.ViewAngles.Forward * targetDistance;
 
 			var tr = Trace.Ray( center, targetPos )
 				.Ignore( pawn )
@@ -48,10 +48,10 @@ namespace Platformer
 				distance = Math.Min( distance, tr.Distance );
 			}
 
-			var endpos = center + Input.Rotation.Backward * distance;
+			var endpos = center + -pawn.ViewAngles.Forward * distance;
 
 			Position = endpos;
-			Rotation = Input.Rotation;
+			Rotation = pawn.ViewAngles.ToRotation();
 			Rotation *= Rotation.FromPitch( distanceA * 10f );
 
 			var rot = pawn.Rotation.Angles() * .015f;
@@ -65,30 +65,6 @@ namespace Platformer
 			FieldOfView = FieldOfView.LerpTo( fov, Time.Delta );
 			ZNear = 6;
 			Viewer = null;
-		}
-
-		public void CalculateTargetPosition()
-		{
-			// How far can our target can be from the player
-			// Jump height works well enough for this
-			float maxDistance = 50.0f;
-
-			targetPosition += Local.Pawn.Velocity.WithZ( 0 ) * Time.Delta * 1.333f;
-
-			// If player is rotating the camera manually, we should
-			// Focus on center again
-			float delta = LastCameraRotation.Distance( Input.Rotation );
-			targetPosition = targetPosition.LerpTo( Local.Pawn.Position, delta * 0.01f );
-
-			LastCameraRotation = Input.Rotation;
-
-			// Clamp distance
-			if ( Local.Pawn.Position.Distance( targetPosition ) > maxDistance )
-			{
-				Vector3 distanceNormal = (targetPosition - Local.Pawn.Position).Normal;
-				targetPosition = Local.Pawn.Position + ( distanceNormal * maxDistance );
-			}
-
 		}
 
 		public override void Activated()
@@ -106,10 +82,8 @@ namespace Platformer
 			if ( traces == null ) return;
 		}
 
-		public override void BuildInput( InputBuilder input )
+		public override void BuildInput()
 		{
-			base.BuildInput( input );
-
 			if ( Input.MouseWheel != 0 )
 			{
 				targetDistance += -Input.MouseWheel * DistanceStep;
