@@ -23,8 +23,9 @@ internal partial class BrawlPlayer : PlatformerPawn
 	{
 		base.Simulate( cl );
 
-		Animator.SetAnimParameter( "holdtype", 5 );
-		Animator.SetAnimParameter( "aim_body_weight", 1.0f );
+		// ANIMATOR: 
+		//Animator.SetAnimParameter( "holdtype", 5 );
+		//Animator.SetAnimParameter( "aim_body_weight", 1.0f );
 
 		if ( Health > 0 && Input.Pressed( InputButton.PrimaryAttack ) )
 		{
@@ -37,7 +38,8 @@ internal partial class BrawlPlayer : PlatformerPawn
 		if ( TimeSincePunch < .5f ) return;
 
 		TimeSincePunch = 0f;
-		Animator.SetAnimParameter( "b_attack", true );
+		// ANIMATOR:
+		//Animator.SetAnimParameter( "b_attack", true );
 
 		if ( !IsServer ) return;
 

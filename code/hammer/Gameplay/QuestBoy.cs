@@ -33,7 +33,7 @@ public partial class QuestBoy : AnimatedEntity
 
 	public override void Spawn()
 	{
-		Animator = new PlatformerLookAnimator();
+		Animator = new PlatformerLookAnimator( this );
 		SetModel("models/citizen/citizen.vmdl");
 		
 		EnableTouch = true;
@@ -80,7 +80,7 @@ public partial class QuestBoy : AnimatedEntity
 		if ( other is not PlatformerPawn pl ) return;
 		LookTarget = null;
 		pl.LookTarget = null;
-		pl.CameraMode = new PlatformerOrbitCamera();
+		pl.Camera = new PlatformerOrbitCamera();
 	}
 
 	public bool OnUse( Entity user )
@@ -103,9 +103,9 @@ public partial class QuestBoy : AnimatedEntity
 
 				WishVelocity = Velocity;
 
-				SetAnimLookAt( "aim_eyes", pl.Position + Vector3.Up * 2f );
-				SetAnimLookAt( "aim_head", pl.Position + Vector3.Up * 2f );
-				SetAnimLookAt( "aim_body", pl.Position + Vector3.Up * 2f );
+				SetAnimLookAt( "aim_eyes", pl.Position, pl.Position + Vector3.Up * 2f );
+				SetAnimLookAt( "aim_head", pl.Position, pl.Position + Vector3.Up * 2f );
+				SetAnimLookAt( "aim_body", pl.Position, pl.Position + Vector3.Up * 2f );
 
 				var defaultPosition = Rotation.LookAt( pl.Position - Position ).Angles();
 				

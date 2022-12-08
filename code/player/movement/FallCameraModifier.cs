@@ -22,7 +22,7 @@ namespace Platformer.Movement
 			this.fallSpeed = fallSpeed * .15f;
 		}
 
-		public bool Update( ref CameraSetup setup )
+		public bool Update()
 		{
 			var delta = t.LerpInverse( 0, length, true );
 			delta = Easing.EaseOut( delta );

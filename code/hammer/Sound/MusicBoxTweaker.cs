@@ -67,13 +67,13 @@ partial class MusicBoxTweaker : ModelEntity
 
 	}
 
-	[Event.Frame]
+	[Event.Client.Frame]
 	public void OnFrame()
 	{
 		MusicBox ??= FindByName( TargetMusicBox ) as MusicBox;
 		if ( !MusicBox.IsValid() ) return;
 
-		var pos = CurrentView.Position;
+		var pos = Camera.Position;
 		if ( Local.Pawn.IsValid() )
 		{
 			pos = Local.Pawn.Position;

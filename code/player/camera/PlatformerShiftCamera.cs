@@ -2,17 +2,24 @@
 
 namespace Platformer
 {
-	public class PlatformerShiftCamera : CameraMode
+	public class PlatformerShiftCamera : BaseCamera
 	{
 
 		private float distance;
 		private float targetDistance = 250f;
 		private Vector3 targetPosition;
 		private Angles currentForward;
+		private float CameraAdjustment;
 
 		public float MinDistance => 120.0f;
 		public float MaxDistance => 350.0f;
 		public float DistanceStep => 60.0f;
+
+		public PlatformerShiftCamera()
+		{
+			Camera.FieldOfView = 70;
+			targetPosition = Local.Pawn.Position;
+		}
 
 		public override void Update()
 		{
@@ -48,33 +55,25 @@ namespace Platformer
 
 			var endpos = tr.EndPosition;
 
-			Position = endpos;
-			Rotation = pawn.ViewAngles.ToRotation();
-			Rotation *= Rotation.FromPitch( distanceA * 10f );
+			Camera.Position = endpos;
+			Camera.Rotation = pawn.ViewAngles.ToRotation();
+			Camera.Rotation *= Rotation.FromPitch( distanceA * 10f );
 
 			var rot = pawn.Rotation.Angles() * .015f;
 			rot.yaw = 0;
 
-			Rotation *= Rotation.From( rot );
+			Camera.Rotation *= Rotation.From( rot );
 
 			var spd = pawn.Velocity.WithZ( 0 ).Length / 350f;
 			var fov = 70f.LerpTo( 80f, spd );
 
-			FieldOfView = FieldOfView.LerpTo( fov, Time.Delta );
+			Camera.FieldOfView = Camera.FieldOfView.LerpTo( fov, Time.Delta );
 
-			Viewer = null;
+			Camera.FirstPersonViewer = null;
 		}
 
-		public override void Activated()
-		{
-			base.Activated();
-
-			FieldOfView = 70;
-			targetPosition = Local.Pawn.Position;
-		}
-
-		private float CameraAdjustment;
-		public override void BuildInput()
+		[Event.Client.BuildInput]
+		public void BuildInput()
 		{
 			if ( Local.Pawn is not PlatformerPawn p ) return;
 

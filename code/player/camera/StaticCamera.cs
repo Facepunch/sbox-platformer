@@ -3,7 +3,7 @@ using System;
 
 namespace Platformer;
 
-public class StaticCamera : CameraMode
+public class StaticCamera : BaseCamera
 {
 	Vector3 TargetPosition;
 	Rotation TargetRotation;
@@ -18,9 +18,6 @@ public class StaticCamera : CameraMode
 	public StaticCamera( Vector3 holePosition )
 	{
 		HolePosition = holePosition;
-
-		Position = CurrentView.Position;
-		Rotation = CurrentView.Rotation;
 	}
 
 	public override void Update()
@@ -36,15 +33,8 @@ public class StaticCamera : CameraMode
 		TargetRotation = Rotation.From( (-dir).EulerAngles );
 
 		// Slerp slerp
-		Position = Position.LerpTo( TargetPosition, RealTime.Delta * LerpSpeed );
-		Rotation = Rotation.Slerp( Rotation, TargetRotation, RealTime.Delta * LerpSpeed );
+		Camera.Position = Camera.Position.LerpTo( TargetPosition, RealTime.Delta * LerpSpeed );
+		Camera.Rotation = Rotation.Slerp( Camera.Rotation, TargetRotation, RealTime.Delta * LerpSpeed );
 	}
 
-	public override void Build( ref CameraSetup camSetup )
-	{
-		camSetup.Position = Position;
-		camSetup.Rotation = Rotation;
-	}
-
-	public override void BuildInput() { }
 }

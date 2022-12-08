@@ -43,11 +43,11 @@ internal partial class CompetitivePlayer : PlatformerPawn
 				KeysPlayerHas.Clear();
 				NumberLife = 3;
 				NumberOfKeys = 0;
-				Game.Current.DoPlayerSuicide( cl );
+				TakeDamage( new() { Damage = 9999 } );
 			}
 			else
 			{
-				Game.Current.DoPlayerSuicide( cl );
+				TakeDamage( new() { Damage = 9999 } );
 			}
 		}
 	}

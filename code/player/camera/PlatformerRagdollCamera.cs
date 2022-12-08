@@ -3,16 +3,13 @@ using Sandbox;
 
 namespace Platformer
 {
-	public class PlatformerRagdollCamera : CameraMode
+	public class PlatformerRagdollCamera : BaseCamera
 	{
 		Vector3 FocusPoint;
 
-		public override void Activated()
+		public PlatformerRagdollCamera()
 		{
-			base.Activated();
-
-			FocusPoint = CurrentView.Position - GetViewOffset();
-			FieldOfView = CurrentView.FieldOfView;
+			FocusPoint = Camera.Position - GetViewOffset();
 		}
 
 		public override void Update()
@@ -29,11 +26,11 @@ namespace Platformer
 				.Radius( 6 )
 				.Run();
 
-			Position = tr.EndPosition;
-			Rotation = p.ViewAngles.ToRotation();
-			FieldOfView = FieldOfView.LerpTo( 65, Time.Delta * 3.0f );
+			Camera.Position = tr.EndPosition;
+			Camera.Rotation = p.ViewAngles.ToRotation();
+			Camera.FieldOfView = Camera.FieldOfView.LerpTo( 65, Time.Delta * 3.0f );
 
-			Viewer = null;
+			Camera.FirstPersonViewer = null;
 		}
 
 		public virtual Vector3 GetSpectatePoint()

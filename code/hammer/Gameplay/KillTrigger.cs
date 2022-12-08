@@ -20,7 +20,7 @@ internal partial class KillTrigger : BaseTrigger
 		if ( !other.IsServer ) return;
 		if ( other is not PlatformerPawn pl ) return;
 
-		Game.Current.DoPlayerSuicide( pl.Client );
+		pl.TakeDamage( new() { Damage = 9999 } );
 	}
 
 }

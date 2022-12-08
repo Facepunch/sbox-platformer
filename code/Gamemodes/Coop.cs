@@ -44,7 +44,8 @@ internal partial class Coop : BaseGamemode
 
 		var deathpawn = new PlatformerDeadPawn( player.Client );
 		player.Client.Pawn = deathpawn;
-		player.Client.Pawn.Transform = player.Transform;
+		player.Client.Pawn.Position = player.Transform.Position;
+		player.Client.Pawn.Rotation = player.Transform.Rotation;
 	}
 
 	public override void DoClientJoined( Client cl )
@@ -60,7 +61,7 @@ internal partial class Coop : BaseGamemode
 			var randomplayer = allplayers.OrderBy( x => Rand.Int( 99999 ) ).FirstOrDefault();
 			deathpawn.Position = randomplayer.Position + Vector3.Up * 32;
 
-			PlatformerChatBox.AddChatEntry( To.Everyone, cl.Name, "has joined the game", cl.PlayerId, null, false );
+			PlatformerChatBox.AddChatEntry( To.Everyone, cl.Name, "has joined the game", cl.SteamId, null, false );
 		}
 
 		if ( GameState != GameStates.Live )
@@ -81,7 +82,7 @@ internal partial class Coop : BaseGamemode
 
 			pawn.NumberLife = 1;
 
-			PlatformerChatBox.AddChatEntry( To.Everyone, cl.Name, "has joined the game", cl.PlayerId, null, false );
+			PlatformerChatBox.AddChatEntry( To.Everyone, cl.Name, "has joined the game", cl.SteamId, null, false );
 		}
 	}
 

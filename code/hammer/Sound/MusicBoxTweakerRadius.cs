@@ -28,13 +28,13 @@ partial class MusicBoxTweakerRadius : ModelEntity
 		Transmit = TransmitType.Always;
 	}
 
-	[Event.Frame]
+	[Event.Client.Frame]
 	public void OnFrame()
 	{
 		MusicBox ??= FindByName( TargetMusicBox ) as MusicBox;
 		if ( !MusicBox.IsValid() ) return;
 
-		var pos = CurrentView.Position + new Vector3( 0, 0, 48 );
+		var pos = Camera.Position + new Vector3( 0, 0, 48 );
 		if ( Local.Pawn.IsValid() )
 		{
 			pos = Local.Pawn.Position + new Vector3( 0, 0, 48 );

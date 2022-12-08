@@ -44,7 +44,7 @@ internal partial class TagPlayer : PlatformerPawn
 		}
 	}
 
-	[Event.Frame]
+	[Event.Client.Frame]
 	private void EnsureTagParticle()
 	{
 		var create = Tagged && TagArrowParticle == null;

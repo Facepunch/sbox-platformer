@@ -3,7 +3,7 @@ using System;
 
 namespace Platformer
 {
-	public class PlatformerOrbitCamera : CameraMode
+	public class PlatformerOrbitCamera : BaseCamera
 	{
 
 		private float distance;
@@ -18,6 +18,11 @@ namespace Platformer
 		public Vector3 LastPosition;
 
 		public Rotation LastCameraRotation;
+
+		public PlatformerOrbitCamera()
+		{
+			Camera.FieldOfView = 70;
+		}
 
 		public override void Update()
 		{
@@ -50,39 +55,32 @@ namespace Platformer
 
 			var endpos = center + -pawn.ViewAngles.Forward * distance;
 
-			Position = endpos;
-			Rotation = pawn.ViewAngles.ToRotation();
-			Rotation *= Rotation.FromPitch( distanceA * 10f );
+			Camera.Position = endpos;
+			Camera.Rotation = pawn.ViewAngles.ToRotation();
+			Camera.Rotation *= Rotation.FromPitch( distanceA * 10f );
 
 			var rot = pawn.Rotation.Angles() * .015f;
 			rot.yaw = 0;
 
-			Rotation *= Rotation.From( rot );
+			Camera.Rotation *= Rotation.From( rot );
 
 			var spd = pawn.Velocity.WithZ( 0 ).Length / 350f;
 			var fov = 70f.LerpTo( 80f, spd );
 
-			FieldOfView = FieldOfView.LerpTo( fov, Time.Delta );
-			ZNear = 6;
-			Viewer = null;
-		}
-
-		public override void Activated()
-		{
-			base.Activated();
-
-			FieldOfView = 70;
-			targetPosition = Local.Pawn.Position;
+			Camera.FieldOfView = Camera.FieldOfView.LerpTo( fov, Time.Delta );
+			Camera.ZNear = 6;
+			Camera.FirstPersonViewer = null;
 		}
 
 		private void UpdateViewBlockers( PlatformerPawn pawn )
 		{
-			var traces = Trace.Sphere( 3f, CurrentView.Position, pawn.Position + Vector3.Up * 16 ).RunAll();
+			var traces = Trace.Sphere( 3f, Camera.Position, pawn.Position + Vector3.Up * 16 ).RunAll();
 
 			if ( traces == null ) return;
 		}
 
-		public override void BuildInput()
+		[Event.Client.BuildInput]
+		public void BuildInput()
 		{
 			if ( Input.MouseWheel != 0 )
 			{

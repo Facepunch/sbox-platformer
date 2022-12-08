@@ -44,6 +44,9 @@ public partial class PlatformerPawn : Sandbox.Player
 	private Particles WalkCloud;
 	private Particles FakeShadowParticle;
 
+	public BaseCamera Camera = new PlatformerOrbitCamera();
+	public BaseAnimator Animator;
+
 	[Net] public string ClothingAsString { get; set; }
 
 	public PlatformerPawn( Client cl ) : this()
@@ -53,7 +56,15 @@ public partial class PlatformerPawn : Sandbox.Player
 		ClothingAsString = cl.GetClientData( "avatar", "" );
 	}
 
-	public PlatformerPawn() { } 
+	public PlatformerPawn() 
+	{
+		Animator = new PlatformerOrbitAnimator( this );
+	}
+
+	public override void FrameSimulate( Client cl )
+	{
+		Camera?.Update();
+	}
 
 	public override void Respawn()
 	{
@@ -61,8 +72,6 @@ public partial class PlatformerPawn : Sandbox.Player
 		
 		Citizen = this;
 		Controller ??= new PlatformerController();
-		Animator = new PlatformerLookAnimator();
-		CameraMode = new PlatformerOrbitCamera();
 
 		EnableAllCollisions = true;
 		EnableDrawing = true;
@@ -121,7 +130,7 @@ public partial class PlatformerPawn : Sandbox.Player
 		Controller = null;
 		EnableAllCollisions = false;
 		EnableDrawing = false;
-		CameraMode = new PlatformerRagdollCamera();
+		//CameraMode = new PlatformerRagdollCamera();
 
 		WalkCloud?.Destroy();
 		WalkCloud = null;
@@ -165,6 +174,8 @@ public partial class PlatformerPawn : Sandbox.Player
 	{
 		if ( Platformer.GameState == GameStates.GameEnd )
 			return;
+
+		Animator?.Simulate();
 		
 		if( TalkingToNPC )
 			return;
@@ -187,22 +198,10 @@ public partial class PlatformerPawn : Sandbox.Player
 			{
 				animator.LookAtMe = true;
 
-				SetAnimLookAt( "aim_eyes", LookTarget.Position + Vector3.Up * 64f );
-				SetAnimLookAt( "aim_head", LookTarget.Position + Vector3.Up * 64f );
-				SetAnimLookAt( "aim_body", LookTarget.Position + Vector3.Up * 64f );
+				SetAnimLookAt( "aim_eyes", EyePosition, LookTarget.Position + Vector3.Up * 64f );
+				SetAnimLookAt( "aim_head", EyePosition, LookTarget.Position + Vector3.Up * 64f );
+				SetAnimLookAt( "aim_body", EyePosition, LookTarget.Position + Vector3.Up * 64f );
 			}
-			//CameraMode = new LookAtCamera();
-			
-			//if ( CameraMode is LookAtCamera lookAtCamera )
-			//{
-			//	lookAtCamera.TargetEntity = NPCCameraTarget;
-			//	lookAtCamera.TargetOffset = new Vector3( 0, 0, 64 );
-			//	lookAtCamera.FieldOfView = 70;
-			//	lookAtCamera.MaxFov = 70;
-			//	lookAtCamera.MinFov = 50;
-			//	lookAtCamera.Origin = NPCCamera;
-			//}
-			//DebugOverlay.Sphere( NPCCamera, 5f, Color.Red );
 		}
 
 		if ( Health == 1 && ts > 2 )
@@ -314,7 +313,7 @@ public partial class PlatformerPawn : Sandbox.Player
 		}
 	}
 
-	[Event.Frame]
+	[Event.Client.Frame]
 	public void UpdateWalkCloud()
 	{
 		WalkCloud ??= Particles.Create( "particles/gameplay/player/walkcloud/walkcloud.vpcf", this );
@@ -329,7 +328,7 @@ public partial class PlatformerPawn : Sandbox.Player
 		WalkCloud.SetPosition( 6, new Vector3( speed, 0f, 0f ) );
 	}
 
-	[Event.Frame]
+	[Event.Client.Frame]
 	public void UpdatePlayerShadow()
 	{
 		FakeShadowParticle ??= Particles.Create( "particles/gameplay/fake_shadow/fake_shadow.vpcf" );
@@ -341,7 +340,7 @@ public partial class PlatformerPawn : Sandbox.Player
 		FakeShadowParticle.SetPosition( 0, tr.EndPosition );
 	}
 
-	[Event.Frame]
+	[Event.Client.Frame]
 	private void UpdateRenderAlpha()
 	{
 		const float MaxRenderDistance = 128f;

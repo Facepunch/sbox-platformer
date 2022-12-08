@@ -106,10 +106,11 @@ public partial class BaseGamemode : Entity
 		{
 			var tx = randomSpawnPoint.Transform;
 			tx.Position = tx.Position + Vector3.Up * 50.0f; // raise it up
-			cl.Pawn.Transform = tx;
+			cl.Pawn.Position = tx.Position;
+			cl.Pawn.Rotation = tx.Rotation;
 		}
 
-		PlatformerChatBox.AddChatEntry( To.Everyone, cl.Name, "has joined the game", cl.PlayerId, null, false );
+		PlatformerChatBox.AddChatEntry( To.Everyone, cl.Name, "has joined the game", cl.SteamId, null, false );
 	}
 
 	public virtual PlatformerPawn CreatePlayerInstance( Client cl ) => new PlatformerPawn( cl );
@@ -118,37 +119,6 @@ public partial class BaseGamemode : Entity
 	protected virtual bool CanStart() => false;
 	protected virtual bool CanBreakState() => false;
 	protected virtual void OnGameLive() { }
-
-	[Event.Frame]
-	protected virtual void DoPostProcess()
-	{
-		var postProcess = Map.Camera.FindOrCreateHook<Sandbox.Effects.ScreenEffects>();
-		//Crashing Game
-		//postProcess.Sharpen.Enabled = false;
-
-		//postProcess.FilmGrain.Enabled = false;
-		//postProcess.FilmGrain.Intensity = 0.2f;
-		//postProcess.FilmGrain.Response = 1;
-
-		//postProcess.Vignette.Enabled = true;
-		//postProcess.Vignette.Intensity = 1.0f;
-		//postProcess.Vignette.Roundness = 1.5f;
-		//postProcess.Vignette.Smoothness = 0.5f;
-		//postProcess.Vignette.Color = Color.Black;
-
-		//postProcess.Saturate.Enabled = true;
-		//postProcess.Saturate.Amount = 1;
-
-		//postProcess.Blur.Enabled = false;
-
-		//if ( GameState == GameStates.Warmup )
-		//{
-		//	postProcess.FilmGrain.Intensity = 0.4f;
-		//	postProcess.FilmGrain.Response = 0.5f;
-
-		//	postProcess.Saturate.Amount = 0.5f;
-		//}
-	}
 
 	protected virtual void FreshStart()
 	{

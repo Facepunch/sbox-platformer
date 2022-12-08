@@ -22,7 +22,7 @@ public partial class BaseCollectible : ModelEntity
 		EnableSolidCollisions = false;
 	}
 
-	[Event.Frame]
+	[Event.Client.Frame]
 	public void OnFrame()
 	{
 		OnFrameEvent();

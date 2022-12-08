@@ -44,10 +44,10 @@ partial class MusicBox : Entity
 	[Event.Tick.Client]
 	public void Tick()
 	{
-		if ( PlayingSound.Index <= 0 )
-		{
-			OnStartSound();
-		}
+		//if ( PlayingSound.Index <= 0 )
+		//{
+		//	OnStartSound();
+		//}
 	}
 	
 	[ClientRpc]

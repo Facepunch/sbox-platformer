@@ -45,7 +45,7 @@ partial class PlatformerPawn
 			var span = TimeSpan.FromSeconds( (Coop.Current.TimeCoopStart * 60).Clamp( 0, float.MaxValue ) );
 			var formattedTime = span.ToString( @"hh\:mm\:ss" );
 
-			PlatformerChatBox.AddChatEntry( To.Everyone, Client.Name, $"Completed the course in {formattedTime}", Client.PlayerId );
+			PlatformerChatBox.AddChatEntry( To.Everyone, Client.Name, $"Completed the course in {formattedTime}", Client.SteamId );
 		}
 
 		if( Competitive.Current != null )
@@ -58,7 +58,7 @@ partial class PlatformerPawn
 			var formattedTime = span.ToString( @"mm\:ss" );
 
 			ClearCheckpoints();
-			PlatformerChatBox.AddChatEntry( To.Everyone, Client.Name,$"Completed the course in {formattedTime}", Client.PlayerId );
+			PlatformerChatBox.AddChatEntry( To.Everyone, Client.Name,$"Completed the course in {formattedTime}", Client.SteamId );
 			Celebrate();
 
 			if( this is CompetitivePlayer pl )

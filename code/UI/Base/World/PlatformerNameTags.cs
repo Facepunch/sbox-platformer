@@ -14,7 +14,7 @@ internal class NameTagComponent : EntityComponent<PlatformerPawn>
 
 	protected override void OnActivate()
 	{
-		NameTag = new NameTag( Entity.Client?.Name ?? Entity.Name, Entity.Client?.PlayerId );
+		NameTag = new NameTag( Entity.Client?.Name ?? Entity.Name, Entity.Client?.SteamId );
 	}
 
 	protected override void OnDeactivate()
@@ -26,12 +26,12 @@ internal class NameTagComponent : EntityComponent<PlatformerPawn>
 	/// <summary>
 	/// Called for every tag, while it's active
 	/// </summary>
-	[Event.Frame]
+	[Event.Client.Frame]
 	public void FrameUpdate()
 	{
 		var tx = Entity.GetAttachment( "hat" ) ?? Entity.Transform;
 		tx.Position += Vector3.Up * 5.0f;
-		tx.Rotation = Rotation.LookAt( -CurrentView.Rotation.Forward );
+		tx.Rotation = Rotation.LookAt( -Camera.Rotation.Forward );
 
 		NameTag.Transform = tx;
 	}
@@ -39,7 +39,7 @@ internal class NameTagComponent : EntityComponent<PlatformerPawn>
 	/// <summary>
 	/// Called once per frame to manage component creation/deletion
 	/// </summary>
-	[Event.Frame]
+	[Event.Client.Frame]
 	public static void SystemUpdate()
 	{
 		foreach ( var player in Sandbox.Entity.All.OfType<PlatformerPawn>() )
@@ -51,7 +51,7 @@ internal class NameTagComponent : EntityComponent<PlatformerPawn>
 				continue;
 			}
 
-			var shouldRemove = player.Position.Distance( CurrentView.Position ) > 500;
+			var shouldRemove = player.Position.Distance( Camera.Position ) > 500;
 			shouldRemove = shouldRemove || player.LifeState != LifeState.Alive;
 			shouldRemove = shouldRemove || player.IsDormant;
 

@@ -154,7 +154,7 @@ namespace Platformer.UI
 		{
 			var cl = ConsoleSystem.Caller;
 
-			PlatformerChatBox.AddChatEntry( To.Everyone, cl.Name, "has joined the game", cl.PlayerId, null, false );
+			PlatformerChatBox.AddChatEntry( To.Everyone, cl.Name, "has joined the game", cl.SteamId, null, false );
 		}
 
 		[ConCmd.Admin( "plat_debug_chat_other" )]
@@ -180,7 +180,7 @@ namespace Platformer.UI
 				return;
 
 			Log.Info( $"{ConsoleSystem.Caller}: {message}" );
-			AddChatEntry( To.Everyone, ConsoleSystem.Caller.Name, message, ConsoleSystem.Caller.PlayerId );
+			AddChatEntry( To.Everyone, ConsoleSystem.Caller.Name, message, ConsoleSystem.Caller.SteamId );
 		}
 
 	}

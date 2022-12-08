@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Platformer;
 
-public partial class Platformer : Sandbox.Game
+public partial class Platformer : GameManager
 {
 
 	public new static Platformer Current;
@@ -48,7 +48,7 @@ public partial class Platformer : Sandbox.Game
 	/// </summary>
 	public override void OnVoicePlayed( Client cl )
 	{
-		VoiceChatList.Current?.OnVoicePlayed( cl.PlayerId, cl.VoiceLevel );
+		VoiceChatList.Current?.OnVoicePlayed( cl.SteamId, cl.VoiceLevel );
 	}
 
 	[Event.Entity.PostSpawn]
@@ -88,7 +88,7 @@ public partial class Platformer : Sandbox.Game
 	{
 		base.ClientDisconnect( client, reason );
 
-		PlatformerChatBox.AddInformation( To.Everyone, $"{client.Name} has left the game", client.PlayerId );
+		PlatformerChatBox.AddInformation( To.Everyone, $"{client.Name} has left the game", client.SteamId );
 	}
 
 	public override void OnKilled( Client client, Entity pawn )
@@ -98,7 +98,7 @@ public partial class Platformer : Sandbox.Game
 		var msg = Rand.FromList( killMessages );
 
 
-		PlatformerChatBox.AddChatEntry( To.Everyone, client.Name, msg, client.PlayerId, null, false );
+		PlatformerChatBox.AddChatEntry( To.Everyone, client.Name, msg, client.SteamId, null, false );
 	}
 
 	private List<string> killMessages = new()
@@ -153,7 +153,7 @@ public partial class Platformer : Sandbox.Game
 
 		var leaderboard = await Leaderboard.FindOrCreate( bucket, false );
 
-		return await leaderboard.Value.GetScore( client.PlayerId );
+		return await leaderboard.Value.GetScore( client.SteamId );
 
 	}
 }

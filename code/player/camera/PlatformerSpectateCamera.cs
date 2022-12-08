@@ -4,19 +4,19 @@ using System.Linq;
 
 namespace Platformer
 {
-	public partial class PlatformerSpectateCamera : CameraMode
+	public partial class PlatformerSpectateCamera : BaseCamera
 	{
 		Vector3 lastPos;
 
-		public override void Activated()
+		public PlatformerSpectateCamera()
 		{
 			var pawn = Local.Pawn as PlatformerDeadPawn;
 			if ( pawn == null ) return;
 
-			Position = pawn.EyePosition;
-			Rotation = pawn.EyeRotation;
+			Camera.Position = pawn.EyePosition;
+			Camera.Rotation = pawn.EyeRotation;
 
-			lastPos = Position;
+			lastPos = Camera.Position;
 		}
 
 		public override void Update()
@@ -27,17 +27,16 @@ namespace Platformer
 			var eyePos = pawn.EyePosition;
 			if ( eyePos.Distance( lastPos ) < 300 ) // TODO: Tweak this, or add a way to invalidate lastpos when teleporting
 			{
-				Position = Vector3.Lerp( eyePos.WithZ( lastPos.z ), eyePos, 20.0f * Time.Delta );
+				Camera.Position = Vector3.Lerp( eyePos.WithZ( lastPos.z ), eyePos, 20.0f * Time.Delta );
 			}
 			else
 			{
-				Position = eyePos;
+				Camera.Position = eyePos;
 			}
 
-			Rotation = pawn.EyeRotation;
+			Camera.Rotation = pawn.EyeRotation;
 
-			Viewer = pawn;
-			lastPos = Position;
+			lastPos = Camera.Position;
 		}
 	}
 }

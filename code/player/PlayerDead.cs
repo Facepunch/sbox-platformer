@@ -30,8 +30,10 @@ namespace Platformer
 			SetModel( "models/gameplay/spectator_head/spectator_head.vmdl" );
 
 			Controller = new FlyingController();
-			Animator = new StandardPlayerAnimator();
-			CameraMode = new PlatformerSpectateCamera();
+			// ANIMATOR: 
+			// CAMERA: 
+			//Animator = new StandardPlayerAnimator();
+			//CameraMode = new PlatformerSpectateCamera();
 
 			EnableAllCollisions = true;
 			EnableDrawing = true;
