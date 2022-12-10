@@ -1,6 +1,7 @@
 ﻿
 using Platformer.UI;
 using Sandbox;
+using Sandbox.Diagnostics;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -67,7 +68,7 @@ public partial class BaseGamemode : Entity
 		StateTimer = mapVote.VoteTimeLeft;
 		await WaitStateTimer();
 
-		Global.ChangeLevel( mapVote.WinningMap );
+		Game.ChangeLevel( mapVote.WinningMap );
 	}
 
 	protected async Task WaitStateTimer()
@@ -91,16 +92,16 @@ public partial class BaseGamemode : Entity
 	{
 		base.ClientSpawn();
 
-		Local.Hud.AddChild<DefaultHud>();
+		Game.RootPanel.AddChild<DefaultHud>();
 	}
 
-	public virtual void DoClientJoined( Client cl )
+	public virtual void DoClientJoined( IClient cl )
 	{
 		cl.Pawn = CreatePlayerInstance( cl );
 		(cl.Pawn as PlatformerPawn).Respawn();
 
 		var spawnpoints = All.OfType<SpawnPoint>();
-		var randomSpawnPoint = spawnpoints.OrderBy( x => Rand.Int( 9999 ) ).FirstOrDefault();
+		var randomSpawnPoint = spawnpoints.OrderBy( x => Game.Random.Int( 9999 ) ).FirstOrDefault();
 
 		if ( randomSpawnPoint != null )
 		{
@@ -113,7 +114,7 @@ public partial class BaseGamemode : Entity
 		PlatformerChatBox.AddChatEntry( To.Everyone, cl.Name, "has joined the game", cl.SteamId, null, false );
 	}
 
-	public virtual PlatformerPawn CreatePlayerInstance( Client cl ) => new PlatformerPawn( cl );
+	public virtual PlatformerPawn CreatePlayerInstance( IClient cl ) => new PlatformerPawn( cl );
 	public virtual void DoPlayerRespawn( PlatformerPawn player ) { }
 	public virtual void DoPlayerKilled( PlatformerPawn player ) { }
 	protected virtual bool CanStart() => false;
@@ -122,7 +123,7 @@ public partial class BaseGamemode : Entity
 
 	protected virtual void FreshStart()
 	{
-		foreach ( var cl in Client.All )
+		foreach ( var cl in Game.Clients )
 		{
 			cl.SetInt( "kills", 0 );
 			cl.SetInt( "deaths", 0 );

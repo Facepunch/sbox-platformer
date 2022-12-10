@@ -19,7 +19,7 @@ namespace Platformer
 
 		public override void Update()
 		{
-			var pawn = Local.Pawn as PlatformerPawn;
+			var pawn = Game.LocalPawn as PlatformerPawn;
 
 			if ( pawn == null ) return;
 

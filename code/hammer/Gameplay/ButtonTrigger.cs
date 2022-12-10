@@ -1,6 +1,6 @@
 ﻿
 using Sandbox;
-using SandboxEditor;
+using Editor;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 
@@ -28,7 +28,7 @@ internal partial class ButtonTrigger : BaseTrigger
 	{
 		base.Touch( other );
 
-		if ( !other.IsServer ) return;
+		if ( !Game.IsServer ) return;
 		if ( other is not PlatformerPawn pl ) return;
 
 
@@ -38,7 +38,7 @@ internal partial class ButtonTrigger : BaseTrigger
 	{
 		base.StartTouch( other );
 
-		if ( !other.IsServer ) return;
+		if ( !Game.IsServer ) return;
 		if(other is PropCarriable prop)
 		{
 			_ = OnPressed.Fire( this );
@@ -55,7 +55,7 @@ internal partial class ButtonTrigger : BaseTrigger
 	{
 		base.EndTouch( other );
 
-		if ( !other.IsServer ) return;
+		if ( !Game.IsServer ) return;
 
 		if ( other is PropCarriable prop )
 		{

@@ -10,7 +10,7 @@ public class CitizenPanelScene : ScenePanel
 
 	private SceneModel PlayerModel { get; set; }
 	private ClothingContainer Clothing { get; set; }
-	public Client Client { get; set; }
+	public IClient Client { get; set; }
 	private bool NeedsUpdating { get; set; } = true;
 
 	public CitizenPanelScene()
@@ -47,7 +47,7 @@ public class CitizenPanelScene : ScenePanel
 
 	private void SetupClothing()
 	{
-		var player = Local.Client.Pawn as PlatformerPawn;
+		var player = Game.LocalClient.Pawn as PlatformerPawn;
 
 		Clothing = new ClothingContainer();
 		Clothing.Deserialize( player.ClothingAsString );
@@ -76,7 +76,7 @@ public class CitizenPanel : Panel
 {
 	public CitizenPanelScene Scene { get; set; }
 
-	public CitizenPanel( Client cl )
+	public CitizenPanel( IClient cl )
 	{
 		StyleSheet.Load( "/UI/CitizenPanel/CitizenPanel.scss" );
 		SetClass( "avatar", true );

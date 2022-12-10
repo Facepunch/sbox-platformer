@@ -12,7 +12,7 @@ internal partial class CompetitivePlayer : PlatformerPawn
 	[Net]
 	public float NumberOfKeys { get; set; }
 
-	public CompetitivePlayer( Client cl ) : base( cl ) { }
+	public CompetitivePlayer( IClient cl ) : base( cl ) { }
 	public CompetitivePlayer() : base() { }
 
 	public override void Respawn()
@@ -22,11 +22,11 @@ internal partial class CompetitivePlayer : PlatformerPawn
 		Tags.Add( "Platplayer" );
 	}
 
-	public override void Simulate( Client cl )
+	public override void Simulate( IClient cl )
 	{
 		base.Simulate( cl );
 
-		if ( !IsServer ) return;
+		if ( !Game.IsServer ) return;
 		if ( LifeState != LifeState.Alive ) return;
 
 		if ( GetActiveController() == DevController )

@@ -155,7 +155,7 @@ namespace Platformer.Movement
 
 			if ( PlayerPickedUpGlider )
 			{
-				if ( Host.IsServer )
+				if ( Game.IsServer )
 				{
 					if ( !GetMechanic<Glide>().Gliding && (startOnGround) )
 					{

@@ -59,7 +59,7 @@ namespace Platformer.Movement
 		{
 			ctrl.AddEvent( "jump" );
 
-			if ( !ctrl.Pawn.IsServer ) return;
+			if ( !Game.IsServer ) return;
 			using var _ = Prediction.Off();
 
 			var color = ctrl.Pawn is PlatformerPawn p ? p.PlayerColor : Color.Green;

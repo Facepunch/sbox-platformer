@@ -52,7 +52,7 @@ partial class PlatformerPawn
 		{
 			TimerState = TimerState.Finished;
 
-			if ( !IsServer ) return;
+			if ( !Game.IsServer ) return;
 
 			var span = TimeSpan.FromSeconds( TimeSinceStart );
 			var formattedTime = span.ToString( @"mm\:ss" );
@@ -89,7 +89,7 @@ partial class PlatformerPawn
 		TimerState = TimerState.InStartZone;
 		TimeSinceStart = 0;
 
-		if ( IsServer )
+		if ( Game.IsServer )
 		{
 			ClearCheckpoints();
 		}
@@ -97,14 +97,14 @@ partial class PlatformerPawn
 
 	public void ClearCheckpoints()
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 
 		Checkpoints.Clear();
 	}
 
 	public void TrySetCheckpoint( Checkpoint checkpoint, bool overridePosition = false )
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 
 		if ( Checkpoints.Contains( checkpoint ) )
 		{
@@ -127,7 +127,7 @@ partial class PlatformerPawn
 
 	public void GotoBestCheckpoint()
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 
 		var cp = Checkpoints.LastOrDefault( x => x.RespawnPoint || x.IsStart );
 		if ( !cp.IsValid() )

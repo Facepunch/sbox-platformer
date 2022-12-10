@@ -1,5 +1,5 @@
 ﻿
-using SandboxEditor;
+using Editor;
 using Sandbox;
 using Sandbox.Internal;
 using System.ComponentModel;
@@ -49,13 +49,13 @@ public partial class LaserHazard : ModelEntity
 			.WithAnyTags( new[] { "player", "world", "solid" } )
 			.Run();
 
-		if ( IsClient )
+		if ( Game.IsClient )
 		{
 			Beam.SetPosition( 0, this.Position );
 			Beam.SetPosition( 1, trace.EndPosition );
 		}
 
-		if ( IsServer )
+		if ( Game.IsServer )
 		{
 
 			if( trace.Entity is PlatformerPawn pl )
@@ -67,7 +67,7 @@ public partial class LaserHazard : ModelEntity
 
 	private void DoDamage( PlatformerPawn pl )
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 
 		if ( pl.TimeUntilVulnerable > 0f ) return;
 

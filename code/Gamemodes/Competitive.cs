@@ -16,7 +16,7 @@ namespace Platformer.Gamemodes
 			return PlayerCount() > 0;
 		}
 
-		public override PlatformerPawn CreatePlayerInstance( Client cl ) => new CompetitivePlayer( cl );
+		public override PlatformerPawn CreatePlayerInstance( IClient cl ) => new CompetitivePlayer( cl );
 
 		public override void DoPlayerRespawn( PlatformerPawn player )
 		{

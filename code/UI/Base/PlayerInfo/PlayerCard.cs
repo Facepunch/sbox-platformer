@@ -19,7 +19,7 @@ public partial class PlayerCard : Panel
 
 	public override void Tick()
 	{
-		var pawn = Local.Pawn as PlatformerPawn;
+		var pawn = Game.LocalPawn as PlatformerPawn;
 		if ( !pawn.IsValid() ) return;
 
 		HealthBar.MaxBlocks = pawn.MaxHealth.CeilToInt();

@@ -10,7 +10,7 @@ namespace Platformer
 
 		public PlatformerSpectateCamera()
 		{
-			var pawn = Local.Pawn as PlatformerDeadPawn;
+			var pawn = Game.LocalPawn as PlatformerDeadPawn;
 			if ( pawn == null ) return;
 
 			Camera.Position = pawn.EyePosition;
@@ -21,7 +21,7 @@ namespace Platformer
 
 		public override void Update()
 		{
-			var pawn = Local.Pawn as PlatformerDeadPawn;
+			var pawn = Game.LocalPawn as PlatformerDeadPawn;
 			if ( pawn == null ) return;
 
 			var eyePos = pawn.EyePosition;

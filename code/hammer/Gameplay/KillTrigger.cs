@@ -1,6 +1,6 @@
 ﻿
 using Sandbox;
-using SandboxEditor;
+using Editor;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 
@@ -17,7 +17,7 @@ internal partial class KillTrigger : BaseTrigger
 	{
 		base.Touch( other );
 
-		if ( !other.IsServer ) return;
+		if ( !Game.IsServer ) return;
 		if ( other is not PlatformerPawn pl ) return;
 
 		pl.TakeDamage( new() { Damage = 9999 } );

@@ -1,4 +1,4 @@
-﻿using SandboxEditor;
+﻿using Editor;
 using Sandbox;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -132,7 +132,7 @@ public partial class Checkpoint : ModelEntity
 	[Event.Client.Frame]
 	private void OnFrame()
 	{
-		if ( Local.Pawn is not CompetitivePlayer pl ) return;
+		if ( Game.LocalPawn is not CompetitivePlayer pl ) return;
 		if ( IsEnd || IsStart ) return;
 
 		var isLatestCheckpoint = pl.Checkpoints.LastOrDefault() == this;

@@ -1,6 +1,6 @@
 ﻿
 using Sandbox;
-using SandboxEditor;
+using Editor;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 
@@ -46,7 +46,7 @@ internal partial class AreaTrigger : BaseTrigger
 	{
 		base.Touch( other );
 
-		if ( !other.IsServer ) return;
+		if ( !Game.IsServer ) return;
 		if ( other is not PlatformerPawn pl ) return;
 
 		if (MainArea == true && pl.AreaPriority == 0)
@@ -62,7 +62,7 @@ internal partial class AreaTrigger : BaseTrigger
 	{
 		base.StartTouch( other );
 
-		if ( !other.IsServer ) return;
+		if ( !Game.IsServer ) return;
 		if ( other is not PlatformerPawn pl ) return;
 
 		pl.AreaPriority = Priority;
@@ -73,7 +73,7 @@ internal partial class AreaTrigger : BaseTrigger
 	{
 		base.EndTouch( other );
 
-		if ( !other.IsServer ) return;
+		if ( !Game.IsServer ) return;
 		if ( other is not PlatformerPawn pl ) return;
 
 		pl.AreaPriority = 0;

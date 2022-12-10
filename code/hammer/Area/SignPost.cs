@@ -3,7 +3,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Sandbox;
-using SandboxEditor;
+using Editor;
 using Sandbox.UI.Construct;
 
 [Library( "plat_sign", Description = "Minigolf Sign Pole" )]

@@ -32,7 +32,7 @@ namespace Platformer.UI
 		{
 			base.Tick();
 
-			if ( Local.Pawn is not Player pl ) return;
+			if ( Game.LocalPawn is not Player pl ) return;
 
 			for ( int i = 0; i < Blocks.Count; i++ )
 			{

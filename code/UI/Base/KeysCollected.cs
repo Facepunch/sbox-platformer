@@ -28,7 +28,7 @@ namespace Platformer.UI
 
 			if( Competitive.Current != null )
 			{
-				if ( Local.Pawn is not CompetitivePlayer pl ) 
+				if ( Game.LocalPawn is not CompetitivePlayer pl ) 
 					return;
 
 				foreach ( var keypanel in KeyPanels )

@@ -145,7 +145,7 @@ internal class RailSlide : BaseMoveMechanic
 	private void SlideEffect()
 	{
 
-		if ( !ctrl.Pawn.IsServer ) return;
+		if ( !Game.IsServer ) return;
 
 		if ( IsRailSliding && !DoOnce )
 		{

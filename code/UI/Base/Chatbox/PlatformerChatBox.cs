@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using Sandbox.Diagnostics;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
 using System;
@@ -98,9 +99,9 @@ namespace Platformer.UI
 			var e = Canvas.AddChild<PlatformerChatEntry>();
 			e.IsChatMessage = isMessage;
 
-			var player = Local.Pawn;
+			var player = Game.LocalPawn;
 			if ( player == null ) return;
-			if ( Local.Pawn is PlatformerPawn pl )
+			if ( Game.LocalPawn is PlatformerPawn pl )
 			{
 				if ( playerId > 0 )
 					e.PlayerId = playerId;
@@ -112,7 +113,7 @@ namespace Platformer.UI
 				e.SetClass( "noavatar", playerId == 0 );
 			}
 
-			if ( Local.Pawn is PlatformerDeadPawn dpl )
+			if ( Game.LocalPawn is PlatformerDeadPawn dpl )
 			{
 				e.Message = message;
 				e.Name = $"{name}";
@@ -138,7 +139,7 @@ namespace Platformer.UI
 			Current?.AddEntry( name, message, long.Parse( playerId ), lobbyState, isMessage );
 
 			// Only log clientside if we're not the listen server host
-			if ( !Global.IsListenServer )
+			if ( !Game.IsListenServer )
 			{
 				Log.Info( $"{name}: {message}" ); 
 			}

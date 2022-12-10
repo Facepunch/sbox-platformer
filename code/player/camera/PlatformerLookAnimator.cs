@@ -34,11 +34,11 @@ public class PlatformerLookAnimator : BaseAnimator
 		p.SetAnimParameter( "b_noclip", noclip );
 		p.SetAnimParameter( "b_sit", sitting );
 		p.SetAnimParameter( "skid", skidding ? 1.0f : 0f );
-		p.SetAnimParameter( "b_swim", p.WaterLevel > 0.5f && !sitting );
+		p.SetAnimParameter( "b_swim", p.GetWaterLevel() > 0.5f && !sitting );
 
-		if ( Host.IsClient && p.Client.IsValid() )
+		if ( Game.IsClient && p.Client.IsValid() )
 		{
-			p.SetAnimParameter( "voice", p.Client.TimeSinceLastVoice < 0.5f ? p.Client.VoiceLevel : 0.0f );
+			p.SetAnimParameter( "voice", p.Client.Voice.LastHeard < 0.5f ? p.Client.Voice.CurrentLevel : 0.0f );
 		}
 
 		if ( LookAtMe )

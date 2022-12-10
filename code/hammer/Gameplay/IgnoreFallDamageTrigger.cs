@@ -1,6 +1,6 @@
 ﻿
 using Sandbox;
-using SandboxEditor;
+using Editor;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 
@@ -17,7 +17,7 @@ internal partial class IgnoreFallDamageTrigger : BaseTrigger
 	{
 		base.StartTouch( other );
 
-		if ( !other.IsServer ) return;
+		if ( !Game.IsServer ) return;
 		if ( other is not PlatformerPawn pl ) return;
 
 		pl.IgnoreFallDamage = true;
@@ -27,7 +27,7 @@ internal partial class IgnoreFallDamageTrigger : BaseTrigger
 	{
 		base.EndTouch( other );
 
-		if ( !other.IsServer ) return;
+		if ( !Game.IsServer ) return;
 		if ( other is not PlatformerPawn pl ) return;
 
 		pl.IgnoreFallDamage = false;

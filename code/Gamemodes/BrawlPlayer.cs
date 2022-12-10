@@ -6,7 +6,7 @@ namespace Platformer.Gamemodes;
 
 internal partial class BrawlPlayer : PlatformerPawn
 {
-	public BrawlPlayer( Client cl ) : base( cl ) { } 
+	public BrawlPlayer( IClient cl ) : base( cl ) { } 
 	public BrawlPlayer() : base() { }
 
 	[Net, Predicted]
@@ -19,7 +19,7 @@ internal partial class BrawlPlayer : PlatformerPawn
 		Health = 4;
 	}
 
-	public override void Simulate( Client cl )
+	public override void Simulate( IClient cl )
 	{
 		base.Simulate( cl );
 
@@ -41,7 +41,7 @@ internal partial class BrawlPlayer : PlatformerPawn
 		// ANIMATOR:
 		//Animator.SetAnimParameter( "b_attack", true );
 
-		if ( !IsServer ) return;
+		if ( !Game.IsServer ) return;
 
 		var hitPos = Position + Vector3.Up * 50 + Rotation.Forward * 20f;
 		var hitRadius = 20f;
@@ -69,7 +69,7 @@ internal partial class BrawlPlayer : PlatformerPawn
 	{
 		base.TakeDamage( info );
 
-		if ( IsServer )
+		if ( Game.IsServer )
 			HurtOverlay.FlashTo( To.Single( Client ) );
 
 		using var _ = Prediction.Off();

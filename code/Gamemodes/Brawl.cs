@@ -8,7 +8,7 @@ internal class Brawl : BaseGamemode
 {
 	public static Brawl Current => Instance as Brawl;
 
-	public override PlatformerPawn CreatePlayerInstance( Client cl ) => new BrawlPlayer( cl );
+	public override PlatformerPawn CreatePlayerInstance( IClient cl ) => new BrawlPlayer( cl );
 
 	public override void Spawn()
 	{
@@ -21,7 +21,7 @@ internal class Brawl : BaseGamemode
 	{
 		base.ClientSpawn();
 
-		Local.Hud.AddChild<BrawlHud>();
+		Game.RootPanel.AddChild<BrawlHud>();
 	}
 
 }

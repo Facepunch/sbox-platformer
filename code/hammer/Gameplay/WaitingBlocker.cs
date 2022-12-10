@@ -1,7 +1,7 @@
 
 using Platformer.Gamemodes;
 using Sandbox;
-using SandboxEditor;
+using Editor;
 using System.ComponentModel.DataAnnotations;
 
 namespace Platformer;

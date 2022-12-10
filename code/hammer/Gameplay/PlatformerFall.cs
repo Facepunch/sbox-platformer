@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Sandbox;
-using SandboxEditor;
+using Editor;
 
 namespace Platformer;
 /// <summary>
@@ -66,7 +66,7 @@ public partial class PlatformerFall : ModelEntity
 	public override void Touch( Entity other )
 	{
 
-		if ( !other.IsServer ) return;
+		if ( !Game.IsServer ) return;
 		if ( other is not PlatformerPawn pl ) return;
 
 		base.Touch( other );
@@ -89,7 +89,7 @@ public partial class PlatformerFall : ModelEntity
 	public override void EndTouch( Entity other )
 	{
 
-		if ( !other.IsServer ) return;
+		if ( !Game.IsServer ) return;
 		if ( other is not PlatformerPawn pl ) return;
 
 		base.EndTouch( other );

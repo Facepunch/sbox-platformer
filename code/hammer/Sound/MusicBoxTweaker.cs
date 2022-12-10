@@ -1,5 +1,5 @@
 ﻿
-using SandboxEditor;
+using Editor;
 using Sandbox;
 using System.ComponentModel.DataAnnotations;
 using System;
@@ -74,9 +74,9 @@ partial class MusicBoxTweaker : ModelEntity
 		if ( !MusicBox.IsValid() ) return;
 
 		var pos = Camera.Position;
-		if ( Local.Pawn.IsValid() )
+		if ( Game.LocalPawn.IsValid() )
 		{
-			pos = Local.Pawn.Position;
+			pos = Game.LocalPawn.Position;
 		}
 
 		var bbox = Outer;

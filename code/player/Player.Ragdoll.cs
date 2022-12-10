@@ -6,7 +6,7 @@ namespace Platformer
 	partial class PlatformerPawn
 	{
 		[ClientRpc]
-		private void BecomeRagdollOnClient( Vector3 velocity, DamageFlags damageFlags, Vector3 forcePos, Vector3 force, int bone )
+		private void BecomeRagdollOnClient( Vector3 velocity, Vector3 forcePos, Vector3 force, int bone )
 		{
 			var ent = new ModelEntity();
 			ent.Position = Position;
@@ -43,30 +43,30 @@ namespace Platformer
 				clothing.CopyMaterialGroup( e );
 			}
 
-			if ( damageFlags.HasFlag( DamageFlags.Bullet ) ||
-				 damageFlags.HasFlag( DamageFlags.PhysicsImpact ) )
-			{
-				PhysicsBody body = bone > 0 ? ent.GetBonePhysicsBody( bone ) : null;
+			//if ( damageFlags.HasFlag( DamageFlags.Bullet ) ||
+			//	 damageFlags.HasFlag( DamageFlags.PhysicsImpact ) )
+			//{
+			//	PhysicsBody body = bone > 0 ? ent.GetBonePhysicsBody( bone ) : null;
 
-				if ( body != null )
-				{
-					body.ApplyImpulseAt( forcePos, force * body.Mass );
-				}
-				else
-				{
-					ent.PhysicsGroup.ApplyImpulse( force );
-				}
-			}
+			//	if ( body != null )
+			//	{
+			//		body.ApplyImpulseAt( forcePos, force * body.Mass );
+			//	}
+			//	else
+			//	{
+			//		ent.PhysicsGroup.ApplyImpulse( force );
+			//	}
+			//}
 
-			if ( damageFlags.HasFlag( DamageFlags.Blast ) )
-			{
-				if ( ent.PhysicsGroup != null )
-				{
-					ent.PhysicsGroup.AddVelocity( (Position - (forcePos + Vector3.Down * 100.0f)).Normal * (force.Length * 0.2f) );
-					var angularDir = (Rotation.FromYaw( 90 ) * force.WithZ( 0 ).Normal).Normal;
-					ent.PhysicsGroup.AddAngularVelocity( angularDir * (force.Length * 0.02f) );
-				}
-			}
+			//if ( damageFlags.HasFlag( DamageFlags.Blast ) )
+			//{
+			//	if ( ent.PhysicsGroup != null )
+			//	{
+			//		ent.PhysicsGroup.AddVelocity( (Position - (forcePos + Vector3.Down * 100.0f)).Normal * (force.Length * 0.2f) );
+			//		var angularDir = (Rotation.FromYaw( 90 ) * force.WithZ( 0 ).Normal).Normal;
+			//		ent.PhysicsGroup.AddAngularVelocity( angularDir * (force.Length * 0.02f) );
+			//	}
+			//}
 
 			Corpse = ent;
 

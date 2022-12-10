@@ -18,14 +18,14 @@ namespace Platformer.Movement
 
 		protected override bool TryActivate()
 		{
-			if ( ctrl.Pawn.WaterLevel > 0.6f ) 
+			if ( ctrl.Pawn.GetWaterLevel() > 0.6f ) 
 				return true;
 			return false;
 		}
 
 		public override void Simulate()
 		{
-			if ( ctrl.Pawn.WaterLevel <= 0.6f )
+			if ( ctrl.Pawn.GetWaterLevel() <= 0.6f )
 			{
 				IsActive = false;
 				return;

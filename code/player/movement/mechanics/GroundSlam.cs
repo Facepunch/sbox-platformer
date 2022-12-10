@@ -68,13 +68,13 @@ namespace Platformer.Movement
 			foreach( var ent in ents )
 			{
 				if ( ent == ctrl.Pawn ) continue;
-				var dmgtype = ent is PlatformerPawn ? DamageFlags.Sonic : DamageFlags.Generic;
+				//var dmgtype = ent is PlatformerPawn ? DamageFlags.Sonic : DamageFlags.Generic;
 				var dmgAmount = ent is PlatformerPawn ? 2 : 80;
 
 				ent.TakeDamage( new DamageInfo()
 				{
 					Attacker = ctrl.Pawn,
-					Flags = dmgtype,
+					//Flags = dmgtype,
 					Damage = dmgAmount
 				} );
 			}
@@ -92,7 +92,7 @@ namespace Platformer.Movement
 		{
 			ctrl.AddEvent( "sitting" );
 
-			if ( !ctrl.Pawn.IsServer ) return;
+			if ( !Game.IsServer ) return;
 
 			using var _ = Prediction.Off();
 

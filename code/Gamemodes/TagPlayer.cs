@@ -15,10 +15,10 @@ internal partial class TagPlayer : PlatformerPawn
 	private Vector3 TagMins => new( -64, -64, 0 );
 	private Vector3 TagMaxs => new( 64, 64, 64 );
 
-	public TagPlayer( Client cl ) : base( cl ) { }
+	public TagPlayer( IClient cl ) : base( cl ) { }
 	public TagPlayer() : base() { }
 
-	public override void Simulate( Client cl )
+	public override void Simulate( IClient cl )
 	{
 		base.Simulate( cl );
 

@@ -1,5 +1,5 @@
 ﻿
-using SandboxEditor;
+using Editor;
 using Sandbox;
 using System.ComponentModel.DataAnnotations;
 using System;
@@ -35,9 +35,9 @@ partial class MusicBoxTweakerRadius : ModelEntity
 		if ( !MusicBox.IsValid() ) return;
 
 		var pos = Camera.Position + new Vector3( 0, 0, 48 );
-		if ( Local.Pawn.IsValid() )
+		if ( Game.LocalPawn.IsValid() )
 		{
-			pos = Local.Pawn.Position + new Vector3( 0, 0, 48 );
+			pos = Game.LocalPawn.Position + new Vector3( 0, 0, 48 );
 		}
 
 		var dist = Position.Distance( pos );

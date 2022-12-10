@@ -36,7 +36,7 @@ public partial class Platformer : GameManager
 	{
 		Current = this;
 
-		if ( IsClient )
+		if ( Game.IsClient )
 		{
 			_ = new Hud();
 		}
@@ -46,9 +46,9 @@ public partial class Platformer : GameManager
 	/// Someone is speaking via voice chat. This might be someone in your game,
 	/// or in your party, or in your lobby.
 	/// </summary>
-	public override void OnVoicePlayed( Client cl )
+	public override void OnVoicePlayed( IClient cl )
 	{
-		VoiceChatList.Current?.OnVoicePlayed( cl.SteamId, cl.VoiceLevel );
+		VoiceChatList.Current?.OnVoicePlayed( cl.SteamId, cl.Voice.CurrentLevel );
 	}
 
 	[Event.Entity.PostSpawn]
@@ -77,25 +77,25 @@ public partial class Platformer : GameManager
 		_ = Gamemode.GameLoopAsync();
 	}
 
-	public override void ClientJoined( Client client )
+	public override void ClientJoined( IClient client )
 	{
 		base.ClientJoined( client );
 
 		Gamemode.DoClientJoined( client );
 	}
 
-	public override void ClientDisconnect( Client client, NetworkDisconnectionReason reason )
+	public override void ClientDisconnect( IClient client, NetworkDisconnectionReason reason )
 	{
 		base.ClientDisconnect( client, reason );
 
 		PlatformerChatBox.AddInformation( To.Everyone, $"{client.Name} has left the game", client.SteamId );
 	}
 
-	public override void OnKilled( Client client, Entity pawn )
+	public override void OnKilled( IClient client, Entity pawn )
 	{
 		base.OnKilled( client, pawn );
 
-		var msg = Rand.FromList( killMessages );
+		var msg = Game.Random.FromList( killMessages );
 
 
 		PlatformerChatBox.AddChatEntry( To.Everyone, client.Name, msg, client.SteamId, null, false );
@@ -139,21 +139,9 @@ public partial class Platformer : GameManager
 		Tag = 2,
 		Brawl = 3
 	}
-	public static async void SubmitScore( string bucket, Client client, int score )
+
+	public static async void SubmitScore( string bucket, IClient client, int score )
 	{
-
-		var leaderboard = await Leaderboard.FindOrCreate( bucket, false );
-
-		await leaderboard.Value.Submit( client, score );
-
-	}
-
-	public static async Task<LeaderboardEntry?> GetScore( string bucket, Client client )
-	{
-
-		var leaderboard = await Leaderboard.FindOrCreate( bucket, false );
-
-		return await leaderboard.Value.GetScore( client.SteamId );
-
+		// leaderboards are gone
 	}
 }

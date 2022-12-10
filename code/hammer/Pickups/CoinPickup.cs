@@ -1,5 +1,5 @@
 ﻿
-using SandboxEditor;
+using Editor;
 using Sandbox;
 using System;
 using System.ComponentModel;

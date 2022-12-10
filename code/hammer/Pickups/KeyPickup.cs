@@ -1,5 +1,5 @@
 ﻿
-using SandboxEditor;
+using Editor;
 using Sandbox;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -123,8 +123,8 @@ internal partial class KeyPickup : AnimatedEntity
 
 	private bool ShouldRender()
 	{
-		if ( !Local.Pawn.IsValid() ) return true;
-		if ( Local.Pawn is not CompetitivePlayer pl ) return true;
+		if ( !Game.LocalPawn.IsValid() ) return true;
+		if ( Game.LocalPawn is not CompetitivePlayer pl ) return true;
 
 		return !pl.KeysPlayerHas.Contains( KeyNumber );
 	}

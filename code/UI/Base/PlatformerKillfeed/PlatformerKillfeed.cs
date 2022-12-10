@@ -20,7 +20,7 @@ internal partial class PlatformerKillfeed : Panel
 		var entry = new PlatformerKillfeedEntry( message );
 		entry.Parent = Current.Canvas;
 
-		if( clientId == Local.Client.NetworkIdent )
+		if( clientId == Game.LocalClient.NetworkIdent )
 		{
 			entry.AddClass( "local" );
 		}

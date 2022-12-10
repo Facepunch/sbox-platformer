@@ -28,7 +28,7 @@ internal partial class Coop : BaseGamemode
 
 		TimeCoopStart = 0;
 
-		foreach ( var cl in Client.All )
+		foreach ( var cl in Game.Clients )
 		{
 			if ( cl.Pawn is not PlatformerPawn pl ) continue;
 			pl.StartCourse();
@@ -48,7 +48,7 @@ internal partial class Coop : BaseGamemode
 		player.Client.Pawn.Rotation = player.Transform.Rotation;
 	}
 
-	public override void DoClientJoined( Client cl )
+	public override void DoClientJoined( IClient cl )
 	{
 		base.DoClientJoined( cl );
 
@@ -58,7 +58,7 @@ internal partial class Coop : BaseGamemode
 			cl.Pawn = deathpawn;
 
 			var allplayers = All.OfType<PlatformerPawn>();
-			var randomplayer = allplayers.OrderBy( x => Rand.Int( 99999 ) ).FirstOrDefault();
+			var randomplayer = allplayers.OrderBy( x => Game.Random.Int( 99999 ) ).FirstOrDefault();
 			deathpawn.Position = randomplayer.Position + Vector3.Up * 32;
 
 			PlatformerChatBox.AddChatEntry( To.Everyone, cl.Name, "has joined the game", cl.SteamId, null, false );
@@ -71,7 +71,7 @@ internal partial class Coop : BaseGamemode
 			pawn.Respawn();
 
 			var spawnpoints = All.OfType<SpawnPoint>();
-			var randomSpawnPoint = spawnpoints.OrderBy( x => Rand.Int( 99999 ) ).FirstOrDefault();
+			var randomSpawnPoint = spawnpoints.OrderBy( x => Game.Random.Int( 99999 ) ).FirstOrDefault();
 
 			if ( randomSpawnPoint != null )
 			{
@@ -98,11 +98,11 @@ internal partial class Coop : BaseGamemode
 		}
 	}
 
-	public override PlatformerPawn CreatePlayerInstance( Client cl ) => new CompetitivePlayer( cl );
+	public override PlatformerPawn CreatePlayerInstance( IClient cl ) => new CompetitivePlayer( cl );
 
 	public void RespawnAsAlive( Entity toucher )
 	{
-		foreach ( var client in Client.All.Where( c => c.Pawn is PlatformerDeadPawn ) )
+		foreach ( var client in Game.Clients.Where( c => c.Pawn is PlatformerDeadPawn ) )
 		{
 			client.Pawn.Delete();
 

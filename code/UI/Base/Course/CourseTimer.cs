@@ -23,7 +23,7 @@ namespace Platformer.UI
 		{
 			base.Tick();
 
-			var pawn = Local.Pawn as PlatformerPawn;
+			var pawn = Game.LocalPawn as PlatformerPawn;
 			if ( !pawn.IsValid() ) return;
 
 			if ( Competitive.Current != null )

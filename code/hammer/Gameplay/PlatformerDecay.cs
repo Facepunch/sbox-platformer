@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Sandbox;
-using SandboxEditor;
+using Editor;
 
 namespace Platformer;
 /// <summary>
@@ -55,7 +55,7 @@ public partial class PlatformerDecay : ModelEntity
 
 	public override void Touch( Entity other )
 	{
-		if ( !other.IsServer ) return;
+		if ( !Game.IsServer ) return;
 		if ( other is not PlatformerPawn pl ) return;
 
 		TimeToHold++;

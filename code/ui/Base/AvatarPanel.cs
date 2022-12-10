@@ -15,18 +15,9 @@ namespace Platformer.UI
 			
 		public AvatarPanel()
 		{			
-			Avatar = new CitizenPanel( Local.Client );
+			Avatar = new CitizenPanel( Game.LocalClient );
 			AddChild( Avatar );
 			
-		}
-
-		public override void Tick()
-		{
-			base.Tick();
-
-			if ( Local.Pawn is not Player pl ) return;
-
-			//Avatar.Style.BackgroundColor = pl.Health >= 1 ? HighColor : LowColor;
 		}
 
 	}

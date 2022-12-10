@@ -19,7 +19,7 @@ namespace Platformer
 
 		public PlatformerDeadPawn() { }
 
-		public PlatformerDeadPawn( Client cl )
+		public PlatformerDeadPawn( IClient cl )
 		{
 
 		}
@@ -50,7 +50,7 @@ namespace Platformer
 
 		}
 
-		public override void Simulate( Client cl )
+		public override void Simulate( IClient cl )
 		{
 			base.Simulate( cl );
 

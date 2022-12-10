@@ -13,7 +13,6 @@
   ],
   "HasCode": true,
   "CodePath": "/code/",
-  "RootNamespace": "Platformer",
   "Metadata": {
     "MapList": [
       "facepunch.tup_block",

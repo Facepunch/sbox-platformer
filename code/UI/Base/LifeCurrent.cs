@@ -23,7 +23,7 @@ namespace Platformer.UI
 
 		public override void Tick()
 		{
-			if ( Local.Pawn is not PlatformerPawn pl ) return;
+			if ( Game.LocalPawn is not PlatformerPawn pl ) return;
 
 			var life = pl.NumberLife;
 

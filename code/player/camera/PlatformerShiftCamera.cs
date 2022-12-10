@@ -18,12 +18,12 @@ namespace Platformer
 		public PlatformerShiftCamera()
 		{
 			Camera.FieldOfView = 70;
-			targetPosition = Local.Pawn.Position;
+			targetPosition = Game.LocalPawn.Position;
 		}
 
 		public override void Update()
 		{
-			var pawn = Local.Pawn as PlatformerPawn;
+			var pawn = Game.LocalPawn as PlatformerPawn;
 
 			if ( pawn == null ) return;
 
@@ -75,7 +75,7 @@ namespace Platformer
 		[Event.Client.BuildInput]
 		public void BuildInput()
 		{
-			if ( Local.Pawn is not PlatformerPawn p ) return;
+			if ( Game.LocalPawn is not PlatformerPawn p ) return;
 
 			if ( InputActions.Menu.Pressed() )
 				CameraAdjustment = -60;

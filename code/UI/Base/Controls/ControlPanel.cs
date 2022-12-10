@@ -27,7 +27,7 @@ internal class ControlPanel : Panel
 	{
 		DeleteChildren();
 
-		if ( Local.Pawn is not PlatformerPawn p ) return;
+		if ( Game.LocalPawn is not PlatformerPawn p ) return;
 		if ( p.Controller is not PlatformerController ctrl ) return;
 
 		built = true;

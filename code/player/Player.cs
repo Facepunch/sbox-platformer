@@ -6,6 +6,7 @@ using System.Linq;
 using Platformer.Movement;
 using Platformer.Utility;
 using Platformer.Gamemodes;
+using Sandbox.Utility;
 
 namespace Platformer;
 
@@ -49,7 +50,7 @@ public partial class PlatformerPawn : Sandbox.Player
 
 	[Net] public string ClothingAsString { get; set; }
 
-	public PlatformerPawn( Client cl ) : this()
+	public PlatformerPawn( IClient cl ) : this()
 	{
 		Clothing = new ClothingContainer();
 		Clothing.LoadFromClient( cl );
@@ -61,7 +62,7 @@ public partial class PlatformerPawn : Sandbox.Player
 		Animator = new PlatformerOrbitAnimator( this );
 	}
 
-	public override void FrameSimulate( Client cl )
+	public override void FrameSimulate( IClient cl )
 	{
 		Camera?.Update();
 	}
@@ -77,7 +78,7 @@ public partial class PlatformerPawn : Sandbox.Player
 		EnableDrawing = true;
 		EnableHideInFirstPerson = true;
 		EnableShadowInFirstPerson = true;
-		CurrentArea ??= Global.MapName;
+		CurrentArea ??= Game.Server.MapIdent;
 
 		Clothing.DressEntity( this );
 
@@ -106,7 +107,7 @@ public partial class PlatformerPawn : Sandbox.Player
 	public override void TakeDamage( DamageInfo info )
 	{
 		if ( TimeUntilVulnerable > 0 ) return;
-		if ( info.Flags == DamageFlags.Sonic && !BaseGamemode.Instance.EnablePvP ) return;
+		//if ( info.Flags == DamageFlags.Sonic && !BaseGamemode.Instance.EnablePvP ) return;
 
 		base.TakeDamage( info );
 
@@ -145,7 +146,7 @@ public partial class PlatformerPawn : Sandbox.Player
 
 		BaseGamemode.Instance.DoPlayerKilled( this );
 
-		BecomeRagdollOnClient( Velocity, lastDamage.Flags, lastDamage.Position, lastDamage.Force, lastDamage.BoneIndex );
+		BecomeRagdollOnClient( Velocity, /*lastDamage.Flags,*/ lastDamage.Position, lastDamage.Force, lastDamage.BoneIndex );
 	}
 
 	private TimeUntil TimeUntilCanUse;
@@ -170,7 +171,7 @@ public partial class PlatformerPawn : Sandbox.Player
 
 	public float MaxHealth { get; set; } = 4;
 
-	public override void Simulate( Client cl )
+	public override void Simulate( IClient cl )
 	{
 		if ( Platformer.GameState == GameStates.GameEnd )
 			return;
@@ -182,7 +183,7 @@ public partial class PlatformerPawn : Sandbox.Player
 
 		base.Simulate( cl );
 
-		if ( !IsServer ) return;
+		if ( !Game.IsServer ) return;
 
 		TickPlayerThrow();
 		TickPlayerUse();
@@ -265,14 +266,14 @@ public partial class PlatformerPawn : Sandbox.Player
 
 	public void PickedUpItem( Color itempickedup )
 	{
-		if ( IsServer )
+		if ( Game.IsServer )
 		{
 		}
 	}
 
 	public void LowHealth()
 	{
-		if ( IsServer )
+		if ( Game.IsServer )
 		{
 			Sound.FromWorld( "player.lowhealth", Position );
 		}
@@ -345,12 +346,12 @@ public partial class PlatformerPawn : Sandbox.Player
 	{
 		const float MaxRenderDistance = 128f;
 
-		if ( Local.Pawn == this ) return;
-		if ( Local.Pawn == null ) return;
-		if ( !Local.Pawn.IsValid() ) return;
+		if ( Game.LocalPawn == this ) return;
+		if ( Game.LocalPawn == null ) return;
+		if ( !Game.LocalPawn.IsValid() ) return;
 		if ( Platformer.Mode != Platformer.GameModes.Competitive ) return;
 
-		var dist = Local.Pawn.Position.Distance( Position );
+		var dist = Game.LocalPawn.Position.Distance( Position );
 		var a = 1f - dist.LerpInverse( MaxRenderDistance, MaxRenderDistance * .1f );
 		a = Math.Max( a, .15f );
 		a = Easing.EaseOut( a );
@@ -383,7 +384,7 @@ public partial class PlatformerPawn : Sandbox.Player
 		var vote = new MapVoteEntity();
 		vote.VoteTimeLeft = 15f;
 		await System.Threading.Tasks.Task.Delay( (int)vote.VoteTimeLeft * 1000 );
-		Global.ChangeLevel( vote.WinningMap );
+		Game.ChangeLevel( vote.WinningMap );
 	}
 
 	TimeSince timeSinceLastFootstep = 0;
@@ -392,7 +393,7 @@ public partial class PlatformerPawn : Sandbox.Player
 		if ( LifeState != LifeState.Alive )
 			return;
 
-		if ( !IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		if ( foot == 0 )

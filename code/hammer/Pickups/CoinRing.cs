@@ -1,5 +1,5 @@
 ﻿
-using SandboxEditor;
+using Editor;
 using Sandbox;
 using System;
 using System.ComponentModel;
@@ -28,7 +28,7 @@ internal partial class CoinRing : BaseCollectible
 
 	public override void OnFrameEvent()
 	{
-		var render = !PlayersWhoCollected.Contains( Local.Pawn );
+		var render = !PlayersWhoCollected.Contains( Game.LocalPawn );
 		var alpha = render ? 1 : 0;
 
 		RenderColor = RenderColor.WithAlpha( alpha );

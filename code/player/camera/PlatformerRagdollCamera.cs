@@ -14,7 +14,7 @@ namespace Platformer
 
 		public override void Update()
 		{
-			var player = Local.Client;
+			var player = Game.LocalClient;
 			if ( !player.IsValid() ) return;
 			if ( player.Pawn is not PlatformerPawn p ) return;
 
@@ -35,17 +35,17 @@ namespace Platformer
 
 		public virtual Vector3 GetSpectatePoint()
 		{
-			if ( Local.Pawn is Player player && player.Corpse.IsValid() )
+			if ( Game.LocalPawn is Player player && player.Corpse.IsValid() )
 			{
 				return player.Corpse.PhysicsGroup.MassCenter;
 			}
 
-			 return Local.Pawn.Position;
+			 return Game.LocalPawn.Position;
 		}
 
 		public virtual Vector3 GetViewOffset()
 		{
-			var player = Local.Client;
+			var player = Game.LocalClient;
 			if ( player == null ) return Vector3.Zero;
 			if ( player.Pawn is not PlatformerPawn p ) return Vector3.Zero;
 

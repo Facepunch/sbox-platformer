@@ -1,6 +1,6 @@
 ﻿
 using Sandbox;
-using SandboxEditor;
+using Editor;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -29,7 +29,7 @@ public partial class Jumppad : BaseTrigger
 
 	public override void Touch( Entity other )
 	{
-		if ( !other.IsServer ) return;
+		if ( !Game.IsServer ) return;
 		if ( other is not PlatformerPawn pl ) return;
 		var target = FindByName( TargetEntity );
 

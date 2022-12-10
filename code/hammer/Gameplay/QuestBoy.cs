@@ -1,6 +1,6 @@
 ﻿
 using Sandbox;
-using SandboxEditor;
+using Editor;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -55,7 +55,7 @@ public partial class QuestBoy : AnimatedEntity
 	{
 		base.Touch( other );
 
-		if ( !IsServer ) return;
+		if ( !Game.IsServer ) return;
 		
 		if ( other is not PlatformerPawn pl ) return;
 

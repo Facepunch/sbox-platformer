@@ -24,10 +24,10 @@ namespace Platformer.UI
 		public override void Tick()
 		{
 
-			var player = Local.Pawn;
+			var player = Game.LocalPawn;
 			if ( player == null ) return;
 
-			if ( Local.Pawn is not PlatformerPawn pl ) return;
+			if ( Game.LocalPawn is not PlatformerPawn pl ) return;
 			CArea = pl.CurrentArea;
 
 			Destination.Text = $"{CArea}";

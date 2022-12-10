@@ -26,7 +26,7 @@ internal partial class Tag : BaseGamemode
 
 	public override void ClientSpawn()
 	{
-		Local.Hud.AddChild<TagHud>();
+		Game.RootPanel.AddChild<TagHud>();
 	}
 
 	protected override bool CanBreakState()
@@ -71,7 +71,7 @@ internal partial class Tag : BaseGamemode
 
 	private void StartTag()
 	{
-		var tagger = Rand.FromList( All.OfType<PlatformerPawn>().ToList() );
+		var tagger = Game.Random.FromList( All.OfType<PlatformerPawn>().ToList() );
 
 		if ( !tagger.IsValid() ) return;
 
@@ -96,7 +96,7 @@ internal partial class Tag : BaseGamemode
 		{
 			player.Respawn();
 
-			var randomSpawn = Rand.FromList( spawnpoints.ToList() );
+			var randomSpawn = Game.Random.FromList( spawnpoints.ToList() );
 			if ( randomSpawn != null )
 			{
 				var tx = randomSpawn.Transform;
@@ -106,11 +106,11 @@ internal partial class Tag : BaseGamemode
 		}
 	}
 
-	public override PlatformerPawn CreatePlayerInstance( Client cl ) => new TagPlayer( cl );
+	public override PlatformerPawn CreatePlayerInstance( IClient cl ) => new TagPlayer( cl );
 
 	public void TagPlayer( PlatformerPawn player )
 	{
-		if ( !IsServer ) return;
+		if ( !Game.IsServer ) return;
 
 		if ( Tagged.Contains( player ) ) 
 			return;

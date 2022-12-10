@@ -50,7 +50,7 @@ namespace Platformer.Movement
 
 		private void FallDamageEffect()
 		{
-			if ( !ctrl.Pawn.IsServer ) return;
+			if ( !Game.IsServer ) return;
 			using var _ = Prediction.Off();
 
 			Sound.FromWorld( "player.fall1", ctrl.Pawn.Position );

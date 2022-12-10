@@ -30,9 +30,9 @@ public partial class BaseCollectible : ModelEntity
 
 	public virtual void OnFrameEvent()
 	{
-		if ( !Local.Pawn.IsValid() ) return;
+		if ( !Game.LocalPawn.IsValid() ) return;
 
-		var render = !PlayersWhoCollected.Contains( Local.Pawn );
+		var render = !PlayersWhoCollected.Contains( Game.LocalPawn );
 		var alpha = render ? 1 : 0;
 
 		RenderColor = RenderColor.WithAlpha( alpha );
@@ -42,7 +42,7 @@ public partial class BaseCollectible : ModelEntity
 	{
 		base.StartTouch( other );
 
-		if ( !IsServer ) return;
+		if ( !Game.IsServer ) return;
 
 		if ( other is not PlatformerPawn pl ) return;
 		if ( PlayersWhoCollected.Contains( pl ) ) return;

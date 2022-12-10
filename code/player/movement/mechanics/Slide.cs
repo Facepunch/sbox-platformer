@@ -65,7 +65,7 @@ namespace Platformer.Movement
 		TimeSince timeSinceLastSlide = 0;
 		public override void Simulate()
 		{
-			if ( ctrl.Pawn.IsServer )
+			if ( Game.IsServer )
 			{
 				var hits = Entity.FindInSphere( ctrl.Position, 50f );
 
@@ -84,7 +84,7 @@ namespace Platformer.Movement
 						Attacker = ctrl.Pawn,
 						Damage = 1,
 						Force = ctrl.Pawn.Velocity.Normal * 620f + Vector3.Up * 150f,
-						Flags = DamageFlags.Sonic
+						//Flags = DamageFlags.Sonic
 					} );
 				}
 			}

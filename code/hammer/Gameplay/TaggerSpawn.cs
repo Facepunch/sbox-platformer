@@ -1,4 +1,4 @@
-﻿using SandboxEditor;
+﻿using Editor;
 using Sandbox;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
