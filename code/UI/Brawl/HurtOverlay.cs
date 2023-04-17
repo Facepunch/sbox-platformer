@@ -4,7 +4,6 @@ using Sandbox.UI;
 
 namespace Platformer.UI;
 
-[UseTemplate]
 internal partial class HurtOverlay : Panel
 {
 

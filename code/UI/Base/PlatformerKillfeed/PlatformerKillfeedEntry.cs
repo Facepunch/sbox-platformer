@@ -1,8 +1,7 @@
 ﻿using Sandbox;
 using Sandbox.UI;
-
-[UseTemplate]
-internal class PlatformerKillfeedEntry : Panel
+namespace Platformer.UI;
+partial class PlatformerKillfeedEntry : Panel
 {
 
 	private TimeSince timeSinceCreated = 0;
@@ -18,7 +17,7 @@ internal class PlatformerKillfeedEntry : Panel
 	{
 		base.Tick();
 
-		if( timeSinceCreated > 5f )
+		if ( timeSinceCreated > 5f )
 		{
 			Delete();
 		}

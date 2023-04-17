@@ -6,8 +6,7 @@ using System.Linq;
 
 namespace Platformer.UI
 {
-	[UseTemplate]
-	public class HealthCurrent : Panel
+	public partial class HealthCurrent : Panel
 	{
 		// @text
 		public string Icon { get; set; }

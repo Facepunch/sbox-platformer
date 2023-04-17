@@ -1,8 +1,8 @@
+using System;
 using Sandbox.UI;
 
 namespace Platformer.UI;
 
-[UseTemplate]
 public partial class StatusCard : Panel
 {
 	// @text
@@ -11,25 +11,32 @@ public partial class StatusCard : Panel
 	public string Header { get; set; }
 	// @text
 	public string Message { get; set; }
-	
+
 	public bool ReverseColor { get; set; }
 
-	public StatusCard()
+	protected override void OnAfterTreeRender( bool firstTime )
 	{
-		AddClass( "status-card" );
+		if ( firstTime )
+		{
+			StyleSheet.Load( "/UI/Base/Course/StatusCard.scss" );
+			AddClass( "status-card" );
+			Icon = "schedule";
+			Header = "WARM UP";
+			Message = "0:16";
 
-		Icon = "schedule";
-		Header = "WARM UP";
-		Message = "0:16";
-
-		BindClass( "reverse-color", () => ReverseColor );
+			BindClass( "reverse-color", () => ReverseColor );
+		}
 	}
-
 	public override void SetProperty( string name, string value )
 	{
 		if ( name == "reverse" )
 		{
 			ReverseColor = true;
 		}
+	}
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( Icon, Header, Message );
 	}
 }

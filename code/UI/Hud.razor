@@ -1,10 +1,12 @@
-﻿
-<link rel="stylesheet" href="Hud.scss" />
+﻿@inherits RootPanel
+@using Sandbox;
+@using Sandbox.UI;
+@namespace Platformer.UI
+@attribute [StyleSheet("UI/Hud.scss")]
 
 <root>
 	<Scoreboard />
 	<PlayerCard />
-	<PlatformerNameTags />
 	<KeysCollected />
 	<NewMajorArea />
 	<WaitingForPlayers />

@@ -1,0 +1,14 @@
+﻿@inherits Panel
+@using Sandbox.UI;
+@namespace Platformer.UI
+
+<root>
+    <panel class="name">@Name</panel>
+    <panel class="description">@Description</panel>
+</root>
+
+
+@code {
+    public string Name { get; set; }
+    public string Description { get; set; }
+}

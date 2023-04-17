@@ -1,8 +1,11 @@
-﻿
-<link rel="stylesheet" href="Scoreboard.scss" />
+﻿@inherits Panel
+@using Sandbox;
+@using Sandbox.UI;
+@namespace Platformer
+@attribute [StyleSheet("UI/Base/Scoreboard/Scoreboard.scss")]
 
 <root class="scoreboard">
-    <img class="logo" src="/ui/hud/scoreboard/logo.png"/>
+    <img class="logo" src="/ui/hud/scoreboard/logo.png" />
     <panel class="header" @ref="Header">
         <label class="player-name">Name</label>
         <label class="kills">Points</label>

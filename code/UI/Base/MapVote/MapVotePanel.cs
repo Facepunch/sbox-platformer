@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-[UseTemplate]
-class MapVotePanel : Panel
+namespace Platformer.UI;
+
+public partial class MapVotePanel : Panel
 {
 	// @text
 	public string Icon { get; set; }
@@ -19,10 +20,13 @@ class MapVotePanel : Panel
 
 	public List<MapIcon> MapIcons = new();
 
-	public MapVotePanel()
+	protected override void OnAfterTreeRender( bool firstTime )
 	{
-		Icon = "schedule";
-		_ = PopulateMaps();
+		if ( firstTime )
+		{
+			Icon = "schedule";
+			_ = PopulateMaps();
+		}
 	}
 
 	public async Task PopulateMaps()
@@ -50,10 +54,6 @@ class MapVotePanel : Panel
 		return icon;
 	}
 
-	public override void Tick()
-	{
-		base.Tick();
-	}
 
 	internal void UpdateFromVotes( IDictionary<IClient, string> votes )
 	{
@@ -65,6 +65,11 @@ class MapVotePanel : Panel
 			var icon = AddMap( group.Key );
 			icon.VoteCount = group.Count().ToString( "n0" );
 		}
+	}
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( TimeText, SubtitleText, TitleText, Icon );
 	}
 }
 

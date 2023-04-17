@@ -6,7 +6,6 @@ using Sandbox.UI.Construct;
 
 namespace Platformer.UI
 {
-	[UseTemplate( "/UI/Base/Course/StatusCard.html" )]
 	public class TagRound : StatusCard
 	{
 		public int CurrentRound { get; set; }

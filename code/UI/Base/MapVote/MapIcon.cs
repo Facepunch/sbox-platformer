@@ -1,10 +1,12 @@
 ﻿
 using Sandbox;
 using Sandbox.UI;
+using System;
 using System.Threading.Tasks;
 
-[UseTemplate]
-class MapIcon : Panel
+namespace Platformer.UI;
+
+partial class MapIcon : Panel
 {
 	public string VoteCount { get; set; } = "0";
 	public string Title { get; set; } = "...";
@@ -16,8 +18,14 @@ class MapIcon : Panel
 	public MapIcon( string fullIdent )
 	{
 		Ident = fullIdent;
+	}
 
-		_ = FetchMapInformation();
+	protected override void OnAfterTreeRender( bool firstTime )
+	{
+		if ( firstTime )
+		{
+			_ = FetchMapInformation();
+		}
 	}
 
 	async Task FetchMapInformation()
@@ -31,6 +39,11 @@ class MapIcon : Panel
 
 		await ThumbnailIcon.Style.SetBackgroundImageAsync( package.Thumb );
 		await OrgAvatar.Style.SetBackgroundImageAsync( package.Org.Thumb );
+	}
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( VoteCount );
 	}
 }
 
