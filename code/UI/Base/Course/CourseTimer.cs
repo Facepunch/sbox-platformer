@@ -7,16 +7,19 @@ using System;
 
 namespace Platformer.UI
 {
-	[UseTemplate( "/UI/Base/Course/StatusCard.html" )]
 	public class CourseTimer : StatusCard
 	{
 		private TimeSince time;
 
-		public CourseTimer()
+		protected override void OnAfterTreeRender( bool firstTime )
 		{
-			Icon = "history_toggle_off ";
-			Header = "TIMER";
-			ReverseColor = true;
+			base.OnAfterTreeRender( firstTime );
+			if ( firstTime )
+			{
+				Icon = "history_toggle_off ";
+				Header = "TIMER";
+				ReverseColor = true;
+			}
 		}
 
 		public override void Tick()

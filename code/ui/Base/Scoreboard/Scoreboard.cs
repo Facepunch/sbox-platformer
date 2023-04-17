@@ -9,8 +9,7 @@ using System.Linq;
 
 namespace Platformer;
 
-[UseTemplate]
-public class Scoreboard : Panel
+public partial class Scoreboard : Panel
 {
 
 	bool Cursor;
@@ -59,7 +58,7 @@ public class Scoreboard : Panel
 				//
 				// Sort by number of kills, then number of deaths
 				//
-				Canvas.SortChildren<ScoreboardEntry>( ( x ) => (-x.Client.GetInt( "kills" ) * 1000) + x.Client.GetInt( "deaths" ));
+				Canvas.SortChildren<ScoreboardEntry>( ( x ) => (-x.Client.GetInt( "kills" ) * 1000) + x.Client.GetInt( "deaths" ) );
 			}
 		}
 	}
@@ -68,7 +67,7 @@ public class Scoreboard : Panel
 	{
 		if ( Platformer.GameState == GameStates.GameEnd )
 			return true;
-		
+
 		if ( Input.Down( InputButton.Score ) )
 			return true;
 

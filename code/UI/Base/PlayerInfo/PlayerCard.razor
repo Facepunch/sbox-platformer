@@ -1,6 +1,9 @@
-<link rel="stylesheet" href="PlayerCard.scss" />
-
-<div>
+@inherits Panel
+@using Sandbox;
+@using Sandbox.UI;
+@namespace Platformer.UI
+@attribute [StyleSheet("UI/Base/PlayerInfo/PlayerCard.scss")]
+<root>
     <AvatarPanel />
 
     <div class="bars">
@@ -11,13 +14,13 @@
         <!-- Lives -->
         <div class="entry lives" @ref="LivesPanel">
             <label class="icon">favorite</label>
-            <label class="text" @text="Lives">3</label>
+            <label class="text">@Lives</label>
         </div>
 
         <!-- Coins -->
         <div class="entry coins" @ref="CoinsPanel">
             <label class="icon">paid</label>
-            <label class="text" @text="Coins">500</label>
+            <label class="text">@Coins</label>
         </div>
     </div>
-</div>
+</root>

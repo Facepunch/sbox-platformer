@@ -6,8 +6,7 @@ using System.Linq;
 
 namespace Platformer.UI;
 
-[UseTemplate]
-internal class TagScore : Panel
+partial class TagScore : Panel
 {
 
 	public int TaggedCount { get; set; }

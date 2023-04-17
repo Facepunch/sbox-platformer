@@ -1,0 +1,15 @@
+﻿@inherits Panel
+@using Sandbox;
+@using Sandbox.UI;
+@namespace Platformer.UI
+@attribute [StyleSheet("UI/Base/MapVote/MapIcon.scss")]
+
+<root>
+    <div class="icon">
+        <text class="title" @text="Title"></text>
+        <div class="orgavatar" @ref="OrgAvatar"></div>
+        <div class="thumbnailicon" @ref="ThumbnailIcon"></div>
+        <text class="orgname">@Org</text>
+        <text class="votes">@VoteCount</text>
+    </div>
+</root>

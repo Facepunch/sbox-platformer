@@ -2,8 +2,9 @@
 using Sandbox.UI;
 using System.Linq;
 
-[UseTemplate]
-internal partial class PlatformerKillfeed : Panel
+namespace Platformer.UI;
+
+partial class PlatformerKillfeed : Panel
 {
 
 	public static PlatformerKillfeed Current;
@@ -20,23 +21,23 @@ internal partial class PlatformerKillfeed : Panel
 		var entry = new PlatformerKillfeedEntry( message );
 		entry.Parent = Current.Canvas;
 
-		if( clientId == Game.LocalClient.NetworkIdent )
+		if ( clientId == Game.LocalClient.NetworkIdent )
 		{
 			entry.AddClass( "local" );
 		}
 
 		var count = Current.Canvas.ChildrenCount;
 
-		if( count > 5 )
+		if ( count > 5 )
 		{
-			foreach(var child in Current.Canvas.Children.Take( count - 5 ) )
+			foreach ( var child in Current.Canvas.Children.Take( count - 5 ) )
 			{
 				child.Delete();
 			}
 		}
 	}
 
-	[ConCmd.Client( "plat_killfeed_add", CanBeCalledFromServer = true)]
+	[ConCmd.Client( "plat_killfeed_add", CanBeCalledFromServer = true )]
 	public static void AddEntryOnClient( string message, int clientId )
 	{
 		Current?.AddEntry( message, clientId );

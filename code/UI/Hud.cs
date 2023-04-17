@@ -5,8 +5,7 @@ using Sandbox;
 
 namespace Platformer.UI;
 
-[UseTemplate]
-public class Hud : RootPanel
+public partial class Hud : RootPanel
 {
 
 	public Hud()

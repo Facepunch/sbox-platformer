@@ -1,10 +1,10 @@
 using Sandbox;
 using Sandbox.UI;
 using Platformer.Gamemodes;
+using System;
 
 namespace Platformer.UI;
 
-[UseTemplate]
 public partial class PlayerCard : Panel
 {
 	// @ref
@@ -20,7 +20,7 @@ public partial class PlayerCard : Panel
 	public override void Tick()
 	{
 		var pawn = Game.LocalPawn as PlatformerPawn;
-		if ( !pawn.IsValid() ) return;
+		if ( !pawn.IsValid() || !HealthBar.IsValid() ) return;
 
 		HealthBar.MaxBlocks = pawn.MaxHealth.CeilToInt();
 		HealthBar.CurrentBlocks = pawn.Health.CeilToInt();
@@ -31,5 +31,10 @@ public partial class PlayerCard : Panel
 
 		Lives = $"{pawn.NumberLife}";
 		Coins = $"{pawn.Coin}";
+	}
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( Lives, Coins );
 	}
 }
