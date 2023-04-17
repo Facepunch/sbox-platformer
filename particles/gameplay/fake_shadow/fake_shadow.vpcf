@@ -67,8 +67,6 @@
 		},
 		{
 			_class = "C_INIT_PositionOffset"
-			m_OffsetMin = [ 0.0, 0.0, 1.0 ]
-			m_OffsetMax = [ 0.0, 0.0, 1.0 ]
 		},
 		{
 			_class = "C_INIT_InitFloatCollection"
@@ -76,7 +74,8 @@
 			{
 				m_nType = "PF_TYPE_LITERAL"
 				m_nMapType = "PF_MAP_TYPE_DIRECT"
-				m_flLiteralValue = 20.0
+				m_NamedValue = ""
+				m_flLiteralValue = 30.0
 				m_nControlPoint = 0
 				m_nScalarAttribute = 3
 				m_nVectorAttribute = 6
@@ -382,9 +381,10 @@
 		},
 		{
 			_class = "C_OP_RenderProjected"
-			m_bProjectCharacter = true
 			m_hProjectedMaterial = resource:"particles/gameplay/fake_shadow/fakshadow.vmat"
-			m_bOrientToNormal = true
+			m_flMinProjectionDepth = -1.0
+			m_flMaxProjectionDepth = 1.0
+			m_bEnableProjectedDepthControls = true
 		},
 	]
 }
