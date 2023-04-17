@@ -12,7 +12,8 @@ namespace Platformer.Movement
 		public override float EyePosMultiplier => .5f;
 		public float DuckSpeed => 110f;
 		public float MaxDuckSpeed => 140f;
-
+		public bool IsDucking { get; private set; }
+		
 		public Ducker( PlatformerController ctrl )
 			: base( ctrl )
 		{
@@ -46,8 +47,6 @@ namespace Platformer.Movement
 				IsActive = false;
 				return;
 			}
-
-			ctrl.SetTag( "ducked" );
 
 			if ( InputActions.Duck.Down() ) return;
 

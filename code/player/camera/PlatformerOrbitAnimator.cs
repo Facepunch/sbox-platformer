@@ -1,6 +1,8 @@
 ﻿
+using Platformer.Movement;
 using Sandbox;
 using System;
+using static Sandbox.Event;
 
 namespace Platformer;
 
@@ -20,6 +22,7 @@ public class PlatformerOrbitAnimator : BaseAnimator
 	public override void Simulate()
 	{
 		if ( Pawn is not PlatformerPawn p ) return;
+		if ( p.Controller is not PlatformerController controller ) return;
 		var idealRotation = Pawn.Rotation;
 
 		DoRotation( idealRotation );
@@ -28,15 +31,17 @@ public class PlatformerOrbitAnimator : BaseAnimator
 		//
 		// Let the animation graph know some shit
 		//
-		bool sitting = p.Tags.Has( "sitting" );
+		bool sitting = controller.GetMechanic<Slide>().Sliding;
 		bool noclip = p.Tags.Has( "noclip" ) && !sitting;
-		bool skidding = p.Tags.Has( "skidding" );
+		bool skidding = controller.GetMechanic<RailSlide>().IsActive;
+		bool ledge = controller.GetMechanic<LedgeGrab>().IsActive;
 
 		p.SetAnimParameter( "b_grounded", p.GroundEntity != null || noclip || sitting );
 		p.SetAnimParameter( "b_noclip", noclip );
 		p.SetAnimParameter( "b_sit", sitting );
 		p.SetAnimParameter( "skid", skidding ? 1.0f : 0f );
 		p.SetAnimParameter( "b_swim", p.GetWaterLevel() > 0.5f && !sitting );
+		p.SetAnimParameter( "special_movement_states", ledge ? 1 : 0 );
 
 		if ( Game.IsClient && p.Client.IsValid() )
 		{
@@ -53,7 +58,7 @@ public class PlatformerOrbitAnimator : BaseAnimator
 		Pawn.SetAnimParameter( "aim_head", lookPos );
 		Pawn.SetAnimParameter( "aim_body", aimPos );
 
-		if ( Pawn.Tags.Has( "ducked" ) ) duck = duck.LerpTo( 1.0f, Time.Delta * 10.0f );
+		if ( controller.GetMechanic<Ducker>().IsActive) duck = duck.LerpTo( 1.0f, Time.Delta * 10.0f );
 		else duck = duck.LerpTo( 0.0f, Time.Delta * 5.0f );
 
 		Pawn.SetAnimParameter( "duck", duck );
@@ -66,14 +71,14 @@ public class PlatformerOrbitAnimator : BaseAnimator
 	public virtual void DoRotation( Rotation idealRotation )
 	{
 		if ( Pawn is not PlatformerPawn p ) return;
-
+		if ( p.Controller is not PlatformerController controller ) return;
 		//
 		// Our ideal player model rotation is the way we're facing
 		//
 		var allowYawDiff = p?.ActiveChild == null ? 90 : 50;
 
 		float turnSpeed = 0.01f;
-		if ( Pawn.Tags.Has( "ducked" ) ) turnSpeed = 0.1f;
+		if ( controller.GetMechanic<Ducker>().IsActive ) turnSpeed = 0.1f;
 
 		//
 		// If we're moving, rotate to our ideal rotation

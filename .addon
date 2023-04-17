@@ -13,6 +13,8 @@
   ],
   "HasCode": true,
   "CodePath": "/code/",
+  "PackageReferences": [],
+  "EditorReferences": null,
   "Metadata": {
     "MapList": [
       "facepunch.tup_block",
@@ -101,6 +103,7 @@
     "ParentPackage": "",
     "Summary": "Super Tumble is a 3D Platformer with a collection of different gamemodes!",
     "Description": "\uD83E\uDD14 | ABOUT\nSuper Tumble is a 3D Platformer with multiple different gamemodes! Collect all the collectables, Play Tag and have a Brawl with your friends!\n\n\uD83D\uDE32 |  DASH\nSuper Tumble Dash is where you must explore the map finding all the collectables to unlock the finish point, Use all the different movement mechanics to get the quickest time!\n\n\uD83D\uDD90\uFE0F | TAG\nSuper Tumble Tag is the game you play in school where one person is Tagger and must tag all the other players to win! Only the best players will last the longest!\n\n\uD83E\uDD1C | BRAWL\nSuper Tumble Brawl is all out Brawl where you are fighting for your life! Slam, Slide and Punch your foes to victory!\n\n\n\u2753| EXTRA INFO\nIf you have any bugs please report them on the GitHub link;\nhttps://github.com/Facepunch/sbox-platformer\n\nTo make your custom map supported set the supported games to \u0060facepunch.platformer\u0060",
-    "Public": true
+    "Public": true,
+    "CsProjName": ""
   }
 }
