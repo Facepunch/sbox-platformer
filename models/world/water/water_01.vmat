@@ -1,41 +1,25 @@
-// THIS FILE IS AUTO-GENERATED
-
-Layer0
+"Layer0"
 {
-	shader "water.vfx"
-
-	//---- Water ----
-	F_TWO_TONE_FOG 1
-
-	//---- Color ----
-	g_flModelTintAmount "1.000"
-	g_vColorTint "[1.000000 1.000000 1.000000 0.000000]"
-
-	//---- Fade ----
-	g_flFadeExponent "1.000"
-
-	//---- Fog ----
-	g_bFogEnabled "1"
-	g_fFogToneDistance "226.233"
-	g_vWaterFogColor "[0.545098 0.882353 0.929412 1.000000]"
-	g_vWaterFogColor2 "[0.309804 0.694118 0.847059 0.000000]"
-	g_vWaterFogDistanceFalloff "[78.986 0.056]"
-
-	//---- Material ----
-	TextureColor "materials/default/default_color.tga"
-	TextureTintMask "materials/default/default.tga"
-
-	//---- Texture Coordinates ----
-	g_nScaleTexCoordUByModelScaleAxis "0"
-	g_nScaleTexCoordVByModelScaleAxis "0"
-	g_vTexCoordOffset "[0.000 0.000]"
-	g_vTexCoordScale "[1.000 1.000]"
-	g_vTexCoordScrollSpeed "[0.000 0.000]"
-
-	//---- Water ----
-	g_fPhase "1.920"
-	g_fScale "1.000"
-	g_fSpeed "0.500"
-	g_fSurfaceRoughness "0.040"
-	g_fWeight "1.000"
+	"shader"		"shaders/water.shader_c"
+	"F_TWO_TONE_FOG"		"1"
+	"g_flModelTintAmount"		"1.000000"
+	"g_vColorTint"		"[1.000000 1.000000 1.000000 0.000000]"
+	"g_flFadeExponent"		"1.000000"
+	"g_bFogEnabled"		"1"
+	"g_fFogToneDistance"		"226.233002"
+	"g_vWaterFogColor"		"[0.545098 0.882353 0.929412 1.000000]"
+	"g_vWaterFogColor2"		"[0.309804 0.694118 0.847059 0.000000]"
+	"g_vWaterFogDistanceFalloff"		"[78.986 0.056]"
+	"TextureColor"		"materials/default/default_color.tga"
+	"TextureTintMask"		"materials/default/default.tga"
+	"g_nScaleTexCoordUByModelScaleAxis"		"0"
+	"g_nScaleTexCoordVByModelScaleAxis"		"0"
+	"g_vTexCoordOffset"		"[0.000 0.000]"
+	"g_vTexCoordScale"		"[1.000 1.000]"
+	"g_vTexCoordScrollSpeed"		"[0.000 0.000]"
+	"g_fPhase"		"1.920000"
+	"g_fScale"		"1.000000"
+	"g_fSpeed"		"0.500000"
+	"g_fSurfaceRoughness"		"0.040000"
+	"g_fWeight"		"1.000000"
 }

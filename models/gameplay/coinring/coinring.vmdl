@@ -17,6 +17,10 @@
 								from = ""
 								to = "models/gameplay/coinring/coinring.vmat"
 							},
+							{
+								from = "material.001.vmat"
+								to = "models/gameplay/coinring/coinring.vmat"
+							},
 						]
 						use_global_default = false
 						global_default_material = ""
@@ -31,10 +35,7 @@
 						_class = "PhysicsShapeCylinder"
 						parent_bone = ""
 						surface_prop = "default"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
+						collision_tags = "solid"
 						radius = 38.817482
 						point0 = [ 0.0, 0.0, -2.905532 ]
 						point1 = [ 0.0, 0.0, 2.964583 ]

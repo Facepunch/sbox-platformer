@@ -48,15 +48,15 @@ public class PlatformerOrbitAnimator : BaseAnimator
 			p.SetAnimParameter( "voice", p.Client.Voice.LastHeard < 0.5f ? p.Client.Voice.CurrentLevel : 0.0f );
 		}
 
-		Vector3 aimPos = p.EyePosition + p.Rotation.Forward * 200;
+		Vector3 aimPos = p.EyePosition + Camera.Rotation.Forward * 200;
 		Vector3 lookPos = aimPos;
 
 		//
 		// Look in the direction what the player's input is facing
 		//
-		Pawn.SetAnimParameter( "aim_eyes", lookPos );
-		Pawn.SetAnimParameter( "aim_head", lookPos );
-		Pawn.SetAnimParameter( "aim_body", aimPos );
+		Pawn.SetAnimLookAt( "aim_eyes", p.EyePosition, lookPos );
+		Pawn.SetAnimLookAt( "aim_head", p.EyePosition, lookPos );
+		Pawn.SetAnimLookAt( "aim_body", p.EyePosition, aimPos );
 
 		if ( controller.GetMechanic<Ducker>().IsActive) duck = duck.LerpTo( 1.0f, Time.Delta * 10.0f );
 		else duck = duck.LerpTo( 0.0f, Time.Delta * 5.0f );
