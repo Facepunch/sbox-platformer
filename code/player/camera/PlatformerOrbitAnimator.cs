@@ -61,6 +61,8 @@ public class PlatformerOrbitAnimator : BaseAnimator
 		if ( controller.GetMechanic<Ducker>().IsActive) duck = duck.LerpTo( 1.0f, Time.Delta * 10.0f );
 		else duck = duck.LerpTo( 0.0f, Time.Delta * 5.0f );
 
+		Pawn.SetAnimParameter( "special_movement_states", controller.GetMechanic<Slide>().IsActive ? 3 : 0 );
+
 		Pawn.SetAnimParameter( "duck", duck );
 
 		var holdtype = p.HeldBody.IsValid() ? 4 : 0;
