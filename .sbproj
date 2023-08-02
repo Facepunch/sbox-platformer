@@ -8,7 +8,7 @@
   "HasAssets": true,
   "AssetsPath": "",
   "Resources": "*.ttf\n*.scss\n/ui/*",
-  "MenuResources": null,
+  "MenuResources": "*.scss\nui/*",
   "HasCode": true,
   "CodePath": "/code/",
   "PackageReferences": [],
