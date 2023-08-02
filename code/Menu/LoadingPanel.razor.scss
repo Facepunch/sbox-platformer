@@ -1,0 +1,48 @@
+
+.loadingpanel
+{
+	background-color: #238ec0;
+	width: 100%;
+	height: 100%;
+	align-items: baseline;
+	flex-direction: column;
+	font-family: Poppins;
+	padding-left: 300px;
+	padding-top: 200px;
+
+	.title
+	{
+		font-size: 100px;
+		font-weight: 800;
+		opacity: 1;
+		transition: all 0.4s ease-out;
+		margin-bottom: 10px;
+		font-family: Poppins;
+		font-weight: bold;
+		color: #faa303;
+		text-shadow: 16px 16px 8px black;
+		text-stroke: 20px #fff;
+		transform: rotate( -1deg );
+
+		&:intro
+		{
+			left: -100px;
+			opacity: 0;
+		}
+	}
+
+	.subtitle
+	{
+		font-size: 50px;
+		color: #fff;
+		text-stroke: 25px #faa303;
+		text-transform: lowercase;
+		cursor: pointer;
+		font-weight: bolder;
+		padding: 10px 20px;
+		opacity: 1;
+		transform: rotate( 1deg );
+		transition: all 0.04s ease;
+		margin-left: 300px;
+	}
+}
