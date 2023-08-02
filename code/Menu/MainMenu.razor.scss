@@ -1,0 +1,87 @@
+
+MainMenu
+{
+	width: 100%;
+	height: 100%;
+	align-items: flex-start;
+	flex-direction: column;
+	font-family: poppins;
+	background-color: #25281b;
+	background-image: url( '/UI/menu.mp4' );
+	background-position: center;
+	background-size: cover;
+
+	&.ingame
+	{
+		backdrop-filter: blur( 10px );
+		background-color: #25281b55;
+		background-image: none;
+	}
+}
+
+.title
+{
+	font-size: 120px;
+	font-family: Poppins;
+	font-weight: bold;
+	color: #faa303;
+	text-shadow: 16px 16px 8px black;
+	text-stroke: 15px #fff;
+	margin-top: 200px;
+	margin-left: 200px;
+	transform: rotate( -2deg );
+}
+
+.options
+{
+	flex-direction: column;
+	gap: 8px;
+	pointer-events: all;
+	color: white;
+	align-items: flex-start;
+	justify-content: flex-end;
+	padding: 50px;
+	padding-bottom: 100px;
+	position: absolute;
+	left: 200px;
+	top: 400px;
+	bottom: 200px;
+
+	.spacer
+	{
+		flex-grow: 1;
+	}
+
+	.option
+	{
+		font-size: 60px;
+		color: #000;
+		text-stroke: 10px #faa303;
+		text-transform: lowercase;
+		cursor: pointer;
+		font-weight: bolder;
+		padding: 10px 20px;
+		opacity: 1;
+		transform: rotate( -1deg );
+
+		&:hover
+		{
+			text-stroke: 10px #fff;
+			opacity: 1;
+			transform: scale( 1.1 ) rotate( -2deg );
+		}
+
+		&:active
+		{
+			padding-top: 2px;
+			padding-bottom: 0px;
+		}
+	}
+
+	.text
+	{
+		font-size: 21px;
+		color: #555;
+		font-weight: normal;
+	}
+}

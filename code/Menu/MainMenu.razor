@@ -1,0 +1,81 @@
+@using System
+@using Sandbox;
+@using Sandbox.UI;
+@attribute [StyleSheet]
+@inherits RootPanel
+@namespace GameMenu
+@implements Sandbox.Menu.IGameMenuPanel
+
+<root>
+
+    <div class="title">Super Tumble</div>
+
+    <div class="options">
+
+        @if ( Game.InGame )
+        {
+            <div class="row">
+                <div class="option" onclick="@(() => Game.Menu.HideMenu() )">Return To Game</div>
+            </div>
+
+            <div class="row">
+                <div class="option" onclick="@(() => Game.Menu.LeaveServer( "End Game" ) )">End Game</div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="option" onclick="@CreateGame">Create Game</div>
+            </div>
+
+            <div class="row">
+                <div class="option" onclick="@OpenServerList">Find Game</div>
+            </div>
+        }
+
+        <div class="row spacer">
+            <div class="option"></div>
+        </div>
+
+        <div class="row">
+            <div class="option" onclick="@Game.Menu.Close">Quit</div>
+        </div>  
+        
+    </div>
+
+</root>
+
+@code
+{
+    public override void Tick()
+    {
+        base.Tick();
+
+        SetClass( "ingame", Game.InGame );
+    }
+
+    void CreateGame()
+    {
+        // TODO
+    }    
+    
+    void OpenServerList()
+    {
+        var options = new Sandbox.Modals.ServerListModalOptions();
+        options.ModalTitle = "Find Game";
+        options.TargetGame = "facepunch.platformer";
+        options.OnSelected = (server) =>
+        {
+            Game.Menu.ConnectToServer(server.SteamId);
+        };
+
+        Game.Overlay.ShowServerList( options );
+    }
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine( Game.InGame );
+    }
+
+
+}
