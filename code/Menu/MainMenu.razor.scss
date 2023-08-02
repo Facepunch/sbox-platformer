@@ -63,18 +63,18 @@ MainMenu
 		padding: 10px 20px;
 		opacity: 1;
 		transform: rotate( -1deg );
+		transition: all 0.04s ease;
 
 		&:hover
 		{
 			text-stroke: 10px #fff;
 			opacity: 1;
-			transform: scale( 1.1 ) rotate( -2deg );
+			transform: scale( 1.1 ) rotate( -3deg );
 		}
 
 		&:active
 		{
-			padding-top: 2px;
-			padding-bottom: 0px;
+			transform: scale( 1.1 ) rotate( 3deg );
 		}
 	}
 

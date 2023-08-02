@@ -56,7 +56,18 @@
 
     void CreateGame()
     {
-        // TODO
+        var options = new Sandbox.Modals.GameCreateModalOptions();
+        options.Cookie = "facepunch.platformer.serverconfig";
+        options.ModalTitle = "Create Game";
+        options.MapFilter = "type:map game:facepunch.platformer sort:popular";
+        options.Default.Map = "facepunch.tup_block";
+
+        options.OnStartGame = (setup) =>
+        {
+            Game.Menu.StartServerAsync( setup.MaxPlayers, setup.GameTitle, setup.Map );
+        };
+
+        Game.Overlay.ShowCreateGame(options);
     }    
     
     void OpenServerList()
