@@ -4,9 +4,8 @@ using System.Linq;
 
 namespace Platformer.UI;
 
-partial class PlatformerKillfeed : Panel
+public partial class PlatformerKillfeed : Panel
 {
-
 	public static PlatformerKillfeed Current;
 
 	public Panel Canvas { get; set; }
